@@ -16,7 +16,7 @@ from transformers import (
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-TOTAL_REQUESTS = 16
+TOTAL_REQUESTS = 1
 MAX_NEW_TOKENS = 20
 
 print(f"TRANSFORMERS PATH = {transformers.__file__}")
@@ -207,7 +207,7 @@ def main():
     print(f"Hooks registered. Ready to profile.")
 
     # Load images and duplicate for batch size
-    image = load_image("resize.jpeg")
+    image = load_image("4000x6000.jpg")
     messages = [
         {
             "role": "user",
