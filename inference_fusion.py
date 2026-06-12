@@ -84,73 +84,103 @@ def register_nvtx_hooks(model):
     print(f"✅ Successfully patched NVTX wrappers to: {', '.join(patched_modules)}")
 
 
-def run_chunked_prefill_profiling(model, inputs):
+def run_chunked_prefill(model, inputs, chunk_size=1024):
     """
     核心實驗邏輯：手動將 Image 拆分成 Tile 進行串行 Prefill。
-    關閉 use_cache，純粹評估分塊 Prefill 下的 Activation 記憶體足跡
+    精確處理單個 <image> token 映射到多個融合 Tiles 特徵的架構。
     """
 
-    text_input_ids = inputs["input_ids"]
-    pixel_values = inputs["pixel_values"]
+    pixel_values = inputs["pixel_values"]  # Shape: [B, Num_Tiles, C, H, W]
+    input_ids = inputs["input_ids"]
+    attention_mask = inputs["attention_mask"]
     
-    batch_size = text_input_ids.shape[0]
-    num_tiles = pixel_values.shape[1]
+    batch_size, num_tiles, C, H, W = pixel_values.shape
 
-    torch.cuda.synchronize()
-    nvtx.range_push("TILE_BY_TILE_PREFILL_FLOW")
-    t0 = time.time()
+    # ---- 階段 1：Tile-by-Tile 影像特徵提取 (降低 Vision Tower Peak Memory) ----
+    tile_features_list = []
+    for t in range(num_tiles):
+        # 每次只讓 1 個 Tile 的 Activation 待在 VRAM，其餘 Tile 算完即釋放
+        single_tile = pixel_values[:, t:t+1, :, :, :].flatten(0, 1) # [B, C, H, W]
+        with torch.no_grad():
+            vision_outputs = model.model.vision_tower(single_tile, output_hidden_states=True)
+            selected_image_feature = vision_outputs.hidden_states[-2] # 依 LLaVA 常規取倒數第二層
+            # 這是該 Tile 產生的實際視覺 Tokens (例如 576 tokens)
+            tile_features = model.model.multi_modal_projector(selected_image_feature)
+            tile_features_list.append(tile_features) # 保持獨立，不 cat
 
-    with torch.no_grad():
-        # A. 取得基礎文字 Embedding
-        text_embeds = model.model.language_model.get_input_embeddings()(text_input_ids)
-        
-        # B. 依序處理每個 Tile (不保留、不拼接 KV Cache)
-        for tile_idx in range(num_tiles):
-            nvtx.range_push(f"Tile_Pipeline_Stage_{tile_idx}")
-            
-            # --- Stage 1: Vision Tower ---
-            single_pixel_value = pixel_values[:, tile_idx:tile_idx+1, :, :, :]
-            single_pixel_value = single_pixel_value.flatten(0, 1) 
-            vision_outputs = model.model.vision_tower(single_pixel_value, output_hidden_states=True)
-            selected_image_feature = vision_outputs.hidden_states[-2]
-            
-            # --- Stage 2: Projector ---
-            image_features = model.model.multi_modal_projector(selected_image_feature)
+    # 將所有 Tile 特徵在 feature 維度水平拼接
+    # 注意：這裡拼接的只是 Feature 級別（通常幾百個 tokens * 25），
+    # 相比 LLM 的 Activation 矩陣，這點記憶體極小（約百餘 MB），不會造成 Peak VRAM 爆炸。
+    all_image_features = torch.cat(tile_features_list, dim=1) # Shape: [B, Total_Image_Tokens, Hidden_Dim]
 
-            # --- Stage 3: Incremental LLM Prefill ---
-            # 說明：這是一個硬體資源消耗的近似測試。我們將文字與第一個 Tile 拼接，後續只增量輸入 Tile 特徵。
-            # 這樣能完美模擬 Chunked 計算時的 Memory 與 Compute 負載。
-            if tile_idx == 0:
-                current_inputs_embeds = torch.cat([text_embeds, image_features], dim=1)
-            else:
-                current_inputs_embeds = image_features
+    # ---- 階段 2：獲取純文字的基礎 Embeddings ----
+    text_embeds = model.model.language_model.get_input_embeddings()(input_ids)
+
+    # 找出哪些位置是 <image> 預留標籤
+    image_token_index = model.config.image_token_index
+    is_image_token = (input_ids == image_token_index)[0] # 取出 Batch 0 的布林陣列
+
+    # 這裡我們手動計算出最終完美的、順序正確的「虛擬完整序列」
+    # 但我們**不實例化**它，只用邏輯指標來做虛擬切片
+    
+    # 建立一個指引地圖：每個位置對應到 text_embeds 還是某個 tile_feature
+    # 由於 OneVision 有 Token Merging/Pooling，1個 image_token 會被擴展成 N 個特徵 tokens
+    # 我們需要動態追蹤：
+
+    # ---- 階段 3：真正的串流分塊與 LLM 遞迴 ----
+    past_key_values = None
+    curr_tile_idx = 0
+    
+    # 用來暫存目前分塊所需要的 Embeddings
+    past_key_values = None
+    llm_outputs = None
+    
+    pending_embeds_chunks = []
+    current_chunk_len = 0
+
+    # 遍歷原始 input_ids 的每一個位置
+    for i in range(input_ids.shape[1]):
+        if not is_image_token[i]:
+            # 1. 遇到普通文字：取單個 token embedding
+            current_embed = text_embeds[:, i:i+1, :]
+            pending_embeds_chunks.append(current_embed)
+            current_chunk_len += 1
+        else:
+            # 2. 遇到 <image> 標籤：直接把「整包拼接好的 25 個 Tiles 特徵」灌進去這個位置
+            pending_embeds_chunks.append(all_image_features)
+            current_chunk_len += all_image_features.shape[1]
+
+        # 3. 檢查目前收集的 Token 長度是否大於等於設定的 chunk_size
+        if current_chunk_len >= chunk_size:
+            # 拼出當前分塊
+            mini_chunk_embeds = torch.cat(pending_embeds_chunks, dim=1)
             
-            # 💡 關鍵點：強制將 use_cache 設為 False 
-            # 阻斷 Hugging Face 底層動態分配與拼接帶來的記憶體垃圾碎片
+            with torch.no_grad():
+                llm_outputs = model.model.language_model(
+                    inputs_embeds=mini_chunk_embeds,
+                    past_key_values=past_key_values,
+                    use_cache=True,
+                    return_dict=True
+                )
+                past_key_values = llm_outputs.past_key_values
+            
+            # 清空暫存，立刻釋放這批小張量的 Activation 記憶體
+            pending_embeds_chunks = []
+            current_chunk_len = 0
+
+    # ---- 階段 4：處理最後剩餘不滿 chunk_size 的尾巴 ----
+    if len(pending_embeds_chunks) > 0:
+        mini_chunk_embeds = torch.cat(pending_embeds_chunks, dim=1)
+        with torch.no_grad():
             llm_outputs = model.model.language_model(
-                inputs_embeds=current_inputs_embeds,
-                past_key_values=None,
-                use_cache=False,
+                inputs_embeds=mini_chunk_embeds,
+                past_key_values=past_key_values,
+                use_cache=True,
                 return_dict=True
             )
-            
-            nvtx.range_pop() # Tile_Pipeline_Stage
+            past_key_values = llm_outputs.past_key_values
 
-        # C. 模擬輸出特徵提取
-        last_hidden_state = llm_outputs.last_hidden_state[:, -1, :]
-        if hasattr(model, "lm_head"):
-            last_tile_logits = model.lm_head(last_hidden_state)
-        else:
-            last_tile_logits = model.language_model.lm_head(last_hidden_state)
-
-        # 3. 找出機率最大的 Token ID
-        next_token_id = torch.argmax(last_tile_logits, dim=-1)
-
-    torch.cuda.synchronize()
-    nvtx.range_pop() # TILE_BY_TILE_PREFILL_FLOW
-    t1 = time.time()
-    
-    return t1 - t0, next_token_id
+    return llm_outputs, past_key_values
 
 
 def main():
@@ -203,7 +233,7 @@ def main():
             with torch.no_grad():
                 _ = model.generate(**inputs, max_new_tokens=1, pad_token_id=processor.tokenizer.eos_token_id)
         else:
-            _ = run_chunked_prefill_profiling(model, inputs)
+            _, _ = run_chunked_prefill(model, inputs)
     
     nvtx.range_pop()
     torch.cuda.synchronize()
@@ -217,14 +247,16 @@ def main():
         torch.cuda.synchronize()
         nvtx.range_push(f"INFER_ITER_{it}")
         
+        t0 = time.time()
         if args.method == "baseline":
-            t0 = time.time()
             with torch.no_grad():
                 generated_ids = model.generate(**inputs, max_new_tokens=MAX_NEW_TOKENS, pad_token_id=processor.tokenizer.eos_token_id)
             torch.cuda.synchronize()
-            elapsed = time.time() - t0
+            
         else:
-            elapsed, next_token_id = run_chunked_prefill_profiling(model, inputs)
+            llm_outputs, past_key_values = run_chunked_prefill(model, inputs)
+        
+        elapsed = time.time() - t0
             
         nvtx.range_pop()
         times.append(elapsed)
