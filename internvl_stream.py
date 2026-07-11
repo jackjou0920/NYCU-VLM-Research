@@ -286,7 +286,7 @@ def encode_tile(model, tile_pixel_values: torch.Tensor, dtype) -> torch.Tensor:
 # Online KV 主函式
 # ──────────────────────────────────────────────────────────────────────────────
 
-def run_internvl_online_kv_stream_dynamic(
+def run_internvl_online_kv_stream(
     model,
     tokenizer,
     pixel_values: torch.Tensor,     # [N_tiles, 3, 448, 448]
@@ -484,7 +484,7 @@ def run_internvl_online_kv_stream_dynamic(
     return answer
 
 
-def run_internvl_online_kv_stream(
+def run_internvl_online_kv_stream_static(
     model,
     tokenizer,
     pixel_values: torch.Tensor,     # [num_image_tiles, 3, 448, 448]
@@ -694,7 +694,7 @@ def main():
     print(f"Peak CUDA alloc: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
     # ── 4. Online KV Pipeline ──
-    # answer = run_internvl_online_kv_stream_dynamic(
+    # answer = run_internvl_online_kv_stream(
     #     model=model,
     #     tokenizer=tokenizer,
     #     pixel_values=pixel_values,
@@ -705,7 +705,7 @@ def main():
     # )
 
     # model.language_model.config._attn_implementation = "sdpa"
-    # answer = run_internvl_online_kv_stream(
+    # answer = run_internvl_online_kv_stream_static(
     #     model=model,
     #     tokenizer=tokenizer,
     #     pixel_values=pixel_values,
