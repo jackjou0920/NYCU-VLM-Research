@@ -153,32 +153,37 @@ def build_model(
 # 標準 generate 參考路徑（用於正確性比較）
 # ──────────────────────────────────────────────────────────────────────────────
 
-def generate_answer_standard(model, tokenizer, pixel_values: torch.Tensor, question: str):
-    """走官方 model.chat() 路徑，作為 Online KV 的比對 baseline。"""
-    generation_config = dict(max_new_tokens=MAX_NEW_TOKENS, do_sample=False)
-    # img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
-    # model.img_context_token_id = img_context_token_id
-    # with torch.no_grad():
-    #     response, history = model.chat(
-    #         tokenizer,
-    #         pixel_values.to(DEVICE, dtype=model.dtype),
-    #         question,
-    #         generation_config,
-    #         return_history=True,
-    #     )
-    
-    # single-image multi-round conversation (单图多轮对话)
-    question = f'<image>\n{question}'
-    response, history = model.chat(
-        tokenizer, 
-        pixel_values.to(DEVICE, dtype=model.dtype), 
-        question, 
-        generation_config, 
-        history=None, 
-        return_history=True
-    )
+def generate_answer_standard(model, tokenizer, pixel_values: torch.Tensor, question: str, batch_size: int):
+    """走官方 model.chat() / model.batch_chat() 路徑，把同一張圖的 pixel_values 複製 batch_size 次一起餵進去。"""
 
-    return response
+    generation_config = dict(max_new_tokens=MAX_NEW_TOKENS, do_sample=False)
+    pixel_values = pixel_values.to(DEVICE, dtype=model.dtype)
+
+    # 同一張圖複製 batch_size 份，沿 batch 維度接在一起
+    num_patches_list = [pixel_values.shape[0]] * batch_size
+    pixel_values_batch = pixel_values.repeat(batch_size, 1, 1, 1)
+
+    questions = [f'<image>\n{question}'] * batch_size
+    responses = model.batch_chat(
+        tokenizer,
+        pixel_values_batch,
+        num_patches_list=num_patches_list,
+        questions=questions,
+        generation_config=generation_config,
+    )
+    
+    # # single-image multi-round conversation (单图多轮对话)
+    # question = f'<image>\n{question}'
+    # response, history = model.chat(
+    #     tokenizer, 
+    #     pixel_values.to(DEVICE, dtype=model.dtype), 
+    #     question, 
+    #     generation_config, 
+    #     history=None, 
+    #     return_history=True
+    # )
+
+    return responses
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -665,6 +670,7 @@ def main():
     parser.add_argument("--max_num",     type=int, default=48,  help="max dynamic tiles")
     parser.add_argument("--vit_batch",   type=int, default=4,   help="ViT micro-batch size")
     parser.add_argument("--chunk_size",  type=int, default=1024, help="LLM chunked-prefill size")
+    parser.add_argument("--batch_size",  type=int, default=1,   help="Image batch size")
     args = parser.parse_args()
 
     image = "4000x6000.jpg"
@@ -684,13 +690,13 @@ def main():
 
     # ── 2. 影像前處理 ──
     pixel_values = load_image_tiles(image, input_size=448, max_num=args.max_num)
-    print(f"Image loaded, pixel_values={pixel_values.shape}")
+    print(f"Image loaded, pixel_values={pixel_values.shape}, batch_size={args.batch_size}")
 
-    # ── 3. (可選) 標準 generate baseline ──
-    print("\n[Baseline] Running standard model.chat() ...")
-    ref_answer = generate_answer_standard(model, tokenizer, pixel_values, question)
-    print("\n[Baseline Answer]")
-    print(ref_answer)
+    # ── 3. 批次 generate（同一張圖重複 batch_size 次） ──
+    print(f"\n[Baseline] Running batch_chat() ...")
+    ref_answers = generate_answer_standard(model, tokenizer, pixel_values, question, args.batch_size)
+    print("\n[Baseline Answer] The first response:")
+    print(ref_answers[0])
     print(f"Peak CUDA alloc: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
     # ── 4. Online KV Pipeline ──
