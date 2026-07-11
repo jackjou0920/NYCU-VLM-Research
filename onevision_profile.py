@@ -26,7 +26,7 @@ def build_model(model_name="llava-hf/llava-onevision-qwen2-7b-ov-hf", dtype=torc
         model_name,
         dtype=dtype,
         device_map=device_map,
-        # attn_implementation="eager"  # 強制關閉 FlashAttention, attn_implementation="flash_attention_2"
+        attn_implementation="eager"  # 強制關閉 FlashAttention, attn_implementation="flash_attention_2"
     ).to(DEVICE)
 
     model.eval()
@@ -90,6 +90,7 @@ def run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dt
         # ==========================================
         # Step 2: ViT 微批次串流 (粉碎 Activation 峰值)
         # ==========================================
+        nvtx.range_push(f"ViT_Micro_batching")
         print("\n[Step 2] ViT Micro-batching ...")
         flat_pixels = pixel_values.view(B * N, C, H, W) # [25, 3, 384, 384]
 
@@ -126,10 +127,12 @@ def run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dt
         # 加回 Batch 維度 -> [1, 25, 729, 3584]
         image_features = image_features.unsqueeze(0)
         print(f"-> Completed ViT output: image_features shape = {image_features.shape}")
+        nvtx.range_pop()
 
         # ==========================================
         # Step 3: 特徵空間重組與壓縮 (pack_image_features)
         # ==========================================
+        nvtx.range_push(f"Pack_Image_Features")
         print("\n[Step 3] Execute pack_image_features (spatial reconstruction and bilinear interpolation) ...")
         # 呼叫 HF 模型內建的 pack_image_features 函數
         # 這一步會進行：Reshape(大畫布) -> Unpad(去邊界) -> Interpolate(下採樣) -> 加入 \n
@@ -143,12 +146,14 @@ def run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dt
         del packed_output
     
         print(f"-> Compression complete, final packed_image_features = {packed_image_features.shape} (about {total_vision_tokens} tokens)")
+        nvtx.range_pop()
     
     print(f"CUDA memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
 
     # ==========================================
     # Step 4: LLM Chunked KV 增量建構 (真正零峰值 Prefill)
     # ==========================================
+    nvtx.range_push(f"LLM_Chunked_Prefill")
     print(f"\n[Step 4] Start LLM Chunked Prefill (Chunk Size: {chunk_size}) ...")
 
     # 這裡的 prompt 就是你在前面定義的那個 chat_template 字串
@@ -207,7 +212,7 @@ def run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dt
         del vision_chunk, outputs, attention_mask
 
         torch.cuda.empty_cache()
-        torch.cuda.reset_peak_memory_stats()  # 每 chunk 後重置，監控下一個 chunk
+        # torch.cuda.reset_peak_memory_stats()  # 每 chunk 後重置，監控下一個 chunk
         mem_alloc = torch.cuda.memory_allocated() / 1e9
         mem_peak = torch.cuda.max_memory_allocated() / 1e9
         print(
@@ -218,11 +223,12 @@ def run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dt
     past_seq_len = past_key_values.get_seq_length()
     print("-> The visual key-value cache has been completed")
     print(f"CUDA memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
-
+    nvtx.range_pop()
     
     # ==========================================
     # Step 5: 文字 Prefill 與手動流式解碼 (Decode)
     # ==========================================
+    nvtx.range_push(f"Decode_Loop")
     print("\n[Step 5] Inject the second half of the text and initiate decoding ...")
 
     # Step 5 prefill: 把後半段的文字轉成 Token
@@ -300,13 +306,13 @@ def run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dt
             torch.cuda.empty_cache()
         
     print("\n" + "="*50)
+    nvtx.range_pop()
+
     return clean_answer(messages, answer)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--warmup", type=int, default=1, help="warmup iterations to run before profiling region")
-    parser.add_argument("--repeat", type=int, default=1, help="how many times to repeat profiled region (avg)")
     parser.add_argument("--batch_size", type=int, default=1, help="batch size to test scaling")
     args = parser.parse_args()
 
@@ -349,26 +355,20 @@ def main():
     # torch.cuda.synchronize()
     # nvtx.range_pop()
 
-    # Profile target region with NVTX ranges
-    times = []
-    for it in range(args.repeat):
-        nvtx.range_push(f"INFER_{it}")
+    nvtx.range_push(f"INFERENCE")
 
-        torch.cuda.synchronize()
-        t0 = time.time()
+    torch.cuda.synchronize()
+    t0 = time.time()
 
-        _ = generate_answer(model, processor, inputs, messages)
+    # _ = generate_answer(model, processor, inputs, messages)
 
-        # _ = run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dtype=dtype)
+    _ = run_online_vision_kv_pipeline(model, processor, inputs, messages, prompt, dtype=dtype)
 
-        nvtx.range_pop()
+    nvtx.range_pop()
 
-        torch.cuda.synchronize()
-        t1 = time.time()
-        times.append(t1 - t0)
-        print(f"Run iter {it}: {times[-1]*1000:.2f} ms")
-
-    print(f"Average profiled region time over {args.repeat} runs: {sum(times)/len(times)*1000:.2f} ms")
+    torch.cuda.synchronize()
+    elapsed = time.time() - t0
+    print(f"\nTotal time: {elapsed:.2f} s")
 
 
 if __name__ == "__main__":

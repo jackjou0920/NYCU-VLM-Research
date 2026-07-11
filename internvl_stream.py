@@ -1,30 +1,36 @@
+
 """
 InternVL3.5-8B Online KV Construction Pipeline
-================================================
-概念與原始 LlavaOnevision 版本完全相同：
-  Step 1 : 影像前處理 (Dynamic High-Res tiles)
-  Step 2 : ViT 微批次串流 (分批 encode，避免 OOM)
-  Step 3 : pixel_shuffle + MLP Projector (extract_feature)
-  Step 4 : LLM Chunked KV 增量建構 (真正零峰值 Prefill)
-  Step 5 : 文字後半 Prefill + 自迴歸解碼
-
-InternVL3.5 架構差異摘要（對比 LlavaOnevision）：
-  - ViT : InternViT-300M，tile 大小 448×448，每 tile → 1024 個 patch token
-  - Projector : pixel_shuffle (downsample_ratio=0.5) + MLP (mlp1)
-                每 tile 最終壓縮為 256 個 LLM token
-  - LLM : Qwen2ForCausalLM (InternVL3.5-8B 使用 Qwen3-8B-Base)
-  - 模型透過 trust_remote_code=True 從 HF 載入
-  - 圖像 token 佔位符為 <IMG_CONTEXT>，以 <img>...</img> 包圍
-  - 沒有 LlavaOnevision 的 pack_image_features / unpad；
-    各 tile 的 vision token 直接串接後注入 LLM
+================================================================
+與「分階段版」(Step2 全部做完 → Step3 全部做完 → Step4 才開始) 的差異：
+ 
+  分階段版：
+      [ViT tile1..N] → [Projector tile1..N] → [LLM chunked prefill]
+      三個階段的 activation 峰值是「疊加」的（Step3 開始時 Step2 的中間產物還留著）
+ 
+  本版（per-tile 串流）：
+      for tile in tiles:
+          ViT(tile) → Projector(tile) → 立刻丟進 LLM 做 chunked prefill
+      三個階段的峰值是「交錯」的：同一時間只有「當前這個 tile」的 ViT/Projector
+      activation + LLM 的 KV cache，不會有「全部 tile 的 image_features 同時存在」
+      這個量級的記憶體佔用。
+ 
+可行性前提（已在前一輪確認）：
+  InternVL 沒有 LLaVA-OneVision 的 pack_image_features（跨 tile 全局空間重組），
+  每個 tile 經 pixel_shuffle + mlp1 後就是獨立的 256 個 token，tile 間互不依賴，
+  因此可以「算完一個 tile 就丟進 LLM」，不需要等全部 tile 的 ViT 都跑完。
+ 
+LLM chunk 的對齊規則：
+  每個 tile 固定產生 num_image_token（通常 256）個 vision token。
+  為了讓「LLM chunk 邊界」盡量對齊「tile 邊界」(避免每個 tile 都觸發一次 LLM forward
+  造成 launch overhead 過高)，本版採用「tile 緩衝區」設計：
+      把連續幾個 tile 的 projector 輸出先暫存，湊滿 chunk_size 再丟進 LLM。
+  這樣依然是串流（不需等全部 tile 跑完 ViT），但 LLM forward 次數可控。
 """
 
 import time
 import argparse
-import warnings
 import torch
-import numpy as np
-import torch.cuda.nvtx as nvtx
 from PIL import Image
 from accelerate import Accelerator
 from torchvision import transforms as T
@@ -43,14 +49,12 @@ IMAGENET_STD  = (0.229, 0.224, 0.225)
 
 
 def build_transform(input_size=448):
-    MEAN, STD = IMAGENET_MEAN, IMAGENET_STD
-    transform = T.Compose([
-        T.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
+    return T.Compose([
+        T.Lambda(lambda img: img.convert("RGB") if img.mode != "RGB" else img),
         T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
         T.ToTensor(),
-        T.Normalize(mean=MEAN, std=STD)
+        T.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
     ])
-    return transform
 
 
 def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
@@ -113,7 +117,7 @@ def load_image_tiles(image_path, input_size=448, max_num=12):
     transform = build_transform(input_size)
     tiles = dynamic_preprocess(image, image_size=input_size, max_num=max_num, use_thumbnail=True)
     pixel_values = torch.stack([transform(t) for t in tiles])
-    return pixel_values, len(tiles)
+    return pixel_values
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -137,41 +141,13 @@ def build_model(
         model_name,
         dtype=dtype,
         trust_remote_code=True,
-        use_flash_attn=False,
+        use_flash_attn=True,  # 關閉 Flash Attention 以降低記憶體碎片（可改 True 加速）
         low_cpu_mem_usage=True,
         device_map=device_map
     ).to(DEVICE).eval()
 
     return tokenizer, model
 
-# ──────────────────────────────────────────────────────────────────────────────
-# 標準 generate 參考路徑（用於正確性比較）
-# ──────────────────────────────────────────────────────────────────────────────
-
-def generate_answer_standard(model, tokenizer, pixel_values: torch.Tensor, question: str):
-    """走官方 model.chat() 路徑，作為 Online KV 的比對 baseline。"""
-    generation_config = dict(max_new_tokens=MAX_NEW_TOKENS, do_sample=False)
-
-    question = f'<image>\n{question}'
-    response, history = model.chat(
-        tokenizer, 
-        pixel_values.to(DEVICE, dtype=model.dtype), 
-        question, 
-        generation_config, 
-        history=None, 
-        return_history=True
-    )
-
-    return response
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# 工具函式
-# ──────────────────────────────────────────────────────────────────────────────
-
-IMG_START_TOKEN   = "<img>"
-IMG_END_TOKEN     = "</img>"
-IMG_CONTEXT_TOKEN = "<IMG_CONTEXT>"
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 標準 generate 參考路徑（用於正確性比較）
@@ -206,10 +182,14 @@ def generate_answer_standard(model, tokenizer, pixel_values: torch.Tensor, quest
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 工具函式
+# Prompt 工具
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_prompt(tokenizer, model, question: str, num_patches: int) -> str:
+IMG_START_TOKEN   = "<img>"
+IMG_END_TOKEN     = "</img>"
+IMG_CONTEXT_TOKEN = "<IMG_CONTEXT>"
+
+def build_prompt(tokenizer, model, question: str, num_image_tiles: int) -> str:
     """
     不依賴 internvl 套件的簡化版本：直接用 Qwen3 chat template。
     InternVL3.5-8B (Qwen3 backbone) 的 system message 格式：
@@ -219,7 +199,7 @@ def build_prompt(tokenizer, model, question: str, num_patches: int) -> str:
     """
     image_tokens = (
         IMG_START_TOKEN
-        + IMG_CONTEXT_TOKEN * model.num_image_token * num_patches
+        + IMG_CONTEXT_TOKEN * model.num_image_token * num_image_tiles
         + IMG_END_TOKEN
     )
     content = image_tokens + "\n" + question
@@ -233,14 +213,21 @@ def build_prompt(tokenizer, model, question: str, num_patches: int) -> str:
     )
     return prompt
 
-
+ 
 def split_prompt_at_vision(prompt: str, tokenizer):
     """
     把 prompt 在 <img>…</img> 區段切成三份：
         text_before : <img> 之前的文字
         vision_span : 整個 <img>...</img> 字串（僅用於計算，不 tokenize）
         text_after  : </img> 之後的文字
+
+    e.g.
+    <|im_start|>user
+    <img><IMG_CONTEXT><IMG_CONTEXT><IMG_CONTEXT><IMG_CONTEXT><IMG_CONTEXT> ..... <IMG_CONTEXT></img>
+    What is shown in this image in extreme detail?<|im_end|>
+    <|im_start|>assistant
     """
+    # print(f"Imput Prompt:\n{prompt}")
     img_start = prompt.find(IMG_START_TOKEN)
     img_end   = prompt.find(IMG_END_TOKEN) + len(IMG_END_TOKEN)
 
@@ -299,290 +286,31 @@ def encode_tile(model, tile_pixel_values: torch.Tensor, dtype) -> torch.Tensor:
 # Online KV 主函式
 # ──────────────────────────────────────────────────────────────────────────────
 
-def run_internvl_online_kv_pipeline(
-    model,
-    tokenizer,
-    pixel_values: torch.Tensor,     # [N_tiles, 3, 448, 448]
-    num_patches: int,
-    question: str,
-    dtype: torch.dtype = torch.bfloat16,
-    vit_batch: int = 4,             # 每次送入 ViT 的 tile 數
-    chunk_size: int = 1024,          # LLM Chunked Prefill 的 token 數
-):
-    """
-    InternVL3.5 Online KV Construction Pipeline
-
-    架構對應關係（InternVL vs LlavaOnevision）：
-      model.vision_model         ↔  model.model.vision_tower
-      model.mlp1                 ↔  model.model.multi_modal_projector
-      pixel_shuffle (內嵌在 extract_feature) ↔ pack_image_features
-      model.language_model       ↔  model.model.language_model
-    """
-    # ──────────────────────────────────────────────────────────────────
-    # Step 1 : 建構 Prompt，設定 img_context_token_id
-    # ──────────────────────────────────────────────────────────────────
-    print("\n[Step 1] Build prompt ...")
-
-    # img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
-    # model.img_context_token_id = img_context_token_id
-
-    prompt = build_prompt(tokenizer, model, question, num_patches)
-    print(f"  ├─> num_image_token per tile : {model.num_image_token}")
-    print(f"  ├─> num_patches              : {num_patches}")
-    print(f"  └─> total vision tokens      : {model.num_image_token * num_patches}")
-
-    text_before, text_after = split_prompt_at_vision(prompt, tokenizer)
-    # print(f"text_before: {text_before}")
-    # print(f"text_after: {text_after}")
-
-    # ──────────────────────────────────────────────────────────────────
-    # Step 2 : ViT 微批次串流
-    #   InternVL : vision_model 輸出 hidden_states[select_layer]
-    #              → 去掉 CLS token ([:, 1:, :])
-    # ──────────────────────────────────────────────────────────────────
-    nvtx.range_push(f"ViT_Micro_batching")
-    print("\n[Step 2] ViT Micro-batching ...")
-    pixel_values = pixel_values.to(DEVICE, dtype=dtype)
-    N_tiles = pixel_values.shape[0]     # e.g. 13
-
-    vit_feature_list = []
-    select_layer = model.select_layer   # 通常 = -1 或某個負數
-
-    with torch.no_grad():
-        for i in range(0, N_tiles, vit_batch):
-            chunk = pixel_values[i : i + vit_batch]
-
-            if select_layer == -1:
-                vit_out = model.vision_model(
-                    pixel_values=chunk,
-                    output_hidden_states=False,
-                    return_dict=True,
-                )
-                feats = vit_out.last_hidden_state     # [B, 1+HW, D]
-            else:
-                vit_out = model.vision_model(
-                    pixel_values=chunk,
-                    output_hidden_states=True,
-                    return_dict=True,
-                )
-                feats = vit_out.hidden_states[select_layer]  # [B, 1+HW, D]
-
-            feats = feats[:, 1:, :]   # 去掉 CLS token → [B, HW, D]
-            vit_feature_list.append(feats)
-
-            del vit_out, chunk
-            torch.cuda.empty_cache()
-
-            mem = torch.cuda.memory_allocated() / 1e9
-            print(f"  ├─> ViT chunk {i}~{min(i+vit_batch, N_tiles)} done, alloc={mem:.2f} GB")
-
-    vit_embeds = torch.cat(vit_feature_list, dim=0)  # [N_tiles, HW, D_vit]
-    print(f"  └─> vit_embeds shape = {vit_embeds.shape}")
-    nvtx.range_pop()
-
-    # ──────────────────────────────────────────────────────────────────
-    # Step 3 : pixel_shuffle + MLP Projector
-    #   InternVL 的 extract_feature 邏輯：
-    #     vit_embeds → reshape → pixel_shuffle → reshape → mlp1
-    #   等價於把每個 tile 的 1024 個 patch token 壓縮到 256 個
-    # ──────────────────────────────────────────────────────────────────
-    nvtx.range_push(f"Pixel_Shuffle")
-    print("\n[Step 3] pixel_shuffle + MLP Projector ...")
-
-    with torch.no_grad():
-        h = w = int(vit_embeds.shape[1] ** 0.5)   # 32 for 448px tile
-        vit_embeds_hw = vit_embeds.reshape(N_tiles, h, w, -1)
-        vit_shuffled  = model.pixel_shuffle(vit_embeds_hw, scale_factor=model.downsample_ratio)
-        # pixel_shuffle 後 shape: [N_tiles, h/2, w/2, D_vit*4]
-        vit_shuffled  = vit_shuffled.reshape(N_tiles, -1, vit_shuffled.shape[-1])
-        image_features = model.mlp1(vit_shuffled)  # [N_tiles, 256, D_llm]
-
-    # 攤平成一長串 vision token
-    total_vision_tokens = N_tiles * image_features.shape[1]  # N_tiles × 256
-    packed_image_features = image_features.reshape(1, total_vision_tokens, -1)
-    print(f"  └─> packed_image_features = {packed_image_features.shape}")
-    print(f"      (total_vision_tokens = {total_vision_tokens})")
-
-    mem = torch.cuda.memory_allocated() / 1e9
-    print(f"CUDA memory allocated: {mem:.2f} GB")
-    nvtx.range_pop()
-
-    # ──────────────────────────────────────────────────────────────────
-    # Step 4 : LLM Chunked KV 增量建構
-    # ──────────────────────────────────────────────────────────────────
-    nvtx.range_push(f"LLM_Chunked_Prefill")
-    print(f"\n[Step 4] Chunked KV Prefill (chunk_size={chunk_size}) ...")
-
-    past_key_values = None
-
-    # 4a. 注入 <img> 之前的文字
-    if text_before:
-        ids_before = tokenizer(text_before, return_tensors="pt").to(DEVICE)
-        embeds_before = model.language_model.get_input_embeddings()(ids_before.input_ids)
-        attn_mask = torch.ones((1, embeds_before.shape[1]), dtype=torch.long, device=DEVICE)
-
-        with torch.no_grad():
-            out = model.language_model(
-                inputs_embeds=embeds_before,
-                attention_mask=attn_mask,
-                past_key_values=past_key_values,
-                use_cache=True,
-                return_dict=True,
-            )
-        past_key_values = out.past_key_values
-        del out, embeds_before, attn_mask
-        torch.cuda.empty_cache()
-
-        mem = torch.cuda.memory_allocated() / 1e9
-        print(f"  ├─> text_before injected, alloc={mem:.2f} GB")
-    
-    # 4b. 分批注入 vision token
-    for i in range(0, total_vision_tokens, chunk_size):
-        chunk_end   = min(i + chunk_size, total_vision_tokens)
-        vision_chunk = packed_image_features[:, i:chunk_end, :]
-        chunk_len    = chunk_end - i
-
-        past_seq_len = 0 if past_key_values is None else past_key_values.get_seq_length()
-        attn_mask    = torch.ones((1, past_seq_len + chunk_len), dtype=torch.long, device=DEVICE)
-        position_ids = torch.arange(
-            past_seq_len, past_seq_len + chunk_len, dtype=torch.long, device=DEVICE
-        ).unsqueeze(0)
-
-        with torch.no_grad():
-            out = model.language_model(
-                inputs_embeds=vision_chunk,
-                attention_mask=attn_mask,
-                position_ids=position_ids,
-                past_key_values=past_key_values,
-                use_cache=True,
-                return_dict=True,
-            )
-        past_key_values = out.past_key_values
-        del out, vision_chunk, attn_mask, position_ids
-        torch.cuda.empty_cache()
-
-        mem = torch.cuda.memory_allocated() / 1e9
-        print(f"  ├─> vision chunk {i:05d}~{chunk_end:05d}/{total_vision_tokens}, alloc={mem:.2f} GB")
-
-    print("  └─> Vision KV cache built")
-    mem = torch.cuda.memory_allocated() / 1e9
-    print(f"CUDA memory allocated: {mem:.2f} GB")
-    nvtx.range_pop()
-
-    # ──────────────────────────────────────────────────────────────────
-    # Step 5 : 文字後半 Prefill + 自迴歸解碼
-    # ──────────────────────────────────────────────────────────────────
-    nvtx.range_push(f"Decode_Loop")
-    print("\n[Step 5] Text Prefill + Autoregressive Decode ...")
-    ids_after = tokenizer(text_after, return_tensors="pt").to(DEVICE)
-    ids_after_ids = ids_after.input_ids
-    text_len = ids_after_ids.shape[1]
-
-    past_seq_len = past_key_values.get_seq_length()
-    attn_mask    = torch.ones((1, past_seq_len + text_len), dtype=torch.long, device=DEVICE)
-    position_ids = torch.arange(
-        past_seq_len, past_seq_len + text_len, dtype=torch.long, device=DEVICE
-    ).unsqueeze(0)
-
-    with torch.no_grad():
-        out = model.language_model(
-            input_ids=ids_after_ids,
-            attention_mask=attn_mask,
-            position_ids=position_ids,
-            past_key_values=past_key_values,
-            use_cache=True,
-            return_dict=True,
-        )
-
-    past_key_values    = out.past_key_values
-    next_token_logits  = out.logits[:, -1, :]
-    next_token         = torch.argmax(next_token_logits, dim=-1).unsqueeze(-1)
-    del out, attn_mask, position_ids
-
-    eos_token_id = tokenizer.eos_token_id
-
-    print("=" * 60)
-    answer = tokenizer.decode(next_token[0])
-
-    # 自迴歸解碼迴圈
-    for step in range(MAX_NEW_TOKENS):
-        past_seq_len = past_key_values.get_seq_length()
-        attn_mask    = torch.ones((1, past_seq_len + 1), dtype=torch.long, device=DEVICE)
-        position_ids = torch.tensor([[past_seq_len]], dtype=torch.long, device=DEVICE)
-
-        with torch.no_grad():
-            out = model.language_model(
-                input_ids=next_token,
-                attention_mask=attn_mask,
-                position_ids=position_ids,
-                past_key_values=past_key_values,
-                use_cache=True,
-                return_dict=True,
-            )
-
-        past_key_values   = out.past_key_values
-        next_token_logits = out.logits[:, -1, :]
-        next_token        = torch.argmax(next_token_logits, dim=-1).unsqueeze(-1)
-
-        token_id = next_token.item()
-        if token_id == eos_token_id:
-            del out, next_token_logits, attn_mask, position_ids
-            break
-
-        token   = tokenizer.decode([token_id])
-        answer += token
-
-        del out, next_token_logits, attn_mask, position_ids
-
-        if step % 50 == 0:
-            torch.cuda.empty_cache()
-
-    print("=" * 60)
-    nvtx.range_pop()
-
-    return answer
-
-
 def run_internvl_online_kv_stream_dynamic(
     model,
     tokenizer,
     pixel_values: torch.Tensor,     # [N_tiles, 3, 448, 448]
-    num_patches: int,
     question: str,
     dtype: torch.dtype = torch.bfloat16,
     vit_batch: int = 4,             # 每次送入 ViT 的 tile 數
     chunk_size: int = 1024,          # LLM Chunked Prefill 的 token 數
 ):
-    """
-    InternVL3.5 真‧串流 Online KV Pipeline
- 
-    迴圈邏輯：
-      buffer = []
-      for tile_batch in tiles (每批 vit_batch 個):
-          tile_tokens = encode_tile(tile_batch)        # ViT + projector
-          buffer.append(tile_tokens)
-          if buffer 累積的 token 數 >= chunk_size:
-              拼接 buffer → 做一次 LLM chunked prefill → 清空 buffer
-      若迴圈結束後 buffer 還有剩（不足 chunk_size），補做最後一次 prefill
- 
-    這樣「ViT 算 tile N+1」與「LLM 消化 tile N 的 buffer」在時間軸上是相鄰、
-    交錯執行的，不會有「全部 tile 的 image_features 同時掛在顯存上」的尖峰。
-    """
     # ──────────────────────────────────────────────────────────────────
     # Step 1 : 建構 Prompt，設定 img_context_token_id
     # ──────────────────────────────────────────────────────────────────
+    num_image_tiles = pixel_values.shape[0]
+    total_vision_tokens = model.num_image_token * num_image_tiles
+    
     print("\n[Step 1] Build prompt ...")
-    prompt = build_prompt(tokenizer, model, question, num_patches)
+    prompt = build_prompt(tokenizer, model, question, num_image_tiles)
     text_before, text_after = split_prompt_at_vision(prompt, tokenizer)
     # print(f"text_before: {text_before}")
     # print(f"text_after: {text_after}")
 
-    total_vision_tokens = model.num_image_token * num_patches
     print(f"  ├─> num_image_token per tile : {model.num_image_token}")
-    print(f"  ├─> num_patches              : {num_patches}")
+    print(f"  ├─> num_image_tiles          : {num_image_tiles}")
     print(f"  └─> total vision tokens      : {total_vision_tokens}")
 
-    N_tiles = pixel_values.shape[0]
     past_key_values = None
 
     # ──────────────────────────────────────────────────────────────
@@ -605,10 +333,10 @@ def run_internvl_online_kv_stream_dynamic(
             )
         past_key_values = out.past_key_values
         del out, embeds_before, attn_mask, ids_before
-        # torch.cuda.empty_cache()
+        torch.cuda.empty_cache()
         
-        mem = torch.cuda.memory_allocated() / 1e9
-        print(f"  ├─> text_before injected, alloc={mem:.2f} GB")
+        mem = torch.cuda.max_memory_allocated() / 1e9
+        print(f"  ├─> text_before injected, peak alloc={mem:.2f} GB")
 
     # ──────────────────────────────────────────────────────────────
     # 核心串流迴圈：per-tile ViT → projector → 累積 buffer → 滿了就 LLM prefill
@@ -651,18 +379,18 @@ def run_internvl_online_kv_stream_dynamic(
         token_buffer = []
         buffered_token_count = 0
  
-        # torch.cuda.empty_cache()
+        torch.cuda.empty_cache()
         mem = torch.cuda.memory_allocated() / 1e9
         print(f"  ├─> [LLM flush] {tokens_done:05d}/{total_vision_tokens} vision tokens "
               f"injected, alloc={mem:.2f} GB")
 
-    for i in range(0, N_tiles, vit_batch):
+    for i in range(0, num_image_tiles, vit_batch):
         tile_chunk = pixel_values[i : i + vit_batch].to(DEVICE, dtype=dtype)
 
         # ── ViT + projector（單一小批 tile）──
         tile_tokens = encode_tile(model, tile_chunk, dtype=dtype)   # [B_tile, num_image_token, D_llm]
         del tile_chunk
-        # torch.cuda.empty_cache()
+        torch.cuda.empty_cache()
 
         # 攤平 batch 維度成序列維度： [B_tile, num_image_token, D] -> [1, B_tile*num_image_token, D]
         B_tile = tile_tokens.shape[0]
@@ -671,9 +399,9 @@ def run_internvl_online_kv_stream_dynamic(
         token_buffer.append(tile_tokens)
         buffered_token_count += tile_tokens.shape[1]
 
-        mem = torch.cuda.memory_allocated() / 1e9
-        print(f"  ├─> [ViT+Proj] tile {i}~{min(i+vit_batch, N_tiles)}/{N_tiles} done, "
-              f"buffered={buffered_token_count} tokens, alloc={mem:.2f} GB")
+        mem = torch.cuda.max_memory_allocated() / 1e9
+        print(f"  ├─> [ViT+Proj] tile {i}~{min(i+vit_batch, num_image_tiles)}/{num_image_tiles} done, "
+              f"buffered={buffered_token_count} tokens, peak alloc={mem:.2f} GB")
         
         # ── buffer 湊滿 chunk_size，立刻觸發 LLM chunked prefill ──
         if buffered_token_count >= chunk_size:
@@ -683,9 +411,9 @@ def run_internvl_online_kv_stream_dynamic(
     flush_buffer()
  
     print("  └─> Vision KV cache built (fully streamed)")
-    print(f"CUDA memory allocated: {torch.cuda.memory_allocated()/1e9:.2f} GB")
+    print(f"Peak CUDA memory allocated: {torch.cuda.memory_allocated()/1e9:.2f} GB")
 
-    past_seq_len = past_key_values.get_seq_length() if past_key_values else 0
+    past_seq_len = past_key_values.get_seq_length()
     
     # ──────────────────────────────────────────────────────────────
     # Step 5 : 文字後半 Prefill + 自迴歸解碼（與分階段版相同，無需串流化）
@@ -751,31 +479,31 @@ def run_internvl_online_kv_stream_dynamic(
  
     print("=" * 60)
     del past_key_values
-    # torch.cuda.empty_cache()
+    torch.cuda.empty_cache()
     
     return answer
+
 
 def run_internvl_online_kv_stream(
     model,
     tokenizer,
-    pixel_values: torch.Tensor,     # [N_tiles, 3, 448, 448]
-    num_patches: int,
+    pixel_values: torch.Tensor,     # [num_image_tiles, 3, 448, 448]
     question: str,
     dtype: torch.dtype = torch.bfloat16,
     vit_batch: int = 4,             # 每次送入 ViT 的 tile 數
     chunk_size: int = 1024,          # LLM Chunked Prefill 的 token 數
 ):
+    num_image_tiles = pixel_values.shape[0]
+    total_vision_tokens = model.num_image_token * num_image_tiles
+    
     print("\n[Step 1] Build prompt ...")
-    prompt = build_prompt(tokenizer, model, question, num_patches)
+    prompt = build_prompt(tokenizer, model, question, num_image_tiles)
     text_before, text_after = split_prompt_at_vision(prompt, tokenizer)
     # print(f"text_before: {text_before}")
     # print(f"text_after: {text_after}")
 
-    total_vision_tokens = model.num_image_token * num_patches
-    N_tiles = pixel_values.shape[0]
     print(f"  ├─> num_image_token per tile : {model.num_image_token}")
-    print(f"  ├─> num_patches              : {num_patches}")
-    print(f"  ├─> n_tiles                  : {N_tiles}")
+    print(f"  ├─> num_image_tiles          : {num_image_tiles}")
     print(f"  └─> total vision tokens      : {total_vision_tokens}")
 
     # ── 先 tokenize text_before / text_after，才能算出 max_cache_len ──
@@ -785,9 +513,9 @@ def run_internvl_online_kv_stream(
     len_before = ids_before.input_ids.shape[1] if ids_before is not None else 0
     len_after  = ids_after.input_ids.shape[1] if ids_after is not None else 0
     max_cache_len = len_before + total_vision_tokens + len_after + MAX_NEW_TOKENS + 8  # 留一點餘裕
-    print(f"len_before:    {len_before}")
-    print(f"len_after:     {len_after}")
-    print(f"max_cache_len: {max_cache_len}")
+    # print(f"len_before:    {len_before}")
+    # print(f"len_after:     {len_after}")
+    # print(f"max_cache_len: {max_cache_len}")
 
     # ── 關鍵改動：用 StaticCache 取代預設 DynamicCache ──
     past_key_values = StaticCache(
@@ -798,31 +526,30 @@ def run_internvl_online_kv_stream(
         dtype=dtype,
     )
 
-    # ★ 關鍵修正：全長 attention_mask，1 代表「這個位置已經寫入有效 KV」
+    # 關鍵修正：全長 attention_mask，1 代表「這個位置已經寫入有效 KV」
     full_attn_mask = torch.zeros((1, max_cache_len), dtype=torch.long, device=DEVICE)
-
-    # ★ 預先配置好 decode 階段會重複使用的固定大小 buffer，全部原地更新，不再逐步 new
+    # 預先配置好 decode 階段會重複使用的固定大小 buffer，全部原地更新，不再逐步 new
     cache_pos_buf   = torch.zeros((max_cache_len,), dtype=torch.long, device=DEVICE)
     position_scalar = torch.zeros((1, 1), dtype=torch.long, device=DEVICE)   # decode 用單 token position
     next_token_buf  = torch.zeros((1, 1), dtype=torch.long, device=DEVICE)   # decode 用單 token id
 
 
     def step_prefill(inputs_embeds=None, input_ids=None, n_tokens=None):
-        """給 prefill 用（text_before / vision chunk / text_after），這幾處呼叫次數少，維持原樣即可。"""
         nonlocal past_key_values, full_attn_mask
+
         start = past_key_values.get_seq_length()
         # 用切片視圖而非重新 arange，減少一次配置
         cache_pos_buf[start:start + n_tokens].copy_(
             torch.arange(start, start + n_tokens, device=DEVICE, dtype=torch.long)
         )
         cache_pos = cache_pos_buf[start:start + n_tokens]
-
         full_attn_mask[:, start:start + n_tokens] = 1
 
         kwargs = dict(
             past_key_values=past_key_values,
             cache_position=cache_pos,
             attention_mask=full_attn_mask,
+            # attention_mask=full_attn_mask[:, : start+n_tokens],
             use_cache=True,
             return_dict=True,
         )
@@ -841,7 +568,7 @@ def run_internvl_online_kv_stream(
         embeds_before = model.language_model.get_input_embeddings()(ids_before.input_ids)
         out = step_prefill(inputs_embeds=embeds_before, n_tokens=embeds_before.shape[1])
         del out, embeds_before
-        print(f"  ├─> text_before injected, alloc={torch.cuda.memory_allocated()/1e9:.2f} GB")
+        print(f"  ├─> text_before injected, peak alloc={torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
     token_buffer, buffered_token_count, tokens_done = [], 0, 0
 
@@ -862,10 +589,10 @@ def run_internvl_online_kv_stream(
         token_buffer.clear()
         buffered_token_count = 0
 
-        mem = torch.cuda.memory_allocated() / 1e9
-        print(f"  ├─> [LLM flush] {tokens_done:05d}/{total_vision_tokens} tokens, alloc={mem:.2f} GB")
+        mem = torch.cuda.max_memory_allocated() / 1e9
+        print(f"  ├─> [LLM flush] {tokens_done:05d}/{total_vision_tokens} tokens, peak alloc={mem:.2f} GB")
 
-    for i in range(0, N_tiles, vit_batch):
+    for i in range(0, num_image_tiles, vit_batch):
         tile_chunk = pixel_values[i:i + vit_batch].to(DEVICE, dtype=dtype)
         tile_tokens = encode_tile(model, tile_chunk, dtype=dtype)
         del tile_chunk
@@ -934,75 +661,67 @@ def run_internvl_online_kv_stream(
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--model_name",  type=str, default="OpenGVLab/InternVL3_5-8B")
     parser.add_argument("--max_num",     type=int, default=48,  help="max dynamic tiles")
     parser.add_argument("--vit_batch",   type=int, default=4,   help="ViT micro-batch size")
     parser.add_argument("--chunk_size",  type=int, default=1024, help="LLM chunked-prefill size")
-    parser.add_argument("--batch_size",  type=int, default=16, help="Inference batch size")
     args = parser.parse_args()
 
     image = "4000x6000.jpg"
     question = "What is shown in this image in extreme detail?"
 
+    dtype = torch.bfloat16
+
     torch.cuda.synchronize()
     t0 = time.time()
 
     # ── 1. 載入模型 ──
-    nvtx.range_push("Load_Model")
-    dtype = torch.bfloat16
-    tokenizer, model = build_model(dtype=dtype)
-    # model.language_model.config._attn_implementation = "sdpa"
-    nvtx.range_pop()
-    print(f"Model loaded, CUDA alloc: {torch.cuda.memory_allocated()/1e9:.2f} GB")
+    tokenizer, model = build_model(args.model_name, dtype=dtype)
     print(f"num_image_token per tile : {model.num_image_token}")
     print(f"downsample_ratio         : {model.downsample_ratio}")
     print(f"select_layer             : {model.select_layer}")
+    print(f"Model loaded, peak CUDA alloc: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
     # ── 2. 影像前處理 ──
-    nvtx.range_push("Load_Image")
-    pixel_values, num_patches = load_image_tiles(image, input_size=448, max_num=args.max_num)
-    nvtx.range_pop()
-    print(f"\nImage loaded: {num_patches} tiles, pixel_values={pixel_values.shape}")
-    print(f"Model loaded, CUDA memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
+    pixel_values = load_image_tiles(image, input_size=448, max_num=args.max_num)
+    print(f"Image loaded, pixel_values={pixel_values.shape}")
 
     # ── 3. (可選) 標準 generate baseline ──
-    nvtx.range_push(f"INFERENCE")
+    print("\n[Baseline] Running standard model.chat() ...")
+    ref_answer = generate_answer_standard(model, tokenizer, pixel_values, question)
+    print("\n[Baseline Answer]")
+    print(ref_answer)
+    print(f"Peak CUDA alloc: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
-    # print("\n[Baseline] Running standard model.chat() ...")
-    # ref_answer = generate_answer_standard(model, tokenizer, pixel_values, question)
-    # print("\n[Baseline Answer]")
-    # print(ref_answer)
-
-    # # ── 4. Online KV Pipeline ──
-    # answer = run_internvl_online_kv_pipeline(
+    # ── 4. Online KV Pipeline ──
+    # answer = run_internvl_online_kv_stream_dynamic(
     #     model=model,
     #     tokenizer=tokenizer,
     #     pixel_values=pixel_values,
-    #     num_patches=num_patches,
     #     question=question,
     #     dtype=dtype,
     #     vit_batch=args.vit_batch,
     #     chunk_size=args.chunk_size,
     # )
 
-    answer = run_internvl_online_kv_stream(
-        model=model,
-        tokenizer=tokenizer,
-        pixel_values=pixel_values,
-        num_patches=num_patches,
-        question=question,
-        dtype=dtype,
-        vit_batch=args.vit_batch,
-        chunk_size=args.chunk_size,
-    )
+    # model.language_model.config._attn_implementation = "sdpa"
+    # answer = run_internvl_online_kv_stream(
+    #     model=model,
+    #     tokenizer=tokenizer,
+    #     pixel_values=pixel_values,
+    #     question=question,
+    #     dtype=dtype,
+    #     vit_batch=args.vit_batch,
+    #     chunk_size=args.chunk_size,
+    # )
 
     # print("\n[Online KV Answer]")
     # print(answer)
+    # print(f"Peak CUDA alloc: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
-    nvtx.range_pop()
-
-    torch.cuda.synchronize()
-    elapsed = time.time() - t0
-    print(f"\nTotal time: {elapsed:.2f} s")
+    # torch.cuda.synchronize()
+    # elapsed = time.time() - t0
+    # print(f"\nTotal time: {elapsed:.2f} s")
 
 
 if __name__ == "__main__":

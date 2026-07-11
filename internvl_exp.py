@@ -8,6 +8,10 @@ InternVL3.5-8B Online KV Construction Pipeline
   Step 4 : LLM Chunked KV 增量建構 (真正零峰值 Prefill)
   Step 5 : 文字後半 Prefill + 自迴歸解碼
 
+  分階段版：
+    [ViT tile1..N] → [Projector tile1..N] → [LLM chunked prefill]
+    三個階段的 activation 峰值是「疊加」的（Step3 開始時 Step2 的中間產物還留著）
+  
 InternVL3.5 架構差異摘要（對比 LlavaOnevision）：
   - ViT : InternViT-300M，tile 大小 448×448，每 tile → 1024 個 patch token
   - Projector : pixel_shuffle (downsample_ratio=0.5) + MLP (mlp1)
@@ -42,14 +46,12 @@ IMAGENET_STD  = (0.229, 0.224, 0.225)
 
 
 def build_transform(input_size=448):
-    MEAN, STD = IMAGENET_MEAN, IMAGENET_STD
-    transform = T.Compose([
-        T.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
+    return T.Compose([
+        T.Lambda(lambda img: img.convert("RGB") if img.mode != "RGB" else img),
         T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
         T.ToTensor(),
-        T.Normalize(mean=MEAN, std=STD)
+        T.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
     ])
-    return transform
 
 
 def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
@@ -152,31 +154,43 @@ IMG_START_TOKEN   = "<img>"
 IMG_END_TOKEN     = "</img>"
 IMG_CONTEXT_TOKEN = "<IMG_CONTEXT>"
 
+# ──────────────────────────────────────────────────────────────────────────────
+# 標準 generate 參考路徑（用於正確性比較）
+# ──────────────────────────────────────────────────────────────────────────────
+
+def generate_answer_standard(model, tokenizer, pixel_values: torch.Tensor, question: str):
+    """走官方 model.chat() 路徑，作為 Online KV 的比對 baseline。"""
+    generation_config = dict(max_new_tokens=MAX_NEW_TOKENS, do_sample=False)
+    # img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
+    # model.img_context_token_id = img_context_token_id
+    # with torch.no_grad():
+    #     response, history = model.chat(
+    #         tokenizer,
+    #         pixel_values.to(DEVICE, dtype=model.dtype),
+    #         question,
+    #         generation_config,
+    #         return_history=True,
+    #     )
+    
+    # single-image multi-round conversation (单图多轮对话)
+    question = f'<image>\n{question}'
+    response, history = model.chat(
+        tokenizer, 
+        pixel_values.to(DEVICE, dtype=model.dtype), 
+        question, 
+        generation_config, 
+        history=None, 
+        return_history=True
+    )
+
+    return response
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Prompt 工具
+# ──────────────────────────────────────────────────────────────────────────────
 
 def build_prompt(tokenizer, model, question: str, num_patches: int) -> str:
-    """
-    使用 InternVL 的 conv_template 建構完整 prompt，
-    並將 <image> 佔位符展開為真正的 <img><IMG_CONTEXT>×N</img> 格式。
-    """
-    from internvl.model.internvl_chat.conversation import get_conv_template  # noqa: F401
-
-    # 若無法 import，使用 model 內建的 conv_template
-    template = model.conv_template
-    template.system_message = model.system_message
-    template.append_message(template.roles[0], "<image>\n" + question)
-    template.append_message(template.roles[1], None)
-    prompt = template.get_prompt()
-
-    image_tokens = (
-        IMG_START_TOKEN
-        + IMG_CONTEXT_TOKEN * model.num_image_token * num_patches
-        + IMG_END_TOKEN
-    )
-    prompt = prompt.replace("<image>", image_tokens, 1)
-    return prompt
-
-
-def _build_prompt_simple(tokenizer, model, question: str, num_patches: int) -> str:
     """
     不依賴 internvl 套件的簡化版本：直接用 Qwen3 chat template。
     InternVL3.5-8B (Qwen3 backbone) 的 system message 格式：
@@ -200,7 +214,7 @@ def _build_prompt_simple(tokenizer, model, question: str, num_patches: int) -> s
     )
     return prompt
 
-
+ 
 def split_prompt_at_vision(prompt: str, tokenizer):
     """
     把 prompt 在 <img>…</img> 區段切成三份：
@@ -228,7 +242,7 @@ def run_internvl_online_kv_pipeline(
     question: str,
     dtype: torch.dtype = torch.bfloat16,
     vit_batch: int = 4,             # 每次送入 ViT 的 tile 數
-    chunk_size: int = 512,          # LLM Chunked Prefill 的 token 數
+    chunk_size: int = 1024,          # LLM Chunked Prefill 的 token 數
 ):
     """
     InternVL3.5 Online KV Construction Pipeline
@@ -239,21 +253,22 @@ def run_internvl_online_kv_pipeline(
       pixel_shuffle (內嵌在 extract_feature) ↔ pack_image_features
       model.language_model       ↔  model.model.language_model
     """
-
     # ──────────────────────────────────────────────────────────────────
     # Step 1 : 建構 Prompt，設定 img_context_token_id
     # ──────────────────────────────────────────────────────────────────
     print("\n[Step 1] Build prompt ...")
 
-    img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
-    model.img_context_token_id = img_context_token_id
+    # img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
+    # model.img_context_token_id = img_context_token_id
 
-    prompt = _build_prompt_simple(tokenizer, model, question, num_patches)
+    prompt = build_prompt(tokenizer, model, question, num_patches)
     print(f"  ├─> num_image_token per tile : {model.num_image_token}")
     print(f"  ├─> num_patches              : {num_patches}")
     print(f"  └─> total vision tokens      : {model.num_image_token * num_patches}")
 
     text_before, text_after = split_prompt_at_vision(prompt, tokenizer)
+    # print(f"text_before: {text_before}")
+    # print(f"text_after: {text_after}")
 
     # ──────────────────────────────────────────────────────────────────
     # Step 2 : ViT 微批次串流
@@ -350,7 +365,7 @@ def run_internvl_online_kv_pipeline(
 
         mem = torch.cuda.memory_allocated() / 1e9
         print(f"  ├─> text_before injected, alloc={mem:.2f} GB")
-
+    
     # 4b. 分批注入 vision token
     for i in range(0, total_vision_tokens, chunk_size):
         chunk_end   = min(i + chunk_size, total_vision_tokens)
@@ -375,7 +390,6 @@ def run_internvl_online_kv_pipeline(
         past_key_values = out.past_key_values
         del out, vision_chunk, attn_mask, position_ids
         torch.cuda.empty_cache()
-        torch.cuda.reset_peak_memory_stats()
 
         mem = torch.cuda.memory_allocated() / 1e9
         print(f"  ├─> vision chunk {i:05d}~{chunk_end:05d}/{total_vision_tokens}, alloc={mem:.2f} GB")
@@ -388,7 +402,6 @@ def run_internvl_online_kv_pipeline(
     # Step 5 : 文字後半 Prefill + 自迴歸解碼
     # ──────────────────────────────────────────────────────────────────
     print("\n[Step 5] Text Prefill + Autoregressive Decode ...")
-
     ids_after = tokenizer(text_after, return_tensors="pt").to(DEVICE)
     ids_after_ids = ids_after.input_ids
     text_len = ids_after_ids.shape[1]
@@ -457,37 +470,15 @@ def run_internvl_online_kv_pipeline(
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 標準 generate 參考路徑（用於正確性比較）
-# ──────────────────────────────────────────────────────────────────────────────
-
-def generate_answer_standard(model, tokenizer, pixel_values: torch.Tensor, question: str):
-    """走官方 model.chat() 路徑，作為 Online KV 的比對 baseline。"""
-    generation_config = dict(max_new_tokens=MAX_NEW_TOKENS, do_sample=False)
-    img_context_token_id = tokenizer.convert_tokens_to_ids(IMG_CONTEXT_TOKEN)
-    model.img_context_token_id = img_context_token_id
-
-    with torch.no_grad():
-        response, history = model.chat(
-            tokenizer,
-            pixel_values.to(DEVICE, dtype=model.dtype),
-            question,
-            generation_config,
-            return_history=True,
-        )
-    return response
-
-
-# ──────────────────────────────────────────────────────────────────────────────
 # Main
 # ──────────────────────────────────────────────────────────────────────────────
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name",  type=str, default="OpenGVLab/InternVL3_5-8B")
-    parser.add_argument("--max_num",     type=int, default=12,  help="max dynamic tiles")
+    parser.add_argument("--max_num",     type=int, default=48,  help="max dynamic tiles")
     parser.add_argument("--vit_batch",   type=int, default=4,   help="ViT micro-batch size")
     parser.add_argument("--chunk_size",  type=int, default=1024, help="LLM chunked-prefill size")
-    parser.add_argument("--compare",     action="store_true",   help="also run standard generate for comparison")
     args = parser.parse_args()
 
     image = "4000x6000.jpg"
@@ -505,32 +496,35 @@ def main():
     print(f"downsample_ratio         : {model.downsample_ratio}")
     print(f"select_layer             : {model.select_layer}")
 
+    print(model.language_model.config._attn_implementation)
+
     # ── 2. 影像前處理 ──
     pixel_values, num_patches = load_image_tiles(image, input_size=448, max_num=args.max_num)
     print(f"\nImage loaded: {num_patches} tiles, pixel_values={pixel_values.shape}")
+    print(f"Model loaded, CUDA memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
 
-    # ── 3. (可選) 標準 generate baseline ──
-    if args.compare:
-        print("\n[Baseline] Running standard model.chat() ...")
-        ref_answer = generate_answer_standard(model, tokenizer, pixel_values, question)
-        print("\n[Baseline Answer]")
-        print(ref_answer)
-        print(f"CUDA alloc: {torch.cuda.memory_allocated()/1e9:.2f} GB")
+    # # ── 3. (可選) 標準 generate baseline ──
+    # print("\n[Baseline] Running standard model.chat() ...")
+    # ref_answer = generate_answer_standard(model, tokenizer, pixel_values, question)
+    # print("\n[Baseline Answer]")
+    # print(ref_answer)
+    
+    # ── 4. Online KV Pipeline ──
+    answer = run_internvl_online_kv_pipeline(
+        model=model,
+        tokenizer=tokenizer,
+        pixel_values=pixel_values,
+        num_patches=num_patches,
+        question=question,
+        dtype=dtype,
+        vit_batch=args.vit_batch,
+        chunk_size=args.chunk_size,
+    )
 
-    # # ── 4. Online KV Pipeline ──
-    # answer = run_internvl_online_kv_pipeline(
-    #     model=model,
-    #     tokenizer=tokenizer,
-    #     pixel_values=pixel_values,
-    #     num_patches=num_patches,
-    #     question=args.question,
-    #     dtype=dtype,
-    #     vit_batch=args.vit_batch,
-    #     chunk_size=args.chunk_size,
-    # )
+    print("\n[Online KV Answer]")
+    print(answer)
 
-    # print("\n[Online KV Answer]")
-    # print(answer)
+    print(f"CUDA alloc: {torch.cuda.memory_allocated()/1e9:.2f} GB")
 
     torch.cuda.synchronize()
     elapsed = time.time() - t0
