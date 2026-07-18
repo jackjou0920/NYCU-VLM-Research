@@ -27,126 +27,15 @@ LLM chunk 的對齊規則：
       把連續幾個 tile 的 projector 輸出先暫存，湊滿 chunk_size 再丟進 LLM。
   這樣依然是串流（不需等全部 tile 跑完 ViT），但 LLM forward 次數可控。
 """
-
 import time
 import argparse
 import torch
-from PIL import Image
-from accelerate import Accelerator
-from torchvision import transforms as T
-from torchvision.transforms.functional import InterpolationMode
 from transformers import AutoModel, AutoTokenizer, PreTrainedModel, StaticCache
+from internvl_preprocess import measure_peak_memory, build_model, load_image_tiles
+
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MAX_NEW_TOKENS = 150
-
-# ──────────────────────────────────────────────────────────────────────────────
-# 影像前處理（動態高解析度，複製自官方 HF model card 範例）
-# ──────────────────────────────────────────────────────────────────────────────
-
-IMAGENET_MEAN = (0.485, 0.456, 0.406)
-IMAGENET_STD  = (0.229, 0.224, 0.225)
-
-
-def build_transform(input_size=448):
-    return T.Compose([
-        T.Lambda(lambda img: img.convert("RGB") if img.mode != "RGB" else img),
-        T.Resize((input_size, input_size), interpolation=InterpolationMode.BICUBIC),
-        T.ToTensor(),
-        T.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
-    ])
-
-
-def find_closest_aspect_ratio(aspect_ratio, target_ratios, width, height, image_size):
-    best_ratio_diff = float("inf")
-    best_ratio = (1, 1)
-    area = width * height
-    for ratio in target_ratios:
-        target_aspect_ratio = ratio[0] / ratio[1]
-        ratio_diff = abs(aspect_ratio - target_aspect_ratio)
-        if ratio_diff < best_ratio_diff:
-            best_ratio_diff = ratio_diff
-            best_ratio = ratio
-        elif ratio_diff == best_ratio_diff:
-            if area > 0.5 * image_size * image_size * ratio[0] * ratio[1]:
-                best_ratio = ratio
-    return best_ratio
-
-
-def dynamic_preprocess(image, min_num=1, max_num=12, image_size=448, use_thumbnail=True):
-    orig_width, orig_height = image.size
-    aspect_ratio = orig_width / orig_height
-
-    target_ratios = set(
-        (i, j)
-        for n in range(min_num, max_num + 1)
-        for i in range(1, n + 1)
-        for j in range(1, n + 1)
-        if i * j <= max_num and i * j >= min_num
-    )
-    target_ratios = sorted(target_ratios, key=lambda x: x[0] * x[1])
-
-    best_ratio = find_closest_aspect_ratio(
-        aspect_ratio, target_ratios, orig_width, orig_height, image_size
-    )
-
-    target_width  = image_size * best_ratio[0]
-    target_height = image_size * best_ratio[1]
-    blocks = best_ratio[0] * best_ratio[1]
-
-    resized_img = image.resize((target_width, target_height))
-    processed_images = []
-    for i in range(blocks):
-        box = (
-            (i % best_ratio[0]) * image_size,
-            (i // best_ratio[0]) * image_size,
-            ((i % best_ratio[0]) + 1) * image_size,
-            ((i // best_ratio[0]) + 1) * image_size,
-        )
-        processed_images.append(resized_img.crop(box))
-
-    if use_thumbnail and len(processed_images) != 1:
-        processed_images.append(image.resize((image_size, image_size)))
-
-    return processed_images
-
-
-def load_image_tiles(image_path, input_size=448, max_num=12):
-    """回傳 pixel_values [N_tiles, 3, H, W] 以及 tile 數量 num_patches"""
-    image = Image.open(image_path).convert("RGB")
-    transform = build_transform(input_size)
-    tiles = dynamic_preprocess(image, image_size=input_size, max_num=max_num, use_thumbnail=True)
-    pixel_values = torch.stack([transform(t) for t in tiles])
-    return pixel_values
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# 模型載入
-# ──────────────────────────────────────────────────────────────────────────────
-
-def build_model(
-    model_name: str = "OpenGVLab/InternVL3_5-8B",
-    dtype: torch.dtype = torch.bfloat16,
-):
-    print(f"Loading tokenizer from {model_name} ...")
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_name,
-        trust_remote_code=True,
-        use_fast=False,
-    )
-
-    print(f"Loading model from {model_name} ...")
-    device_map = Accelerator().device
-    model = AutoModel.from_pretrained(
-        model_name,
-        dtype=dtype,
-        trust_remote_code=True,
-        use_flash_attn=True,  # 關閉 Flash Attention 以降低記憶體碎片（可改 True 加速）
-        low_cpu_mem_usage=True,
-        device_map=device_map
-    ).to(DEVICE).eval()
-
-    return tokenizer, model
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -279,7 +168,6 @@ def encode_tile(model, tile_pixel_values: torch.Tensor, dtype) -> torch.Tensor:
 # ──────────────────────────────────────────────────────────────────────────────
 # Online KV 主函式
 # ──────────────────────────────────────────────────────────────────────────────
-
 def run_internvl_online_kv_stream(
     model,
     tokenizer,
@@ -700,21 +588,22 @@ def main():
     print(f"Loaded {len(image_paths)} different images, "
           f"tiles per image = {[pv.shape[0] for pv in pixel_values_list]}")
 
-    # ── 3. 批次 generate ──
-    print(f"\n[Baseline] Running batch_chat() ...")
-    ref_answers = generate_answer_standard(model, tokenizer, pixel_values_list, questions)
-    print("\n[Baseline Answer] The first response:")
-    print(ref_answers[0])
-    print(f"Peak CUDA alloc: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
+    # # ── 3. 批次 generate ──
+    # print(f"\n[Baseline] Running batch_chat() ...")
+    # with measure_peak_memory("baseline"):
+    #     ref_answers = generate_answer_standard(model, tokenizer, pixel_values_list, questions)
+    # print("\n[Baseline Answer] The first response:")
+    # print(ref_answers[0])
 
-    # # ── 4. Online KV Pipeline ──
-    # torch.cuda.reset_peak_memory_stats()
-    # answers = run_internvl_online_kv_stream(
-    #     model, tokenizer, pixel_values_list, questions,
-    #     dtype=dtype,
-    #     vit_batch=args.vit_batch,
-    #     chunk_size=args.chunk_size,
-    # )
+    # ── 4. Online KV Pipeline ──
+    print(f"\n[Online Stream] Running online_kv_streaming ...")
+    with measure_peak_memory("online_kv_stream"):
+        answers = run_internvl_online_kv_stream(
+            model, tokenizer, pixel_values_list, questions,
+            dtype=dtype,
+            vit_batch=args.vit_batch,
+            chunk_size=args.chunk_size,
+        )
 
     # # model.language_model.config._attn_implementation = "sdpa"
     # # answer = run_internvl_online_kv_stream_static(
@@ -730,13 +619,10 @@ def main():
     # print("\n[Online KV Answer]")
     # for i, (p, a) in enumerate(zip(image_paths, answers)):
     #     print(f"\n{i} -> [{p}]\n{a}")
- 
-    # print(f"\nPeak CUDA alloc (multi-image batch, B={len(image_paths)}): "
-    #       f"{torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
-    # torch.cuda.synchronize()
-    # elapsed = time.time() - t0
-    # print(f"\nTotal time: {elapsed:.2f} s")
+    torch.cuda.synchronize()
+    elapsed = time.time() - t0
+    print(f"\nTotal time: {elapsed:.2f} s")
 
 
 if __name__ == "__main__":
