@@ -11,9 +11,8 @@ import time
 import argparse
 import json
 import torch
-import torch.nn.functional as F
-from pprint import pprint
 from internvl_preprocess import measure_peak_memory, build_model, load_image_tiles
+from internvl_memory_bank import StreamingMemoryBank, TileStreamingMemoryBank
 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -43,105 +42,6 @@ def generate_answer_standard(model, tokenizer, pixel_values_list, questions):
         generation_config=generation_config,
     )
     return responses
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# Importance scoring：先給幾個簡單、可直接比較的指標
-# ──────────────────────────────────────────────────────────────────────────────
-def score_l2_norm(tokens: torch.Tensor) -> torch.Tensor:
-    """token 向量的 L2 norm。直覺：activation 越大，代表這個 patch 的訊號越強／越不像
-    背景這種低變化區域（跟 ViT literature 裡常見的 'high-norm token = salient' 觀察一致）。
-    """
-    return tokens.float().norm(dim=-1)
-
-
-SCORE_FUNCS = {
-    "l2_norm": score_l2_norm,
-    # "attn_entropy": score_attention_entropy,
-    # "random": score_random,
-}
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# Streaming Memory Bank
-# ──────────────────────────────────────────────────────────────────────────────
-class StreamingMemoryBank:
-    """
-    mode="none"   : Phase 1 —— 只驗證固定 budget 有沒有被真正遵守，超過就直接砍掉
-                    最新進來的（最簡單，用來先跑通 pipeline，還不談 importance）。
-    mode="evict"  : Phase 2 —— 依 importance score，超過 budget 就丟掉分數最低的。
-    mode="merge"  : Phase 3 —— 超過 budget 時，先做 progressive merge，
-                    只有真的無法再合併（例如已經逼近很小的 n）才退化成 evict。
-    """
- 
-    def __init__(self, capacity: int, dim: int, device, dtype, score_fn: str = "l2_norm", mode: str = "evict"):
-        self.capacity = capacity
-        self.tokens = torch.empty(0, dim, device=device, dtype=dtype)
-        self.scores = torch.empty(0, device=device, dtype=torch.float32)
-        self.sizes  = torch.empty(0, device=device, dtype=torch.float32)
-        self.score_fn = SCORE_FUNCS[score_fn]
-        self.mode = mode
- 
-        self.total_seen = 0     # 總共進來過幾個 token（含被丟掉/合併掉的）
-        self.total_dropped = 0  # 被丟掉或被合併掉的 token 數
-        self.size_history = []  # 每次 add_tile 之後 bank 的實際大小，用來畫「budget 有沒有被守住」
- 
-    def add_tile(self, tile_tokens: torch.Tensor):
-        """tile_tokens: [K, D]，一個 tile（或一次 vit_batch）算出來的 vision token。"""
-        new_scores = self.score_fn(tile_tokens)
-        new_sizes = torch.ones(tile_tokens.shape[0], device=tile_tokens.device)
- 
-        self.tokens = torch.cat([self.tokens, tile_tokens], dim=0)
-        self.scores = torch.cat([self.scores, new_scores], dim=0)
-        self.sizes  = torch.cat([self.sizes, new_sizes], dim=0)
-        self.total_seen += tile_tokens.shape[0]
- 
-        if self.tokens.shape[0] > self.capacity:
-            n_over = self.tokens.shape[0] - self.capacity
- 
-            if self.mode == "none":
-                # Phase 1：最簡單版本，直接砍掉最舊的（FIFO），只為了證明 budget 被守住
-                self.tokens = self.tokens[n_over:]
-                self.scores = self.scores[n_over:]
-                self.sizes  = self.sizes[n_over:]
-                self.total_dropped += n_over
- 
-            elif self.mode == "evict":
-                keep_idx = torch.topk(self.scores, self.capacity, largest=True).indices
-                keep_idx, _ = keep_idx.sort()
-                self.total_dropped += n_over
-                self.tokens = self.tokens[keep_idx]
-                self.scores = self.scores[keep_idx]
-                self.sizes  = self.sizes[keep_idx]
- 
-            # elif self.mode == "merge":
-            #     self.tokens, self.scores, self.sizes = bipartite_merge(
-            #         self.tokens, self.scores, self.sizes, r=n_over
-            #     )
-            #     self.total_dropped += n_over
-            #     # bipartite_merge 一次最多合併到剩一半，理論上不會超過，
-            #     # 但保險起見：真的還是超過 budget（極端情況）就退化成 evict 收尾
-            #     if self.tokens.shape[0] > self.capacity:
-            #         extra = self.tokens.shape[0] - self.capacity
-            #         keep_idx = torch.topk(self.scores, self.capacity, largest=True).indices
-            #         keep_idx, _ = keep_idx.sort()
-            #         self.tokens = self.tokens[keep_idx]
-            #         self.scores = self.scores[keep_idx]
-            #         self.sizes  = self.sizes[keep_idx]
-            #         self.total_dropped += extra
- 
-        self.size_history.append(self.tokens.shape[0])
- 
-    def finalize(self):
-        """回傳目前 bank 裡的 token（<= capacity），以及一些統計資訊方便你比較。"""
-        stats = {
-            "final_size": self.tokens.shape[0],
-            "total_seen": self.total_seen,
-            "total_dropped": self.total_dropped,
-            "compression_ratio": self.total_seen / max(self.tokens.shape[0], 1),
-            "size_history": self.size_history,
-        }
-        return self.tokens, stats
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -261,7 +161,7 @@ def run_online_kv_with_memory_bank(
     vit_batch: int = 4,
     chunk_size: int = 1024,
     budget: int = 1024,       # ← 固定 memory budget（每張圖各自的 vision token 上限）
-    score_fn: str = "l2_norm",
+    score_fn: str = "l2_norm",   # "l2_norm" | "attn_entropy" | "random"
     merge_mode: str = "evict",   # "none" | "evict" | "merge"
 ):
     B = len(pixel_values_list)
@@ -314,11 +214,22 @@ def run_online_kv_with_memory_bank(
         owner.extend([b] * n)
     
     D_llm = model.mlp1[-1].out_features
+
+    # ── 新增：算出每個 question 的 embedding（跟 vision token 同一個 LLM embedding space）──
+    with torch.no_grad():
+        q_tok = tokenizer(questions, return_tensors="pt", padding=True).to(DEVICE)
+        q_embeds_all = model.language_model.get_input_embeddings()(q_tok.input_ids)  # [B, L, D_llm]
+        q_mask = q_tok.attention_mask.unsqueeze(-1).float()                          # [B, L, 1]
+        # mean-pool，忽略 padding
+        question_embeds = (q_embeds_all * q_mask).sum(dim=1) / q_mask.sum(dim=1).clamp(min=1e-6)
+        question_embeds = question_embeds.to(dtype)  # [B, D_llm]
+
     banks = [
-        StreamingMemoryBank(
+        TileStreamingMemoryBank(
             capacity=budget, dim=D_llm, device=DEVICE, dtype=dtype,
-            score_fn=score_fn, mode=merge_mode
-        ) for _ in range(B)
+            score_fn=score_fn, mode=merge_mode,
+            question_embed=question_embeds[b],   # ← 傳入真正的向量，不再是空字串
+        ) for b in range(B)
     ]
 
     for i in range(0, flat_tiles.shape[0], vit_batch):
@@ -335,8 +246,8 @@ def run_online_kv_with_memory_bank(
  
         mem = torch.cuda.max_memory_allocated() / 1e9
         print(f"  ├─> [ViT+Bank] flat tile {i}~{min(i+vit_batch, flat_tiles.shape[0])}"
-              f"/{flat_tiles.shape[0]} done, peak alloc={mem:.2f} GB, "
-              f"bank sizes={[bk.tokens.shape[0] for bk in banks]}")
+              f"/{flat_tiles.shape[0]} done, peak alloc={mem:.2f} GB")
+            #   f"bank sizes={[bk.tokens.shape[0] for bk in banks]}")
  
     del flat_tiles
 
@@ -478,8 +389,15 @@ def main():
     parser.add_argument("--chunk_size",  type=int, default=1024, help="LLM chunked-prefill size")
     parser.add_argument("--batch_size",  type=int, default=1,   help="Image batch size")
     parser.add_argument("--budget",      type=int, default=1024, help="The maximum number of vision tokens per image")
-    parser.add_argument("--merge_mode",  type=str, default="none", help="none | evict | merge")
-    parser.add_argument("--image",       type=str, default="datasets/4000x6000.jpg", help="image")
+    parser.add_argument(
+        "--score_fn", type=str, default="information_density",
+        choices=["l2_norm", "information_density", "attn_entropy", "random"],
+    )
+    parser.add_argument(
+        "--merge_mode", type=str, default="evict",
+        choices=["fifo", "evict", "evict_topk", "merge"],
+    )
+    parser.add_argument("--image",       type=str, default="img_datasets/4000x6000.jpg", help="image")
     parser.add_argument("--output_json", type=str, default="output_results.json")
     parser.add_argument("--run_stream", action="store_true", help="run online KV pipeline")
     args = parser.parse_args()
@@ -519,7 +437,7 @@ def main():
     else:
         output_results = {"references": [], "candidates": {}}
 
-    tag = f"budget={args.budget}_{args.merge_mode}"
+    tag = f"budget={args.budget}_{args.merge_mode}_{args.score_fn}"
     if tag in output_results["candidates"] and len(output_results["candidates"][tag]) == len(image_paths):
         torch.cuda.synchronize()
         elapsed = time.time() - t0
@@ -569,7 +487,8 @@ def main():
                         vit_batch=args.vit_batch,
                         chunk_size=args.chunk_size,
                         budget=args.budget,
-                        merge_mode=args.merge_mode
+                        merge_mode=args.merge_mode,
+                        score_fn=args.score_fn
                     )
                     output_results["candidates"][tag] += answers
 
