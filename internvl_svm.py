@@ -12,7 +12,7 @@ import argparse
 import json
 import torch
 from internvl_preprocess import measure_peak_memory, build_model, load_image_tiles
-from internvl_memory_bank import StreamingMemoryBank, TileStreamingMemoryBank
+from internvl_memory_bank import StreamingMemoryBank
 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -225,7 +225,7 @@ def run_online_kv_with_memory_bank(
         question_embeds = question_embeds.to(dtype)  # [B, D_llm]
 
     banks = [
-        TileStreamingMemoryBank(
+        StreamingMemoryBank(
             capacity=budget, dim=D_llm, device=DEVICE, dtype=dtype,
             score_fn=score_fn, mode=merge_mode,
             question_embed=question_embeds[b],   # ← 傳入真正的向量，不再是空字串
@@ -391,11 +391,11 @@ def main():
     parser.add_argument("--budget",      type=int, default=1024, help="The maximum number of vision tokens per image")
     parser.add_argument(
         "--score_fn", type=str, default="information_density",
-        choices=["l2_norm", "information_density", "attn_entropy", "random"],
+        choices=["l2_norm", "info_density", "random"],
     )
     parser.add_argument(
         "--merge_mode", type=str, default="evict",
-        choices=["fifo", "evict", "evict_topk", "merge"],
+        choices=["fifo", "evict"],
     )
     parser.add_argument("--image",       type=str, default="img_datasets/4000x6000.jpg", help="image")
     parser.add_argument("--output_json", type=str, default="output_results.json")
