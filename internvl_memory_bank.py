@@ -4,7 +4,6 @@ import torch.nn.functional as F
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Importance scoring：統一介面 (tokens, question_embed=None, norm_stats=None) -> [N]
-# 這樣不管哪個 score_fn 都能被 StreamingMemoryBank / TileStreamingMemoryBank 一致呼叫
 #
 # norm_stats: 可選的 dict {"mean": scalar tensor, "std": scalar tensor}
 #   - 若提供，signal 項會用「跨 tile 的全域統計量」做 z-score 正規化，
@@ -81,7 +80,7 @@ SCORE_FUNCS = {
 }
 
 
-class StreamingMemoryBank:
+class TileStreamingMemoryBank:
     """
     以 Tile (256 tokens) 為單位。
     add_tile() 只負責累積 + 算分,真正的淘汰決策延後到 finalize(),

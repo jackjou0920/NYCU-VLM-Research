@@ -12,7 +12,7 @@ import argparse
 import json
 import torch
 from internvl_preprocess import measure_peak_memory, build_model, load_image_tiles
-from internvl_memory_bank import StreamingMemoryBank
+from internvl_memory_bank import TileStreamingMemoryBank
 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -161,8 +161,8 @@ def run_online_kv_with_memory_bank(
     vit_batch: int = 4,
     chunk_size: int = 1024,
     budget: int = 1024,       # ← 固定 memory budget（每張圖各自的 vision token 上限）
-    score_fn: str = "l2_norm",   # "l2_norm" | "attn_entropy" | "random"
-    merge_mode: str = "evict",   # "none" | "evict" | "merge"
+    score_fn: str = "l2_norm",   # "l2_norm" | "info_density" | "random"
+    merge_mode: str = "evict",   # "none" | "evict"
 ):
     B = len(pixel_values_list)
     assert B == len(questions)
@@ -225,7 +225,7 @@ def run_online_kv_with_memory_bank(
         question_embeds = question_embeds.to(dtype)  # [B, D_llm]
 
     banks = [
-        StreamingMemoryBank(
+        TileStreamingMemoryBank(
             capacity=budget, dim=D_llm, device=DEVICE, dtype=dtype,
             score_fn=score_fn, mode=merge_mode,
             question_embed=question_embeds[b],   # ← 傳入真正的向量，不再是空字串
