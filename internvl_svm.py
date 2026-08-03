@@ -398,6 +398,7 @@ def main():
         choices=["fifo", "evict"],
     )
     parser.add_argument("--image",       type=str, default="img_datasets/4000x6000.jpg", help="image")
+    parser.add_argument("--save", action="store_true", help="save output_json")
     parser.add_argument("--output_json", type=str, default="output_results.json")
     parser.add_argument("--run_stream", action="store_true", help="run online KV pipeline")
     args = parser.parse_args()
@@ -415,6 +416,10 @@ def main():
     print(f"select_layer             : {model.select_layer}")
     print(f"Model loaded, peak CUDA alloc: {torch.cuda.max_memory_allocated()/1e9:.2f} GB")
 
+    torch.cuda.synchronize()
+    elapsed = time.time() - t0
+    print(f"Load model time: {elapsed:.2f} s")
+
     # ── 2. 找出所有圖片路徑（先只收集路徑，不要一次把全部圖片前處理/載進記憶體）──
     if os.path.isdir(args.image):
         image_paths = sorted(sum(
@@ -423,7 +428,7 @@ def main():
         if not image_paths:
             raise FileNotFoundError(f"No images in {args.image}")
     else:
-        image_paths = [args.image]
+        image_paths = [args.image] * args.batch_size
     print(f"Found {len(image_paths)} image(s) to process (batch_size={args.batch_size})")
 
     # ── 3. 讀取舊的 output_results.json（如果存在），支援中斷後繼續跑 ──
@@ -463,16 +468,16 @@ def main():
         torch.cuda.reset_peak_memory_stats()
 
         try:
-            if len(output_results["references"]) < len(image_paths):
-                # ── Baseline ──
-                print(f"\n[Baseline] Running batch_chat() ...")
-                with measure_peak_memory(f"baseline_{i}"):
-                    ref_answers = generate_answer_standard(model, tokenizer, pixel_values_list, questions)
-                    output_results["references"] += ref_answers
+            # if len(output_results["references"]) < len(image_paths):
+            #     # ── Baseline ──
+            #     print(f"\n[Baseline] Running batch_chat() ...")
+            #     with measure_peak_memory(f"baseline_{i}"):
+            #         ref_answers = generate_answer_standard(model, tokenizer, pixel_values_list, questions)
+            #         output_results["references"] += ref_answers
         
-                print("\n[Baseline Answer]")
-                for i, (path, answer) in enumerate(zip(batch_paths, ref_answers)):
-                    print(f"\n{i} -> [{path}]\n{answer}")
+                # print("\n[Baseline Answer]")
+                # for i, (path, answer) in enumerate(zip(batch_paths, ref_answers)):
+                #     print(f"\n{i} -> [{path}]\n{answer}")
 
             # ── (可選) Online KV Memory Bank，跟 baseline 用同一批圖片比較 ──
             if args.run_stream:
@@ -492,9 +497,9 @@ def main():
                     )
                     output_results["candidates"][tag] += answers
 
-                print("\n[Online KV Answer]")
-                for i, (path, answer) in enumerate(zip(batch_paths, answers)):
-                    print(f"\n{i} -> [{path}]\n{answer}")
+                # print("\n[Online KV Answer]")
+                # for i, (path, answer) in enumerate(zip(batch_paths, answers)):
+                #     print(f"\n{i} -> [{path}]\n{answer}")
 
         except torch.cuda.OutOfMemoryError as e:
             print(f"\n[OOM] Failed on batch {batch_paths}: {e}")
@@ -507,14 +512,17 @@ def main():
         torch.cuda.empty_cache()
     
         # ── 每處理完一批就存檔一次，不用等全部 10 張都跑完 ──
-        save_results_incremental(args.output_json, output_results)
-        print(f"\n[Saved] {args.output_json} updated "
-              f"({len(output_results['references'])}/{len(image_paths)} images done)")
+        if args.save:
+            save_results_incremental(args.output_json, output_results)
+            print(f"\n[Saved] {args.output_json} updated "
+                f"({len(output_results['references'])}/{len(image_paths)} images done)")
 
     torch.cuda.synchronize()
     elapsed = time.time() - t0
     print(f"\nAll done. Total time: {elapsed:.2f} s")
-    print(f"Results saved to {args.output_json}")
+
+    if args.save:
+        print(f"Results saved to {args.output_json}")
 
 
 if __name__ == "__main__":
