@@ -8,7 +8,7 @@ from transformers.image_utils import load_image
 from transformers import AutoProcessor, LlavaOnevisionProcessor, LlavaOnevisionForConditionalGeneration
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-MAX_NEW_TOKENS = 20
+MAX_NEW_TOKENS = 300
 
 print(f"TRANSFORMERS PATH = {transformers.__file__}")
 print(f"DEVICE: {DEVICE}")
@@ -49,7 +49,7 @@ def main():
     parser.add_argument("--batch_size", type=int, default=1, help="batch size to test scaling")
     args = parser.parse_args()
 
-    image = load_image("4000x6000.jpg") 
+    image = load_image("img_datasets/img08.jpg") 
     messages = [
         {
             "role": "user",

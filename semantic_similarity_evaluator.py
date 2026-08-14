@@ -158,8 +158,11 @@ class SemanticSimilarityEvaluator:
         self,
         references: List[str],
         candidates_by_tag: Dict[str, List[str]],
+        min_tokens: int = 5,
+        max_tokens: Optional[int] = None,
     ) -> Dict[str, EvalResult]:
-        """一次比較多組設定，例如：
+        """一次比較多組設定，每組先各自濾掉極短（或極長）的樣本，
+        對應的 baseline reference 也同筆一起丟掉，例如：
         candidates_by_tag = {
             "budget=512_evict":  [...],
             "budget=512_merge":  [...],
@@ -170,9 +173,12 @@ class SemanticSimilarityEvaluator:
         """
         results = {}
         for tag, candidates in candidates_by_tag.items():
+            f_ref, f_cand, kept_idx = self.filter_extreme_length(
+                references, candidates, min_tokens=min_tokens, max_tokens=max_tokens
+            )
             print(f"\n[evaluate_multiple] Evaluating '{tag}' "
-                  f"({len(candidates)} samples) ...")
-            results[tag] = self.evaluate(references, candidates, tag=tag)
+                f"({len(f_cand)}/{len(candidates)} samples after filtering) ...")
+            results[tag] = self.evaluate(f_ref, f_cand, tag=tag)
         return results
 
     # ──────────────────────────────────────────────────────────────────
@@ -226,6 +232,38 @@ class SemanticSimilarityEvaluator:
         方便用 seaborn/matplotlib 畫「budget vs 相似度」的趨勢圖。"""
         frames = [self.to_dataframe(r) for r in results.values()]
         return pd.concat(frames, ignore_index=True)
+
+    def filter_extreme_length(
+        self,
+        references: List[str],
+        candidates: List[str],
+        min_tokens: int = 5,
+        max_tokens: Optional[int] = None,
+    ) -> tuple[List[str], List[str], List[int]]:
+        """濾掉 reference 或 candidate 任一方 token 數低於 min_tokens
+        （或高於 max_tokens）的樣本。回傳過濾後的 references, candidates,
+        以及被保留樣本的原始 index（方便追蹤是哪幾筆被丟掉）。
+        """
+        kept_ref, kept_cand, kept_idx = [], [], []
+        dropped = []
+        for i, (r, c) in enumerate(zip(references, candidates)):
+            r_len, c_len = len(r.split()), len(c.split())
+            too_short = r_len < min_tokens or c_len < min_tokens
+            too_long = max_tokens is not None and (r_len > max_tokens or c_len > max_tokens)
+            if too_short or too_long:
+                dropped.append((i, r_len, c_len))
+                continue
+            kept_ref.append(r)
+            kept_cand.append(c)
+            kept_idx.append(i)
+
+        if dropped:
+            print(f"[filter_extreme_length] dropped {len(dropped)}/{len(references)} samples "
+                f"(min_tokens={min_tokens}, max_tokens={max_tokens})")
+            for i, r_len, c_len in dropped:
+                print(f"  ── idx={i}  ref_len={r_len}  cand_len={c_len}")
+
+        return kept_ref, kept_cand, kept_idx
 
 
 def _mean_std(values: List[float]):
@@ -293,7 +331,7 @@ if __name__ == "__main__":
     # all_results = evaluator.evaluate(references, candidates[tag], tag)
     # evaluator.print_report(all_results)
 
-    all_results = evaluator.evaluate_multiple(references, candidates)
+    all_results = evaluator.evaluate_multiple(references, candidates, min_tokens=3)
     evaluator.print_comparison_table(all_results)
 
     # # 多組比較（不同 budget/merge 設定一次跑完，一張表比較）

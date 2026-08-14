@@ -26,7 +26,7 @@ def build_model(model_name="llava-hf/llava-onevision-qwen2-7b-ov-hf", dtype=torc
         model_name,
         dtype=dtype,
         device_map=device_map,
-        attn_implementation="eager"  # 強制關閉 FlashAttention, attn_implementation="flash_attention_2"
+        attn_implementation="flash_attention_2"  # 強制關閉 FlashAttention, attn_implementation="flash_attention_2"
     ).to(DEVICE)
 
     model.eval()

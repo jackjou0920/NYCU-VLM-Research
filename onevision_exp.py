@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import torch.nn.functional as F
 
 from torchvision import transforms
-from rouge_score import rouge_scorer
+# from rouge_score import rouge_scorer
 from sentence_transformers import SentenceTransformer
 from sentence_transformers.util import cos_sim
 from accelerate import Accelerator
@@ -31,10 +31,8 @@ def build_model(model_name="llava-hf/llava-onevision-qwen2-7b-ov-hf", dtype=torc
         model_name,
         dtype=dtype,
         device_map=device_map,
-        attn_implementation="eager"  # 強制關閉 FlashAttention, attn_implementation="flash_attention_2"
-    ).to(DEVICE)
-
-    model.eval()
+        attn_implementation="flash_attention_2"  # 強制關閉 FlashAttention, attn_implementation="flash_attention_2"
+    ).to(DEVICE).eval()
     return processor, model
 
 
@@ -329,7 +327,7 @@ def run_online_vision_kv_pipeline(model, processor, inputs, messages, texts, dty
             
         token = processor.tokenizer.decode([token_id])
         answer += token
-        # print(token, end="", flush=True)
+        print(token, end="", flush=True)
 
         # === 記憶體管理：徹底斷開 Python 引用計數，防止 Activation 殘留 ===
         del outputs, next_token_logits, attention_mask, position_ids
@@ -352,7 +350,7 @@ def main():
     torch.cuda.synchronize()
     t0 = time.time()
 
-    image = load_image("4000x6000.jpg")
+    image = load_image("img_datasets/img10.jpg")
     messages = [
         {
             "role": "user",

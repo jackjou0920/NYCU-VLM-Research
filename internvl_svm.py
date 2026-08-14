@@ -390,7 +390,7 @@ def main():
     parser.add_argument("--batch_size",  type=int, default=1,   help="Image batch size")
     parser.add_argument("--budget",      type=int, default=1024, help="The maximum number of vision tokens per image")
     parser.add_argument(
-        "--score_fn", type=str, default="information_density",
+        "--score_fn", type=str, default="info_density",
         choices=["l2_norm", "info_density", "random"],
     )
     parser.add_argument(
@@ -468,16 +468,16 @@ def main():
         torch.cuda.reset_peak_memory_stats()
 
         try:
-            # if len(output_results["references"]) < len(image_paths):
-            #     # ── Baseline ──
-            #     print(f"\n[Baseline] Running batch_chat() ...")
-            #     with measure_peak_memory(f"baseline_{i}"):
-            #         ref_answers = generate_answer_standard(model, tokenizer, pixel_values_list, questions)
-            #         output_results["references"] += ref_answers
+            if len(output_results["references"]) < len(image_paths):
+                # ── Baseline ──
+                print(f"\n[Baseline] Running batch_chat() ...")
+                with measure_peak_memory(f"baseline_{i}"):
+                    ref_answers = generate_answer_standard(model, tokenizer, pixel_values_list, questions)
+                    output_results["references"] += ref_answers
         
-                # print("\n[Baseline Answer]")
-                # for i, (path, answer) in enumerate(zip(batch_paths, ref_answers)):
-                #     print(f"\n{i} -> [{path}]\n{answer}")
+                print("\n[Baseline Answer]")
+                for i, (path, answer) in enumerate(zip(batch_paths, ref_answers)):
+                    print(f"\n{i} -> [{path}]\n{answer}")
 
             # ── (可選) Online KV Memory Bank，跟 baseline 用同一批圖片比較 ──
             if args.run_stream:
