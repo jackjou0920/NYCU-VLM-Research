@@ -1,8 +1,40 @@
+import time
 import torch
+import contextlib
 from PIL import Image
+from accelerate import Accelerator
 from torchvision import transforms as T
 from torchvision.transforms.functional import InterpolationMode
 from transformers import AutoModel, AutoTokenizer
+
+
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+
+@contextlib.contextmanager
+def measure_peak_memory(tag: str, record_timeline: bool = False):
+    if record_timeline:
+        torch.cuda.memory._record_memory_history(max_entries=100000)
+
+    torch.cuda.synchronize()
+    torch.cuda.reset_peak_memory_stats()
+    t0 = time.time()
+
+    try:
+        yield
+    finally:
+        torch.cuda.synchronize()
+        elapsed = time.time() - t0
+        peak_alloc = torch.cuda.max_memory_allocated() / 1e9
+        peak_reserved = torch.cuda.max_memory_reserved() / 1e9
+
+        print(f"\n[{tag}] time={elapsed:.2f} sec  "
+              f"peak_allocated={peak_alloc:.3f} GB  "
+              f"peak_reserved={peak_reserved:.3f} GB")
+
+        if record_timeline:
+            torch.cuda.memory._dump_snapshot(f"{tag}_snapshot.pickle")
+            torch.cuda.memory._record_memory_history(enabled=None)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -76,8 +108,9 @@ def dynamic_preprocess(image, min_num=1, max_num=12, image_size=448, use_thumbna
     return processed_images
 
 
-def load_image_tiles(image, input_size=448, max_num=12):
+def load_image_tiles(image_path, input_size=448, max_num=12):
     """回傳 pixel_values [N_tiles, 3, H, W] 以及 tile 數量 num_patches"""
+    image = Image.open(image_path).convert("RGB")
     transform = build_transform(input_size)
     tiles = dynamic_preprocess(image, image_size=input_size, max_num=max_num, use_thumbnail=True)
     pixel_values = torch.stack([transform(t) for t in tiles])
@@ -87,11 +120,10 @@ def load_image_tiles(image, input_size=448, max_num=12):
 # ──────────────────────────────────────────────────────────────────────────────
 # 模型載入
 # ──────────────────────────────────────────────────────────────────────────────
- 
+
 def build_model(
     model_name: str = "OpenGVLab/InternVL3_5-8B",
     dtype: torch.dtype = torch.bfloat16,
-    device: str = "cuda:0"
 ):
     print(f"Loading tokenizer from {model_name} ...")
     tokenizer = AutoTokenizer.from_pretrained(
@@ -99,14 +131,16 @@ def build_model(
         trust_remote_code=True,
         use_fast=False,
     )
- 
+
     print(f"Loading model from {model_name} ...")
+    device_map = Accelerator().device
     model = AutoModel.from_pretrained(
         model_name,
         dtype=dtype,
         trust_remote_code=True,
         use_flash_attn=True,  # 關閉 Flash Attention 以降低記憶體碎片（可改 True 加速）
         low_cpu_mem_usage=True,
-    ).to(device).eval()
- 
+        device_map=device_map
+    ).to(DEVICE).eval()
+
     return tokenizer, model

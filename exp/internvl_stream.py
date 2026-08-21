@@ -31,7 +31,7 @@ import time
 import argparse
 import torch
 from transformers import AutoModel, AutoTokenizer, PreTrainedModel, StaticCache
-from internvl_preprocess import measure_peak_memory, build_model, load_image_tiles
+from exp.internvl_preprocess import measure_peak_memory, build_model, load_image_tiles
 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"

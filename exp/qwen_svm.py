@@ -22,7 +22,7 @@ import time
 import argparse
 import json
 import torch
-from qwen_preprocess import measure_peak_memory, build_model
+from exp.qwen_preprocess import measure_peak_memory, build_model
 
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"

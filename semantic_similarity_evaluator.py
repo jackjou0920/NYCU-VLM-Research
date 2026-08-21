@@ -19,6 +19,10 @@ from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 from bert_score import BERTScorer
 from sentence_transformers import util, SentenceTransformer
+from anls_eval import ANLSCalculator
+from degenerate_filter import DegenerateOutputDetector
+from degenerate_filter import evaluate_multiple_with_degenerate_split, print_comparison_table_with_degenerate_rate
+from stream_adapters import DEVICE
 
 
 @dataclass
@@ -324,14 +328,34 @@ if __name__ == "__main__":
     parser.add_argument("--output_csv", type=str, default="semantic_eval_results.csv")
     args = parser.parse_args()
 
+    # detector = DegenerateOutputDetector()
+
     references, candidates = load_eval_json(args.input_json)
-    evaluator = SemanticSimilarityEvaluator()
+    evaluator = SemanticSimilarityEvaluator(device=DEVICE)
+
+    # # 拿 budget=1024 那組看看:min_tokens<3 丟掉的 3585 筆裡,
+    # # 真正 empty/複讀/亂碼的有多少,vs 短但乾淨的有多少
+    # df = detector.diagnose(candidates["budget=1024_evict_info_density"])
+    # print(df["is_degenerate"].value_counts())
+
+    # # 具體看幾筆「被舊規則(min_tokens<3)誤殺、但新規則判定為乾淨」的樣本
+    # short_but_clean = df[(df["token_len"] < 3) & (~df["is_degenerate"])]
+    # print(short_but_clean[["token_len", "text"]].head(20))
+
+    # calc = ANLSCalculator()
+
+    # results, degen_rates = evaluate_multiple_with_degenerate_split(
+    #     evaluator, references, candidates, calc=None  # candidates 是四個 budget 的 dict
+    # )
+    # print_comparison_table_with_degenerate_rate(results, degen_rates)
+
+    # calc.print_comparison_table(results)
 
     # tag = "budget=1024_none"
     # all_results = evaluator.evaluate(references, candidates[tag], tag)
     # evaluator.print_report(all_results)
 
-    all_results = evaluator.evaluate_multiple(references, candidates, min_tokens=3)
+    all_results = evaluator.evaluate_multiple(references, candidates, min_tokens=1)
     evaluator.print_comparison_table(all_results)
 
     # # 多組比較（不同 budget/merge 設定一次跑完，一張表比較）
