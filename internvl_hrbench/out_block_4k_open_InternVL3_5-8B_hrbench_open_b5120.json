@@ -1,0 +1,50 @@
+{
+  "source_json": "out_block_4k_open_InternVL3_5-8B_hrbench_b5120.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "open",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=5120_info_density_delay0_thumbattn",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n": 200,
+      "acc": 43.5,
+      "by_category": {
+        "cross": 37.0,
+        "single": 50.0
+      },
+      "match_ref": NaN,
+      "unparsed": 41.0,
+      "delta": 1.5,
+      "ci_lo": -3.0,
+      "ci_hi": 6.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=5120_info_density_delay0_thumbattn",
+      "n": 200,
+      "acc": 42.0,
+      "by_category": {
+        "cross": 38.0,
+        "single": 46.0
+      },
+      "match_ref": 47.0,
+      "unparsed": 45.5,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

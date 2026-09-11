@@ -26,7 +26,11 @@ def extract_question_image(sample):
     # --------------------------------------------------------
     match = re.search(r"<image\s+(\d+)>", question)
     if match is None:
-        return None
+        return {
+            "question": question,
+            "image": sample.get("image"),
+            "image_index": -1,
+        }
 
     image_index = int(match.group(1))
 
@@ -87,4 +91,32 @@ def load_mmmu(subject="Agriculture", split="test", num_image=None):
         print(f"Question: {sample['question']}")
 
 
-load_mmmu(num_image=3)
+# load_mmmu(num_image=3)
+
+
+
+# ds = load_dataset("lmms-lab-encoder/MMMU", subject=None, split="validation")
+# print(ds[203])
+
+# samples = []
+# for i in range(len(ds)):
+#     result = extract_question_image(ds[i])
+#     if result is not None:
+#         samples.append(result)
+# # print(f"Loaded {len(samples)} samples")
+# print(samples[203])
+
+
+# ds = load_dataset("yifanzhang114/MME-RealWorld")
+
+ds = load_dataset("DreamMr/HR-Bench")
+sample = ds["hrbench_4k"][0]
+
+# 印出關鍵欄位資訊
+print("Question:", sample["question"])
+print("A:", sample.get("A", ""))
+print("B:", sample.get("B", ""))
+print("C:", sample.get("C", ""))
+print("D:", sample.get("D", ""))
+print("Answer:", sample.get("answer", ""))
+print("Category:", sample.get("category", ""))

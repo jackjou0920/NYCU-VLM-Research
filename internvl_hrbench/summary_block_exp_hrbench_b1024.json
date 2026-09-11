@@ -1,0 +1,266 @@
+{
+  "source_json": "out_block_a_hrbench_b1024.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "letter",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=1024_evict_info_density_delay0",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n": 200,
+      "acc": 76.5,
+      "by_category": {
+        "cross": 50.0,
+        "single": 82.3170731707317
+      },
+      "match_ref": NaN,
+      "unparsed": 0.0,
+      "delta": 26.0,
+      "ci_lo": 19.0,
+      "ci_hi": 34.0,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0",
+      "n": 200,
+      "acc": 50.5,
+      "by_category": {
+        "cross": 47.22222222222222,
+        "single": 51.21951219512195
+      },
+      "match_ref": 60.5,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_oracle",
+      "n": 200,
+      "acc": 85.5,
+      "by_category": {
+        "cross": 55.55555555555556,
+        "single": 92.07317073170732
+      },
+      "match_ref": 84.5,
+      "unparsed": 0.0,
+      "delta": 35.0,
+      "ci_lo": 28.499999999999996,
+      "ci_hi": 42.0,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_spatial_bin",
+      "n": 200,
+      "acc": 52.0,
+      "by_category": {
+        "cross": 50.0,
+        "single": 52.4390243902439
+      },
+      "match_ref": 63.5,
+      "unparsed": 0.0,
+      "delta": 1.5,
+      "ci_lo": -3.0,
+      "ci_hi": 6.5,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_spatial_bin_thumbattn",
+      "n": 200,
+      "acc": 56.00000000000001,
+      "by_category": {
+        "cross": 44.44444444444444,
+        "single": 58.536585365853654
+      },
+      "match_ref": 66.5,
+      "unparsed": 0.0,
+      "delta": 5.5,
+      "ci_lo": 0.5,
+      "ci_hi": 11.0,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_thumbattn",
+      "n": 200,
+      "acc": 62.0,
+      "by_category": {
+        "cross": 44.44444444444444,
+        "single": 65.85365853658537
+      },
+      "match_ref": 71.0,
+      "unparsed": 0.0,
+      "delta": 11.5,
+      "ci_lo": 6.487500000000002,
+      "ci_hi": 17.0,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_thumbattn_w0.4",
+      "n": 200,
+      "acc": 57.99999999999999,
+      "by_category": {
+        "cross": 47.22222222222222,
+        "single": 60.36585365853659
+      },
+      "match_ref": 67.0,
+      "unparsed": 0.0,
+      "delta": 7.5,
+      "ci_lo": 2.5,
+      "ci_hi": 12.512499999999932,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_thumbattn_w0.8",
+      "n": 200,
+      "acc": 64.0,
+      "by_category": {
+        "cross": 47.22222222222222,
+        "single": 67.6829268292683
+      },
+      "match_ref": 74.5,
+      "unparsed": 0.0,
+      "delta": 13.5,
+      "ci_lo": 8.0,
+      "ci_hi": 19.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_thumbattn_w0.9",
+      "n": 200,
+      "acc": 63.0,
+      "by_category": {
+        "cross": 50.0,
+        "single": 65.85365853658537
+      },
+      "match_ref": 76.0,
+      "unparsed": 0.0,
+      "delta": 12.5,
+      "ci_lo": 6.5,
+      "ci_hi": 19.0,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_thumbattn_w1",
+      "n": 200,
+      "acc": 63.0,
+      "by_category": {
+        "cross": 50.0,
+        "single": 65.85365853658537
+      },
+      "match_ref": 77.0,
+      "unparsed": 0.0,
+      "delta": 12.5,
+      "ci_lo": 5.5,
+      "ci_hi": 19.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_info_density_delay0_topk_mean",
+      "n": 200,
+      "acc": 51.5,
+      "by_category": {
+        "cross": 36.11111111111111,
+        "single": 54.87804878048781
+      },
+      "match_ref": 69.0,
+      "unparsed": 0.0,
+      "delta": 1.0,
+      "ci_lo": -4.0,
+      "ci_hi": 6.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_l2_norm_delay0",
+      "n": 200,
+      "acc": 50.5,
+      "by_category": {
+        "cross": 52.77777777777778,
+        "single": 50.0
+      },
+      "match_ref": 63.0,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": -5.5,
+      "ci_hi": 6.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_evict_random_delay0",
+      "n": 200,
+      "acc": 49.0,
+      "by_category": {
+        "cross": 44.44444444444444,
+        "single": 50.0
+      },
+      "match_ref": 63.0,
+      "unparsed": 0.0,
+      "delta": -1.5,
+      "ci_lo": -7.000000000000001,
+      "ci_hi": 4.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "fixed_tiles=4",
+      "n": 200,
+      "acc": 54.0,
+      "by_category": {
+        "cross": 52.77777777777778,
+        "single": 54.268292682926834
+      },
+      "match_ref": 64.0,
+      "unparsed": 0.0,
+      "delta": 3.5000000000000004,
+      "ci_lo": -2.0,
+      "ci_hi": 9.5,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

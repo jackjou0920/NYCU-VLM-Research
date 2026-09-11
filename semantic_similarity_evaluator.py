@@ -19,10 +19,37 @@ from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 from bert_score import BERTScorer
 from sentence_transformers import util, SentenceTransformer
-from anls_eval import ANLSCalculator
-from degenerate_filter import DegenerateOutputDetector
-from degenerate_filter import evaluate_multiple_with_degenerate_split, print_comparison_table_with_degenerate_rate
-from stream_adapters import DEVICE
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# 裝置挑選 / 記憶體量測 / question embedding      （from stream_adapters.py）
+# ══════════════════════════════════════════════════════════════════════════════
+def get_optimal_cuda_device(min_required_gb: float = 0) -> torch.device:
+    if not torch.cuda.is_available():
+        return torch.device("cpu")
+
+    best_device_idx = 0
+    max_free_memory = 0
+
+    # 巡檢所有可用的 GPU
+    for i in range(torch.cuda.device_count()):
+        # mem_get_info(i) 回傳 tuple: (free_memory_bytes, total_memory_bytes)
+        free_bytes, _ = torch.cuda.mem_get_info(i)
+
+        if free_bytes > max_free_memory:
+            max_free_memory = free_bytes
+            best_device_idx = i
+
+    # 轉成 GB 進行檢查
+    max_free_gb = max_free_memory / (1024**3)
+
+    if min_required_gb > 0 and max_free_gb < min_required_gb:
+        print(f"警告：顯存最多的 GPU (cuda:{best_device_idx}) 僅剩 {max_free_gb:.2f} GB，未達要求的 {min_required_gb} GB。")
+
+    return torch.device(f"cuda:{best_device_idx}")
+
+
+DEVICE = get_optimal_cuda_device(min_required_gb=20.0)
 
 
 @dataclass
@@ -211,10 +238,10 @@ class SemanticSimilarityEvaluator:
 
     def print_comparison_table(self, results: Dict[str, EvalResult]):
         """把 evaluate_multiple() 的結果整理成一張表，方便直接放進論文。"""
-        print(f"\n{'tag':<30} {'n':>5} {'cos_sim':>12} {'bertscore_f1':>14}")
+        print(f"\n{'tag':<50} {'n':>5} {'cos_sim':>12} {'bertscore_f1':>14}")
         print("-" * 65)
         for tag, r in results.items():
-            print(f"{tag:<30} {r.n_samples:>5} "
+            print(f"{tag:<50} {r.n_samples:>5} "
                   f"{r.cosine_sim_mean:>7.4f}±{r.cosine_sim_std:<4.3f} "
                   f"{r.bertscore_f1_mean:>9.4f}±{r.bertscore_f1_std:<4.3f}")
 
@@ -325,44 +352,38 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_json", type=str, required=True, help="evaluation json")
-    parser.add_argument("--output_csv", type=str, default="semantic_eval_results.csv")
+    parser.add_argument("--output_csv", type=str, default="semantic_eval_results.csv",
+                        help="逐筆長格式 CSV（每個 tag x 每筆樣本一列）")
+    parser.add_argument("--summary_csv", type=str, default=None,
+                        help="每個 tag 一列的彙總 CSV（n / cos_sim mean±std / bertscore_f1 mean±std）")
+    parser.add_argument("--min_tokens", type=int, default=1,
+                        help="reference 或 candidate 任一方詞數低於此值就整筆丟掉")
     args = parser.parse_args()
 
-    # detector = DegenerateOutputDetector()
 
     references, candidates = load_eval_json(args.input_json)
     evaluator = SemanticSimilarityEvaluator(device=DEVICE)
 
-    # # 拿 budget=1024 那組看看:min_tokens<3 丟掉的 3585 筆裡,
-    # # 真正 empty/複讀/亂碼的有多少,vs 短但乾淨的有多少
-    # df = detector.diagnose(candidates["budget=1024_evict_info_density"])
-    # print(df["is_degenerate"].value_counts())
-
-    # # 具體看幾筆「被舊規則(min_tokens<3)誤殺、但新規則判定為乾淨」的樣本
-    # short_but_clean = df[(df["token_len"] < 3) & (~df["is_degenerate"])]
-    # print(short_but_clean[["token_len", "text"]].head(20))
-
-    # calc = ANLSCalculator()
-
-    # results, degen_rates = evaluate_multiple_with_degenerate_split(
-    #     evaluator, references, candidates, calc=None  # candidates 是四個 budget 的 dict
-    # )
-    # print_comparison_table_with_degenerate_rate(results, degen_rates)
-
-    # calc.print_comparison_table(results)
-
-    # tag = "budget=1024_none"
-    # all_results = evaluator.evaluate(references, candidates[tag], tag)
-    # evaluator.print_report(all_results)
-
-    all_results = evaluator.evaluate_multiple(references, candidates, min_tokens=1)
+    all_results = evaluator.evaluate_multiple(references, candidates, min_tokens=args.min_tokens)
     evaluator.print_comparison_table(all_results)
 
-    # # 多組比較（不同 budget/merge 設定一次跑完，一張表比較）
-    # all_results = evaluator.evaluate_multiple(baseline_answers, compressed_answers)
-    # evaluator.print_comparison_table(all_results)
+    # 逐筆長格式（budget vs 相似度趨勢圖 / 論文附錄用）
+    evaluator.multiple_to_dataframe(all_results).to_csv(args.output_csv, index=False)
+    print(f"[saved] per-sample CSV -> {args.output_csv}")
 
-    # # 存成 CSV，方便後續畫圖或放進論文附錄
-    # df = evaluator.multiple_to_dataframe(all_results)
-    # df.to_csv("semantic_eval_results.csv", index=False)
+    # 每個 tag 一列的彙總表（跨 budget 直接比較）
+    if args.summary_csv:
+        summary = pd.DataFrame([
+            {
+                "tag": r.tag,
+                "n_samples": r.n_samples,
+                "cosine_sim_mean": r.cosine_sim_mean,
+                "cosine_sim_std": r.cosine_sim_std,
+                "bertscore_f1_mean": r.bertscore_f1_mean,
+                "bertscore_f1_std": r.bertscore_f1_std,
+            }
+            for r in all_results.values()
+        ])
+        summary.to_csv(args.summary_csv, index=False)
+        print(f"[saved] summary CSV -> {args.summary_csv}")
     # print("\nSaved to semantic_eval_results.csv")

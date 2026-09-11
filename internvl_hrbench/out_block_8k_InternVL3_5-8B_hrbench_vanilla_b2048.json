@@ -1,0 +1,50 @@
+{
+  "source_json": "out_block_800_InternVL3_5-8B_hrbench_b2048.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "letter",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=2048_info_density_delay0_thumbattn",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n": 800,
+      "acc": 68.5,
+      "by_category": {
+        "cross": 58.25,
+        "single": 78.75
+      },
+      "match_ref": NaN,
+      "unparsed": 0.0,
+      "delta": 6.875000000000001,
+      "ci_lo": 4.121875,
+      "ci_hi": 9.875,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_info_density_delay0_thumbattn",
+      "n": 800,
+      "acc": 61.625,
+      "by_category": {
+        "cross": 56.49999999999999,
+        "single": 66.75
+      },
+      "match_ref": 77.0,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+{
+  "source_json": "out_block_a_hrbench_b2048.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "letter",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=2048_evict_info_density_delay0",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n": 200,
+      "acc": 76.5,
+      "by_category": {
+        "cross": 50.0,
+        "single": 82.3170731707317
+      },
+      "match_ref": NaN,
+      "unparsed": 0.0,
+      "delta": 11.5,
+      "ci_lo": 5.0,
+      "ci_hi": 18.0,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0",
+      "n": 200,
+      "acc": 65.0,
+      "by_category": {
+        "cross": 55.55555555555556,
+        "single": 67.07317073170732
+      },
+      "match_ref": 74.5,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_oracle",
+      "n": 200,
+      "acc": 84.5,
+      "by_category": {
+        "cross": 52.77777777777778,
+        "single": 91.46341463414635
+      },
+      "match_ref": 86.0,
+      "unparsed": 0.0,
+      "delta": 19.5,
+      "ci_lo": 13.987500000000002,
+      "ci_hi": 25.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_spatial_bin",
+      "n": 200,
+      "acc": 57.99999999999999,
+      "by_category": {
+        "cross": 52.77777777777778,
+        "single": 59.14634146341463
+      },
+      "match_ref": 69.5,
+      "unparsed": 0.0,
+      "delta": -7.000000000000001,
+      "ci_lo": -11.0,
+      "ci_hi": -3.987500000000068,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_spatial_bin_thumbattn",
+      "n": 200,
+      "acc": 62.0,
+      "by_category": {
+        "cross": 41.66666666666667,
+        "single": 66.46341463414635
+      },
+      "match_ref": 73.0,
+      "unparsed": 0.0,
+      "delta": -3.0,
+      "ci_lo": -9.0,
+      "ci_hi": 2.5,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_thumbattn",
+      "n": 200,
+      "acc": 64.0,
+      "by_category": {
+        "cross": 38.88888888888889,
+        "single": 69.51219512195121
+      },
+      "match_ref": 75.5,
+      "unparsed": 0.0,
+      "delta": -1.0,
+      "ci_lo": -6.5,
+      "ci_hi": 4.5,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_thumbattn_w0.4",
+      "n": 200,
+      "acc": 63.5,
+      "by_category": {
+        "cross": 44.44444444444444,
+        "single": 67.6829268292683
+      },
+      "match_ref": 76.5,
+      "unparsed": 0.0,
+      "delta": -1.5,
+      "ci_lo": -6.0,
+      "ci_hi": 3.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_thumbattn_w0.8",
+      "n": 200,
+      "acc": 65.5,
+      "by_category": {
+        "cross": 44.44444444444444,
+        "single": 70.1219512195122
+      },
+      "match_ref": 79.0,
+      "unparsed": 0.0,
+      "delta": 0.5,
+      "ci_lo": -5.0,
+      "ci_hi": 6.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_thumbattn_w0.9",
+      "n": 200,
+      "acc": 66.5,
+      "by_category": {
+        "cross": 47.22222222222222,
+        "single": 70.73170731707317
+      },
+      "match_ref": 78.0,
+      "unparsed": 0.0,
+      "delta": 1.5,
+      "ci_lo": -4.5,
+      "ci_hi": 7.5,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_thumbattn_w1",
+      "n": 200,
+      "acc": 70.0,
+      "by_category": {
+        "cross": 47.22222222222222,
+        "single": 75.0
+      },
+      "match_ref": 81.5,
+      "unparsed": 0.0,
+      "delta": 5.0,
+      "ci_lo": -1.0,
+      "ci_hi": 11.012499999999932,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_info_density_delay0_topk_mean",
+      "n": 200,
+      "acc": 57.49999999999999,
+      "by_category": {
+        "cross": 33.33333333333333,
+        "single": 62.80487804878049
+      },
+      "match_ref": 73.5,
+      "unparsed": 0.0,
+      "delta": -7.5,
+      "ci_lo": -13.5,
+      "ci_hi": -1.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_l2_norm_delay0",
+      "n": 200,
+      "acc": 56.49999999999999,
+      "by_category": {
+        "cross": 52.77777777777778,
+        "single": 57.3170731707317
+      },
+      "match_ref": 69.0,
+      "unparsed": 0.0,
+      "delta": -8.5,
+      "ci_lo": -14.499999999999998,
+      "ci_hi": -3.0,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_evict_random_delay0",
+      "n": 200,
+      "acc": 58.5,
+      "by_category": {
+        "cross": 50.0,
+        "single": 60.36585365853659
+      },
+      "match_ref": 69.5,
+      "unparsed": 0.0,
+      "delta": -6.5,
+      "ci_lo": -13.0,
+      "ci_hi": -0.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "fixed_tiles=8",
+      "n": 200,
+      "acc": 60.5,
+      "by_category": {
+        "cross": 58.333333333333336,
+        "single": 60.97560975609756
+      },
+      "match_ref": 73.5,
+      "unparsed": 0.0,
+      "delta": -4.5,
+      "ci_lo": -12.0,
+      "ci_hi": 2.5,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

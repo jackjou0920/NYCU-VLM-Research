@@ -1,0 +1,47 @@
+{
+  "source_json": "out_block_800_InternVL3_5-8B_hrbench_b1024.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "options",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=1024_info_density_delay0_thumbattn",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n_groups": 151,
+      "circ_acc": 56.95364238410596,
+      "vanilla_acc": 68.5,
+      "by_category": {
+        "cross": 49.29577464788733,
+        "single": 63.74999999999999
+      },
+      "delta": 16.55629139072848,
+      "ci_lo": 8.609271523178808,
+      "ci_hi": 23.841059602649008,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true
+    },
+    {
+      "tag": "budget=1024_info_density_delay0_thumbattn",
+      "n_groups": 151,
+      "circ_acc": 40.397350993377486,
+      "vanilla_acc": 56.00000000000001,
+      "by_category": {
+        "cross": 38.028169014084504,
+        "single": 42.5
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}
