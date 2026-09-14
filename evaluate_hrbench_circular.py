@@ -3,7 +3,7 @@ HR-Bench 官方 CircularEval 計分。
 
 HR-Bench 每題有 4 個「選項輪換」版本（同圖同問句，A/B/C/D 順序輪轉）。官方協定：
 一組 4 個全部答對，該題才算對（vanilla per-sample acc 會高估，因為模型只要位置
-偏好就能矇到 1~3 個）。這支腳本吃 internvl_stream_v2.py 存的 run JSON
+偏好就能矇到 1~3 個）。這支腳本吃 internvl_stream.py 存的 run JSON
 （{"references":[...], "candidates":{tag:[...]}, "meta":[...]}），把 200 筆（= 50 組
 × 4 輪換）攤平的結果重新按組計分。
 

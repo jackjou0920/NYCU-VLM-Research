@@ -1,0 +1,40 @@
+{
+  "source_json": "out_block_short_InternVL3_5-8B_docvqa_b4096.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": true,
+  "baseline_tag": "budget=4096_info_density_delay0_thumbattn",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed baseline>",
+      "n": 5349,
+      "anls": 92.10582822127543,
+      "exact": 86.50214993456721,
+      "zero": 5.7767807066741454,
+      "delta": 2.092838733621563,
+      "ci_lo": 1.5524241154038954,
+      "ci_hi": 2.616933519978602,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=4096_info_density_delay0_thumbattn",
+      "n": 5349,
+      "anls": 90.01298948765385,
+      "exact": 84.22134978500654,
+      "zero": 7.6462890259861656,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

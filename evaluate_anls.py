@@ -2,11 +2,17 @@
 DocVQA ANLS 評測：對一份 run 出來的 JSON（{"references": [...], "candidates": {tag: [...]}}）
 逐 tag 算 ANLS。
 
-Ground truth 兩種來源：
-  --use_hf_gt        從 HF lmms-lab-encoder/DocVQA validation 讀官方 answers（多 GT，
-                     官方算法）。論文數字用這個。
-  （預設，不加旗標）  用 JSON 裡的 references 當 pseudo-GT。不用連網，但 references
-                     本身要是乾淨、對齊的才有意義。
+Ground truth 三種來源，優先序 --use_hf_gt > meta > references：
+  --use_hf_gt        從 HF lmms-lab-encoder/DocVQA validation **重新載入**官方
+                     answers（多 GT，官方算法）。**假設 JSON 裡第 i 筆對應 HF
+                     dataset 第 i 筆**——如果 load_docvqa() 跳過了任何一張圖
+                     （no image / 壞檔），後面每一筆都會位移，且不會有警告。
+                     只建議跑舊版（load_docvqa 還沒存 meta.answers）留下的 JSON
+                     才用這個；新跑的都應該有 meta，不需要它。
+  （預設，meta 有 answers）不重載 HF，直接用 JSON meta 裡存好的 answers（
+                     load_docvqa 存的，跟 candidates 天生對齊、沒有錯位風險）。
+  （都沒有時的最後手段）用 JSON 裡的 references 當 pseudo-GT。不用連網，但
+                     references 本身要是乾淨、對齊的才有意義。
 
 **對齊是 index-based**：gold[i] / references[i] 對應 candidates[tag][i]。
 所以腳本會先印各欄長度，任何一欄長度跟 GT 對不上就大聲警告——長度不一致
@@ -250,14 +256,26 @@ def evaluate(json_path, use_hf_gt, threshold, do_extract, dump_csv,
 
     prep = extract_final_answer if do_extract else (lambda s: str(s).strip())
 
-    # ---- ground truth ----
+    # ---- ground truth：優先序 --use_hf_gt > meta.answers > references ----
+    meta = data.get("meta") or []
+    meta_has_answers = bool(meta) and any(m.get("answers") for m in meta)
     if use_hf_gt:
-        print(f"[gt] loading HF {hf_dataset}/{hf_config}:{hf_split} ...")
+        print(f"[gt] loading HF {hf_dataset}/{hf_config}:{hf_split} ..."
+              " (assumes JSON row i == HF row i, no skipped images)")
         gts = load_hf_gold(hf_dataset, hf_config, hf_split)          # list[list[str]]
-        gt_name = f"HF {hf_dataset}:{hf_split} answers"
+        gt_name = f"HF {hf_dataset}:{hf_split} answers (reloaded)"
+    elif meta_has_answers:
+        # load_docvqa 存的、跟 candidates 天生對齊，不用重載 HF。
+        # 個別題目 answers 是空的話（理論上不該發生），退回該題的 reference 當 GT，
+        # 避免整題直接算 0 分。
+        gts = [
+            [str(a) for a in m.get("answers", [])] or ([prep(references[i])] if i < len(references) else [])
+            for i, m in enumerate(meta)
+        ]
+        gt_name = "JSON meta answers (aligned, from load_docvqa)"
     else:
         if not references:
-            raise SystemExit("JSON 沒有 references，請改用 --use_hf_gt")
+            raise SystemExit("JSON 沒有 references，且沒有 meta.answers，請改用 --use_hf_gt")
         gts = [[prep(r)] for r in references]                        # list[list[str]]
         gt_name = "JSON references (pseudo-GT)"
     gt_len = len(gts)
@@ -282,10 +300,12 @@ def evaluate(json_path, use_hf_gt, threshold, do_extract, dump_csv,
         for t in bad:
             print(f"      - {t}")
 
-    # ---- 要評分的欄位：candidates + （--use_hf_gt 時）references 當作「未壓縮上界」一起評 ----
+    # ---- 要評分的欄位：candidates + references 當作「未壓縮上界」一起評 ----
+    #      只有 GT 是真正獨立於 references 的來源（HF 重載或 meta.answers）才有意義；
+    #      GT 本身就是 references 的話，把 references 拿來跟自己比只會恆等於 100%。
     REF_KEY = "<references / uncompressed baseline>"
     score_cols = dict(candidates)
-    if use_hf_gt and references:
+    if (use_hf_gt or meta_has_answers) and references:
         score_cols[REF_KEY] = references
     ordered = ([REF_KEY] if REF_KEY in score_cols else []) + tags
 
@@ -348,7 +368,7 @@ def evaluate(json_path, use_hf_gt, threshold, do_extract, dump_csv,
         payload = {
             "source_json": json_path,
             "gt_name": gt_name,
-            "gt_source": "hf" if use_hf_gt else "references",
+            "gt_source": "hf" if use_hf_gt else ("meta" if meta_has_answers else "references"),
             "threshold": threshold,
             "answer_extraction": bool(do_extract),
             "baseline_tag": base_tag,

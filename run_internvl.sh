@@ -30,9 +30,9 @@ set -euo pipefail
 
 PY=${PY:-python}
 MODEL=${MODEL:-OpenGVLab/InternVL3_5-8B}     # 換模型改這裡
-DATASET=${DATASET:-hrbench}                  # hrbench | mmmu | docvqa
+DATASET=${DATASET:-docvqa}                  # hrbench | mmmu | docvqa
 BUDGETS=(1024 2048 3072 4096 5120)
-# NUM_IMAGES=${NUM_IMAGES:-100}                # accuracy 用（投稿前拉全量）
+# NUM_IMAGES=${NUM_IMAGES:-1000}                # accuracy 用（投稿前拉全量）
 NUM_IMAGES=${NUM_IMAGES:--1}
 METRIC_IMAGES=${METRIC_IMAGES:-24}           # peak/TTFT 用，小 n 即可
 MAX_NUM=${MAX_NUM:-48}
@@ -45,31 +45,39 @@ DS_ARGS="--use_ds --dataset $DATASET"
 MTAG=$(basename "$MODEL")
 WSUF=$($PY -c "print('' if abs($TAW-0.9)<1e-9 else '_w'+format($TAW,'g'))")
 
-# HR-Bench 的 split / prompt 模式（internvl_stream_v2.py 裡的 HRBENCH_SPLIT /
+# HR-Bench 的 split / prompt 模式（internvl_stream.py 裡的 HRBENCH_SPLIT /
 # HRBENCH_PROMPT 常數）。split 決定 hrbench_4k | hrbench_8k；prompt 決定 accuracy
 # 段怎麼評：letter -> 官方 CircularEval；open -> prompt 不帶選項，四選項輪換的
 # CircularEval 不適用，改比「每個 budget 的自由生成輸出 vs uncompressed reference」
 # 的語意相似度（見迴圈後的 similarity 段）。兩者都進 output naming。
-PROMPT_MODE=$(grep -oP 'HRBENCH_PROMPT\s*=\s*"\K[^"]+' internvl_stream_v2.py || echo letter)
-SPLIT_TAG=$(grep -oP 'HRBENCH_SPLIT\s*=\s*"\K[^"]+' internvl_stream_v2.py || echo hrbench_4k)
+PROMPT_MODE=$(grep -oP 'HRBENCH_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo letter)
+SPLIT_TAG=$(grep -oP 'HRBENCH_SPLIT\s*=\s*"\K[^"]+' internvl_stream.py || echo hrbench_4k)
 SPLIT_TAG=${SPLIT_TAG#hrbench_}              # hrbench_4k -> 4k
+
+# DocVQA 的 prompt 模式（internvl_stream.py 裡的 DOCVQA_PROMPT 常數），跟 HR-Bench
+# 的 letter/open 同一個精神：short -> 官方 ANLS 協定（evaluate_anls.py）；
+# open -> 不加作答指示、自由生成，沒有 GT 可比，改用語意相似度（同一個 similarity 段）。
+DOCVQA_PROMPT_MODE=$(grep -oP 'DOCVQA_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo short)
 
 if [ "$DATASET" = hrbench ]; then
     OUTBASE="out_block_${SPLIT_TAG}_${PROMPT_MODE}_${MTAG}_${DATASET}"
     METRIC_TAG="${SPLIT_TAG}_${MTAG}"
+elif [ "$DATASET" = docvqa ]; then
+    OUTBASE="out_block_${DOCVQA_PROMPT_MODE}_${MTAG}_${DATASET}"
+    METRIC_TAG="$MTAG"
 else
     OUTBASE="out_block_${MTAG}_${DATASET}"
     METRIC_TAG="$MTAG"
 fi
 
-echo "== Block B :: model=$MTAG  dataset=$DATASET  budgets=${BUDGETS[*]}  taw=$TAW  hrbench_split=$SPLIT_TAG  hrbench_prompt=$PROMPT_MODE =="
+echo "== Block B :: model=$MTAG  dataset=$DATASET  budgets=${BUDGETS[*]}  taw=$TAW  hrbench_split=$SPLIT_TAG  hrbench_prompt=$PROMPT_MODE  docvqa_prompt=$DOCVQA_PROMPT_MODE =="
 
 for BUDGET in "${BUDGETS[@]}"; do
     J="${OUTBASE}_b${BUDGET}.json"
     OURS_TAG="budget=${BUDGET}_info_density_delay0_thumbattn${WSUF}"
     COMMON="--model_name $MODEL $DS_ARGS --num_images $NUM_IMAGES --max_num $MAX_NUM \
             --budget $BUDGET --chunk_size $CHUNK --save --output_json $J"
-    run() { echo; echo "==== $MTAG $DATASET b$BUDGET :: $* ===="; $PY internvl_stream_v2.py $COMMON "$@"; }
+    run() { echo; echo "==== $MTAG $DATASET b$BUDGET :: $* ===="; $PY internvl_stream.py $COMMON "$@"; }
 
     # 0) uncompressed 上界（references，accuracy 的比較基準）
     run --batch_size "$STD_BATCH" --run_standard
@@ -105,14 +113,27 @@ for BUDGET in "${BUDGETS[@]}"; do
             $PY evaluate_mmmu.py --input_json "$J" --baseline_tag "$OURS_TAG" \
                 --summary_json "${OUTBASE}_b${BUDGET}.summary.json" || true ;;
         docvqa)
-            $PY evaluate_anls.py --input_json "$J" --use_hf_gt --baseline_tag "$OURS_TAG" \
-                --summary_json "${OUTBASE}_b${BUDGET}.summary.json" || true ;;
+            if [ "$DOCVQA_PROMPT_MODE" = open ]; then
+                # open：沒有 GT 可比對，逐 budget 的語意相似度在迴圈跑完後一次算
+                # （見下方 similarity 段），這裡只跳過。
+                :
+            else
+                # short：ANLS，GT 優先讀 meta.answers（load_docvqa 存的，天生對齊），
+                # 不用 --use_hf_gt 重載 HF dataset。
+                $PY evaluate_anls.py --input_json "$J" --baseline_tag "$OURS_TAG" \
+                    --dump_csv "${OUTBASE}_anls_b${BUDGET}.csv" \
+                    --summary_json "${OUTBASE}_b${BUDGET}.summary.json" || true
+            fi ;;
     esac
 done
 
-# ---- HR-Bench open：跨 budget 的語意相似度（每個 budget 輸出 vs uncompressed reference）----
-if [ "$DATASET" = hrbench ] && [ "$PROMPT_MODE" = open ]; then
-    echo; echo "==== $MTAG hrbench :: semantic similarity vs reference (all budgets) ===="
+# ---- open 模式（HR-Bench open 或 DocVQA open）：沒有 GT 可比對，改成跨 budget 的
+#      語意相似度（每個 budget 輸出 vs uncompressed reference）----
+IS_OPEN_RUN=0
+[ "$DATASET" = hrbench ] && [ "$PROMPT_MODE" = open ] && IS_OPEN_RUN=1
+[ "$DATASET" = docvqa ] && [ "$DOCVQA_PROMPT_MODE" = open ] && IS_OPEN_RUN=1
+if [ "$IS_OPEN_RUN" = 1 ]; then
+    echo; echo "==== $MTAG $DATASET :: semantic similarity vs reference (all budgets) ===="
     SIM_JSONS=(); for B in "${BUDGETS[@]}"; do SIM_JSONS+=("${OUTBASE}_b${B}.json"); done
     MERGED="${OUTBASE}_sim_merged.json"
     $PY merge_sim_inputs.py --out "$MERGED" "${SIM_JSONS[@]}" \
@@ -131,10 +152,12 @@ $PY bench_metrics.py --model_name "$MODEL" --dataset "$DATASET" \
 
 echo
 echo "===== Block B done  ($MTAG / $DATASET) ====="
-if [ "$DATASET" = hrbench ] && [ "$PROMPT_MODE" = open ]; then
-    echo "open matchRef    : ${OUTBASE}_open_b*.json"
+if [ "$IS_OPEN_RUN" = 1 ]; then
+    [ "$DATASET" = hrbench ] && echo "open matchRef    : ${OUTBASE}_open_b*.json"
     echo "similarity table : ${OUTBASE}_sim_summary.csv  (per-sample: ${OUTBASE}_sim_persample.csv)"
-else
+elif [ "$DATASET" = hrbench ]; then
     echo "circular summary : ${OUTBASE}_circ_b*.json"
+elif [ "$DATASET" = docvqa ]; then
+    echo "ANLS summary     : ${OUTBASE}_b*.summary.json  (per-sample: ${OUTBASE}_anls_b*.csv)"
 fi
 echo "metrics          : metrics_${METRIC_TAG}_${DATASET}.csv"

@@ -16,8 +16,8 @@
       --num_images 24 --budgets 1024,2048,4096 \
       --thumb_attn --out_csv metrics_internvl8b_hrbench4k.csv
 
-  （HR-Bench split / prompt 沒有旗標，改 internvl_stream_v2.py 頂端的
-   HRBENCH_SPLIT / HRBENCH_PROMPT 常數）
+  （HR-Bench split / prompt、DocVQA prompt 沒有旗標，改 internvl_stream.py 頂端的
+   HRBENCH_SPLIT / HRBENCH_PROMPT / DOCVQA_PROMPT 常數）
 """
 import gc
 import csv
@@ -59,7 +59,8 @@ def _load_dataset(name, n):
     if name == "mmmu":
         return load_mmmu(split="validation", num_image=n)
     if name == "docvqa":
-        return load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation", num_image=n)
+        return load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
+                            num_image=n, prompt_mode=S.DOCVQA_PROMPT)
     raise ValueError(name)
 
 

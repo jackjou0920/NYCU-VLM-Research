@@ -1,5 +1,5 @@
 """
-HR-Bench 評測（吃 internvl_stream_v2.py 存的 JSON：
+HR-Bench 評測（吃 internvl_stream.py 存的 JSON：
     {"references": [...], "candidates": {tag: [...]}, "meta": [...]}）
 
 meta[i] = {"answer": "A", "answer_text": "27B", "options": ["27B","37B","27D","27E"],
@@ -199,7 +199,7 @@ def evaluate(json_path, prompt_mode, dump_csv, baseline_tag=None,
         raise SystemExit('JSON 需要 {"references":[...], "candidates":{tag:[...]}, "meta":[...]}')
     if not data.get("meta"):
         raise SystemExit("JSON 沒有 meta（answer/options/category）。"
-                         "請用更新後的 internvl_stream_v2.py 重跑（--dataset hrbench 會存 meta）。")
+                         "請用更新後的 internvl_stream.py 重跑（--dataset hrbench 會存 meta）。")
 
     references = [str(x) for x in data.get("references", [])]
     candidates = {k: [str(x) for x in v] for k, v in data["candidates"].items()}

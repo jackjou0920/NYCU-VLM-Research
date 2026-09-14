@@ -141,6 +141,10 @@ COVERAGE_FLOOR = 1     # A3：flush 的 top-K 永遠保留 1 個 farthest-point 
 HRBENCH_SPLIT = "hrbench_8k"   # hrbench_4k | hrbench_8k
 HRBENCH_PROMPT = "open"      # letter（選項進 prompt、只輸出字母）| open（只給題目、自由生成）
 
+# ── DocVQA 設定：沒有 CLI 旗標，要換 prompt 就改這個常數 ──
+DOCVQA_PROMPT = "open"       # short（官方 ANLS 協定、比 evaluate_anls.py）
+                              # | open（只給題目、自由生成，比 semantic similarity）
+
 # ── thumbnail-attention tile prior（--thumb_attn 才啟用，預設關；跨方法比較用）──
 #   thumbnail 跑一次 LLM forward → 取「答案位置對 256 個 thumbnail patch 的 attention」
 #   → 16x16 粗 saliency → 每個 grid tile 一個 prior，再跟 info_density 分數線性混合：
@@ -1908,7 +1912,8 @@ def main():
             # MMMU：選擇題，prompt 會帶選項；每筆會多存 answer/options/question_type 進 meta
             datasets = load_mmmu(split="validation", num_image=args.num_images)
         elif args.dataset == "docvqa":
-            datasets = load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation", num_image=args.num_images)
+            datasets = load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
+                                    num_image=args.num_images, prompt_mode=DOCVQA_PROMPT)
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                     num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
@@ -1932,13 +1937,16 @@ def main():
     else:
         output_results = {"references": [], "candidates": {}}
 
-    # ── 2b. MMMU / HR-Bench：把每題的 answer/options/... 存進 JSON 的 meta ──
+    # ── 2b. MMMU / HR-Bench / DocVQA：把每題的 answer/options/... 存進 JSON 的 meta ──
     #        HR-Bench 多存 answer_text（open 模式下 evaluate 拿它比對自由輸出）與 category。
+    #        DocVQA 多存 answers（官方允許的多個可接受答案，ANLS 要取 max），讓
+    #        evaluate_anls.py 直接讀 meta 算 GT，不用重載 HF dataset、沒有對齊風險。
     if datasets and "answer" in datasets[0]:
         output_results["meta"] = [
             {"answer": d.get("answer", ""), "options": d.get("options", []),
              "question_type": d.get("question_type", "open"), "id": d.get("id", str(k)),
-             "answer_text": d.get("answer_text", ""), "category": d.get("category", "")}
+             "answer_text": d.get("answer_text", ""), "category": d.get("category", ""),
+             "answers": d.get("answers", [])}
             for k, d in enumerate(datasets)
         ]
 

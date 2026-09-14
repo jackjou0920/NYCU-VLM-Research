@@ -118,23 +118,70 @@ def extract_question_image(sample):
     }
 
 
-def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation", num_image=None):
+def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
+                 num_image=None, prompt_mode="short"):
+    """DocVQA loader（給 internvl_stream.py 用）。跟 load_hrbench 同一套設計：
+
+    prompt_mode 對應兩種要比的設定（跟 HRBENCH_PROMPT 的 letter/open 是同一個精神）：
+
+      "short"（預設，官方 ANLS 協定）：question 後面加一句作答指示，逼模型輸出
+          短答案（DocVQA 官方就是這樣問的）。evaluate_anls.py 拿它跟 GT 算 ANLS。
+      "open"：只給題目本身，不加任何作答指示，讓模型自由生成完整說明。
+          沒有「正確答案」可比對，改用 semantic similarity 比「每個 budget 的輸出
+          vs uncompressed reference」（跟 evaluate_anls.py --similarity / HR-Bench
+          open 模式同一套）。
+
+    每筆額外回傳 answer / answers / id，讓 internvl_stream.py 存進輸出 JSON 的
+    meta（比照 load_hrbench）：
+      - answers：DocVQA 官方允許的多個可接受答案（list），ANLS 要取 max。
+      - id：HF dataset 原始的 questionId，不是攤平後的位置索引。
+
+    這兩點是刻意補的：舊版 loader 用 extract_question_image()（MMMU 的 <image N>
+    佔位符邏輯，DocVQA 沒有這種佔位符，等於繞了一圈只取 sample["image"]）且完全
+    不存 answer/id，導致 evaluate_anls.py 只能用 --use_hf_gt 重新載入 HF dataset、
+    靠「第 i 筆對第 i 筆」的假設對齊 GT——一旦這裡跳過任何一張圖（no image /
+    壞檔），後面每一筆都會位移、ANLS 全部算錯且不會有任何警告。存進 meta 之後
+    evaluate_anls.py 直接讀，不用重載、沒有對齊風險（跟 HR-Bench 修過的坑一樣）。
+    """
+    if prompt_mode not in ("short", "open"):
+        raise ValueError(f"prompt_mode must be 'short' or 'open', got {prompt_mode!r}")
+
     ds = load_dataset(dataset, subject, split=split)
+    limit = len(ds) if (num_image is None or num_image == -1) else min(int(num_image), len(ds))
 
-    if num_image is None:
-        num_image = float("inf")
-
-    samples = []
-    skipped = 0
-    for i in range(min(num_image, len(ds))):
-        result = extract_question_image(ds[i])
-        if result is not None and result.get("image") is not None:
-            samples.append(result)
-        else:
+    samples, skipped = [], 0
+    for i in range(limit):
+        s = ds[i]
+        image = _to_pil(s.get("image") or s.get("image_1"))
+        if image is None:
             skipped += 1
-    if skipped:
-        print(f"[load_hf_dataset] skipped {skipped} sample(s) with no usable image")
-    # print(f"Loaded {len(samples)} samples")
+            continue
+
+        q = str(s.get("question", "") or "").strip()
+
+        raw_ans = s.get("answers")
+        if raw_ans is None:
+            raw_ans = s.get("answer")
+        if isinstance(raw_ans, str):
+            raw_ans = [raw_ans]
+        answers = [str(a) for a in (raw_ans or [])]
+
+        if prompt_mode == "short":
+            prompt_q = f"{q}\nAnswer the question using a single word or phrase."
+        else:
+            prompt_q = q
+
+        samples.append({
+            "question": prompt_q,
+            "image": image,
+            "answer": answers[0] if answers else "",
+            "answers": answers,
+            "question_type": "docvqa",
+            "id": str(s.get("questionId", s.get("id", i))),
+        })
+
+    print(f"[load_docvqa] {dataset}:{split} (prompt_mode={prompt_mode}) -> "
+          f"kept {len(samples)}, skipped {skipped} (no image)")
     return samples
 
 
@@ -205,7 +252,7 @@ def load_mmmu(split="validation", num_image=None, dataset="lmms-lab-encoder/MMMU
 
 
 def load_hrbench(dataset="DreamMr/HR-Bench", split="hrbench_4k", num_image=None, prompt_mode="letter"):
-    """HR-Bench loader（給 internvl_stream_v2.py 用）。
+    """HR-Bench loader（給 internvl_stream.py 用）。
 
     HR-Bench 每筆長這樣（欄位名固定）：
         question : "What is the number displayed above the entrance ..."
@@ -229,7 +276,7 @@ def load_hrbench(dataset="DreamMr/HR-Bench", split="hrbench_4k", num_image=None,
         evaluate 時改用 answer_text（正解選項的文字）去比對模型的自由輸出。
 
     每筆額外回傳 answer / answer_text / options / question_type / category / id，
-    讓 internvl_stream_v2.py 存進輸出 JSON 的 meta（比照 load_mmmu），
+    讓 internvl_stream.py 存進輸出 JSON 的 meta（比照 load_mmmu），
     evaluate 直接讀、不用重載 dataset。
     """
     print("prompt_mode:", prompt_mode)
