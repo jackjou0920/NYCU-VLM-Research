@@ -1,0 +1,47 @@
+{
+  "source_json": "out_fastv_4k_letter_InternVL3_5-8B_hrbench_b5120.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "fastv_budget=5120_k=2",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n_groups": 200,
+      "circ_acc": 62.0,
+      "vanilla_acc": 72.875,
+      "by_category": {
+        "cross": 47.0,
+        "single": 77.0
+      },
+      "delta": 1.0,
+      "ci_lo": -1.5,
+      "ci_hi": 3.5000000000000004,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": true
+    },
+    {
+      "tag": "fastv_budget=5120_k=2",
+      "n_groups": 200,
+      "circ_acc": 61.0,
+      "vanilla_acc": 72.875,
+      "by_category": {
+        "cross": 45.0,
+        "single": 77.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}

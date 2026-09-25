@@ -1,0 +1,40 @@
+{
+  "source_json": "out_ifprune_short_InternVL3_5-8B_infovqa_b2048.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "ifprune_budget=2048_L=2",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed baseline>",
+      "n": 2801,
+      "anls": 78.7283666767062,
+      "exact": 72.90253480899679,
+      "zero": 18.636201356658336,
+      "delta": 5.293400862857987,
+      "ci_lo": 4.180851311873183,
+      "ci_hi": 6.441423031712051,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "ifprune_budget=2048_L=2",
+      "n": 2801,
+      "anls": 73.43496581384821,
+      "exact": 66.94037843627277,
+      "zero": 23.59871474473402,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

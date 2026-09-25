@@ -1,9 +1,17 @@
 """
-DocVQA ANLS 評測：對一份 run 出來的 JSON（{"references": [...], "candidates": {tag: [...]}}）
-逐 tag 算 ANLS。
+DocVQA / InfoVQA 官方 ANLS 評測：對一份 run 出來的 JSON
+（{"references": [...], "candidates": {tag: [...]}}）逐 tag 算 ANLS。
+
+指標完全照官方（deepopinion/anls_star_metric 的 ANLSLeaf）：normalize 只有
+lower + strip + 壓縮空白，score = 1 - NLD、低於 0.5 歸 0、多個 GT 取最大；
+不刪詞 / 單位 / 標點、沒有包含關係 fallback、也不對模型輸出做答案抽取
+（所以 prompt 一定要逼模型只輸出短答案，見 load_docvqa / load_infovqa 的 "short"）。
+表格裡的 exact% = 官方 Accuracy（normalize 後完全一致）。DocVQA 與 InfoVQA 共用，
+用同一份 meta.answers 就好，不用分資料集切換。
 
 Ground truth 三種來源，優先序 --use_hf_gt > meta > references：
-  --use_hf_gt        從 HF lmms-lab-encoder/DocVQA validation **重新載入**官方
+  --use_hf_gt        從 HF **重新載入**官方（預設 DocVQA validation；InfoVQA 要加
+                     --hf_dataset Ahren09/InfoVQA --hf_config "" --hf_split val）
                      answers（多 GT，官方算法）。**假設 JSON 裡第 i 筆對應 HF
                      dataset 第 i 筆**——如果 load_docvqa() 跳過了任何一張圖
                      （no image / 壞檔），後面每一筆都會位移，且不會有警告。
@@ -34,7 +42,6 @@ bootstrap CI 太寬、看不出兩個 selection 變體差異時，先看這個�
 
     python evaluate_anls.py --input_json out.json --use_hf_gt --similarity
 """
-import re
 import csv
 import json
 import argparse
@@ -49,104 +56,26 @@ HF_SPLIT = "validation"
 # ──────────────────────────────────────────────────────────────────────────────
 # ANLS（單一樣本，支援多 ground truth）
 # ──────────────────────────────────────────────────────────────────────────────
-def advanced_normalize_text(text: str) -> str:
-    """
-    進階文本清洗：比照官方 MMEval / VLMEvalKit 常規
-    移除贅字、修飾詞、單位、標點，只保留核心核心詞
-    """
-    text = str(text).lower().strip()
-    
-    # 1. 移除大模型常見的句首引導詞、修飾詞 (nearly, about, approximately 等)
-    prefixes_to_remove = [
-        r"^\s*according\s+to\s+the\s+[a-z_]+\s*,\s*", 
-        r"^\s*the\s+[a-z_]+\s+is\s+", r"^\s*it\s+is\s+approximately\s+",
-        r"\b(approximately|approx|about|nearly|over|around|more\s+than|less\s+than|almost)\b"
-    ]
-    for p in prefixes_to_remove:
-        text = re.sub(p, "", text, flags=re.IGNORECASE)
-        
-    # 2. 如果模型吐了一長串話，嘗試抽取「最後一個標點後面的核心」或「引號內文字」
-    # 許多模型喜歡寫: The total amount is $150. 
-    if "is " in text:
-        text = text.split("is ")[-1]
-    
-    # 移除句尾的點 (例如 "50." -> "50")
-    text = text.rstrip('.')
-    
-    # 3. 移除常見的末尾單位贅字 (例如 "4 million farmers" -> "4 million")
-    text = re.sub(r"\s+(farmers|people|patients|dollars|units|crores|rupees|lacs)\b.*$", "", text, flags=re.IGNORECASE)
-    
-    # 4. 清除多餘符號與空格
-    text = re.sub(r"[,\"\';\(\):\-–—?]", " ", text) # 將標點轉空格，避免影響長度比對
-    text = " ".join(text.split()) # 壓縮連續空格
-    
-    return text.strip()
-
-
 def calculate_single_anls(prediction: str, ground_truths, theta: float = 0.5) -> float:
-    """ 升級版 ANLS 計算 """
-    # 先做進階清洗
-    pred = advanced_normalize_text(prediction)
-    max_anls = 0.0
-    
+    """官方 ANLS：逐行對照 deepopinion/anls_star_metric 的 ANLSLeaf.nls_list()。
+    DocVQA / InfoVQA 的 GT 是 list[str]（多個可接受答案）、預測是 str，官方的 VQA 相容
+    模式把 GT 當 tuple，取分數最高的那個。
+
+      * normalize 只有 " ".join(str(x).strip().lower().split())：不刪詞、不刪標點、不刪單位
+      * 分數 = 1 - Levenshtein / max(len)；低於 theta（0.5）歸 0，剛好 == theta 的保留
+      * 沒有「包含關係」fallback，也不對模型輸出做答案抽取
+    """
+    pred = " ".join(str(prediction).strip().lower().split())
+    best = 0.0
     for gt in ground_truths:
-        gt = advanced_normalize_text(gt)
-        
-        if not pred and not gt:
-            max_anls = max(max_anls, 1.0)
-            continue
-        if not pred or not gt:
-            max_anls = max(max_anls, 0.0)
-            continue
-            
-        # 計算編輯距離
-        edit_distance = Levenshtein.distance(pred, gt)
-        max_len = max(len(pred), len(gt))
-        nld = edit_distance / max_len
-        
-        ans_similarity = (1.0 - nld) if nld < theta else 0.0
-        
-        # 額外防防呆：如果 pred 是一句長話但「完全包含」了短的 gt (或者相反)
-        # 且長度落差在合理範圍內，給予部分分數免得直接歸 0
-        if ans_similarity == 0.0 and (gt in pred or pred in gt) and len(pred) < len(gt) * 3:
-            ans_similarity = min(len(pred), len(gt)) / max(len(pred), len(gt))
-            # 限制 fallback 相似度不要高過門檻太多，但至少不為 0
-            ans_similarity = ans_similarity if ans_similarity < theta else 0.45
-            
-        if ans_similarity > max_anls:
-            max_anls = ans_similarity
-            
-    return max_anls
-
-
-# ──────────────────────────────────────────────────────────────────────────────
-# 答案抽取：candidate 常是 CoT（"Step 1... Answer: X"）或整句，先抽最後的短答案
-# ──────────────────────────────────────────────────────────────────────────────
-_MARKER_RE = re.compile(
-    r"^\s*\**\s*(?:the\s+)?(?:final\s+answer|answer|ans)\s*\**\s*[:\-–—]\s*(.+?)\s*$",
-    re.IGNORECASE,
-)
-
-
-def _tidy(s: str) -> str:
-    s = s.strip().strip("`").strip()
-    s = s.strip("* ").strip()
-    s = s.strip(" \t\"'")
-    return re.sub(r"\s+", " ", s).strip()
-
-
-def extract_final_answer(text: str) -> str:
-    """由後往前找 "Answer: ..." 行取冒號後內容；找不到 marker 就取最後一個非空行。"""
-    if not text:
-        return ""
-    lines = [ln.strip() for ln in str(text).strip().splitlines() if ln.strip()]
-    if not lines:
-        return ""
-    for ln in reversed(lines):
-        m = _MARKER_RE.match(ln)
-        if m:
-            return _tidy(m.group(1))
-    return _tidy(lines[-1])
+        g = " ".join(str(gt).strip().lower().split())
+        n = max(len(pred), len(g))
+        nl = 0.0 if n == 0 else Levenshtein.distance(pred, g) / n
+        score = 1 - nl
+        if score < theta:
+            score = 0.0
+        best = max(best, score)
+    return best
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -200,7 +129,7 @@ def load_hf_gold(dataset=HF_DATASET, config=HF_CONFIG, split=HF_SPLIT):
     """回傳 list[list[str]]，第 i 筆是第 i 題所有可接受答案。"""
     from datasets import load_dataset
 
-    ds = load_dataset(dataset, config, split=split)
+    ds = load_dataset(dataset, config or None, split=split)
     key = next(
         (k for k in ("answers", "answer", "gt_answers", "gt_answer", "gt") if k in ds.column_names),
         None,
@@ -237,7 +166,7 @@ def run_similarity(references, candidates, tags):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-def evaluate(json_path, use_hf_gt, threshold, do_extract, dump_csv,
+def evaluate(json_path, use_hf_gt, threshold, dump_csv,
              hf_dataset, hf_config, hf_split,
              baseline_tag=None, n_boot=2000, seed=0, summary_json=None,
              similarity=False):
@@ -254,7 +183,7 @@ def evaluate(json_path, use_hf_gt, threshold, do_extract, dump_csv,
     candidates = {k: [str(x) for x in v] for k, v in data["candidates"].items()}
     tags = sorted(candidates)
 
-    prep = extract_final_answer if do_extract else (lambda s: str(s).strip())
+    prep = str    # 官方 ANLS 直接吃模型原始輸出，不做答案抽取
 
     # ---- ground truth：優先序 --use_hf_gt > meta.answers > references ----
     meta = data.get("meta") or []
@@ -331,7 +260,7 @@ def evaluate(json_path, use_hf_gt, threshold, do_extract, dump_csv,
     base_tag = pick_baseline_tag(tags, baseline_tag)
     base_scores = per_tag_scores[base_tag]
 
-    print(f"\nground truth = {gt_name}   |   answer extraction = {'ON' if do_extract else 'OFF'}"
+    print(f"\nground truth = {gt_name}   |   metric = official ANLS"
           f"   |   threshold = {threshold}   |   baseline = {base_tag}")
     print(f"paired bootstrap: n_boot={n_boot}, seed={seed}   (* = 95% CI 不含 0，相對 baseline 顯著)\n")
     print(f"{'tag':<44} {'n':>6} {'ANLS%':>8} {'exact%':>7} {'zero%':>7}   {'ΔANLS% vs base (95% CI)':>30}")
@@ -370,7 +299,7 @@ def evaluate(json_path, use_hf_gt, threshold, do_extract, dump_csv,
             "gt_name": gt_name,
             "gt_source": "hf" if use_hf_gt else ("meta" if meta_has_answers else "references"),
             "threshold": threshold,
-            "answer_extraction": bool(do_extract),
+            "answer_extraction": False,
             "baseline_tag": base_tag,
             "n_boot": n_boot,
             "seed": seed,
@@ -410,8 +339,7 @@ if __name__ == "__main__":
     ap.add_argument("--use_hf_gt", action="store_true",
                     help="用 HF lmms-lab-encoder/DocVQA validation 的官方 answers 當 GT；"
                          "不加則用 JSON 內的 references")
-    ap.add_argument("--threshold", type=float, default=0.5, help="ANLS 門檻，NL 低於此歸 0（官方 0.5）")
-    ap.add_argument("--no_extract", action="store_true", help="不做答案抽取，直接比原始字串")
+    ap.add_argument("--threshold", type=float, default=0.5, help="ANLS 門檻，1-NL 低於此歸 0（官方 0.5，除非要做敏感度分析否則別動）")
     ap.add_argument("--dump_csv", type=str, default=None, help="把 per-sample (tag, idx, anls, gt, pred) 存成 CSV")
     ap.add_argument("--baseline_tag", type=str, default=None,
                     help="ΔANLS 的比較基準；預設自動挑沒有聚合後綴的 tag（= mean）")
@@ -423,7 +351,8 @@ if __name__ == "__main__":
                     help="另外算 metric 2：各 tag 輸出 vs references 的 cosine + BERTScore，"
                          "不需要 ground truth，適合偵測 ANLS bootstrap CI 太寬看不出來的小效應")
     ap.add_argument("--hf_dataset", type=str, default=HF_DATASET)
-    ap.add_argument("--hf_config", type=str, default=HF_CONFIG)
+    ap.add_argument("--hf_config", type=str, default=HF_CONFIG,
+                    help="HF config 名；InfoVQA 沒有 config，傳空字串 \"\"")
     ap.add_argument("--hf_split", type=str, default=HF_SPLIT)
     args = ap.parse_args()
 
@@ -434,7 +363,6 @@ if __name__ == "__main__":
         json_path=json_path,
         use_hf_gt=args.use_hf_gt,
         threshold=args.threshold,
-        do_extract=not args.no_extract,
         dump_csv=args.dump_csv,
         hf_dataset=args.hf_dataset,
         hf_config=args.hf_config,

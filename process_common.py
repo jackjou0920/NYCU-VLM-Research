@@ -1,9 +1,6 @@
-import re
 import os
-import ast
 import glob
 import base64
-import string
 from io import BytesIO
 from PIL import Image
 from datasets import load_dataset
@@ -68,56 +65,6 @@ def load_local(image, batch_size, num_image=None):
     return samples
 
 
-def extract_question_image(sample):
-    """
-    從 MMMU sample 中：
-    1. 找 question 中第一個 <image N>
-    2. 取得對應的 image_N
-    3. 移除 question 中所有 <image N>
-    
-    Returns:
-        {
-            "question": str,
-            "image": PIL.Image,
-            "image_index": int,
-        }
-    """
-    question = sample["question"]
-
-    # --------------------------------------------------------
-    # 找第一個 image placeholder
-    # --------------------------------------------------------
-    match = re.search(r"<image\s+(\d+)>", question)
-    if match is None:
-        # 沒有 <image N> placeholder：MMMU 沒有純 "image" 欄位，退回 image_1。
-        img = sample.get("image") or sample.get("image_1")
-        return {
-            "question": question,
-            "image": img.convert("RGB") if img is not None else None,
-            "image_index": -1,
-        }
-
-    image_index = int(match.group(1))
-
-    # --------------------------------------------------------
-    # 根據 placeholder 找真正對應的 image
-    # --------------------------------------------------------
-    image = sample.get(f"image_{image_index}")
-    if image is None:
-        return None
-
-    # --------------------------------------------------------
-    # 移除所有 image placeholder
-    # --------------------------------------------------------
-    question = re.sub(r"<image\s+\d+>", "", question).strip()
-
-    return {
-        "question": question,
-        "image": image.convert("RGB"),   # MMMU 有非 RGB 圖，統一轉 RGB（跟 load_local 一致）
-        "image_index": image_index,
-    }
-
-
 def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
                  num_image=None, prompt_mode="short"):
     """DocVQA loader（給 internvl_stream.py 用）。跟 load_hrbench 同一套設計：
@@ -136,9 +83,8 @@ def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="vali
       - answers：DocVQA 官方允許的多個可接受答案（list），ANLS 要取 max。
       - id：HF dataset 原始的 questionId，不是攤平後的位置索引。
 
-    這兩點是刻意補的：舊版 loader 用 extract_question_image()（MMMU 的 <image N>
-    佔位符邏輯，DocVQA 沒有這種佔位符，等於繞了一圈只取 sample["image"]）且完全
-    不存 answer/id，導致 evaluate_anls.py 只能用 --use_hf_gt 重新載入 HF dataset、
+    這兩點是刻意補的：舊版 loader 完全不存 answer/id，導致 evaluate_anls.py
+    只能用 --use_hf_gt 重新載入 HF dataset、
     靠「第 i 筆對第 i 筆」的假設對齊 GT——一旦這裡跳過任何一張圖（no image /
     壞檔），後面每一筆都會位移、ANLS 全部算錯且不會有任何警告。存進 meta 之後
     evaluate_anls.py 直接讀，不用重載、沒有對齊風險（跟 HR-Bench 修過的坑一樣）。
@@ -185,69 +131,55 @@ def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="vali
     return samples
 
 
-def load_mmmu(split="validation", num_image=None, dataset="lmms-lab-encoder/MMMU"):
-    """MMMU 專用 loader（給 internvl_svm.py 用）。跟 load_hf_dataset 的差別：
+def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_mode="short"):
+    """InfoVQA loader（給 internvl_stream.py 用）。設計比照 load_docvqa：
 
-    1. prompt 會把選項一起帶上（MMMU 是選擇題，模型看不到選項根本沒法答），
-       格式比照官方 MMMU：question + "A. .. / B. .." + "Answer with the option's
-       letter from the given choices directly."；open 題則加簡答指示。
-    2. 每筆多回傳 answer / options / question_type / id，讓 internvl_svm.py 存進
-       輸出 JSON 的 meta，evaluate_mmmu.py 直接讀、不用重載 dataset（免對齊風險）。
-    3. 影像取 question 裡第一個 <image N> 對應的 image_N（多圖題只用第一張，
-       單圖 pipeline 的限制，會印出多圖題數量）。沒有可用影像的題目跳過。
+    prompt_mode：
+      "short"（預設，官方 ANLS 協定）：question 後面加一句作答指示，輸出短答案。
+      "open"：只給題目本身，自由生成。
+
+    Ahren09/InfoVQA 的欄位：id (int) / question / answer (list[str]) / image / deck_name /
+    image_url。注意 validation split 在這個 dataset 裡叫 "val"，不是 "validation"。
+    每筆額外回傳 answer / answers / id，讓 internvl_stream.py 存進輸出 JSON 的 meta，
+    ANLS 直接讀 meta，不用重載 HF dataset（避免跳圖造成的對齊位移，理由同 load_docvqa）。
     """
-    ds = load_dataset(dataset, None, split=split)
-    limit = len(ds) if num_image is None else min(int(num_image), len(ds))
-    letters = string.ascii_uppercase
+    if prompt_mode not in ("short", "open"):
+        raise ValueError(f"prompt_mode must be 'short' or 'open', got {prompt_mode!r}")
 
-    samples, skipped, multi = [], 0, 0
+    ds = load_dataset(dataset, split=split)
+    limit = len(ds) if (num_image is None or num_image == -1) else min(int(num_image), len(ds))
+
+    samples, skipped = [], 0
     for i in range(limit):
         s = ds[i]
-        q = str(s.get("question", "") or "")
-        idxs = re.findall(r"<image\s+(\d+)>", q)
-        if idxs:
-            if len(set(idxs)) > 1:
-                multi += 1
-            img = s.get(f"image_{int(idxs[0])}")
-        else:
-            img = s.get("image") or s.get("image_1")
-        if img is None:
+        image = _to_pil(s.get("image"))
+        if image is None:
             skipped += 1
             continue
 
-        q_clean = re.sub(r"<image\s+\d+>", "", q).strip()
+        q = str(s.get("question", "") or "").strip()
 
-        raw_opts = s.get("options")
-        if isinstance(raw_opts, str):
-            try:
-                raw_opts = ast.literal_eval(raw_opts)
-            except (ValueError, SyntaxError):
-                raw_opts = []
-        opts = [str(o) for o in (raw_opts or [])]
+        raw_ans = s.get("answer")
+        if isinstance(raw_ans, str):
+            raw_ans = [raw_ans]
+        answers = [str(a) for a in (raw_ans or [])]
 
-        qtype = str(s.get("question_type") or ("multiple-choice" if opts else "open"))
-        answer = s.get("answer")
-        if isinstance(answer, list):
-            answer = answer[0] if answer else ""
-
-        if qtype == "multiple-choice" and opts:
-            choice_block = "\n".join(f"{letters[j]}. {o}" for j, o in enumerate(opts))
-            prompt_q = (f"{q_clean}\n{choice_block}\n"
-                        "Answer with the option's letter from the given choices directly.")
+        if prompt_mode == "short":
+            prompt_q = f"{q}\nAnswer the question using a single word or phrase."
         else:
-            prompt_q = f"{q_clean}\nAnswer the question using a single word or phrase."
+            prompt_q = q
 
         samples.append({
             "question": prompt_q,
-            "image": img.convert("RGB"),
-            "answer": "" if answer is None else str(answer),
-            "options": opts,
-            "question_type": qtype,
+            "image": image,
+            "answer": answers[0] if answers else "",
+            "answers": answers,
+            "question_type": "infovqa",
             "id": str(s.get("id", i)),
         })
 
-    print(f"[load_mmmu] {dataset}:{split} -> kept {len(samples)}, "
-          f"skipped {skipped} (no image), {multi} multi-image question(s) (first image only)")
+    print(f"[load_infovqa] {dataset}:{split} (prompt_mode={prompt_mode}) -> "
+          f"kept {len(samples)}, skipped {skipped} (no image)")
     return samples
 
 
@@ -270,14 +202,13 @@ def load_hrbench(dataset="DreamMr/HR-Bench", split="hrbench_4k", num_image=None,
           C. 27D
           D. 27E
           Answer with the option's letter from the given choices directly.
-        格式比照 load_mmmu 的選擇題 prompt，evaluate 時直接比對輸出字母 vs answer。
+        格式跟 DocVQA 的作答指示同一個精神，evaluate 時直接比對輸出字母 vs answer。
 
       "open"：只給題目本身，不帶任何選項也不加作答指示，讓模型自由生成完整答案。
         evaluate 時改用 answer_text（正解選項的文字）去比對模型的自由輸出。
 
     每筆額外回傳 answer / answer_text / options / question_type / category / id，
-    讓 internvl_stream.py 存進輸出 JSON 的 meta（比照 load_mmmu），
-    evaluate 直接讀、不用重載 dataset。
+    讓 internvl_stream.py 存進輸出 JSON 的 meta，evaluate 直接讀、不用重載 dataset。
     """
     print("prompt_mode:", prompt_mode)
     if prompt_mode not in ("letter", "open"):

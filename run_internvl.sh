@@ -12,14 +12,14 @@
 #   拿掉的：delay window（D=0≈D=2≈D=48，無效）、spatial_bin、tile_agg 掃描、
 #           rescore/novelty 旗標（併進 info_density 預設）。
 #
-#   評測廣度：改 DATASET / HRBENCH_SPLIT 手動跑 hrbench_4k / hrbench_8k / mmmu / docvqa
+#   評測廣度：改 DATASET / HRBENCH_SPLIT 手動跑 hrbench_4k / hrbench_8k / docvqa / infovqa
 #             （V*Bench / MME-RealWorld 需要新 loader，未含）
 #   不同模型：改 MODEL 手動跑（pipeline 綁 InternVL tile 結構，換 family 要另外接）
 #   主張指標：budget 迴圈跑完後，跑一次 bench_metrics.py —— 未壓縮 vs streaming 的
 #             peak memory / TTFT / vision time，小 n（METRIC_IMAGES）即可，輸出 CSV
 #
 #   HR-Bench 用官方 CircularEval 計分（evaluate_hrbench_circular.py，組為單位做
-#   bootstrap），另存 vanilla per-sample 供對照。mmmu→evaluate_mmmu，docvqa→evaluate_anls。
+#   bootstrap），另存 vanilla per-sample 供對照。docvqa / infovqa→evaluate_anls。
 #
 # 產出檔名：
 #   accuracy JSON   : out_block_b_<model>_<dataset>_b<budget>.json
@@ -30,7 +30,7 @@ set -euo pipefail
 
 PY=${PY:-python}
 MODEL=${MODEL:-OpenGVLab/InternVL3_5-8B}     # 換模型改這裡
-DATASET=${DATASET:-docvqa}                  # hrbench | mmmu | docvqa
+DATASET=${DATASET:-infovqa}                  # hrbench | docvqa | infovqa
 BUDGETS=(1024 2048 3072 4096 5120)
 # NUM_IMAGES=${NUM_IMAGES:-1000}                # accuracy 用（投稿前拉全量）
 NUM_IMAGES=${NUM_IMAGES:--1}
@@ -59,18 +59,23 @@ SPLIT_TAG=${SPLIT_TAG#hrbench_}              # hrbench_4k -> 4k
 # open -> 不加作答指示、自由生成，沒有 GT 可比，改用語意相似度（同一個 similarity 段）。
 DOCVQA_PROMPT_MODE=$(grep -oP 'DOCVQA_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo short)
 
+# InfoVQA（validation split）同 DocVQA：INFOVQA_PROMPT 常數決定 short(ANLS) / open(語意相似度)。
+INFOVQA_PROMPT_MODE=$(grep -oP 'INFOVQA_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo short)
+# docvqa / infovqa 共用的 prompt 模式，後面的 OUTBASE / eval / similarity 都吃這個。
+if [ "$DATASET" = infovqa ]; then QA_PROMPT_MODE=$INFOVQA_PROMPT_MODE; else QA_PROMPT_MODE=$DOCVQA_PROMPT_MODE; fi
+
 if [ "$DATASET" = hrbench ]; then
     OUTBASE="out_block_${SPLIT_TAG}_${PROMPT_MODE}_${MTAG}_${DATASET}"
     METRIC_TAG="${SPLIT_TAG}_${MTAG}"
-elif [ "$DATASET" = docvqa ]; then
-    OUTBASE="out_block_${DOCVQA_PROMPT_MODE}_${MTAG}_${DATASET}"
+elif [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; then
+    OUTBASE="out_block_${QA_PROMPT_MODE}_${MTAG}_${DATASET}"
     METRIC_TAG="$MTAG"
 else
     OUTBASE="out_block_${MTAG}_${DATASET}"
     METRIC_TAG="$MTAG"
 fi
 
-echo "== Block B :: model=$MTAG  dataset=$DATASET  budgets=${BUDGETS[*]}  taw=$TAW  hrbench_split=$SPLIT_TAG  hrbench_prompt=$PROMPT_MODE  docvqa_prompt=$DOCVQA_PROMPT_MODE =="
+echo "== Block B :: model=$MTAG  dataset=$DATASET  budgets=${BUDGETS[*]}  taw=$TAW  hrbench_split=$SPLIT_TAG  hrbench_prompt=$PROMPT_MODE  docvqa_prompt=$DOCVQA_PROMPT_MODE  infovqa_prompt=$INFOVQA_PROMPT_MODE =="
 
 for BUDGET in "${BUDGETS[@]}"; do
     J="${OUTBASE}_b${BUDGET}.json"
@@ -89,7 +94,7 @@ for BUDGET in "${BUDGETS[@]}"; do
     # --- ablation（預設關；要 Tier-0 對照 / random / oracle 再 uncomment）---
     # run --batch_size "$BATCH" --select topk --score_fn info_density --delay_tiles 0 --run_stream
     # run --batch_size "$BATCH" --select topk --score_fn random       --delay_tiles 0 --run_stream
-    # [ "$DATASET" != docvqa ] && run --batch_size 1 --select oracle --score_fn info_density --run_stream
+    # [ "$DATASET" = hrbench ] && run --batch_size 1 --select oracle --score_fn info_density --run_stream
 
     # ---- accuracy 評測 ----
     echo; echo "==== $MTAG $DATASET b$BUDGET :: eval ===="
@@ -109,16 +114,13 @@ for BUDGET in "${BUDGETS[@]}"; do
                 $PY evaluate_hrbench.py --input_json "$J" --baseline_tag "$OURS_TAG" \
                     --summary_json "${OUTBASE}_vanilla_b${BUDGET}.json" || true
             fi ;;
-        mmmu)
-            $PY evaluate_mmmu.py --input_json "$J" --baseline_tag "$OURS_TAG" \
-                --summary_json "${OUTBASE}_b${BUDGET}.summary.json" || true ;;
-        docvqa)
-            if [ "$DOCVQA_PROMPT_MODE" = open ]; then
+        docvqa|infovqa)
+            if [ "$QA_PROMPT_MODE" = open ]; then
                 # open：沒有 GT 可比對，逐 budget 的語意相似度在迴圈跑完後一次算
                 # （見下方 similarity 段），這裡只跳過。
                 :
             else
-                # short：ANLS，GT 優先讀 meta.answers（load_docvqa 存的，天生對齊），
+                # short：ANLS，GT 優先讀 meta.answers（load_docvqa / load_infovqa 存的，天生對齊），
                 # 不用 --use_hf_gt 重載 HF dataset。
                 $PY evaluate_anls.py --input_json "$J" --baseline_tag "$OURS_TAG" \
                     --dump_csv "${OUTBASE}_anls_b${BUDGET}.csv" \
@@ -127,11 +129,11 @@ for BUDGET in "${BUDGETS[@]}"; do
     esac
 done
 
-# ---- open 模式（HR-Bench open 或 DocVQA open）：沒有 GT 可比對，改成跨 budget 的
+# ---- open 模式（HR-Bench / DocVQA / InfoVQA 的 open）：沒有 GT 可比對，改成跨 budget 的
 #      語意相似度（每個 budget 輸出 vs uncompressed reference）----
 IS_OPEN_RUN=0
 [ "$DATASET" = hrbench ] && [ "$PROMPT_MODE" = open ] && IS_OPEN_RUN=1
-[ "$DATASET" = docvqa ] && [ "$DOCVQA_PROMPT_MODE" = open ] && IS_OPEN_RUN=1
+{ [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; } && [ "$QA_PROMPT_MODE" = open ] && IS_OPEN_RUN=1
 if [ "$IS_OPEN_RUN" = 1 ]; then
     echo; echo "==== $MTAG $DATASET :: semantic similarity vs reference (all budgets) ===="
     SIM_JSONS=(); for B in "${BUDGETS[@]}"; do SIM_JSONS+=("${OUTBASE}_b${B}.json"); done
@@ -157,7 +159,7 @@ if [ "$IS_OPEN_RUN" = 1 ]; then
     echo "similarity table : ${OUTBASE}_sim_summary.csv  (per-sample: ${OUTBASE}_sim_persample.csv)"
 elif [ "$DATASET" = hrbench ]; then
     echo "circular summary : ${OUTBASE}_circ_b*.json"
-elif [ "$DATASET" = docvqa ]; then
+elif [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; then
     echo "ANLS summary     : ${OUTBASE}_b*.summary.json  (per-sample: ${OUTBASE}_anls_b*.csv)"
 fi
 echo "metrics          : metrics_${METRIC_TAG}_${DATASET}.csv"

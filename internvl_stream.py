@@ -13,7 +13,7 @@
 #
 # 仍保留 import 的外部相依：
 #   internvl_preprocess.py  → build_model / load_image_tiles / dynamic_preprocess
-#   process_common.py       → load_local / load_hf_dataset / load_mmmu
+#   process_common.py       → load_local / load_docvqa / load_infovqa / load_hrbench
 # ══════════════════════════════════════════════════════════════════════════════
 from __future__ import annotations
 
@@ -121,6 +121,42 @@ def measure_peak_memory(tag: str, record_timeline: bool = False):
             torch.cuda.memory._record_memory_history(enabled=None)
 
 
+def estimate_kv_cache_mb(model, seq_lens_per_layer: list[int], batch: int = 1) -> float:
+    """
+    KV cache tensor 本身的大小（MB），不是 torch.cuda.max_memory_allocated()
+    量到的「整個 process 的 peak GPU 記憶體」——後者包含固定的模型權重
+    （InternVL3.5-8B 約 17GB），同樣的壓縮比例反映到 peak_allocated 上會被
+    這個大分母稀釋成很小的百分比，看不出壓縮方法本身的效果。KV cache 壓縮/
+    token pruning 文獻（SparseVLM、H2O、StreamingLLM、SnapKV 等）報記憶體
+    節省時，用的都是這個口徑（e.g. SparseVLM 論文在 192/576 token 報
+    "302.4MB -> 100.8MB，約 67% 減少"），這裡用同一條公式算，才能跟文獻
+    數字放在同一張表比。
+
+    公式：2(K+V) * batch * num_kv_heads * head_dim * seq_len * dtype_bytes，
+    每一層各自算再加總。seq_lens_per_layer 吃一個 per-layer 的 list 而不是
+    單一數字，是因為像 SparseVLM 那種在 LLM 內部漸進式剪枝的方法，不同層
+    的 KV cache 長度不一樣；TileStreamingMemoryBank 在進 LLM 之前就把 token
+    數固定了，所有層長度相同，呼叫端傳 [final_size] * num_layers 即可。
+    """
+    cfg = model.language_model.config
+    num_kv_heads = cfg.num_key_value_heads
+    head_dim = getattr(cfg, "head_dim", cfg.hidden_size // cfg.num_attention_heads)
+    dtype_bytes = torch.tensor([], dtype=model.dtype).element_size()
+
+    total_tokens = sum(seq_lens_per_layer)
+    total_bytes = 2 * batch * num_kv_heads * head_dim * total_tokens * dtype_bytes
+    return total_bytes / (1024 ** 2)
+
+
+def estimate_prompt_token_lengths(tokenizer, text_before: str, text_after: str):
+    """回傳 (text_before_len, text_after_len)，純 tokenizer 計算、不碰 GPU。
+    跟 vision token 數（tile 數 * num_image_token，或壓縮後的 final_size）
+    加總即可得到完整序列長度，餵給 estimate_kv_cache_mb()。"""
+    tb_len = tokenizer(text_before, return_tensors="pt").input_ids.shape[1]
+    ta_len = tokenizer(text_after, return_tensors="pt").input_ids.shape[1]
+    return tb_len, ta_len
+
+
 # ══════════════════════════════════════════════════════════════════════════════
 # InternVL 專屬低階函式         （from internvl_core.py）
 # ══════════════════════════════════════════════════════════════════════════════
@@ -138,12 +174,15 @@ SIGNAL_TRIM = 0.02     # D2：signal 項與全域 norm 統計量，永遠 winsor
 COVERAGE_FLOOR = 1     # A3：flush 的 top-K 永遠保留 1 個 farthest-point 名額，其餘按分數
 
 # ── HR-Bench 設定：沒有 CLI 旗標，要換 split / prompt 就改這兩個常數 ──
-HRBENCH_SPLIT = "hrbench_8k"   # hrbench_4k | hrbench_8k
-HRBENCH_PROMPT = "open"      # letter（選項進 prompt、只輸出字母）| open（只給題目、自由生成）
+HRBENCH_SPLIT = "hrbench_4k"   # hrbench_4k | hrbench_8k
+HRBENCH_PROMPT = "letter"      # letter（選項進 prompt、只輸出字母）| open（只給題目、自由生成）
 
 # ── DocVQA 設定：沒有 CLI 旗標，要換 prompt 就改這個常數 ──
-DOCVQA_PROMPT = "open"       # short（官方 ANLS 協定、比 evaluate_anls.py）
+DOCVQA_PROMPT = "short"       # short（官方 ANLS 協定、比 evaluate_anls.py）
                               # | open（只給題目、自由生成，比 semantic similarity）
+
+# ── InfoVQA 設定（validation split，HF 上叫 "val"）：同 DocVQA，改這個常數換 prompt ──
+INFOVQA_PROMPT = "short"      # short | open
 
 # ── thumbnail-attention tile prior（--thumb_attn 才啟用，預設關；跨方法比較用）──
 #   thumbnail 跑一次 LLM forward → 取「答案位置對 256 個 thumbnail patch 的 attention」
@@ -1130,6 +1169,7 @@ class InternVLAdapter:
         thumb_attn_w=0.0,
         past_key_values=None,
         running_mask=None,
+        abs_pos=False,
     ):
         """True online Vision -> bounded candidate pool -> LLM KV construction.
 
@@ -1148,6 +1188,13 @@ class InternVLAdapter:
         guarantees the selected tiles span the whole image (one winner per
         spatial bin) at the cost of not always taking the globally highest
         scores.
+
+        ``abs_pos=True``（P0）：存活 tile 保留「未壓縮時」的絕對 position——tile i 的
+        token 放在 vis_start + i*num_image_token 起的那一段，被丟的 tile 在 RoPE 上留下
+        空洞，跟 FastV / IF-Prune 的 inplace 版（position_ids = keep_indices）同一個語意；
+        text_after 從 vis_start + num_tiles*num_image_token 接著編。False = 舊行為
+        （存活 tile 連續重新編號）。回傳的 stats["next_position"] 是 text_after 第一個
+        token 的 position，呼叫端 decode 要拿它當計數器，不能再用 KV cache 長度反推。
         """
         num_image_token = model.num_image_token
         num_tiles = pixel_values.shape[0]
@@ -1195,17 +1242,19 @@ class InternVLAdapter:
 
         tokens_injected = 0
         kv_flushes = 0
+        # text_before 已經 prefill 完，cache 長度 = 第一個 vision token 的 position
+        vis_start = past_key_values.get_seq_length()
 
-        def prefill_vision(vtok_2d):
-            """Write one [c, D] block of committed visual tokens into the KV cache."""
+        def prefill_vision(vtok_2d, start_pos):
+            """Write one [c, D] block of committed visual tokens into the KV cache,
+            at positions start_pos .. start_pos+c-1 (must be contiguous, see Phase 2)."""
             nonlocal past_key_values, running_mask, tokens_injected, kv_flushes
             vchunk = vtok_2d.unsqueeze(0)  # [1, c, D]
             c = vchunk.shape[1]
-            past_seq_len = past_key_values.get_seq_length()
             mchunk = torch.ones((1, c), dtype=torch.long, device=DEVICE)
             running_mask = torch.cat([running_mask, mchunk], dim=1)
             position_ids = torch.arange(
-                past_seq_len, past_seq_len + c, dtype=torch.long, device=DEVICE,
+                start_pos, start_pos + c, dtype=torch.long, device=DEVICE,
             ).unsqueeze(0)
             out = self.lm_prefill(
                 model,
@@ -1244,10 +1293,31 @@ class InternVLAdapter:
 
         # ---- Phase 2: final top-K selection, then chunked KV prefill ----
         selected = memory.flush()  # list of [num_image_token, D], sorted by tile_index
+        sel_idx = list(memory.committed_indices)  # 跟 selected 同順序（flush 內已依 tile_index 排序）
+        assert len(sel_idx) == len(selected)
         tiles_per_flush = max(1, chunk_size // num_image_token)
-        for s in range(0, len(selected), tiles_per_flush):
-            group = selected[s:s + tiles_per_flush]
-            prefill_vision(torch.cat(group, dim=0))
+        if abs_pos:
+            # 一次 prefill 的 position 必須連續：flash_attention_2 在 position_ids 不是
+            # arange 時會當成 packed sequence 走 varlen（transformers
+            # modeling_flash_attention_utils._is_packed_sequence），帶 KV cache 時會算錯
+            # 且不報錯。所以只把「tile_index 相鄰」的 tile 併成同一段，空洞處切開。
+            groups, run = [], []
+            for t, idx in zip(selected, sel_idx):
+                if run and (idx != run[-1][1] + 1 or len(run) >= tiles_per_flush):
+                    groups.append(run)
+                    run = []
+                run.append((t, idx))
+            if run:
+                groups.append(run)
+            for run in groups:
+                prefill_vision(torch.cat([t for t, _ in run], dim=0),
+                               vis_start + run[0][1] * num_image_token)
+            next_position = vis_start + num_tiles * num_image_token
+        else:
+            for s in range(0, len(selected), tiles_per_flush):
+                group = selected[s:s + tiles_per_flush]
+                prefill_vision(torch.cat(group, dim=0), past_key_values.get_seq_length())
+            next_position = past_key_values.get_seq_length()
         del selected
 
         stats = memory.stats()
@@ -1258,6 +1328,8 @@ class InternVLAdapter:
             "kv_flushes": kv_flushes,
             "final_size": tokens_injected,
             "final_tiles": tokens_injected // num_image_token,
+            "abs_pos": bool(abs_pos),
+            "next_position": int(next_position),
         })
 
         assert tokens_injected <= budget, (
@@ -1489,6 +1561,7 @@ def run_online_kv_with_memory_bank(
     thumb_attn: bool = False,
     thumb_attn_w: float = THUMB_ATTN_W,
     orig_sizes: list[tuple[int, int]] | None = None,
+    abs_pos: bool = False,
 ):
     """True online Vision -> bounded tile memory -> LLM KV pipeline.
 
@@ -1653,6 +1726,7 @@ def run_online_kv_with_memory_bank(
                 thumb_attn_w=thumb_attn_w,
                 past_key_values=past_key_values,
                 running_mask=running_mask,
+                abs_pos=abs_pos,
             )
 
         torch.cuda.synchronize(DEVICE)
@@ -1677,6 +1751,18 @@ def run_online_kv_with_memory_bank(
             f"(tiny std relative to mean => ranking is close to arbitrary)"
         )
 
+        # KV cache（analytical，跟 SparseVLM 論文同一種量測方式，見
+        # estimate_kv_cache_mb() docstring）：這個方法在進 LLM 前就把 token 數
+        # 固定了，所有層長度一樣，直接用 stats['final_size'] 乘上層數即可，
+        # 不用像 SparseVLM 那樣逐層查 past_key_values（每層長度不同）。
+        tb_len, ta_len = estimate_prompt_token_lengths(tokenizer, text_before, text_after)
+        total_len = tb_len + stats["final_size"] + ta_len
+        num_layers = model.language_model.config.num_hidden_layers
+        kv_cache_mb = estimate_kv_cache_mb(model, [total_len] * num_layers)
+        stats["kv_cache_mb"] = round(kv_cache_mb, 2)
+        print(f"[Image {b}] KV cache (prompt-only, analytical) = {kv_cache_mb:.1f} MB "
+              f"({total_len} tokens x {num_layers} layers)")
+
         # --------------------------------------------------------
         # Step C: text-after + autoregressive decode
         # --------------------------------------------------------
@@ -1684,9 +1770,13 @@ def run_online_kv_with_memory_bank(
         ids_after = tok_after.input_ids.to(DEVICE)
         mask_after = tok_after.attention_mask.to(DEVICE)
 
-        past_seq_len = past_key_values.get_seq_length()
+        # position 計數器：abs_pos 時 text_after 接在「未壓縮長度」之後，跟 KV cache 長度
+        # 不同，所以 text_after 與之後每個 decode token 都用這個計數器，不從 cache 長度反推
+        # （oracle 路徑沒回傳 next_position → 退回 cache 長度，等於舊行為）。
+        next_pos = stats.get("next_position", past_key_values.get_seq_length())
         running_mask = torch.cat([running_mask, mask_after], dim=1)
-        position_ids = torch.arange(past_seq_len, past_seq_len + ids_after.shape[1], dtype=torch.long, device=DEVICE).unsqueeze(0)
+        position_ids = torch.arange(next_pos, next_pos + ids_after.shape[1], dtype=torch.long, device=DEVICE).unsqueeze(0)
+        next_pos += ids_after.shape[1]
 
         torch.cuda.synchronize(DEVICE)
         t_decode_start = time.time()
@@ -1719,9 +1809,9 @@ def run_online_kv_with_memory_bank(
             if finished:
                 break
 
-            past_seq_len = past_key_values.get_seq_length()
             running_mask = torch.cat([running_mask, torch.ones((1, 1), dtype=torch.long, device=DEVICE)], dim=1)
-            position_ids = torch.full((1, 1), past_seq_len, dtype=torch.long, device=DEVICE)
+            position_ids = torch.full((1, 1), next_pos, dtype=torch.long, device=DEVICE)
+            next_pos += 1
 
             next_token_logits, past_key_values = adapter.lm_decode_step(
                 model,
@@ -1786,6 +1876,13 @@ def run_online_kv_with_memory_bank(
         "Decode": round(_mem_phases.get("Decode", {}).get("peak", 0.0), 2),
         "OVERALL": round(_overall_peak, 2),
     }
+
+    # KV cache（analytical，見 estimate_kv_cache_mb()）：batch 內每張圖各自
+    # 存在 stats["kv_cache_mb"]（已經在 all_stats 裡），這裡另外彙總一個
+    # batch 平均，跟 _peak_mem_gb 一樣掛在 timing 底下方便單一數字看整體。
+    _kv_mb_vals = [s["kv_cache_mb"] for s in all_stats if "kv_cache_mb" in s]
+    if _kv_mb_vals:
+        timing["_kv_cache_mb"] = round(sum(_kv_mb_vals) / len(_kv_mb_vals), 2)
 
     return adapter.clean_answer(questions, all_answers), all_stats, timing
 
@@ -1867,12 +1964,16 @@ def main():
     parser.add_argument("--thumb_attn_w", type=float, default=THUMB_ATTN_W,
                         help="thumbnail-attention prior 的混合權重 w："
                              "final = (1-w)*info_density + w*thumbnail_prior。預設 THUMB_ATTN_W。")
+    parser.add_argument("--abs_pos", action="store_true",
+                        help="P0：存活 tile 保留未壓縮時的絕對 position（被丟 tile 在 RoPE 上留空洞，"
+                             "跟 FastV / IF-Prune 同語意），text_after / decode 接在未壓縮長度之後。"
+                             "預設關（連續重新編號）。tag 後綴 _abspos。")
     parser.add_argument("--run_stream", action="store_true", help="run online KV pipeline")
     parser.add_argument("--run_standard", action="store_true",
                             help="run the official (uncompressed) HF generate() path to produce reference answers")
 
     parser.add_argument("--use_ds", action="store_true", help="Use HF dataset instead of local images")
-    parser.add_argument("--dataset", type=str, default="hrbench", choices=["mmmu", "docvqa", "hrbench"],
+    parser.add_argument("--dataset", type=str, default="hrbench", choices=["infovqa", "docvqa", "hrbench"],
                         help="which HF dataset to load when --use_ds is set")
     parser.add_argument("--num_images", type=int, default=None, help="Number of images/questions to inference (None means all)")
     parser.add_argument("--image", type=str, default="img_datasets/4000x6000.jpg", help="image")
@@ -1907,10 +2008,11 @@ def main():
 
     # ── 2. 載入圖像與問題 ──
     if args.use_ds:
-        from process_common import load_docvqa, load_mmmu, load_hrbench
-        if args.dataset == "mmmu":
-            # MMMU：選擇題，prompt 會帶選項；每筆會多存 answer/options/question_type 進 meta
-            datasets = load_mmmu(split="validation", num_image=args.num_images)
+        from process_common import load_docvqa, load_infovqa, load_hrbench
+        if args.dataset == "infovqa":
+            # InfoVQA validation（HF split 名為 "val"）：比照 DocVQA，存 answers/id 進 meta 給 ANLS
+            datasets = load_infovqa(dataset="Ahren09/InfoVQA", split="val",
+                                    num_image=args.num_images, prompt_mode=INFOVQA_PROMPT)
         elif args.dataset == "docvqa":
             datasets = load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
                                     num_image=args.num_images, prompt_mode=DOCVQA_PROMPT)
@@ -1937,9 +2039,9 @@ def main():
     else:
         output_results = {"references": [], "candidates": {}}
 
-    # ── 2b. MMMU / HR-Bench / DocVQA：把每題的 answer/options/... 存進 JSON 的 meta ──
+    # ── 2b. HR-Bench / DocVQA / InfoVQA：把每題的 answer/options/... 存進 JSON 的 meta ──
     #        HR-Bench 多存 answer_text（open 模式下 evaluate 拿它比對自由輸出）與 category。
-    #        DocVQA 多存 answers（官方允許的多個可接受答案，ANLS 要取 max），讓
+    #        DocVQA / InfoVQA 多存 answers（官方允許的多個可接受答案，ANLS 要取 max），讓
     #        evaluate_anls.py 直接讀 meta 算 GT，不用重載 HF dataset、沒有對齊風險。
     if datasets and "answer" in datasets[0]:
         output_results["meta"] = [
@@ -1964,6 +2066,8 @@ def main():
         tag += "_thumbattn"
         if abs(args.thumb_attn_w - THUMB_ATTN_W) > 1e-9:
             tag += f"_w{args.thumb_attn_w:g}"
+    if args.abs_pos:
+        tag += "_abspos"
     if tag in output_results["candidates"] and len(output_results["candidates"][tag]) == len(datasets):
         torch.cuda.synchronize(DEVICE)
         elapsed = time.time() - t0
@@ -1996,6 +2100,7 @@ def main():
         print(f"  tiles per image = {tile_counts}")
 
         torch.cuda.reset_peak_memory_stats(DEVICE)
+        baseline_kv_mb = None
 
         try:
             if args.run_standard and len(output_results["references"]) < len(datasets):
@@ -2007,6 +2112,23 @@ def main():
                 print("\n[Baseline Answer]")
                 for i, answer in enumerate(ref_answers):
                     print(f"\n{i} -> [{batch_datasets[i]['question']}]\n{answer}")
+
+                # KV cache（analytical，跟 --run_stream 那邊同一條公式）：baseline
+                # 是黑盒的 adapter.generate_baseline() / model.batch_chat()，拿不到
+                # 它內部真正的 past_key_values，改用跟 stream 那邊完全一樣的算法
+                # （build_prompt/tokenizer 直接算 prompt token 數，乘上 raw tile 數，
+                # 沒有剪枝所以所有層長度一樣）反推——兩邊是同一種量測方式，能直接比。
+                num_layers = model.language_model.config.num_hidden_layers
+                baseline_kv_list = []
+                for pv, q in zip(pixel_values_list, questions):
+                    prompt = build_prompt(tokenizer, model, q, pv.shape[0])
+                    tb, ta = split_prompt_at_vision(prompt, tokenizer)
+                    tb_len, ta_len = estimate_prompt_token_lengths(tokenizer, tb, ta)
+                    total_len = tb_len + pv.shape[0] * model.num_image_token + ta_len
+                    baseline_kv_list.append(estimate_kv_cache_mb(model, [total_len] * num_layers))
+                baseline_kv_mb = sum(baseline_kv_list) / len(baseline_kv_list)
+                print(f"\n[Baseline] KV cache (prompt-only, analytical) = {baseline_kv_mb:.1f} MB "
+                      f"(batch mean, {len(baseline_kv_list)} image(s))")
 
             if args.run_stream:
                 if tag not in output_results["candidates"]: output_results["candidates"][tag] = []
@@ -2038,12 +2160,22 @@ def main():
                         thumb_attn=args.thumb_attn,
                         thumb_attn_w=args.thumb_attn_w,
                         orig_sizes=orig_sizes,
+                        abs_pos=args.abs_pos,
                     )
                     output_results["candidates"][tag] += answers
 
                 print("\n[Online KV Answer]")
                 for i, answer in enumerate(answers):
                     print(f"\n{i} -> [{batch_datasets[i]['question']}]\n{answer}")
+
+                stream_kv_mb = timing.get("_kv_cache_mb")
+                if stream_kv_mb is not None:
+                    print(f"\n[Stream] KV cache (prompt-only, analytical) = {stream_kv_mb:.1f} MB "
+                          f"(batch mean, {len(all_stats)} image(s))")
+                    if baseline_kv_mb is not None:
+                        reduction = 100 * (1 - stream_kv_mb / baseline_kv_mb)
+                        print(f"[KV cache] baseline={baseline_kv_mb:.1f} MB  stream={stream_kv_mb:.1f} MB  "
+                              f"({reduction:.1f}% 減少)")
 
             del pixel_values_list, questions
 

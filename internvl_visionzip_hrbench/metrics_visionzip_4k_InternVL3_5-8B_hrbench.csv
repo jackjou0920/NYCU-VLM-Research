@@ -1,0 +1,12 @@
+model,dataset,method,n_images,model_load_peak_gb,note,raw_tiles_mean,ttft_s_mean,peak_alloc_gb_mean,peak_resv_gb_mean,vision_s_mean,kv_cache_mb_mean,raw_tiles_std,ttft_s_std,peak_alloc_gb_std,peak_resv_gb_std,vision_s_std,kv_cache_mb_std
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,uncompressed,24,17.06,"max_num tiles, budget-independent",37,2.2776,19.6251,20.6902,,1345.0781,0.0,0.0698,0.002,0.0946,,1.1568
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,stream_b1024,24,17.06,thumb_attn=on(w=0.9),37,0.942,17.4117,17.7566,0.8438,157.0767,0.0,0.0899,0.0186,0.0255,0.0781,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,visionzip_b1024,24,17.06,ctx_ratio=0.1562,37,0.69,17.3707,17.5483,,157.0767,0.0,0.0836,0.0021,0.004,,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,stream_b2048,24,17.06,thumb_attn=on(w=0.9),37,1.3862,17.5,17.8719,1.2868,301.0767,0.0,0.145,0.0,0.0197,0.1422,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,visionzip_b2048,24,17.06,ctx_ratio=0.1562,37,0.9313,17.6519,17.9432,,301.0767,0.0,0.096,0.0019,0.0089,,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,stream_b3072,24,17.06,thumb_attn=on(w=0.9),37,1.4936,17.66,18.0514,1.3899,445.0767,0.0,0.1212,0.0,0.0281,0.1014,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,visionzip_b3072,24,17.06,ctx_ratio=0.1562,37,1.0417,17.926,18.32,,445.0767,0.0,0.0764,0.0017,0.0099,,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,stream_b4096,24,17.06,thumb_attn=on(w=0.9),37,1.7436,17.82,18.3742,1.6424,589.0767,0.0,0.1202,0.0,0.0249,0.1224,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,visionzip_b4096,24,17.06,ctx_ratio=0.1562,37,1.2805,18.2108,18.6402,,589.0767,0.0,0.1276,0.0016,0.0583,,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,stream_b5120,24,17.06,thumb_attn=on(w=0.9),37,1.9876,17.98,18.5472,1.8902,733.0767,0.0,0.1141,0.0,0.0169,0.1068,1.1557
+OpenGVLab/InternVL3_5-8B,hrbench:hrbench_4k,visionzip_b5120,24,17.06,ctx_ratio=0.1562,37,1.4324,18.4815,19.0743,,733.0767,0.0,0.0994,0.0016,0.0463,,1.1557

@@ -1,0 +1,40 @@
+{
+  "source_json": "out_visionzip_short_InternVL3_5-8B_infovqa_b3072.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "visionzip_budget=3072",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed baseline>",
+      "n": 2801,
+      "anls": 78.7283666767062,
+      "exact": 72.90253480899679,
+      "zero": 18.636201356658336,
+      "delta": 16.892284025978217,
+      "ci_lo": 15.447800485999434,
+      "ci_hi": 18.439767596500875,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "visionzip_budget=3072",
+      "n": 2801,
+      "anls": 61.83608265072799,
+      "exact": 51.51731524455552,
+      "zero": 33.131024634059266,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

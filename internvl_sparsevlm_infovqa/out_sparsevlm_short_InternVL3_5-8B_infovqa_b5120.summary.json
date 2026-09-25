@@ -1,0 +1,40 @@
+{
+  "source_json": "out_sparsevlm_short_InternVL3_5-8B_infovqa_b5120.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "sparsevlm_budget=5120_lam=0.005",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed baseline>",
+      "n": 2801,
+      "anls": 78.7283666767062,
+      "exact": 72.90253480899679,
+      "zero": 18.636201356658336,
+      "delta": 11.921914584634962,
+      "ci_lo": 10.569817867607952,
+      "ci_hi": 13.293678031138734,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "sparsevlm_budget=5120_lam=0.005",
+      "n": 2801,
+      "anls": 66.80645209207124,
+      "exact": 59.72866833273831,
+      "zero": 29.775080328454123,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

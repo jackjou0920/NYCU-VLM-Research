@@ -1,0 +1,50 @@
+{
+  "source_json": "out_visionzip_4k_letter_InternVL3_5-8B_hrbench_b5120.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "letter",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "visionzip_budget=5120",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n": 800,
+      "acc": 72.875,
+      "by_category": {
+        "cross": 60.0,
+        "single": 85.75
+      },
+      "match_ref": NaN,
+      "unparsed": 0.0,
+      "delta": 1.625,
+      "ci_lo": -0.5,
+      "ci_hi": 3.875,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "visionzip_budget=5120",
+      "n": 800,
+      "acc": 71.25,
+      "by_category": {
+        "cross": 57.99999999999999,
+        "single": 84.5
+      },
+      "match_ref": 86.375,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

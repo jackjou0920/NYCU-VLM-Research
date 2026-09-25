@@ -1,0 +1,47 @@
+{
+  "source_json": "out_visionzip_4k_letter_InternVL3_5-8B_hrbench_b1024.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "visionzip_budget=1024",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n_groups": 200,
+      "circ_acc": 62.0,
+      "vanilla_acc": 72.875,
+      "by_category": {
+        "cross": 47.0,
+        "single": 77.0
+      },
+      "delta": 19.0,
+      "ci_lo": 12.5,
+      "ci_hi": 25.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true
+    },
+    {
+      "tag": "visionzip_budget=1024",
+      "n_groups": 200,
+      "circ_acc": 43.0,
+      "vanilla_acc": 57.62500000000001,
+      "by_category": {
+        "cross": 32.0,
+        "single": 54.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}

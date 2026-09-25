@@ -1,0 +1,7 @@
+model,dataset,method,n_images,model_load_peak_gb,note,raw_tiles_mean,ttft_s_mean,peak_alloc_gb_mean,peak_resv_gb_mean,vision_s_mean,kv_cache_mb_mean,raw_tiles_std,ttft_s_std,peak_alloc_gb_std,peak_resv_gb_std,vision_s_std,kv_cache_mb_std
+OpenGVLab/InternVL3_5-8B,infovqa,uncompressed,24,17.06,"max_num tiles, budget-independent",26.75,1.5772,18.9211,19.5913,,972.5918,9.1344,0.556,0.6256,0.7975,,329.4028
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b1024,24,17.06,thumb_attn=on(w=0.9),26.75,0.752,17.3717,17.7793,0.6627,153.5908,9.1344,0.129,0.0134,0.0387,0.1278,0.8326
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b2048,24,17.06,thumb_attn=on(w=0.9),26.75,0.9611,17.4942,17.8758,0.8768,291.5908,9.1344,0.1658,0.028,0.0172,0.1652,28.8808
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b3072,24,17.06,thumb_attn=on(w=0.9),26.75,1.1823,17.6475,18.0467,1.0972,429.5908,9.1344,0.2066,0.0599,0.0518,0.2062,57.6499
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b4096,24,17.06,thumb_attn=on(w=0.9),26.75,1.4048,17.8008,18.3067,1.3189,567.5908,9.1344,0.2506,0.0919,0.1064,0.25,86.4229
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b5120,24,17.06,thumb_attn=on(w=0.9),26.75,1.6298,17.9542,18.5532,1.5431,705.5908,9.1344,0.2987,0.1239,0.1594,0.2982,115.1969

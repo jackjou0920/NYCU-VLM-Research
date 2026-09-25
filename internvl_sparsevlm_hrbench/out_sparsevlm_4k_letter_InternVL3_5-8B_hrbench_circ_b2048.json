@@ -1,0 +1,47 @@
+{
+  "source_json": "out_sparsevlm_4k_letter_InternVL3_5-8B_hrbench_b2048.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "sparsevlm_budget=2048_lam=0.3794",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n_groups": 200,
+      "circ_acc": 62.0,
+      "vanilla_acc": 72.875,
+      "by_category": {
+        "cross": 47.0,
+        "single": 77.0
+      },
+      "delta": 7.000000000000001,
+      "ci_lo": 3.0,
+      "ci_hi": 11.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true
+    },
+    {
+      "tag": "sparsevlm_budget=2048_lam=0.3794",
+      "n_groups": 200,
+      "circ_acc": 55.00000000000001,
+      "vanilla_acc": 69.125,
+      "by_category": {
+        "cross": 41.0,
+        "single": 69.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}

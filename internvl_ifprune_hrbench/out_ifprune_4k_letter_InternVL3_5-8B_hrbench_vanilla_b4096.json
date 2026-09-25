@@ -1,0 +1,50 @@
+{
+  "source_json": "out_ifprune_4k_letter_InternVL3_5-8B_hrbench_b4096.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "letter",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "ifprune_budget=4096_L=2",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n": 800,
+      "acc": 72.875,
+      "by_category": {
+        "cross": 60.0,
+        "single": 85.75
+      },
+      "match_ref": NaN,
+      "unparsed": 0.0,
+      "delta": 2.5,
+      "ci_lo": 0.625,
+      "ci_hi": 4.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "ifprune_budget=4096_L=2",
+      "n": 800,
+      "acc": 70.375,
+      "by_category": {
+        "cross": 54.0,
+        "single": 86.75
+      },
+      "match_ref": 88.375,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}
