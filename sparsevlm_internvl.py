@@ -68,7 +68,7 @@ from transformers.models.qwen3.modeling_qwen3 import apply_rotary_pos_emb, repea
 from internvl_stream import (
     MAX_NEW_TOKENS, build_prompt, clean_answer, generate_answer_standard,
     split_prompt_at_vision, encode_tile, build_model, load_image_tiles,
-    DEVICE, measure_peak_memory, dedup_hrbench_open,
+    DEVICE, measure_peak_memory,
     DOCVQA_PROMPT, INFOVQA_PROMPT, HRBENCH_PROMPT, HRBENCH_SPLIT,
 )
 from sparsevlm_core import SparseVLMPruner
@@ -536,8 +536,6 @@ def main():
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
-            if HRBENCH_PROMPT == "open":
-                datasets = dedup_hrbench_open(datasets)
         else:
             return
     else:

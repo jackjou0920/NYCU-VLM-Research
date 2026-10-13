@@ -142,19 +142,17 @@ IMG_END_TOKEN     = "</img>"
 IMG_CONTEXT_TOKEN = "<IMG_CONTEXT>"
 RANDOM_SEED = 0
 
-# ── HR-Bench 設定：沒有 CLI 旗標，要換 split / prompt 就改這兩個常數 ──
+# ── HR-Bench split（baseline 腳本用的環境變數）──
 HRBENCH_SPLIT = os.environ.get("HRBENCH_SPLIT", "hrbench_4k")   # hrbench_4k | hrbench_8k
 # 用環境變數切 split（資料選擇，不是方法開關）：baseline 腳本 / bench_metrics 都從這裡 import，
-# run_*.sh 也讀同一個環境變數決定輸出檔名，例 HRBENCH_SPLIT=hrbench_8k DATASET=hrbench ./run_multiscale.sh
+# run_*.sh 也讀同一個環境變數決定輸出檔名，例 HRBENCH_SPLIT=hrbench_8k DATASET=hrbench ./run_fastv.sh
+# （internvl_stream.py 自己用 --dataset hrbench_4k / hrbench_8k，不看這個）
 assert HRBENCH_SPLIT in ("hrbench_4k", "hrbench_8k"), HRBENCH_SPLIT
-HRBENCH_PROMPT = "letter"      # letter（選項進 prompt、只輸出字母）| open（只給題目、自由生成）
 
-# ── DocVQA 設定：沒有 CLI 旗標，要換 prompt 就改這個常數 ──
-DOCVQA_PROMPT = "short"       # short（官方 ANLS 協定、比 evaluate_anls.py）
-                              # | open（只給題目、自由生成，比 semantic similarity）
-
-# ── InfoVQA 設定（validation split，HF 上叫 "val"）：同 DocVQA，改這個常數換 prompt ──
-INFOVQA_PROMPT = "short"      # short | open
+# ── 評測 prompt（固定；baseline 腳本 import 這三個常數，run_*.sh 也讀它們當輸出檔名的一部分）──
+HRBENCH_PROMPT = "letter"     # 選項進 prompt、只輸出字母（官方 CircularEval）
+DOCVQA_PROMPT = "short"       # 官方 ANLS 協定（evaluate_anls.py）
+INFOVQA_PROMPT = "short"      # 同 DocVQA（validation split，HF 上叫 "val"）
 
 # ── thumbnail prior：thumbnail 跑一次 LLM 前段 forward，取 text_after 所有位置（問題 + 作答指示 +
 #    assistant 開頭）對 256 個 thumbnail patch 的 attention → 16x16 粗 saliency → 每個 grid tile 一個 prior。
@@ -1044,32 +1042,6 @@ def save_results_incremental(output_path: str, results: dict):
         json.dump(results, f, indent=2, ensure_ascii=False)
 
 
-def dedup_hrbench_open(datasets):
-    """open 模式：每題只保留一筆。
-
-    HR-Bench 官方把每題的四個選項輪換成連續四筆（id 連號 0..3 / 4..7 / ...，
-    circular eval 用 id // 4 當題號）。letter 模式下這四筆的 prompt 因選項順序不同
-    而互異，但 open 模式的 prompt 只有題目本身、不帶任何選項，四筆會產生一模一樣的
-    輸入。全部跑一遍除了浪費四倍算力，還會在「與 baseline 比對 output 相似度」時把
-    同一題重複計四次、稀釋統計量。這裡每個題號只保留第一筆。
-
-    id 不是乾淨整數時退回用 question 字串去重，順序維持原本的出現順序。
-    """
-    seen, kept = set(), []
-    for d in datasets:
-        raw = str(d.get("id", "")).strip()
-        try:
-            key = int(raw) // 4
-        except ValueError:
-            key = d.get("question", "")
-        if key in seen:
-            continue
-        seen.add(key)
-        kept.append(d)
-    print(f"[dedup_hrbench_open] {len(datasets)} 筆 -> {len(kept)} 筆（每題一問）")
-    return kept
-
-
 # ══════════════════════════════════════════════════════════════════════════════
 # 評測資料集
 #   新增 dataset：在 DATASETS 加一筆 name -> (loader, metric)。loader(n) 回傳 process_common
@@ -1090,8 +1062,7 @@ def _load_infovqa(n):
 def _hrbench_loader(split):
     def load(n):
         from process_common import load_hrbench
-        ds = load_hrbench(dataset="DreamMr/HR-Bench", split=split, num_image=n, prompt_mode=HRBENCH_PROMPT)
-        return dedup_hrbench_open(ds) if HRBENCH_PROMPT == "open" else ds
+        return load_hrbench(dataset="DreamMr/HR-Bench", split=split, num_image=n, prompt_mode=HRBENCH_PROMPT)
     return load
 
 

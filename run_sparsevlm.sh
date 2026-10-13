@@ -123,43 +123,18 @@ for BUDGET in "${BUDGETS[@]}"; do
     echo; echo "==== $MTAG $DATASET b$BUDGET :: eval (tag=$TAG) ===="
     case "$DATASET" in
         hrbench)
-            if [ "$PROMPT_MODE" = open ]; then
-                $PY evaluate_hrbench.py --input_json "$J" --prompt_mode open \
-                    --baseline_tag "$TAG" \
-                    --summary_json "${OUTBASE}_open_b${BUDGET}.json" || true
-            else
-                $PY evaluate_hrbench_circular.py --input_json "$J" --baseline_tag "$TAG" \
-                    --group_by id \
-                    --dump_csv "${OUTBASE}_circ_b${BUDGET}.csv" \
-                    --summary_json "${OUTBASE}_circ_b${BUDGET}.json" || true
-                $PY evaluate_hrbench.py --input_json "$J" --baseline_tag "$TAG" \
-                    --summary_json "${OUTBASE}_vanilla_b${BUDGET}.json" || true
-            fi ;;
+            $PY evaluate_hrbench_circular.py --input_json "$J" --baseline_tag "$TAG" \
+                --group_by id \
+                --dump_csv "${OUTBASE}_circ_b${BUDGET}.csv" \
+                --summary_json "${OUTBASE}_circ_b${BUDGET}.json" || true
+            $PY evaluate_hrbench.py --input_json "$J" --baseline_tag "$TAG" \
+                --summary_json "${OUTBASE}_vanilla_b${BUDGET}.json" || true ;;
         docvqa|infovqa)
-            if [ "$QA_PROMPT_MODE" = open ]; then
-                : # open：沒有 GT，見下面跨 budget 的語意相似度
-            else
-                $PY evaluate_anls.py --input_json "$J" --baseline_tag "$TAG" \
-                    --dump_csv "${OUTBASE}_anls_b${BUDGET}.csv" \
-                    --summary_json "${OUTBASE}_b${BUDGET}.summary.json" || true
-            fi ;;
+            $PY evaluate_anls.py --input_json "$J" --baseline_tag "$TAG" \
+                --dump_csv "${OUTBASE}_anls_b${BUDGET}.csv" \
+                --summary_json "${OUTBASE}_b${BUDGET}.summary.json" || true ;;
     esac
 done
-
-# ---- open 模式：沒有 GT，改成跨 budget 的語意相似度（輸出 vs uncompressed
-#      reference），跟 run_internvl.sh 同一段邏輯，套用在 SparseVLM 的 json 上 ----
-IS_OPEN_RUN=0
-[ "$DATASET" = hrbench ] && [ "$PROMPT_MODE" = open ] && IS_OPEN_RUN=1
-{ [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; } && [ "$QA_PROMPT_MODE" = open ] && IS_OPEN_RUN=1
-if [ "$IS_OPEN_RUN" = 1 ]; then
-    echo; echo "==== $MTAG $DATASET :: semantic similarity vs reference (all budgets) ===="
-    SIM_JSONS=(); for B in "${BUDGETS[@]}"; do SIM_JSONS+=("${OUTBASE}_b${B}.json"); done
-    MERGED="${OUTBASE}_sim_merged.json"
-    $PY merge_sim_inputs.py --out "$MERGED" "${SIM_JSONS[@]}" \
-        && $PY semantic_similarity_evaluator.py --input_json "$MERGED" \
-               --output_csv "${OUTBASE}_sim_persample.csv" \
-               --summary_csv "${OUTBASE}_sim_summary.csv" || true
-fi
 
 # ---- 主張指標：peak memory / KV cache（跑一次涵蓋所有 budget，跟 stream_b<K>
 #      並排比較）。bench_metrics.py 內部逐張圖對 SparseVLM 自己做 auto_lam
@@ -179,10 +154,7 @@ echo "calibrated lam per budget:"
 for BUDGET in "${BUDGETS[@]}"; do
     echo "  budget=$BUDGET  lam=${LAM_FOR_BUDGET[$BUDGET]}"
 done
-if [ "$IS_OPEN_RUN" = 1 ]; then
-    [ "$DATASET" = hrbench ] && echo "open matchRef    : ${OUTBASE}_open_b*.json"
-    echo "similarity table : ${OUTBASE}_sim_summary.csv  (per-sample: ${OUTBASE}_sim_persample.csv)"
-elif [ "$DATASET" = hrbench ]; then
+if [ "$DATASET" = hrbench ]; then
     echo "circular summary : ${OUTBASE}_circ_b*.json"
 elif [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; then
     echo "ANLS summary     : ${OUTBASE}_b*.summary.json  (per-sample: ${OUTBASE}_anls_b*.csv)"
