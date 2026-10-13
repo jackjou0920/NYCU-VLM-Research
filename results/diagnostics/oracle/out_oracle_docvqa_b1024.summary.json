@@ -1,0 +1,40 @@
+{
+  "source_json": "out_oracle_docvqa_b1024.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "oracle_budget=1024_mode=per_tile",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed baseline>",
+      "n": 200,
+      "anls": 96.02218821246875,
+      "exact": 90.0,
+      "zero": 2.5,
+      "delta": 18.708654853018412,
+      "ci_lo": 13.609989419821147,
+      "ci_hi": 23.823404613175125,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "oracle_budget=1024_mode=per_tile",
+      "n": 200,
+      "anls": 77.31353335945033,
+      "exact": 63.5,
+      "zero": 17.5,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

@@ -1,0 +1,491 @@
+SVMA V2 Optimization Plan
+===========================
+
+Research Goal
+-------------
+Upgrade the current SVMA architecture to improve low-budget accuracy while preserving:
+
+1. Streaming high-resolution tile processing
+2. Online KV construction
+3. Bounded visual memory
+4. No need to materialize all high-resolution visual tokens
+5. No additional Small VLM inference during inference
+6. No unnecessary extra full LLM forward passes
+
+Current Benchmark Interpretation
+--------------------------------
+The current benchmark suggests that the main weakness is low-budget tile selection,
+not necessarily the streaming architecture itself.
+
+HR-Bench 4K:
+- SVMA is behind FastV/IF-Prune at 1024/2048/3072.
+- SVMA exceeds both at 4096/5120.
+
+DocVQA:
+- The gap is large at 1024 and decreases as the budget increases.
+- At 4096/5120, SVMA is close to FastV/IF-Prune.
+
+InfoVQA:
+- This is currently the largest weakness.
+- The gap is especially large at 1024/2048.
+- This indicates that fine-grained, query-dependent evidence localization is the
+  main scoring problem.
+
+Core V2 Direction
+-----------------
+Do NOT add a Small VLM during inference.
+
+Instead, strengthen the tile scorer while preserving streaming:
+
+Image
+  -> Dynamic tiles
+  -> ViT(tile_i)
+  -> Lightweight query-aware tile scorer
+  -> Bounded candidate memory
+  -> Commit/Evict
+  -> Online KV construction
+  -> Next tile
+
+The scorer should combine:
+
+    Query-to-tile relevance
+    Information Density
+    Cross-tile coverage
+    Thumbnail spatial prior
+
+1. Query-to-Tile Token Relevance
+--------------------------------
+The current approach is approximately:
+
+    R_i = cosine(question_embedding, mean_pool(tile_tokens))
+
+This can be too coarse because only a small subset of a tile's 256 visual tokens
+may be relevant to the question.
+
+Recommended replacement:
+
+    V_i in R^(256 x d)
+
+Project the question and visual tokens:
+
+    q' = W_q q
+    V_i' = W_v V_i
+
+Compute token-level similarity:
+
+    a_ij = sim(q', v_ij')
+
+Aggregate with Top-K Mean:
+
+    R_i = TopKMean_j(a_ij)
+
+Ablate:
+- max
+- mean
+- top-5%
+- top-10%
+- top-20%
+- mixed max/top-k
+
+This remains streaming because only the current tile and question embedding are used.
+It is not a Small VLM and does not require a full target-LLM forward pass.
+
+2. Keep Information Density, But Reduce Its Dominance
+-------------------------------------------------------
+Keep the existing Information Density as an intrinsic visual-quality signal.
+
+However, Information Density answers:
+    "Does this tile contain diverse/informative visual content?"
+
+It does not necessarily answer:
+    "Does this tile contain the evidence needed for this question?"
+
+Use:
+
+    S_i =
+        alpha * QueryRelevance_i
+      + beta  * InformationDensity_i
+      + gamma * CrossTileCoverage_i
+      + delta * ThumbnailPrior_i
+
+Under aggressive compression, QueryRelevance should receive more weight.
+
+Initial hypotheses for tuning:
+
+Budget 1024:
+    Query relevance       0.50
+    Information density  0.15
+    Cross-tile coverage   0.20
+    Thumbnail prior       0.15
+
+Budget 2048:
+    Query relevance       0.35
+    Information density  0.25
+    Cross-tile coverage   0.25
+    Thumbnail prior       0.15
+
+Budget 4096:
+    Query relevance       0.25
+    Information density  0.30
+    Cross-tile coverage   0.30
+    Thumbnail prior       0.15
+
+These are starting hypotheses, not final values.
+
+3. Add Cross-Tile Coverage
+---------------------------
+The current Information Density is mainly intra-tile. It does not directly measure
+whether a new tile duplicates information already represented in memory.
+
+Maintain:
+
+    e_i = normalize(mean_pool(V_i))
+
+For a new tile:
+
+    Coverage_i =
+        1 - max_j cosine(e_i, e_j)
+
+where j belongs to the bounded current memory/candidate set.
+
+Interpretation:
+- High Coverage: new information.
+- Low Coverage: redundant with existing memory.
+
+This is naturally compatible with the bounded Memory Bank.
+
+4. Use MMR-Style Selection
+--------------------------
+Pure top-K ranking can select many highly similar tiles.
+
+Use:
+
+    S_i_MMR =
+        lambda * Relevance_i
+        + (1-lambda) * Information_i
+        - gamma * max_j similarity(e_i, e_j)
+
+This encourages:
+
+    relevant + informative + non-redundant
+
+rather than only the highest score.
+
+5. Add True 2D Spatial Diversity
+--------------------------------
+Avoid using only raster tile-index distance.
+
+Represent each tile by:
+
+    (row, col)
+
+Use Euclidean or Manhattan distance when enforcing spatial diversity.
+
+A simple spatial constraint can prevent all selected tiles from concentrating in one
+local region. This is particularly worth testing on InfoVQA and high-resolution
+document/image QA.
+
+Keep this component simple initially.
+
+6. Keep Thumbnail Prior as a Coarse Global Signal
+--------------------------------------------------
+The thumbnail attention prior is useful because it provides global spatial information
+without requiring full high-resolution attention.
+
+Interpret the signals as:
+
+    Thumbnail prior       = coarse localization
+    Query relevance       = fine semantic localization
+    Information Density   = intrinsic visual quality
+    Cross-tile coverage   = redundancy control
+
+Do not let the thumbnail prior dominate.
+
+Recommended ablation:
+
+    thumbnail weight:
+        0
+        0.25
+        0.50
+        0.75
+        0.90
+        1.00
+
+Also test attention aggregation from:
+    last token
+    last 4 tokens
+    last 8 tokens
+
+7. V2 Candidate / Commit Architecture
+--------------------------------------
+Separate:
+
+    Candidate Memory
+    Committed KV
+
+Example:
+
+    Final visual budget K = 8 tiles
+    Candidate reserve D = 2 tiles
+
+Candidate memory:
+    raw visual tokens + compact metadata
+
+Committed memory:
+    LLM KV cache
+
+Once committed, raw visual tokens can be released when safe.
+
+This makes the architecture closer to true online KV construction.
+
+Do not immediately implement revocable KV eviction. Replacing committed KV introduces
+KV-cache reconstruction and positional-semantics complications.
+
+Start with:
+    non-revocable commit
+    delayed candidate buffering
+
+8. Recommended Streaming Pipeline
+----------------------------------
+For each incoming tile:
+
+Step 1:
+    ViT encode current tile
+
+Step 2:
+    Compute compact tile representation
+
+Step 3:
+    Compute:
+        - Query-to-tile token relevance
+        - Information Density
+        - Cross-tile coverage
+        - Thumbnail spatial prior
+
+Step 4:
+    Combine scores
+
+Step 5:
+    Add tile to bounded candidate memory
+
+Step 6:
+    If candidate capacity is exceeded:
+        commit the strongest candidate
+        or use MMR/diversity-aware selection
+
+Step 7:
+    Construct LLM KV for the committed tile
+
+Step 8:
+    Release temporary tile visual tokens
+
+Step 9:
+    Continue to next tile
+
+9. Do Not Add a Small VLM in V2 Inference
+-----------------------------------------
+A Small VLM may improve query-aware scoring, but it adds:
+- extra model parameters
+- extra inference compute
+- extra peak memory
+- extra TTFT
+- extra implementation complexity
+
+This weakens one of the strongest potential advantages over IF-Prune.
+
+The target V2 should aim for:
+
+    Extra VLM inference = 0
+    Extra full LLM scoring forward = 0
+
+while improving query-aware tile selection.
+
+10. Optional Teacher-Student Direction
+--------------------------------------
+If the lightweight scorer is still not accurate enough, use a teacher only during
+training.
+
+Training:
+
+    IF-Prune / FastV / Oracle-like signal
+        -> Teacher importance
+        -> Lightweight tile scorer
+
+Inference:
+
+    Question + current tile
+        -> Lightweight student scorer
+        -> score tile
+
+This preserves:
+- no Small VLM at inference
+- no extra LLM forward at inference
+- streaming inference
+- bounded visual memory
+
+11. Recommended Experiment Order
+---------------------------------
+Do not change everything simultaneously.
+
+Experiment A:
+    Current Information Density
+
+Experiment B:
+    Information Density + Query relevance
+
+Experiment C:
+    Information Density + Query relevance + Cross-tile coverage
+
+Experiment D:
+    C + MMR/diversity-aware selection
+
+Experiment E:
+    D + 2D spatial diversity
+
+Experiment F:
+    E + stronger query-to-tile token scoring
+
+Experiment G:
+    Candidate/Committed online KV architecture
+
+Experiment H (optional):
+    Teacher-distilled lightweight scorer
+
+12. Most Important Ablations
+----------------------------
+A. Query relevance aggregation:
+    max / mean / top-k mean / mixed max-top-k
+
+B. Score components:
+    ID
+    Query
+    Coverage
+    Thumbnail
+    ID + Query
+    ID + Query + Coverage
+    ID + Query + Coverage + Thumbnail
+
+C. Selection:
+    Top-K
+    MMR
+    MMR + spatial diversity
+
+D. Budget:
+    512 / 1024 / 2048 / 4096
+
+E. Candidate reserve:
+    D = 0 / 1 tile / 2 tiles / 4 tiles
+
+F. Positional strategy:
+    abs_pos = True
+    abs_pos = False
+
+13. Metrics
+-----------
+Accuracy:
+    HR-Bench 4K
+    DocVQA
+    InfoVQA
+    Additional high-resolution VQA dataset if available
+
+Efficiency:
+    Peak GPU memory
+    Visual-token resident memory
+    KV-cache memory
+    TTFT
+    ViT encoding time
+    LLM prefill time
+    Total latency
+
+Selection quality:
+    Oracle gap
+    Recall@K of oracle-important tiles
+    Tile-selection overlap with a strong teacher
+    Spatial coverage
+
+The main contribution should be evaluated as a trade-off:
+
+    accuracy
+        vs
+    peak memory
+        vs
+    TTFT
+        vs
+    extra compute
+
+14. Research Positioning
+------------------------
+The strongest V2 positioning is NOT:
+
+    "We outperform IF-Prune in accuracy."
+
+Instead:
+
+    "We perform query-aware visual tile selection during streaming image encoding,
+     while maintaining bounded visual memory and constructing the visual KV cache
+     online, without requiring an auxiliary VLM during inference."
+
+Conceptual comparison:
+
+IF-Prune:
+    Full visual representation
+        ->
+    additional Small VLM
+        ->
+    importance estimation
+        ->
+    pruning
+
+SVMA V2:
+    Tile
+        ->
+    ViT
+        ->
+    lightweight query-aware score
+        ->
+    bounded candidate memory
+        ->
+    commit
+        ->
+    online KV construction
+
+Potential SVMA advantages:
+    - No auxiliary VLM
+    - No full high-resolution visual-token materialization
+    - Streaming
+    - Bounded memory
+    - Online KV construction
+    - Lower TTFT / peak-memory overhead
+
+15. Priority Recommendation
+---------------------------
+Highest priority:
+1. Query-to-tile token-level relevance
+2. Cross-tile coverage
+3. MMR-style selection
+4. True 2D spatial diversity
+5. Candidate/Committed delayed-commit architecture
+
+Do NOT prioritize:
+- Adding a Small VLM
+- Running a full target LLM forward for every tile
+- Highly complicated tile-selection algorithms
+- Token-level pruning inside every tile
+
+First V2 prototype:
+
+    ViT
+      |
+      +-- Query-to-tile relevance
+      +-- Information Density
+      +-- Cross-tile coverage
+      +-- Thumbnail prior
+      |
+      v
+    MMR / bounded candidate memory
+      |
+      v
+    Online KV construction
+
+This directly targets the current low-budget accuracy problem while preserving the
+research contribution of streaming + online KV construction + bounded memory.

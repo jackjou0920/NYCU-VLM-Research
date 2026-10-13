@@ -8,9 +8,12 @@
 # 方法已收斂（Block A 的結論）：
 #   Ours = streaming（tile 逐個 encode → bounded pool，delay_tiles=0）
 #          + info_density（Tier-0 清理全內建，無旗標）
-#          + thumbnail-attention prior（--thumb_attn，w = THUMB_ATTN_W = 0.9）
+#          + thumbnail-attention prior（永遠開，w = THUMB_ATTN_W = 0.9，層 L21-28:q）
+#          + 邊界打分：prior 粗排後只對 S 塊邊界 tile 跑 q_attn（L20 + thumbnail context）
+#            S = QT=auto（預設）依 budget 自動決定（svma_config.py：<=1024→15、<=3072→12、更大→0）
 #   拿掉的：delay window（D=0≈D=2≈D=48，無效）、spatial_bin、tile_agg 掃描、
-#           rescore/novelty 旗標（併進 info_density 預設）。
+#           rescore/novelty 旗標（併進 info_density 預設）。這些都已改成 internvl_stream.py
+#           的常數，不再是 CLI 旗標。
 #
 #   評測廣度：改 DATASET / HRBENCH_SPLIT 手動跑 hrbench_4k / hrbench_8k / docvqa / infovqa
 #             （V*Bench / MME-RealWorld 需要新 loader，未含）
@@ -31,19 +34,22 @@ set -euo pipefail
 PY=${PY:-python}
 MODEL=${MODEL:-OpenGVLab/InternVL3_5-8B}     # 換模型改這裡
 DATASET=${DATASET:-infovqa}                  # hrbench | docvqa | infovqa
-BUDGETS=(1024 2048 3072 4096 5120)
+read -r -a BUDGETS <<< "${BUDGETS:-1024 2048 3072 4096 5120}"
 # NUM_IMAGES=${NUM_IMAGES:-1000}                # accuracy 用（投稿前拉全量）
 NUM_IMAGES=${NUM_IMAGES:--1}
 METRIC_IMAGES=${METRIC_IMAGES:-24}           # peak/TTFT 用，小 n 即可
 MAX_NUM=${MAX_NUM:-48}
 BATCH=${BATCH:-4}
 STD_BATCH=${STD_BATCH:-2}
-CHUNK=1024
-TAW=${TAW:-0.9}                              # thumb-attn 混合權重（收斂預設；OURS_TAG 會自動跟）
+QT=${QT:-auto}                               # 邊界打分的 S（--qattn_tiles）；auto = 依 budget（svma_config.py）
 
-DS_ARGS="--use_ds --dataset $DATASET"
+DS_ARGS="--dataset $DATASET"
 MTAG=$(basename "$MODEL")
-WSUF=$($PY -c "print('' if abs($TAW-0.9)<1e-9 else '_w'+format($TAW,'g'))")
+# OURS_TAG 要跟 internvl_stream.py main() 產生的 tag 一致：budget=<B>_svma_S<S>[_qa<L>ctx]
+# q_attn 固定第 QATTN_LAYER=20 層、含 thumbnail context（internvl_stream.py 的常數）
+QA_SUF=$(grep -oP '^QATTN_LAYER = \K\d+' internvl_stream.py)ctx
+s_for() { if [ "$QT" = auto ]; then $PY -c "from svma_config import default_qattn_tiles as f; print(f($1))"; else echo "$QT"; fi; }
+tag_for() { if [ "$2" -gt 0 ]; then echo "budget=$1_svma_S$2_qa$QA_SUF"; else echo "budget=$1_svma_S0"; fi; }
 
 # HR-Bench 的 split / prompt 模式（internvl_stream.py 裡的 HRBENCH_SPLIT /
 # HRBENCH_PROMPT 常數）。split 決定 hrbench_4k | hrbench_8k；prompt 決定 accuracy
@@ -51,7 +57,7 @@ WSUF=$($PY -c "print('' if abs($TAW-0.9)<1e-9 else '_w'+format($TAW,'g'))")
 # CircularEval 不適用，改比「每個 budget 的自由生成輸出 vs uncompressed reference」
 # 的語意相似度（見迴圈後的 similarity 段）。兩者都進 output naming。
 PROMPT_MODE=$(grep -oP 'HRBENCH_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo letter)
-SPLIT_TAG=$(grep -oP 'HRBENCH_SPLIT\s*=\s*"\K[^"]+' internvl_stream.py || echo hrbench_4k)
+SPLIT_TAG=${HRBENCH_SPLIT:-hrbench_4k}   # 跟 internvl_stream.py 同一個環境變數
 SPLIT_TAG=${SPLIT_TAG#hrbench_}              # hrbench_4k -> 4k
 
 # DocVQA 的 prompt 模式（internvl_stream.py 裡的 DOCVQA_PROMPT 常數），跟 HR-Bench
@@ -75,26 +81,21 @@ else
     METRIC_TAG="$MTAG"
 fi
 
-echo "== Block B :: model=$MTAG  dataset=$DATASET  budgets=${BUDGETS[*]}  taw=$TAW  hrbench_split=$SPLIT_TAG  hrbench_prompt=$PROMPT_MODE  docvqa_prompt=$DOCVQA_PROMPT_MODE  infovqa_prompt=$INFOVQA_PROMPT_MODE =="
+echo "== Block B :: model=$MTAG  dataset=$DATASET  budgets=${BUDGETS[*]}  qattn_tiles=$QT  hrbench_split=$SPLIT_TAG  hrbench_prompt=$PROMPT_MODE  docvqa_prompt=$DOCVQA_PROMPT_MODE  infovqa_prompt=$INFOVQA_PROMPT_MODE =="
 
 for BUDGET in "${BUDGETS[@]}"; do
     J="${OUTBASE}_b${BUDGET}.json"
-    OURS_TAG="budget=${BUDGET}_info_density_delay0_thumbattn${WSUF}"
+    S_B=$(s_for "$BUDGET")
+    OURS_TAG=$(tag_for "$BUDGET" "$S_B")
     COMMON="--model_name $MODEL $DS_ARGS --num_images $NUM_IMAGES --max_num $MAX_NUM \
-            --budget $BUDGET --chunk_size $CHUNK --save --output_json $J"
+            --budget $BUDGET --save --output_json $J"
     run() { echo; echo "==== $MTAG $DATASET b$BUDGET :: $* ===="; $PY internvl_stream.py $COMMON "$@"; }
 
     # 0) uncompressed 上界（references，accuracy 的比較基準）
     run --batch_size "$STD_BATCH" --run_standard
 
-    # 1) Ours：收斂方法 = streaming + info_density + thumb-attn(w=TAW)
-    run --batch_size "$BATCH" --select topk --score_fn info_density --delay_tiles 0 \
-        --thumb_attn --thumb_attn_w "$TAW" --run_stream
-
-    # --- ablation（預設關；要 Tier-0 對照 / random / oracle 再 uncomment）---
-    # run --batch_size "$BATCH" --select topk --score_fn info_density --delay_tiles 0 --run_stream
-    # run --batch_size "$BATCH" --select topk --score_fn random       --delay_tiles 0 --run_stream
-    # [ "$DATASET" = hrbench ] && run --batch_size 1 --select oracle --score_fn info_density --run_stream
+    # 1) Ours：SVMA（thumbnail prior 粗排 → 邊界打分 S 塊）
+    run --batch_size "$BATCH" --qattn_tiles "$S_B" --run_stream
 
     # ---- accuracy 評測 ----
     echo; echo "==== $MTAG $DATASET b$BUDGET :: eval ===="
@@ -149,7 +150,7 @@ echo; echo "==== $MTAG $DATASET :: metrics (peak memory / TTFT) ===="
 $PY bench_metrics.py --model_name "$MODEL" --dataset "$DATASET" \
     --num_images "$METRIC_IMAGES" --max_num "$MAX_NUM" \
     --budgets "$(IFS=,; echo "${BUDGETS[*]}")" \
-    --thumb_attn --thumb_attn_w "$TAW" \
+    --qattn_tiles "$QT" \
     --out_csv "metrics_${METRIC_TAG}_${DATASET}.csv" || true
 
 echo

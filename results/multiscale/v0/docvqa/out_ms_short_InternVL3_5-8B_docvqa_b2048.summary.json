@@ -1,0 +1,82 @@
+{
+  "source_json": "out_ms_short_InternVL3_5-8B_docvqa_b2048.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "budget=2048_svma_S14_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx",
+      "n": 500,
+      "anls": 83.26862843250305,
+      "exact": 72.2,
+      "zero": 13.600000000000001,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m2",
+      "n": 500,
+      "anls": 84.68389763152913,
+      "exact": 74.0,
+      "zero": 12.2,
+      "delta": 1.4152691990260975,
+      "ci_lo": -0.3456427238986467,
+      "ci_hi": 3.1406738537015992,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m4",
+      "n": 500,
+      "anls": 87.20208969408051,
+      "exact": 77.8,
+      "zero": 10.2,
+      "delta": 3.9334612615774653,
+      "ci_lo": 0.986033293733408,
+      "ci_hi": 6.825354438108858,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m6",
+      "n": 500,
+      "anls": 89.24458068879586,
+      "exact": 79.60000000000001,
+      "zero": 8.6,
+      "delta": 5.975952256292825,
+      "ci_lo": 2.91122168103639,
+      "ci_hi": 9.02773363750605,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m8",
+      "n": 500,
+      "anls": 91.15663879188762,
+      "exact": 81.0,
+      "zero": 6.800000000000001,
+      "delta": 7.888010359384577,
+      "ci_lo": 4.821262507224417,
+      "ci_hi": 11.010754377613912,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

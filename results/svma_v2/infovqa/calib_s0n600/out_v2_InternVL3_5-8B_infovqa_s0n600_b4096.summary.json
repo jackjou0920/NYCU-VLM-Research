@@ -1,0 +1,82 @@
+{
+  "source_json": "out_v2_InternVL3_5-8B_infovqa_s0n600_b4096.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "budget=4096_svma_S0",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=4096_svma_S0",
+      "n": 600,
+      "anls": 72.05584015945857,
+      "exact": 65.83333333333333,
+      "zero": 25.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=4096_svma_S12_qa20ctx",
+      "n": 600,
+      "anls": 77.51647409607936,
+      "exact": 71.66666666666667,
+      "zero": 20.0,
+      "delta": 5.460633936620778,
+      "ci_lo": 3.266641601090615,
+      "ci_hi": 7.7569261588505,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=4096_svma_S16_qa20ctx",
+      "n": 600,
+      "anls": 76.24975869646921,
+      "exact": 70.33333333333334,
+      "zero": 21.166666666666668,
+      "delta": 4.193918537010642,
+      "ci_lo": 1.921126027162211,
+      "ci_hi": 6.432031943964509,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=4096_svma_S4_qa20ctx",
+      "n": 600,
+      "anls": 73.92486737996606,
+      "exact": 68.0,
+      "zero": 23.5,
+      "delta": 1.8690272205074836,
+      "ci_lo": 0.31673866466218437,
+      "ci_hi": 3.418041655537543,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=4096_svma_S8_qa20ctx",
+      "n": 600,
+      "anls": 75.809431688708,
+      "exact": 70.33333333333334,
+      "zero": 21.833333333333332,
+      "delta": 3.7535915292494235,
+      "ci_lo": 1.775240803102645,
+      "ci_hi": 5.756932126948574,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

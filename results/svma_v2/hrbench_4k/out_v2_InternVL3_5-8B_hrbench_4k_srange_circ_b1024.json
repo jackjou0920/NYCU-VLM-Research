@@ -1,0 +1,31 @@
+{
+  "source_json": "out_v2_InternVL3_5-8B_hrbench_4k_b1024.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=1024_svma_S15_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=1024_svma_S15_qa20ctx",
+      "n_groups": 200,
+      "circ_acc": 56.49999999999999,
+      "vanilla_acc": 67.75,
+      "by_category": {
+        "cross": 43.0,
+        "single": 70.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}

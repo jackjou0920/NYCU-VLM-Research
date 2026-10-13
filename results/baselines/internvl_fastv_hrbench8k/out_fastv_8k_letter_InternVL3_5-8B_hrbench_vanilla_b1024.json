@@ -1,0 +1,50 @@
+{
+  "source_json": "out_fastv_8k_letter_InternVL3_5-8B_hrbench_b1024.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "letter",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "fastv_budget=1024_k=2",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n": 800,
+      "acc": 68.5,
+      "by_category": {
+        "cross": 58.25,
+        "single": 78.75
+      },
+      "match_ref": NaN,
+      "unparsed": 0.0,
+      "delta": 10.0,
+      "ci_lo": 7.5,
+      "ci_hi": 12.5,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "fastv_budget=1024_k=2",
+      "n": 800,
+      "acc": 58.5,
+      "by_category": {
+        "cross": 52.5,
+        "single": 64.5
+      },
+      "match_ref": 80.0,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+model,dataset,method,n_images,model_load_peak_gb,note,raw_tiles_mean,ttft_s_mean,peak_alloc_gb_mean,peak_resv_gb_mean,vision_s_mean,kv_cache_mb_mean,raw_tiles_std,ttft_s_std,peak_alloc_gb_std,peak_resv_gb_std,vision_s_std,kv_cache_mb_std
+OpenGVLab/InternVL3_5-8B,infovqa,uncompressed,100,17.06,"max_num tiles, budget-independent",26.49,1.5767,18.9032,19.5344,,963.2897,13.3435,0.8056,0.9129,1.1878,,480.3495
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b1024,100,17.06,thumb_attn=on(w=0.9),26.49,0.7394,17.3716,17.7823,0.653,153.6487,13.3435,0.1858,0.0127,0.0371,0.1843,0.7981
+OpenGVLab/InternVL3_5-8B,infovqa,sparsevlm_b1024,100,17.06,auto_lam,26.49,0.6912,18.2731,19.4153,,287.5695,13.3435,0.2562,0.5533,1.0892,,80.6715
+OpenGVLab/InternVL3_5-8B,infovqa,fastv_b1024,100,17.06,agg_layer=2,26.49,0.5794,18.2667,18.6915,,198.6287,13.3435,0.1915,0.5708,0.7207,,26.6805
+OpenGVLab/InternVL3_5-8B,infovqa,ifprune_b1024,100,17.06,"L=2,head=bf16",26.49,1.0214,19.9168,20.4447,,198.6287,13.3435,0.4148,0.4198,0.5634,,26.6805
+OpenGVLab/InternVL3_5-8B,infovqa,visionzip_b1024,100,17.06,ctx_ratio=0.1562,26.49,0.5206,17.3666,17.515,,153.6487,13.3435,0.1553,0.0011,0.0143,,0.7981
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b2048,100,17.06,thumb_attn=on(w=0.9),26.49,0.9354,17.484,17.8687,0.8532,280.7287,13.3435,0.2449,0.0424,0.0336,0.2447,45.2656
+OpenGVLab/InternVL3_5-8B,infovqa,sparsevlm_b2048,100,17.06,auto_lam,26.49,0.8771,18.3229,19.4192,,432.4516,13.3435,0.3334,0.5109,1.0848,,137.023
+OpenGVLab/InternVL3_5-8B,infovqa,fastv_b2048,100,17.06,agg_layer=2,26.49,0.727,18.2755,18.7073,,318.6487,13.3435,0.2293,0.5596,0.7047,,62.9684
+OpenGVLab/InternVL3_5-8B,infovqa,ifprune_b2048,100,17.06,"L=2,head=bf16",26.49,1.1767,19.9497,20.4758,,318.6487,13.3435,0.4518,0.3861,0.5359,,62.9684
+OpenGVLab/InternVL3_5-8B,infovqa,visionzip_b2048,100,17.06,ctx_ratio=0.1562,26.49,0.676,17.6151,17.8775,,280.7287,13.3435,0.1956,0.0885,0.1376,,45.2656
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b3072,100,17.06,thumb_attn=on(w=0.9),26.49,1.1344,17.6216,18.0151,1.0515,404.5687,13.3435,0.3185,0.0964,0.0911,0.3178,93.5456
+OpenGVLab/InternVL3_5-8B,infovqa,sparsevlm_b3072,100,17.06,auto_lam,26.49,0.9673,18.417,19.454,,502.2292,13.3435,0.3317,0.4638,1.0551,,143.8781
+OpenGVLab/InternVL3_5-8B,infovqa,fastv_b3072,100,17.06,agg_layer=2,26.49,0.8683,18.316,18.7683,,435.6087,13.3435,0.2754,0.5245,0.6626,,107.738
+OpenGVLab/InternVL3_5-8B,infovqa,ifprune_b3072,100,17.06,"L=2,head=bf16",26.49,1.3179,20.0222,20.5485,,435.6087,13.3435,0.494,0.3475,0.5013,,107.738
+OpenGVLab/InternVL3_5-8B,infovqa,visionzip_b3072,100,17.06,ctx_ratio=0.1562,26.49,0.828,17.852,18.1464,,404.5687,13.3435,0.2473,0.1803,0.2457,,93.5456
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b4096,100,17.06,thumb_attn=on(w=0.9),26.49,1.3194,17.7385,18.2024,1.236,514.7287,13.3435,0.4046,0.151,0.1859,0.4037,141.2145
+OpenGVLab/InternVL3_5-8B,infovqa,sparsevlm_b4096,100,17.06,auto_lam,26.49,1.1325,18.571,19.5003,,626.7948,13.3435,0.4329,0.5244,1.0337,,218.1221
+OpenGVLab/InternVL3_5-8B,infovqa,fastv_b4096,100,17.06,agg_layer=2,26.49,0.9994,18.3643,18.8478,,539.6487,13.3435,0.3357,0.5023,0.6436,,154.6877
+OpenGVLab/InternVL3_5-8B,infovqa,ifprune_b4096,100,17.06,"L=2,head=bf16",26.49,1.4504,20.1124,20.6283,,539.6487,13.3435,0.5536,0.3484,0.5025,,154.6877
+OpenGVLab/InternVL3_5-8B,infovqa,visionzip_b4096,100,17.06,ctx_ratio=0.1562,26.49,0.9688,18.0684,18.4275,,514.7287,13.3435,0.3124,0.274,0.3627,,141.2145
+OpenGVLab/InternVL3_5-8B,infovqa,stream_b5120,100,17.06,thumb_attn=on(w=0.9),26.49,1.4828,17.8473,18.3489,1.3988,612.6487,13.3435,0.5052,0.2147,0.2777,0.504,195.7474
+OpenGVLab/InternVL3_5-8B,infovqa,sparsevlm_b5120,100,17.06,auto_lam,26.49,1.239,18.7261,19.5399,,706.7827,13.3435,0.4951,0.6038,1.0324,,261.6962
+OpenGVLab/InternVL3_5-8B,infovqa,fastv_b5120,100,17.06,agg_layer=2,26.49,1.1169,18.4176,18.8971,,632.1287,13.3435,0.4063,0.5021,0.6513,,207.8828
+OpenGVLab/InternVL3_5-8B,infovqa,ifprune_b5120,100,17.06,"L=2,head=bf16",26.49,1.5685,20.2595,20.8096,,632.1287,13.3435,0.6243,0.4289,0.6053,,207.8828
+OpenGVLab/InternVL3_5-8B,infovqa,visionzip_b5120,100,17.06,ctx_ratio=0.1562,26.49,1.0913,18.254,18.7299,,612.6487,13.3435,0.3854,0.3774,0.5193,,195.7474

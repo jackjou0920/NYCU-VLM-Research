@@ -21,7 +21,7 @@ set -euo pipefail
 PY=${PY:-python}
 MODEL=${MODEL:-OpenGVLab/InternVL3_5-8B}
 DATASET=${DATASET:-infovqa}                   # hrbench | docvqa | infovqa，跟 run_internvl.sh 保持一致才能對照
-BUDGETS=(1024 2048 3072 4096 5120)
+read -r -a BUDGETS <<< "${BUDGETS:-1024 2048 3072 4096 5120}"
 NUM_IMAGES=${NUM_IMAGES:--1}                 # accuracy 用（投稿前拉全量，跟 run_internvl.sh 的 NUM_IMAGES 對齊）
 MAX_NUM=${MAX_NUM:-48}
 MAX_NEW_TOKENS=${MAX_NEW_TOKENS:-500}
@@ -34,21 +34,26 @@ MTAG=$(basename "$MODEL")
 # 跟 run_sparsevlm.sh 用同一招從 internvl_stream.py 讀 HR-Bench/DocVQA 的
 # split/prompt 常數——fastv_internvl.py 也是 import 同一份常數，語意一致。
 PROMPT_MODE=$(grep -oP 'HRBENCH_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo letter)
-SPLIT_TAG=$(grep -oP 'HRBENCH_SPLIT\s*=\s*"\K[^"]+' internvl_stream.py || echo hrbench_4k)
+SPLIT_TAG=${HRBENCH_SPLIT:-hrbench_4k}   # 跟 internvl_stream.py 同一個環境變數
 SPLIT_TAG=${SPLIT_TAG#hrbench_}
 DOCVQA_PROMPT_MODE=$(grep -oP 'DOCVQA_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo short)
 INFOVQA_PROMPT_MODE=$(grep -oP 'INFOVQA_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo short)
 # docvqa / infovqa 共用的 prompt 模式，後面的 OUTBASE / eval / similarity 都吃這個。
 if [ "$DATASET" = infovqa ]; then QA_PROMPT_MODE=$INFOVQA_PROMPT_MODE; else QA_PROMPT_MODE=$DOCVQA_PROMPT_MODE; fi
 
+# 輸出放 results/baselines/internvl_fastv_<dataset>/（HR-Bench 8K 是 hrbench8k），OUTDIR 可覆寫
+if [ "$DATASET" = hrbench ] && [ "${SPLIT_TAG#hrbench_}" = 8k ]; then DSDIR=hrbench8k; else DSDIR=$DATASET; fi
+OUTDIR=${OUTDIR:-results/baselines/internvl_fastv_${DSDIR}}
+mkdir -p "$OUTDIR"
+
 if [ "$DATASET" = hrbench ]; then
-    OUTBASE="out_fastv_${SPLIT_TAG}_${PROMPT_MODE}_${MTAG}_${DATASET}"
+    OUTBASE="$OUTDIR/out_fastv_${SPLIT_TAG}_${PROMPT_MODE}_${MTAG}_${DATASET}"
     METRIC_TAG="${SPLIT_TAG}_${MTAG}"
 elif [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; then
-    OUTBASE="out_fastv_${QA_PROMPT_MODE}_${MTAG}_${DATASET}"
+    OUTBASE="$OUTDIR/out_fastv_${QA_PROMPT_MODE}_${MTAG}_${DATASET}"
     METRIC_TAG="$MTAG"
 else
-    OUTBASE="out_fastv_${MTAG}_${DATASET}"
+    OUTBASE="$OUTDIR/out_fastv_${MTAG}_${DATASET}"
     METRIC_TAG="$MTAG"
 fi
 
@@ -114,7 +119,7 @@ $PY bench_metrics.py --model_name "$MODEL" --dataset "$DATASET" \
     --num_images "$METRIC_IMAGES" --max_num "$MAX_NUM" \
     --budgets "$(IFS=,; echo "${BUDGETS[*]}")" \
     --run_fastv --fastv_agg_layer "$AGG_LAYER" \
-    --out_csv "metrics_fastv_${METRIC_TAG}_${DATASET}.csv" || true
+    --out_csv "$OUTDIR/metrics_fastv_${METRIC_TAG}_${DATASET}.csv" || true
 
 echo
 echo "===== FastV done  ($MTAG / $DATASET) ====="
@@ -127,5 +132,5 @@ elif [ "$DATASET" = hrbench ]; then
 elif [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; then
     echo "ANLS summary     : ${OUTBASE}_b*.summary.json  (per-sample: ${OUTBASE}_anls_b*.csv)"
 fi
-echo "metrics          : metrics_fastv_${METRIC_TAG}_${DATASET}.csv"
+echo "metrics          : $OUTDIR/metrics_fastv_${METRIC_TAG}_${DATASET}.csv"
 echo "                    (uncompressed / stream_b<K>(SVMA) / fastv_b<K> 同一批圖並排)"

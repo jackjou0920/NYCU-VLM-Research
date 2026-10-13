@@ -1,0 +1,82 @@
+{
+  "source_json": "out_v2_InternVL3_5-8B_infovqa_b5120.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "budget=5120_svma_S4_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=5120_svma_S2_qa20ctx",
+      "n": 2801,
+      "anls": 73.48097146720113,
+      "exact": 67.22599071760087,
+      "zero": 23.527311674402,
+      "delta": -0.40810103229420164,
+      "ci_lo": -0.9332631041700129,
+      "ci_hi": 0.09588410624424196,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=5120_svma_S3_qa20ctx",
+      "n": 2801,
+      "anls": 73.76241206763493,
+      "exact": 67.654409139593,
+      "zero": 23.313102463405926,
+      "delta": -0.12666043186038456,
+      "ci_lo": -0.5039586254052322,
+      "ci_hi": 0.23129359972387487,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=5120_svma_S4_qa20ctx",
+      "n": 2801,
+      "anls": 73.88907249949531,
+      "exact": 67.72581220992502,
+      "zero": 23.17029632274188,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=5120_svma_S5_qa20ctx",
+      "n": 2801,
+      "anls": 74.19679894779982,
+      "exact": 67.9400214209211,
+      "zero": 22.813280971081756,
+      "delta": 0.3077264483044827,
+      "ci_lo": -0.09506507428454138,
+      "ci_hi": 0.7184595145415869,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=5120_svma_S6_qa20ctx",
+      "n": 2801,
+      "anls": 74.17951170739394,
+      "exact": 67.97572295608711,
+      "zero": 22.88468404141378,
+      "delta": 0.2904392078986112,
+      "ci_lo": -0.21756135319825187,
+      "ci_hi": 0.7986234145992767,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

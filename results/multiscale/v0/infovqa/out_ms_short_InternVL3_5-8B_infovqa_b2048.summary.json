@@ -1,0 +1,82 @@
+{
+  "source_json": "out_ms_short_InternVL3_5-8B_infovqa_b2048.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "budget=2048_svma_S14_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx",
+      "n": 500,
+      "anls": 64.1065992140373,
+      "exact": 55.800000000000004,
+      "zero": 32.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m2",
+      "n": 500,
+      "anls": 71.34821091167738,
+      "exact": 64.0,
+      "zero": 25.6,
+      "delta": 7.241611697640082,
+      "ci_lo": 3.7312770056965663,
+      "ci_hi": 10.77742445044897,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m4",
+      "n": 500,
+      "anls": 75.56757645335371,
+      "exact": 68.60000000000001,
+      "zero": 21.4,
+      "delta": 11.460977239316419,
+      "ci_lo": 8.073291836023317,
+      "ci_hi": 15.127718271415336,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m6",
+      "n": 500,
+      "anls": 76.13377813792674,
+      "exact": 69.19999999999999,
+      "zero": 21.0,
+      "delta": 12.027178923889451,
+      "ci_lo": 8.412367467643783,
+      "ci_hi": 15.774191660115996,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_m8",
+      "n": 500,
+      "anls": 74.1501388263074,
+      "exact": 65.8,
+      "zero": 22.400000000000002,
+      "delta": 10.043539612270102,
+      "ci_lo": 6.564144610824671,
+      "ci_hi": 13.947332651794447,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

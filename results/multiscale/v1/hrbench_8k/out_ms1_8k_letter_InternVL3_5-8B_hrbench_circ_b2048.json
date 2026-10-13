@@ -1,0 +1,79 @@
+{
+  "source_json": "out_ms1_8k_letter_InternVL3_5-8B_hrbench_b2048.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=2048_svma_S14_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx",
+      "n_groups": 200,
+      "circ_acc": 53.0,
+      "vanilla_acc": 63.625,
+      "by_category": {
+        "cross": 44.0,
+        "single": 62.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    },
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx_ds1",
+      "n_groups": 200,
+      "circ_acc": 45.5,
+      "vanilla_acc": 58.25,
+      "by_category": {
+        "cross": 37.0,
+        "single": 54.0
+      },
+      "delta": -7.5,
+      "ci_lo": -14.512499999999998,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false
+    },
+    {
+      "tag": "budget=2048_svma_S4_qa20ctx_m6",
+      "n_groups": 200,
+      "circ_acc": 50.5,
+      "vanilla_acc": 63.125,
+      "by_category": {
+        "cross": 39.0,
+        "single": 62.0
+      },
+      "delta": -2.5,
+      "ci_lo": -8.0,
+      "ci_hi": 3.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false
+    },
+    {
+      "tag": "budget=2048_svma_S4_qa20ctx_m6_ds1",
+      "n_groups": 200,
+      "circ_acc": 50.5,
+      "vanilla_acc": 63.24999999999999,
+      "by_category": {
+        "cross": 43.0,
+        "single": 57.99999999999999
+      },
+      "delta": -2.5,
+      "ci_lo": -9.0,
+      "ci_hi": 4.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false
+    }
+  ]
+}

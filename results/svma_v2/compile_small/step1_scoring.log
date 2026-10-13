@@ -1,0 +1,32 @@
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+[qattn compile] mode=default 預編譯 text_after 長度 16..128 完成，耗時 104.5s
+[qattn compile] mode=reduce-overhead 預編譯 text_after 長度 16..128 完成，耗時 110.3s
+[load_infovqa] Ahren09/InfoVQA:val (prompt_mode=short) -> kept 20, skipped 0 (no image)
+[1] tiles=22  default: rel=9.3e-02 前3同=True  reduce-overhead: rel=9.3e-02 前3同=True
+[2] tiles=22  default: rel=9.5e-02 前3同=True  reduce-overhead: rel=9.5e-02 前3同=True
+[3] tiles=22  default: rel=9.9e-02 前3同=True  reduce-overhead: rel=9.9e-02 前3同=True
+[4] tiles=22  default: rel=9.2e-02 前3同=True  reduce-overhead: rel=9.2e-02 前3同=True
+[5] tiles=22  default: rel=8.7e-02 前3同=True  reduce-overhead: rel=8.7e-02 前3同=True
+[6] tiles=22  default: rel=8.3e-02 前3同=True  reduce-overhead: rel=8.3e-02 前3同=True
+[7] tiles=25  default: rel=8.9e-02 前3同=True  reduce-overhead: rel=8.9e-02 前3同=True
+[8] tiles=22  default: rel=9.5e-02 前3同=True  reduce-overhead: rel=9.5e-02 前3同=True
+[9] tiles=25  default: rel=8.4e-02 前3同=True  reduce-overhead: rel=8.4e-02 前3同=True
+[10] tiles=25  default: rel=8.5e-02 前3同=False  reduce-overhead: rel=8.5e-02 前3同=False
+[11] tiles=25  default: rel=1.1e-01 前3同=False  reduce-overhead: rel=1.1e-01 前3同=False
+[12] tiles=25  default: rel=8.3e-02 前3同=False  reduce-overhead: rel=8.3e-02 前3同=False
+[13] tiles=22  default: rel=9.8e-02 前3同=True  reduce-overhead: rel=9.8e-02 前3同=True
+[14] tiles=22  default: rel=9.4e-02 前3同=True  reduce-overhead: rel=9.4e-02 前3同=True
+[15] tiles=22  default: rel=9.3e-02 前3同=True  reduce-overhead: rel=9.3e-02 前3同=True
+[16] tiles=22  default: rel=9.8e-02 前3同=True  reduce-overhead: rel=9.8e-02 前3同=True
+[17] tiles=25  default: rel=6.5e-02 前3同=True  reduce-overhead: rel=6.5e-02 前3同=True
+[18] tiles=41  default: rel=1.5e-01 前3同=False  reduce-overhead: rel=1.5e-01 前3同=False
+[19] tiles=41  default: rel=1.7e-01 前3同=True  reduce-overhead: rel=1.7e-01 前3同=True
+[20] tiles=41  default: rel=1.1e-01 前3同=True  reduce-overhead: rel=1.1e-01 前3同=True
+
+mode                打分 ms/批     加速      暫時記憶體 MB   常駐 alloc MB   常駐 reserved MB       最大相對誤差     前K-1名相同
+none                  109.4  1.00x         178.1           0.0              0.0            —           —
+default                97.5  1.12x         217.1           8.1            914.0      1.7e-01       16/20
+reduce-overhead        97.9  1.12x          14.2          -8.1           -212.0      1.7e-01       16/20
+
+（每批 4 塊 tile、L20、略過第 1 張圖的時間；參考：b1024 KV cache 約 154 MB、整個 pipeline peak 約 17.4 GB）

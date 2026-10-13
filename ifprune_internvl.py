@@ -459,7 +459,7 @@ def main():
                         help="小 VLM 骨架（InternVL2.5-1B 官方 HF remote code）")
     parser.add_argument("--head_dtype", choices=["fp32", "bf16"], default="bf16",
                         help="KL head 的計算精度；bf16 = 官方數值（預設），fp32 = 偏離官方的 ablation（見檔頭第 4 點）")
-    parser.add_argument("--max_num", type=int, default=48, help="max dynamic tiles")
+    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 internvl_stream.py 同語意")
     parser.add_argument("--vit_batch", type=int, default=4)
     parser.add_argument("--budget", type=int, default=512,
                         help="剪枝後保留的視覺 token 數（= 官方 keep_ratio * vis_len）")
@@ -560,7 +560,7 @@ def main():
         print(f"[{i+1}/{len(datasets)}] Processing image...")
         print(f"{'='*70}")
 
-        pixel_values = load_image_tiles(d["image"], input_size=448, max_num=args.max_num)
+        pixel_values = load_image_tiles(d["image"], input_size=448, max_num=max(1, args.max_num - 1))
         print(f"  tiles = {pixel_values.shape[0]}  raw_vis_tokens = {pixel_values.shape[0] * model.num_image_token}")
 
         torch.cuda.reset_peak_memory_stats(DEVICE)

@@ -1,0 +1,47 @@
+{
+  "source_json": "out_lowresfill_4k_letter_InternVL3_5-8B_hrbench_b5120.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "lowresfill_max20",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed>",
+      "n_groups": 200,
+      "circ_acc": 57.99999999999999,
+      "vanilla_acc": 69.75,
+      "by_category": {
+        "cross": 44.0,
+        "single": 72.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": true
+    },
+    {
+      "tag": "lowresfill_max20",
+      "n_groups": 200,
+      "circ_acc": 57.99999999999999,
+      "vanilla_acc": 69.75,
+      "by_category": {
+        "cross": 44.0,
+        "single": 72.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}

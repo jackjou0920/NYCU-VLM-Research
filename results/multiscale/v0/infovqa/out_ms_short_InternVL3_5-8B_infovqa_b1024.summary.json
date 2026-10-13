@@ -1,0 +1,68 @@
+{
+  "source_json": "out_ms_short_InternVL3_5-8B_infovqa_b1024.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "budget=1024_svma_S15_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=1024_svma_S15_qa20ctx",
+      "n": 500,
+      "anls": 58.95977929977325,
+      "exact": 49.2,
+      "zero": 36.199999999999996,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_svma_S15_qa20ctx_m2",
+      "n": 500,
+      "anls": 66.91714272055633,
+      "exact": 57.199999999999996,
+      "zero": 29.2,
+      "delta": 7.957363420783059,
+      "ci_lo": 4.501568159886243,
+      "ci_hi": 11.622342741195881,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_svma_S15_qa20ctx_m3",
+      "n": 500,
+      "anls": 67.726722254857,
+      "exact": 57.99999999999999,
+      "zero": 28.199999999999996,
+      "delta": 8.766942955083737,
+      "ci_lo": 5.41206447279186,
+      "ci_hi": 12.329313763365699,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=1024_svma_S15_qa20ctx_m4",
+      "n": 500,
+      "anls": 64.90714650975976,
+      "exact": 56.599999999999994,
+      "zero": 31.4,
+      "delta": 5.94736720998651,
+      "ci_lo": 1.881076333647121,
+      "ci_hi": 10.078527463607138,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

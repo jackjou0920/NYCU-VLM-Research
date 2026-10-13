@@ -1,0 +1,40 @@
+{
+  "source_json": "out_conf_short_InternVL3_5-8B_infovqa_b2048.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "budget=2048_svma_S14_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=2048_svma_S14_qa20ctx",
+      "n": 500,
+      "anls": 64.1065992140373,
+      "exact": 55.800000000000004,
+      "zero": 32.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    },
+    {
+      "tag": "budget=2048_svma_S4_qa20ctx_m6",
+      "n": 500,
+      "anls": 76.69995361191955,
+      "exact": 69.39999999999999,
+      "zero": 20.0,
+      "delta": 12.593354397882262,
+      "ci_lo": 8.883296359578674,
+      "ci_hi": 16.526360959166876,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

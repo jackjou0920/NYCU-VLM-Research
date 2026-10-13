@@ -1,0 +1,47 @@
+{
+  "source_json": "out_conf_8k_letter_InternVL3_5-8B_hrbench_b1024.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "budget=1024_svma_S15_qa20ctx",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "budget=1024_svma_S15_qa20ctx",
+      "n_groups": 200,
+      "circ_acc": 50.0,
+      "vanilla_acc": 64.0,
+      "by_category": {
+        "cross": 40.0,
+        "single": 60.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    },
+    {
+      "tag": "budget=1024_svma_S5_qa20ctx_m3",
+      "n_groups": 200,
+      "circ_acc": 51.0,
+      "vanilla_acc": 62.375,
+      "by_category": {
+        "cross": 40.0,
+        "single": 62.0
+      },
+      "delta": 1.0,
+      "ci_lo": -4.0,
+      "ci_hi": 5.5,
+      "significant": false,
+      "is_baseline": false,
+      "is_reference": false
+    }
+  ]
+}

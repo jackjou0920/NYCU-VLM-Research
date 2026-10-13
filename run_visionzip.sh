@@ -7,10 +7,8 @@
 # 跟 run_fastv.sh 的差異：
 #   1. VisionZip 沒有需要校準的超參數（budget 平均分給每個 tile，contextual 佔
 #      5/32，見 visionzip_internvl.py 檔頭），所以跟 FastV 一樣只有一個 phase。
-#   2. 指標段的 stream_b<K> 帶 --thumb_attn --thumb_attn_w $TAW，跟 run_internvl.sh
-#      的 metrics 呼叫一致，也就是跟你 accuracy 用的 streaming 設定同一組（
-#      run_fastv.sh / run_sparsevlm.sh 的 metrics 段沒帶這個旗標，stream 那幾列是
-#      thumb_attn=off，跟 accuracy 對不上）。
+#   2. 指標段的 stream_b<K> 用 bench_metrics.py 預設的 SVMA 設定（--qattn_tiles auto），
+#      跟 run_internvl.sh 的 accuracy 設定一致。
 #   3. accuracy 段不是註解掉的；只想重跑其中一段用 RUN_ACCURACY=0 / RUN_METRICS=0。
 #
 # 產出檔名：
@@ -34,7 +32,6 @@ MAX_NUM=${MAX_NUM:-48}
 MAX_NEW_TOKENS=${MAX_NEW_TOKENS:-500}
 METRIC_IMAGES=${METRIC_IMAGES:-24}           # peak/KV cache 用，小 n 即可，跟 run_sparsevlm.sh / run_fastv.sh 一致
 CTX_RATIO=${CTX_RATIO:-0.15625}              # contextual 佔比 = 5/32，論文 Table 8/9 每一組數字都是這個比例
-TAW=${TAW:-0.9}                              # stream 指標列的 thumb-attn 權重，跟 run_internvl.sh 一致
 RUN_ACCURACY=${RUN_ACCURACY:-1}
 RUN_METRICS=${RUN_METRICS:-1}
 
@@ -44,21 +41,26 @@ MTAG=$(basename "$MODEL")
 # 跟 run_fastv.sh 用同一招從 internvl_stream.py 讀 HR-Bench/DocVQA 的
 # split/prompt 常數——visionzip_internvl.py 也是 import 同一份常數，語意一致。
 PROMPT_MODE=$(grep -oP 'HRBENCH_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo letter)
-SPLIT_TAG=$(grep -oP 'HRBENCH_SPLIT\s*=\s*"\K[^"]+' internvl_stream.py || echo hrbench_4k)
+SPLIT_TAG=${HRBENCH_SPLIT:-hrbench_4k}   # 跟 internvl_stream.py 同一個環境變數
 SPLIT_TAG=${SPLIT_TAG#hrbench_}
 DOCVQA_PROMPT_MODE=$(grep -oP 'DOCVQA_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo short)
 INFOVQA_PROMPT_MODE=$(grep -oP 'INFOVQA_PROMPT\s*=\s*"\K[^"]+' internvl_stream.py || echo short)
 # docvqa / infovqa 共用的 prompt 模式，後面的 OUTBASE / eval / similarity 都吃這個。
 if [ "$DATASET" = infovqa ]; then QA_PROMPT_MODE=$INFOVQA_PROMPT_MODE; else QA_PROMPT_MODE=$DOCVQA_PROMPT_MODE; fi
 
+# 輸出放 results/baselines/internvl_visionzip_<dataset>/（HR-Bench 8K 是 hrbench8k），OUTDIR 可覆寫
+if [ "$DATASET" = hrbench ] && [ "${SPLIT_TAG#hrbench_}" = 8k ]; then DSDIR=hrbench8k; else DSDIR=$DATASET; fi
+OUTDIR=${OUTDIR:-results/baselines/internvl_visionzip_${DSDIR}}
+mkdir -p "$OUTDIR"
+
 if [ "$DATASET" = hrbench ]; then
-    OUTBASE="out_visionzip_${SPLIT_TAG}_${PROMPT_MODE}_${MTAG}_${DATASET}"
+    OUTBASE="$OUTDIR/out_visionzip_${SPLIT_TAG}_${PROMPT_MODE}_${MTAG}_${DATASET}"
     METRIC_TAG="${SPLIT_TAG}_${MTAG}"
 elif [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; then
-    OUTBASE="out_visionzip_${QA_PROMPT_MODE}_${MTAG}_${DATASET}"
+    OUTBASE="$OUTDIR/out_visionzip_${QA_PROMPT_MODE}_${MTAG}_${DATASET}"
     METRIC_TAG="$MTAG"
 else
-    OUTBASE="out_visionzip_${MTAG}_${DATASET}"
+    OUTBASE="$OUTDIR/out_visionzip_${MTAG}_${DATASET}"
     METRIC_TAG="$MTAG"
 fi
 
@@ -128,9 +130,8 @@ if [ "$RUN_METRICS" = 1 ]; then
     $PY bench_metrics.py --model_name "$MODEL" --dataset "$DATASET" \
         --num_images "$METRIC_IMAGES" --max_num "$MAX_NUM" \
         --budgets "$(IFS=,; echo "${BUDGETS[*]}")" \
-        --thumb_attn --thumb_attn_w "$TAW" \
         --run_visionzip --visionzip_contextual_ratio "$CTX_RATIO" \
-        --out_csv "metrics_visionzip_${METRIC_TAG}_${DATASET}.csv" || true
+        --out_csv "$OUTDIR/metrics_visionzip_${METRIC_TAG}_${DATASET}.csv" || true
 fi
 
 echo
@@ -144,5 +145,5 @@ elif [ "$DATASET" = hrbench ]; then
 elif [ "$DATASET" = docvqa ] || [ "$DATASET" = infovqa ]; then
     echo "ANLS summary     : ${OUTBASE}_b*.summary.json  (per-sample: ${OUTBASE}_anls_b*.csv)"
 fi
-echo "metrics          : metrics_visionzip_${METRIC_TAG}_${DATASET}.csv"
-echo "                    (uncompressed / stream_b<K>(SVMA, thumb_attn w=$TAW) / visionzip_b<K> 同一批圖並排)"
+echo "metrics          : $OUTDIR/metrics_visionzip_${METRIC_TAG}_${DATASET}.csv"
+echo "                    (uncompressed / stream_b<K>(SVMA) / visionzip_b<K> 同一批圖並排)"

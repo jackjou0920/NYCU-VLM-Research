@@ -65,12 +65,11 @@ import statistics as st
 
 import torch
 
-from internvl_preprocess import build_model, load_image_tiles
+from internvl_preprocess import build_model, load_image_tiles, load_image_tiles_fill
 import internvl_stream as S
 import sparsevlm_internvl as SV
 import fastv_internvl as FV
 import visionzip_internvl as VZ
-from process_common import load_hrbench, load_docvqa, load_infovqa
 
 
 def _sync():
@@ -93,19 +92,6 @@ def _peak_resv_gb():
     return torch.cuda.max_memory_reserved(S.DEVICE) / 1e9 if torch.cuda.is_available() else 0.0
 
 
-def _load_dataset(name, n):
-    if name == "hrbench":
-        return load_hrbench(dataset="DreamMr/HR-Bench", split=S.HRBENCH_SPLIT,
-                            num_image=n, prompt_mode=S.HRBENCH_PROMPT)
-    if name == "docvqa":
-        return load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
-                            num_image=n, prompt_mode=S.DOCVQA_PROMPT)
-    if name == "infovqa":
-        return load_infovqa(dataset="Ahren09/InfoVQA", split="val",
-                            num_image=n, prompt_mode=S.INFOVQA_PROMPT)
-    raise ValueError(name)
-
-
 def _agg(rows, keys):
     """rows: list[dict] → {key: (mean, std)} for the numeric keys."""
     out = {}
@@ -123,17 +109,17 @@ def _agg(rows, keys):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--model_name", default="OpenGVLab/InternVL3_5-8B")
-    ap.add_argument("--dataset", default="hrbench", choices=["hrbench", "docvqa", "infovqa"])
+    ap.add_argument("--dataset", default="hrbench_4k", choices=["hrbench"] + sorted(S.DATASETS),
+                    help="同 internvl_stream.py；hrbench = 舊名稱，split 看環境變數 HRBENCH_SPLIT")
     ap.add_argument("--num_images", type=int, default=24)
     ap.add_argument("--max_num", type=int, default=48, help="dynamic tiles 上限（含縮圖）")
     ap.add_argument("--budgets", default="1024,2048,4096")
     ap.add_argument("--vit_batch", type=int, default=4)
-    ap.add_argument("--chunk_size", type=int, default=1024)
     ap.add_argument("--max_new_tokens", type=int, default=8, help="指標只需要量到第一個 token + 幾步 decode")
-    ap.add_argument("--score_fn", default="info_density")
-    ap.add_argument("--thumb_attn", action="store_true", help="streaming 是否開 thumbnail-attention prior")
-    ap.add_argument("--thumb_attn_w", type=float, default=S.THUMB_ATTN_W)
     ap.add_argument("--skip_uncompressed", action="store_true")
+    ap.add_argument("--lowres_fill", action="store_true",
+                    help="Low-Res（fill）：uncompressed 改吃 load_image_tiles_fill（網格 <= --max_num、不加縮圖），"
+                         "不跑 streaming（沒有縮圖可當 prior）")
 
     ap.add_argument("--run_sparsevlm", action="store_true",
                      help="每個 budget 額外跑一次 SparseVLM，跟 stream_b<K> 同一組 budget 公平比較")
@@ -180,7 +166,7 @@ def main():
     model_load_peak = _peak_alloc_gb()
     print(f"model loaded, peak_alloc={model_load_peak:.2f} GB  num_image_token={model.num_image_token}")
 
-    ds = _load_dataset(args.dataset, args.num_images)
+    ds = S.load_eval_dataset(args.dataset, args.num_images)
     max_num_grid = max(1, args.max_num - 1)
 
     output_results = {"references": [], "candidates": {}}
@@ -203,9 +189,9 @@ def main():
     for i, d in enumerate(ds):
         q = d["question"]
         img = d["image"]
-        pv = load_image_tiles(img, input_size=448, max_num=max_num_grid)
+        pv = (load_image_tiles_fill(img, input_size=448, max_tiles=args.max_num) if args.lowres_fill
+              else load_image_tiles(img, input_size=448, max_num=max_num_grid))
         n_tiles = pv.shape[0]
-        ow, oh = tuple(img.size)
 
         # ---- uncompressed（budget 無關）----
         if not args.skip_uncompressed:
@@ -250,19 +236,18 @@ def main():
             gc.collect()
             torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
-        # ---- streaming @ each budget ----
-        for b in budgets:
+        # ---- SVMA @ each budget（m、S 都由 budget 決定，跟 internvl_stream.py --mode svma 一樣）----
+        for b in ([] if args.lowres_fill else budgets):
+            ms = S.prepare_inputs([img], "svma", b, args.max_num)[0]
             stream_tag = f"stream_b{b}"
             output_results["candidates"].setdefault(stream_tag, [])
             adapter = S.InternVLAdapter(tokenizer, model, budget=b)
             _peak_reset()
             answers, all_stats, timing = S.run_online_kv_with_memory_bank(
-                model, adapter, [pv], [q],
-                dtype=dtype, vit_batch=args.vit_batch, chunk_size=args.chunk_size,
-                budget=b, score_fn=args.score_fn, tile_agg="max", select="topk",
-                max_new_tokens=args.max_new_tokens, delay_tiles=0,
-                thumb_attn=args.thumb_attn, thumb_attn_w=args.thumb_attn_w,
-                orig_sizes=[(ow, oh)],
+                model, adapter, [ms], [q],
+                budget=b,
+                qattn_tiles=S.default_qattn_tiles(b, S.default_coverage_tiles(b)),
+                max_new_tokens=args.max_new_tokens, dtype=dtype,
             )
             output_results["candidates"][stream_tag].append(answers[0])
             pk = timing.get("_peak_mem_gb", {})
@@ -436,7 +421,7 @@ def main():
     out_rows = []
     tag = f"model={args.model_name}"
     ds_tag = args.dataset + (f":{S.HRBENCH_SPLIT}" if args.dataset == "hrbench" else "")
-    method_note = f"thumb_attn=on(w={args.thumb_attn_w:g})" if args.thumb_attn else "thumb_attn=off"
+    method_note = "svma m=floor(0.75K), S=default_qattn_tiles(b, m)"
 
     def _row(method, agg, extra=""):
         r = {"model": args.model_name, "dataset": ds_tag, "method": method,
@@ -451,7 +436,8 @@ def main():
     if unc_rows:
         out_rows.append(_row("uncompressed", _agg(unc_rows, num_keys), extra="max_num tiles, budget-independent"))
     for b in budgets:
-        out_rows.append(_row(f"stream_b{b}", _agg(stream_rows[b], num_keys)))
+        if stream_rows[b]:
+            out_rows.append(_row(f"stream_b{b}", _agg(stream_rows[b], num_keys)))
         if args.run_sparsevlm:
             sv_note = "auto_lam" if args.sparsevlm_lam is None else f"lam={args.sparsevlm_lam:g}"
             out_rows.append(_row(f"sparsevlm_b{b}", _agg(sparsevlm_rows[b], num_keys), extra=sv_note))

@@ -1,0 +1,40 @@
+{
+  "source_json": "out_oracle_greedy_docvqa_b1024.json",
+  "gt_name": "JSON meta answers (aligned, from load_docvqa)",
+  "gt_source": "meta",
+  "threshold": 0.5,
+  "answer_extraction": false,
+  "baseline_tag": "oracle_budget=1024_mode=greedy",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "<references / uncompressed baseline>",
+      "n": 200,
+      "anls": 96.02218821246875,
+      "exact": 90.0,
+      "zero": 2.5,
+      "delta": 9.93660753574252,
+      "ci_lo": 5.4418193506473855,
+      "ci_hi": 14.820998827015321,
+      "significant": true,
+      "is_baseline": false,
+      "is_reference": true,
+      "len_ok": true
+    },
+    {
+      "tag": "oracle_budget=1024_mode=greedy",
+      "n": 200,
+      "anls": 86.08558067672622,
+      "exact": 73.5,
+      "zero": 10.5,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}
