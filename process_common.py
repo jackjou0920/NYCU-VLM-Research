@@ -1,8 +1,11 @@
 import os
+import json
 import glob
 import base64
 from io import BytesIO
 from PIL import Image
+import random
+
 from datasets import load_dataset
 
 
@@ -131,7 +134,8 @@ def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="vali
     return samples
 
 
-def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_mode="short"):
+def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_mode="short",
+                 sample_seed=None):
     """InfoVQA loader（給 internvl_stream.py 用）。設計比照 load_docvqa：
 
     prompt_mode：
@@ -140,6 +144,8 @@ def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_
 
     Ahren09/InfoVQA 的欄位：id (int) / question / answer (list[str]) / image / deck_name /
     image_url。注意 validation split 在這個 dataset 裡叫 "val"，不是 "validation"。
+    sample_seed：None = 依原始順序取前 num_image 題；給整數時改成用這個 seed 隨機抽 num_image 題
+    （held-out 校準集用，例如 train split 抽 600 題；抽到的順序固定，可重現）。
     每筆額外回傳 answer / answers / id，讓 internvl_stream.py 存進輸出 JSON 的 meta，
     ANLS 直接讀 meta，不用重載 HF dataset（避免跳圖造成的對齊位移，理由同 load_docvqa）。
     """
@@ -148,9 +154,12 @@ def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_
 
     ds = load_dataset(dataset, split=split)
     limit = len(ds) if (num_image is None or num_image == -1) else min(int(num_image), len(ds))
+    order = list(range(len(ds)))
+    if sample_seed is not None:
+        random.Random(sample_seed).shuffle(order)
 
     samples, skipped = [], 0
-    for i in range(limit):
+    for i in order[:limit]:
         s = ds[i]
         image = _to_pil(s.get("image"))
         if image is None:
@@ -255,3 +264,54 @@ def load_hrbench(dataset="DreamMr/HR-Bench", split="hrbench_4k", num_image=None,
     print(f"[load_hrbench] {dataset}:{split} (prompt_mode={prompt_mode}) -> "
           f"kept {len(samples)}, skipped {skipped} (no image)")
     return samples
+
+
+MME_RW_ROOT = os.path.expanduser(os.environ.get("MME_RW_ROOT", "~/datasets/MME-RealWorld"))
+# 官方 MME-RealWorld / VLMEvalKit 的作答指示
+MME_RW_INSTRUCTION = ("Select the best answer to the above multiple-choice question based on the image. "
+                      "Respond with only the letter (A, B, C, D, or E) of the correct option.\n"
+                      "The best answer is:")
+
+
+def load_mme_realworld(split="calib", num_image=None, root=MME_RW_ROOT):
+    """MME-RealWorld loader（英文版，選擇題）。題目清單由 prepare_mme_realworld.py 產生：
+      split="calib"：held-out 校準集（完整版扣掉 Lite 與 Lite 的圖，5 個 Subtask 各 120 題，seed 0）
+      split="lite" ：測試集 MME-RealWorld-Lite（1,919 題）
+
+    圖片很大（remote sensing 常超過 5000x5000），所以不預先讀進記憶體：每筆只放 image_path，
+    用 get_image(d) 在用到時才開檔（internvl_stream.py 已改用 get_image）。
+    meta：answer = 正解字母，options = 去掉 "(A) " 前綴的選項文字，category = Subtask/Category。
+    """
+    path = os.path.join(root, {"calib": "calib600.json", "lite": "lite.json"}[split])
+    if not os.path.exists(path):
+        raise SystemExit(f"找不到 {path}，請先跑 python prepare_mme_realworld.py")
+    items = json.load(open(path))
+    if num_image is not None and num_image != -1:
+        items = items[:int(num_image)]
+    samples = []
+    for d in items:
+        choices = [str(c).strip() for c in d["Answer choices"]]
+        options = [c[3:].strip() if len(c) > 3 and c[0] == "(" and c[2] == ")" else c for c in choices]
+        prompt_q = (f"{d['Text'].strip()}\nThe choices are listed below:\n" + "\n".join(choices)
+                    + f"\n{MME_RW_INSTRUCTION}")
+        samples.append({
+            "question": prompt_q,
+            "image_path": os.path.join(root, d["Image"]),
+            "answer": str(d["Ground truth"]).strip(),
+            "answer_text": "",
+            "options": options,
+            "question_type": "multiple_choice",
+            "category": f"{d['Subtask']}/{d['Category']}",
+            "id": d["Question_id"],
+        })
+    print(f"[load_mme_realworld] {split}: {len(samples)} 題（{path}）")
+    return samples
+
+
+def get_image(d):
+    """回傳 sample 的 PIL 影像：有 image 直接用，否則（MME-RealWorld 等大圖）從 image_path 開檔。"""
+    if d.get("image") is not None:
+        return d["image"]
+    Image.MAX_IMAGE_PIXELS = None          # remote sensing 圖超過 PIL 預設的 decompression-bomb 上限
+    with Image.open(d["image_path"]) as im:
+        return im.convert("RGB")

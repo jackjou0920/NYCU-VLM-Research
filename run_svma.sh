@@ -37,6 +37,7 @@ MTAG=$(basename "$MODEL")
 evaluate() {   # $1 = dataset, $2 = json
     local stem=${2%.json}
     case "$1" in
+        mme_rw*)  echo "  ($1 用選擇題 accuracy，由 summarize_results.py 直接評分)" ;;
         hrbench*) $PY evaluate_hrbench_circular.py --input_json "$2" --group_by id \
                       --dump_csv "${stem}.circ.csv" --summary_json "${stem}.circ.json" ;;
         *)        $PY evaluate_anls.py --input_json "$2" \

@@ -30,7 +30,9 @@ MODEL=${MODEL:-OpenGVLab/InternVL3_5-8B}
 DATASET=${DATASET:-infovqa}                   # hrbench | docvqa | infovqa，跟 run_internvl.sh 保持一致才能對照
 read -r -a BUDGETS <<< "${BUDGETS:-1024 2048 3072 4096 5120}"
 NUM_IMAGES=${NUM_IMAGES:--1}                 # accuracy 用（投稿前拉全量，跟 run_internvl.sh 的 NUM_IMAGES 對齊）
-CALIB_IMAGES=${CALIB_IMAGES:-8}              # λ 校準用，小 n 就夠（校準成本是 accuracy pass 的好幾倍/張）
+RUN_STANDARD=${RUN_STANDARD:-1}              # 1 = 同時跑 uncompressed（batch_chat）當 references；0 = 不跑（已有 uncompressed 結果時省一半時間，評分只用 meta 的 GT）
+RUN_METRICS=${RUN_METRICS:-1}                # 1 = 最後用 bench_metrics.py 量 TTFT / peak memory
+CALIB_IMAGES=${CALIB_IMAGES:-32}             # λ 校準用（校準成本是 accuracy pass 的好幾倍/張）；原圖 token 不超過門檻的圖會被跳過，不算進中位數
 METRIC_IMAGES=${METRIC_IMAGES:-24}           # peak/KV cache 用，小 n 即可，跟 run_internvl.sh 一致
 MAX_NUM=${MAX_NUM:-48}
 MAX_NEW_TOKENS=${MAX_NEW_TOKENS:-500}
@@ -113,7 +115,7 @@ for BUDGET in "${BUDGETS[@]}"; do
     echo "==== $MTAG $DATASET b$BUDGET :: Phase 2 accuracy run (n=$NUM_IMAGES, lam=$LAM) ===="
     $PY sparsevlm_internvl.py --model_name "$MODEL" $DS_ARGS --num_images "$NUM_IMAGES" \
         --max_num "$MAX_NUM" --budget "$BUDGET" --lam "$LAM" --max_new_tokens "$MAX_NEW_TOKENS" \
-        --run_standard --run_sparsevlm --save --output_json "$J"
+        $( [ "$RUN_STANDARD" = 1 ] && echo --run_standard ) --run_sparsevlm --save --output_json "$J"
 
     # candidates 只有一個 key（這個 budget/lam 的 tag），直接讀出來當 --baseline_tag，
     # 避免自己組字串跟 sparsevlm_internvl.py 的 f"sparsevlm_budget={budget}_lam={lam}"
@@ -141,12 +143,14 @@ done
 #      校準（小 n=METRIC_IMAGES 才跑得動），跟 Phase 1/2 的固定 λ 是兩回事，
 #      不需要共用 LAM_FOR_BUDGET——記憶體指標本來就要看「校準到位」的 SparseVLM
 #      表現，跟 accuracy pass 用固定 λ 圖省時間的考量不衝突。----
+if [ "$RUN_METRICS" = 1 ]; then
 echo; echo "==== $MTAG $DATASET :: metrics (peak memory / KV cache, streaming vs SparseVLM) ===="
 $PY bench_metrics.py --model_name "$MODEL" --dataset "$DATASET" \
     --num_images "$METRIC_IMAGES" --max_num "$MAX_NUM" \
     --budgets "$(IFS=,; echo "${BUDGETS[*]}")" \
     --run_sparsevlm \
     --out_csv "$OUTDIR/metrics_sparsevlm_${METRIC_TAG}_${DATASET}.csv" || true
+fi
 
 echo
 echo "===== SparseVLM done  ($MTAG / $DATASET) ====="

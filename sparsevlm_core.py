@@ -221,13 +221,15 @@ def rank_based_stage_removal(P: torch.Tensor, lam: float, energy_threshold: floa
 # ──────────────────────────────────────────────────────────────────────────
 # C. Density-Peak/KNN 聚類 + 加權平均 merge
 # ──────────────────────────────────────────────────────────────────────────
-def dpc_knn_merge(tokens: torch.Tensor, weights: torch.Tensor, num_clusters: int, knn_k: int = 5) -> torch.Tensor:
+def dpc_knn_merge(tokens: torch.Tensor, weights: torch.Tensor, num_clusters: int, knn_k: int = 5,
+                  return_assign: bool = False):
     """
     tokens  : [N, D]  要被聚類合併的候選 token（已經是「值得留一點痕跡、
               但排不進硬保留名額」的那群，不是隨便什麼 token 都拿來聚類）
     weights : [N]     合併時的加權依據（用 B 步驟算出的重要性分數）
     num_clusters : 要聚成幾群（= merge 完之後這批候選會變成幾個代表 token）
-    回傳: merged [num_clusters, D]
+    回傳: merged [num_clusters, D]；return_assign=True 時回傳 (merged, assign [N])，
+          assign[i] = 第 i 個候選被併進哪一群（給呼叫端算每個群心 token 的分數）
 
     演算法（density-peak clustering 的 KNN 密度版，token merging 文獻的
     常見做法，非這篇論文獨創，這裡的張量運算是我自己重新寫的）：
@@ -245,7 +247,8 @@ def dpc_knn_merge(tokens: torch.Tensor, weights: torch.Tensor, num_clusters: int
     N, D = tokens.shape
     num_clusters = max(1, min(num_clusters, N))
     if num_clusters >= N:
-        return tokens.clone()
+        merged = tokens.clone()
+        return (merged, torch.arange(N, device=tokens.device)) if return_assign else merged
 
     x = tokens.float()
     dist = torch.cdist(x, x) / (D ** 0.5)                       # [N, N]，除以 sqrt(D) 貼近官方
@@ -281,7 +284,8 @@ def dpc_knn_merge(tokens: torch.Tensor, weights: torch.Tensor, num_clusters: int
     merged.index_add_(0, assign, x * w.unsqueeze(-1))
     weight_sum.index_add_(0, assign, w)
     merged = merged / weight_sum.clamp(min=1e-6).unsqueeze(-1)
-    return merged.to(tokens.dtype)
+    merged = merged.to(tokens.dtype)
+    return (merged, assign) if return_assign else merged
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -300,7 +304,9 @@ def sparsevlm_prune_step(
     row_offset: int = 0,
 ):
     """
-    回傳 (new_hidden_states, new_vis_len, debug_stats)。
+    回傳 (new_hidden_states, new_vis_len, debug_stats, new_scores)。
+    new_scores [new_vis_len]：每個留下來的視覺 token 的重要性分數（跟 new_hidden_states 的視覺區段
+    逐一對齊；merge 出來的群心 token 取群內最高分），給 SparseVLMPruner.step() 最後裁切到 budget 用。
 
     hidden_states 的排版固定是 [pre-prompt 文字][視覺 token][問題文字]，
     只有中間的視覺 token 區段會被動；pre-prompt 跟問題文字原封不動接回去
@@ -328,7 +334,7 @@ def sparsevlm_prune_step(
     if k >= vis_len:
         debug_stats["vis_len_after"] = vis_len   # 沒剔除，維持原值——跟下面正常路徑的欄位一致，
                                                    # 呼叫端（例如 auto_tune_lam()）才能穩定讀到這個 key
-        return hidden_states, vis_len, debug_stats   # rank(P) 估出來這一層不用剔除
+        return hidden_states, vis_len, debug_stats, importance   # rank(P) 估出來這一層不用剔除
 
     keep_idx = importance.topk(k).indices if k > 0 else importance.new_zeros(0, dtype=torch.long)
     keep_mask = torch.zeros(vis_len, dtype=torch.bool, device=hidden_states.device)
@@ -336,8 +342,9 @@ def sparsevlm_prune_step(
     drop_idx = (~keep_mask).nonzero(as_tuple=True)[0]
     kept_tokens = vis_tokens[keep_mask]
 
+    kept_scores = importance[keep_mask]
     if drop_idx.numel() == 0:
-        new_vis_tokens = kept_tokens
+        new_vis_tokens, new_scores = kept_tokens, kept_scores
     else:
         drop_scores = importance[drop_idx]
         n_filter = min(drop_idx.numel(), int(drop_idx.numel() * merge_filter_ratio) + 1)
@@ -345,8 +352,12 @@ def sparsevlm_prune_step(
         merge_candidates = vis_tokens[drop_idx[filter_local_idx]]
 
         num_clusters = merge_candidates.shape[0] // cluster_divisor + 1
-        merged = dpc_knn_merge(merge_candidates, filter_scores, num_clusters, knn_k=knn_k)
+        merged, assign = dpc_knn_merge(merge_candidates, filter_scores, num_clusters, knn_k=knn_k,
+                                       return_assign=True)
+        merged_scores = filter_scores.new_full((merged.shape[0],), float("-inf")).scatter_reduce(
+            0, assign, filter_scores, reduce="amax")
         new_vis_tokens = torch.cat([kept_tokens, merged], dim=0)
+        new_scores = torch.cat([kept_scores, merged_scores], dim=0)
         # 篩掉的另外 (1 - merge_filter_ratio) 那批（分數最低、被判定為純雜訊）
         # 直接消失，不進 new_vis_tokens——這一步是硬丟棄，對應官方碼「不進
         # merge_token_stage1」的那些 token。
@@ -355,7 +366,7 @@ def sparsevlm_prune_step(
         [hidden_states[:vis_start], new_vis_tokens, text_tokens], dim=0
     )
     debug_stats["vis_len_after"] = new_vis_tokens.shape[0]
-    return new_hidden_states, new_vis_tokens.shape[0], debug_stats
+    return new_hidden_states, new_vis_tokens.shape[0], debug_stats, new_scores
 
 
 # ──────────────────────────────────────────────────────────────────────────
@@ -419,7 +430,7 @@ class SparseVLMPruner:
         if self._rater_idx is None:
             self._rater_idx = select_text_raters(vis_tokens, text_tokens)
 
-        new_hidden, new_vis_len, debug_stats = sparsevlm_prune_step(
+        new_hidden, new_vis_len, debug_stats, new_scores = sparsevlm_prune_step(
             hidden_states, attn_weights, vis_start, vis_len, text_start,
             rater_idx=self._rater_idx, lam=self.lam,
             rank_energy_threshold=self.rank_energy_threshold,
@@ -433,7 +444,12 @@ class SparseVLMPruner:
             # 自適應方法本來就有的性質，不是近似誤差）；最後一個 stage 結束後
             # 硬裁切到 target_budget，確保跟本專案其他 bank 一樣有
             # final_size <= budget 的硬保證，方便公平比較同一個 budget 下的準確率。
-            vis_part = new_hidden[vis_start: vis_start + new_vis_len][: self.target_budget]
+            # 裁切依這個 stage 的重要性分數取前 target_budget 名（維持原本順序）。
+            # 2026-10-13 修正：之前是 [:target_budget] 照位置截斷，等於丟掉圖片後半段的 token；
+            # λ 校準到下限（例如 b4096 的 λ=0.005）時幾乎所有壓縮都由這一步完成，
+            # 造成 accuracy 隨 budget 變大反而下降（InfoVQA b3072 65.1 → b4096 59.5）。
+            keep = new_scores.topk(self.target_budget).indices.sort().values
+            vis_part = new_hidden[vis_start: vis_start + new_vis_len][keep]
             new_hidden = torch.cat(
                 [new_hidden[:vis_start], vis_part, new_hidden[vis_start + new_vis_len:]], dim=0
             )

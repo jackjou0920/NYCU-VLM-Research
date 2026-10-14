@@ -1,0 +1,1739 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading check   -> budget=1024  calibrated lam=0.5666
+
+==== InternVL3_5-8B docvqa b1024 :: Phase 2 accuracy run (n=-1, lam=0.5666) ====
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 80.74it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.71 s
+[load_docvqa] lmms-lab-encoder/DocVQA:validation (prompt_mode=short) -> kept 5349, skipped 0 (no image)
+Found 5349 image(s) to process
+
+======================================================================
+[1/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.16 sec  peak_allocated=18.017 GB  peak_reserved=18.358 GB
+  5376 -> 514 tokens (compression=10.459x)  stage_logs=[{'layer': 2, 'rank_p': 23, 'n_remove': 3033, 'vis_len_before': 5376, 'vis_len_after': 2435}, {'layer': 7, 'rank_p': 18, 'n_remove': 1369, 'vis_len_before': 2435, 'vis_len_after': 1108}, {'layer': 17, 'rank_p': 26, 'n_remove': 613, 'vis_len_before': 1108, 'vis_len_after': 514}]
+  [KV cache, prompt-only] 201.1 MB
+
+[SparseVLM Answer]
+0.2
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[2/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.64 sec  peak_allocated=17.653 GB  peak_reserved=17.975 GB
+  3328 -> 319 tokens (compression=10.433x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 1878, 'vis_len_before': 3328, 'vis_len_after': 1507}, {'layer': 7, 'rank_p': 15, 'n_remove': 845, 'vis_len_before': 1507, 'vis_len_after': 688}, {'layer': 17, 'rank_p': 15, 'n_remove': 381, 'vis_len_before': 688, 'vis_len_after': 319}]
+  [KV cache, prompt-only] 126.5 MB
+
+[SparseVLM Answer]
+University of California, San Diego
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[3/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.97 sec  peak_allocated=18.665 GB  peak_reserved=19.023 GB
+  9216 -> 857 tokens (compression=10.754x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 5213, 'vis_len_before': 9216, 'vis_len_after': 4160}, {'layer': 7, 'rank_p': 18, 'n_remove': 2347, 'vis_len_before': 4160, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 15, 'n_remove': 1059, 'vis_len_before': 1884, 'vis_len_after': 857}]
+  [KV cache, prompt-only] 332.1 MB
+
+[SparseVLM Answer]
+ITC Limited
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[4/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.37 sec  peak_allocated=17.653 GB  peak_reserved=17.973 GB
+  3328 -> 317 tokens (compression=10.498x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 1878, 'vis_len_before': 3328, 'vis_len_after': 1507}, {'layer': 7, 'rank_p': 12, 'n_remove': 847, 'vis_len_before': 1507, 'vis_len_after': 686}, {'layer': 17, 'rank_p': 13, 'n_remove': 381, 'vis_len_before': 686, 'vis_len_after': 317}]
+  [KV cache, prompt-only] 126.2 MB
+
+[SparseVLM Answer]
+California
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[5/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.37 sec  peak_allocated=17.653 GB  peak_reserved=17.973 GB
+  3328 -> 319 tokens (compression=10.433x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 1878, 'vis_len_before': 3328, 'vis_len_after': 1507}, {'layer': 7, 'rank_p': 15, 'n_remove': 845, 'vis_len_before': 1507, 'vis_len_after': 688}, {'layer': 17, 'rank_p': 16, 'n_remove': 381, 'vis_len_before': 688, 'vis_len_after': 319}]
+  [KV cache, prompt-only] 126.6 MB
+
+[SparseVLM Answer]
+Paul
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[6/5349] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=2.13 sec  peak_allocated=18.972 GB  peak_reserved=19.317 GB
+  11008 -> 1020 tokens (compression=10.792x)  stage_logs=[{'layer': 2, 'rank_p': 13, 'n_remove': 6230, 'vis_len_before': 11008, 'vis_len_after': 4966}, {'layer': 7, 'rank_p': 13, 'n_remove': 2806, 'vis_len_before': 4966, 'vis_len_after': 2245}, {'layer': 17, 'rank_p': 15, 'n_remove': 1264, 'vis_len_before': 2245, 'vis_len_after': 1020}]
+  [KV cache, prompt-only] 394.4 MB
+
+[SparseVLM Answer]
+1128 Sixteenth St., N.W., Washington, D.C. 20036
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[7/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.08 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 15, 'n_remove': 2350, 'vis_len_before': 4162, 'vis_len_after': 1883}, {'layer': 17, 'rank_p': 20, 'n_remove': 1056, 'vis_len_before': 1883, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 333.1 MB
+
+[SparseVLM Answer]
+Aashirvaad
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[8/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.43 sec  peak_allocated=17.653 GB  peak_reserved=17.973 GB
+  3328 -> 318 tokens (compression=10.465x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 1878, 'vis_len_before': 3328, 'vis_len_after': 1507}, {'layer': 7, 'rank_p': 14, 'n_remove': 846, 'vis_len_before': 1507, 'vis_len_after': 687}, {'layer': 17, 'rank_p': 14, 'n_remove': 381, 'vis_len_before': 687, 'vis_len_after': 318}]
+  [KV cache, prompt-only] 126.5 MB
+
+[SparseVLM Answer]
+the foundation
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[9/5349] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.03 sec  peak_allocated=17.480 GB  peak_reserved=17.824 GB
+  2304 -> 225 tokens (compression=10.24x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 1297, 'vis_len_before': 2304, 'vis_len_after': 1047}, {'layer': 7, 'rank_p': 13, 'n_remove': 586, 'vis_len_before': 1047, 'vis_len_after': 479}, {'layer': 17, 'rank_p': 17, 'n_remove': 262, 'vis_len_before': 479, 'vis_len_after': 225}]
+  [KV cache, prompt-only] 91.1 MB
+
+[SparseVLM Answer]
+11:14 to 11:39 a.m.
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[10/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.64 sec  peak_allocated=17.659 GB  peak_reserved=17.973 GB
+  3328 -> 321 tokens (compression=10.368x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 1875, 'vis_len_before': 3328, 'vis_len_after': 1510}, {'layer': 7, 'rank_p': 12, 'n_remove': 849, 'vis_len_before': 1510, 'vis_len_after': 687}, {'layer': 17, 'rank_p': 19, 'n_remove': 378, 'vis_len_before': 687, 'vis_len_after': 321}]
+  [KV cache, prompt-only] 127.7 MB
+
+[SparseVLM Answer]
+$13.00
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[11/5349] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.50 sec  peak_allocated=17.481 GB  peak_reserved=17.822 GB
+  2304 -> 227 tokens (compression=10.15x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 1295, 'vis_len_before': 2304, 'vis_len_after': 1048}, {'layer': 7, 'rank_p': 13, 'n_remove': 586, 'vis_len_before': 1048, 'vis_len_after': 480}, {'layer': 17, 'rank_p': 20, 'n_remove': 261, 'vis_len_before': 480, 'vis_len_after': 227}]
+  [KV cache, prompt-only] 92.2 MB
+
+[SparseVLM Answer]
+Lee A. Waller
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[12/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.98 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 20, 'n_remove': 2346, 'vis_len_before': 4161, 'vis_len_after': 1886}, {'layer': 17, 'rank_p': 19, 'n_remove': 1058, 'vis_len_before': 1886, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 332.8 MB
+
+[SparseVLM Answer]
+bingo!
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[13/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.98 sec  peak_allocated=18.671 GB  peak_reserved=19.023 GB
+  9216 -> 861 tokens (compression=10.704x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 22, 'n_remove': 2346, 'vis_len_before': 4162, 'vis_len_after': 1887}, {'layer': 17, 'rank_p': 20, 'n_remove': 1058, 'vis_len_before': 1887, 'vis_len_after': 861}]
+  [KV cache, prompt-only] 333.2 MB
+
+[SparseVLM Answer]
+Wills Lifestyle
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[14/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.88 sec  peak_allocated=18.674 GB  peak_reserved=19.023 GB
+  9216 -> 862 tokens (compression=10.691x)  stage_logs=[{'layer': 2, 'rank_p': 21, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 15, 'n_remove': 2350, 'vis_len_before': 4163, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 23, 'n_remove': 1054, 'vis_len_before': 1884, 'vis_len_after': 862}]
+  [KV cache, prompt-only] 333.6 MB
+
+[SparseVLM Answer]
+2
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[15/5349] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.96 sec  peak_allocated=17.480 GB  peak_reserved=17.824 GB
+  2304 -> 227 tokens (compression=10.15x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 1296, 'vis_len_before': 2304, 'vis_len_after': 1047}, {'layer': 7, 'rank_p': 16, 'n_remove': 584, 'vis_len_before': 1047, 'vis_len_after': 481}, {'layer': 17, 'rank_p': 18, 'n_remove': 262, 'vis_len_before': 481, 'vis_len_after': 227}]
+  [KV cache, prompt-only] 91.5 MB
+
+[SparseVLM Answer]
+11:39 to 12:25 p.m
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[16/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.87 sec  peak_allocated=18.671 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 14, 'n_remove': 2350, 'vis_len_before': 4161, 'vis_len_after': 1882}, {'layer': 17, 'rank_p': 21, 'n_remove': 1054, 'vis_len_before': 1882, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.0 MB
+
+[SparseVLM Answer]
+2
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[17/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.88 sec  peak_allocated=18.689 GB  peak_reserved=19.252 GB
+  9216 -> 868 tokens (compression=10.618x)  stage_logs=[{'layer': 2, 'rank_p': 29, 'n_remove': 5205, 'vis_len_before': 9216, 'vis_len_after': 4168}, {'layer': 7, 'rank_p': 22, 'n_remove': 2349, 'vis_len_before': 4168, 'vis_len_after': 1890}, {'layer': 17, 'rank_p': 29, 'n_remove': 1054, 'vis_len_before': 1890, 'vis_len_after': 868}]
+  [KV cache, prompt-only] 336.1 MB
+
+[SparseVLM Answer]
+2
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[18/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.88 sec  peak_allocated=18.683 GB  peak_reserved=19.252 GB
+  9216 -> 865 tokens (compression=10.654x)  stage_logs=[{'layer': 2, 'rank_p': 25, 'n_remove': 5208, 'vis_len_before': 9216, 'vis_len_after': 4165}, {'layer': 7, 'rank_p': 19, 'n_remove': 2349, 'vis_len_before': 4165, 'vis_len_after': 1887}, {'layer': 17, 'rank_p': 26, 'n_remove': 1054, 'vis_len_before': 1887, 'vis_len_after': 865}]
+  [KV cache, prompt-only] 335.0 MB
+
+[SparseVLM Answer]
+3
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[19/5349] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.40 sec  peak_allocated=17.483 GB  peak_reserved=17.822 GB
+  2304 -> 231 tokens (compression=9.974x)  stage_logs=[{'layer': 2, 'rank_p': 22, 'n_remove': 1293, 'vis_len_before': 2304, 'vis_len_after': 1050}, {'layer': 7, 'rank_p': 19, 'n_remove': 584, 'vis_len_before': 1050, 'vis_len_after': 484}, {'layer': 17, 'rank_p': 23, 'n_remove': 261, 'vis_len_before': 484, 'vis_len_after': 231}]
+  [KV cache, prompt-only] 93.2 MB
+
+[SparseVLM Answer]
+Exhibits
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[20/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.88 sec  peak_allocated=18.674 GB  peak_reserved=19.023 GB
+  9216 -> 862 tokens (compression=10.691x)  stage_logs=[{'layer': 2, 'rank_p': 21, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 15, 'n_remove': 2350, 'vis_len_before': 4163, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 23, 'n_remove': 1054, 'vis_len_before': 1884, 'vis_len_after': 862}]
+  [KV cache, prompt-only] 333.6 MB
+
+[SparseVLM Answer]
+2
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[21/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.08 sec  peak_allocated=18.665 GB  peak_reserved=19.023 GB
+  9216 -> 854 tokens (compression=10.792x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 13, 'n_remove': 2350, 'vis_len_before': 4161, 'vis_len_after': 1882}, {'layer': 17, 'rank_p': 12, 'n_remove': 1060, 'vis_len_before': 1882, 'vis_len_after': 854}]
+  [KV cache, prompt-only] 331.8 MB
+
+[SparseVLM Answer]
+CIGFIL LIMITED
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[22/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.04 sec  peak_allocated=18.659 GB  peak_reserved=19.023 GB
+  9216 -> 854 tokens (compression=10.792x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 5213, 'vis_len_before': 9216, 'vis_len_after': 4160}, {'layer': 7, 'rank_p': 15, 'n_remove': 2349, 'vis_len_before': 4160, 'vis_len_after': 1882}, {'layer': 17, 'rank_p': 12, 'n_remove': 1060, 'vis_len_before': 1882, 'vis_len_after': 854}]
+  [KV cache, prompt-only] 331.5 MB
+
+[SparseVLM Answer]
+CHENNAI
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[23/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.14 sec  peak_allocated=18.671 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 19, 'n_remove': 2347, 'vis_len_before': 4162, 'vis_len_after': 1886}, {'layer': 17, 'rank_p': 17, 'n_remove': 1059, 'vis_len_before': 1886, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 333.1 MB
+
+[SparseVLM Answer]
+20.77%
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[24/5349] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.04 sec  peak_allocated=17.480 GB  peak_reserved=17.824 GB
+  2304 -> 225 tokens (compression=10.24x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 1296, 'vis_len_before': 2304, 'vis_len_after': 1047}, {'layer': 7, 'rank_p': 14, 'n_remove': 585, 'vis_len_before': 1047, 'vis_len_after': 480}, {'layer': 17, 'rank_p': 16, 'n_remove': 263, 'vis_len_before': 480, 'vis_len_after': 225}]
+  [KV cache, prompt-only] 91.3 MB
+
+[SparseVLM Answer]
+11:39 to 11:44 a.m.
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[25/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.86 sec  peak_allocated=18.007 GB  peak_reserved=18.358 GB
+  5376 -> 506 tokens (compression=10.625x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 11, 'n_remove': 1371, 'vis_len_before': 2430, 'vis_len_after': 1101}, {'layer': 17, 'rank_p': 17, 'n_remove': 614, 'vis_len_before': 1101, 'vis_len_after': 506}]
+  [KV cache, prompt-only] 198.2 MB
+
+[SparseVLM Answer]
+As competitor's joined the price war
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[26/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.14 sec  peak_allocated=18.671 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 20, 'n_remove': 2347, 'vis_len_before': 4162, 'vis_len_after': 1886}, {'layer': 17, 'rank_p': 18, 'n_remove': 1058, 'vis_len_before': 1886, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.1 MB
+
+[SparseVLM Answer]
+82.85%
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[27/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.09 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 18, 'n_remove': 2349, 'vis_len_before': 4163, 'vis_len_after': 1885}, {'layer': 17, 'rank_p': 18, 'n_remove': 1058, 'vis_len_before': 1885, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 333.2 MB
+
+[SparseVLM Answer]
+79.23
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[28/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.15 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 18, 'n_remove': 2349, 'vis_len_before': 4163, 'vis_len_after': 1885}, {'layer': 17, 'rank_p': 19, 'n_remove': 1057, 'vis_len_before': 1885, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.2 MB
+
+[SparseVLM Answer]
+82.85%
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[29/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.59 sec  peak_allocated=17.656 GB  peak_reserved=17.973 GB
+  3328 -> 319 tokens (compression=10.433x)  stage_logs=[{'layer': 2, 'rank_p': 12, 'n_remove': 1879, 'vis_len_before': 3328, 'vis_len_after': 1506}, {'layer': 7, 'rank_p': 16, 'n_remove': 844, 'vis_len_before': 1506, 'vis_len_after': 688}, {'layer': 17, 'rank_p': 15, 'n_remove': 381, 'vis_len_before': 688, 'vis_len_after': 319}]
+  [KV cache, prompt-only] 126.7 MB
+
+[SparseVLM Answer]
+A. C. Monk
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[30/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 505 tokens (compression=10.646x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 18, 'n_remove': 1367, 'vis_len_before': 2430, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 13, 'n_remove': 619, 'vis_len_before': 1105, 'vis_len_after': 505}]
+  [KV cache, prompt-only] 198.4 MB
+
+[SparseVLM Answer]
+31
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[31/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.99 sec  peak_allocated=18.665 GB  peak_reserved=19.023 GB
+  9216 -> 858 tokens (compression=10.741x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 5213, 'vis_len_before': 9216, 'vis_len_after': 4160}, {'layer': 7, 'rank_p': 19, 'n_remove': 2346, 'vis_len_before': 4160, 'vis_len_after': 1885}, {'layer': 17, 'rank_p': 16, 'n_remove': 1059, 'vis_len_before': 1885, 'vis_len_after': 858}]
+  [KV cache, prompt-only] 332.2 MB
+
+[SparseVLM Answer]
+ITC Limited
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[32/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.99 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 857 tokens (compression=10.754x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 13, 'n_remove': 2351, 'vis_len_before': 4162, 'vis_len_after': 1882}, {'layer': 17, 'rank_p': 17, 'n_remove': 1057, 'vis_len_before': 1882, 'vis_len_after': 857}]
+  [KV cache, prompt-only] 332.5 MB
+
+[SparseVLM Answer]
+in Bengaluru
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[33/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.38 sec  peak_allocated=17.660 GB  peak_reserved=17.968 GB
+  3328 -> 321 tokens (compression=10.368x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 1876, 'vis_len_before': 3328, 'vis_len_after': 1509}, {'layer': 7, 'rank_p': 12, 'n_remove': 848, 'vis_len_before': 1509, 'vis_len_after': 687}, {'layer': 17, 'rank_p': 20, 'n_remove': 378, 'vis_len_before': 687, 'vis_len_after': 321}]
+  [KV cache, prompt-only] 128.0 MB
+
+[SparseVLM Answer]
+2
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[34/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.43 sec  peak_allocated=17.659 GB  peak_reserved=17.973 GB
+  3328 -> 320 tokens (compression=10.4x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 1877, 'vis_len_before': 3328, 'vis_len_after': 1508}, {'layer': 7, 'rank_p': 13, 'n_remove': 847, 'vis_len_before': 1508, 'vis_len_after': 687}, {'layer': 17, 'rank_p': 18, 'n_remove': 379, 'vis_len_before': 687, 'vis_len_after': 320}]
+  [KV cache, prompt-only] 127.6 MB
+
+[SparseVLM Answer]
+22
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[35/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.27 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 858 tokens (compression=10.741x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 17, 'n_remove': 2349, 'vis_len_before': 4162, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 17, 'n_remove': 1058, 'vis_len_before': 1884, 'vis_len_after': 858}]
+  [KV cache, prompt-only] 332.6 MB
+
+[SparseVLM Answer]
+Y. C. Deveshwar
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[36/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.10 sec  peak_allocated=18.674 GB  peak_reserved=19.023 GB
+  9216 -> 861 tokens (compression=10.704x)  stage_logs=[{'layer': 2, 'rank_p': 22, 'n_remove': 5209, 'vis_len_before': 9216, 'vis_len_after': 4164}, {'layer': 7, 'rank_p': 18, 'n_remove': 2349, 'vis_len_before': 4164, 'vis_len_after': 1886}, {'layer': 17, 'rank_p': 20, 'n_remove': 1057, 'vis_len_before': 1886, 'vis_len_after': 861}]
+  [KV cache, prompt-only] 333.5 MB
+
+[SparseVLM Answer]
+2,000
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[37/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.15 sec  peak_allocated=18.678 GB  peak_reserved=19.252 GB
+  9216 -> 862 tokens (compression=10.691x)  stage_logs=[{'layer': 2, 'rank_p': 25, 'n_remove': 5208, 'vis_len_before': 9216, 'vis_len_after': 4165}, {'layer': 7, 'rank_p': 18, 'n_remove': 2350, 'vis_len_before': 4165, 'vis_len_after': 1886}, {'layer': 17, 'rank_p': 23, 'n_remove': 1056, 'vis_len_before': 1886, 'vis_len_after': 862}]
+  [KV cache, prompt-only] 334.2 MB
+
+[SparseVLM Answer]
+26,435
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[38/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.012 GB  peak_reserved=18.358 GB
+  5376 -> 511 tokens (compression=10.521x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 3035, 'vis_len_before': 5376, 'vis_len_after': 2433}, {'layer': 7, 'rank_p': 18, 'n_remove': 1368, 'vis_len_before': 2433, 'vis_len_after': 1107}, {'layer': 17, 'rank_p': 22, 'n_remove': 615, 'vis_len_before': 1107, 'vis_len_after': 511}]
+  [KV cache, prompt-only] 199.8 MB
+
+[SparseVLM Answer]
+70
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[39/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.26 sec  peak_allocated=18.674 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 22, 'n_remove': 5209, 'vis_len_before': 9216, 'vis_len_after': 4164}, {'layer': 7, 'rank_p': 16, 'n_remove': 2350, 'vis_len_before': 4164, 'vis_len_after': 1885}, {'layer': 17, 'rank_p': 20, 'n_remove': 1057, 'vis_len_before': 1885, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.4 MB
+
+[SparseVLM Answer]
+2,62,856
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[40/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.014 GB  peak_reserved=18.358 GB
+  5376 -> 512 tokens (compression=10.5x)  stage_logs=[{'layer': 2, 'rank_p': 21, 'n_remove': 3034, 'vis_len_before': 5376, 'vis_len_after': 2434}, {'layer': 7, 'rank_p': 17, 'n_remove': 1369, 'vis_len_before': 2434, 'vis_len_after': 1107}, {'layer': 17, 'rank_p': 23, 'n_remove': 614, 'vis_len_before': 1107, 'vis_len_after': 512}]
+  [KV cache, prompt-only] 200.2 MB
+
+[SparseVLM Answer]
+68
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[41/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.99 sec  peak_allocated=18.665 GB  peak_reserved=19.023 GB
+  9216 -> 856 tokens (compression=10.766x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 5213, 'vis_len_before': 9216, 'vis_len_after': 4160}, {'layer': 7, 'rank_p': 16, 'n_remove': 2348, 'vis_len_before': 4160, 'vis_len_after': 1883}, {'layer': 17, 'rank_p': 14, 'n_remove': 1059, 'vis_len_before': 1883, 'vis_len_after': 856}]
+  [KV cache, prompt-only] 332.0 MB
+
+[SparseVLM Answer]
+ITC Limited
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[42/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.006 GB  peak_reserved=18.358 GB
+  5376 -> 505 tokens (compression=10.646x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 18, 'n_remove': 1367, 'vis_len_before': 2430, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 13, 'n_remove': 619, 'vis_len_before': 1105, 'vis_len_after': 505}]
+  [KV cache, prompt-only] 198.1 MB
+
+[SparseVLM Answer]
+The Environment
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[43/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.05 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 857 tokens (compression=10.754x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 18, 'n_remove': 2347, 'vis_len_before': 4161, 'vis_len_after': 1885}, {'layer': 17, 'rank_p': 14, 'n_remove': 1060, 'vis_len_before': 1885, 'vis_len_after': 857}]
+  [KV cache, prompt-only] 332.7 MB
+
+[SparseVLM Answer]
+2013
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[44/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.94 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 21, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 15, 'n_remove': 2350, 'vis_len_before': 4163, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 20, 'n_remove': 1056, 'vis_len_before': 1884, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.2 MB
+
+[SparseVLM Answer]
+50
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[45/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.52 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 18, 'n_remove': 2347, 'vis_len_before': 4161, 'vis_len_after': 1885}, {'layer': 17, 'rank_p': 17, 'n_remove': 1058, 'vis_len_before': 1885, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 332.9 MB
+
+[SparseVLM Answer]
+Aashirvaad, Sunfeast, Bingo, Yale
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[46/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.25 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 19, 'n_remove': 2348, 'vis_len_before': 4163, 'vis_len_after': 1886}, {'layer': 17, 'rank_p': 19, 'n_remove': 1058, 'vis_len_before': 1886, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.3 MB
+
+[SparseVLM Answer]
+Essenza Wills,  John Players
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[47/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.16 sec  peak_allocated=18.671 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 17, 'n_remove': 2349, 'vis_len_before': 4162, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 19, 'n_remove': 1057, 'vis_len_before': 1884, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 333.0 MB
+
+[SparseVLM Answer]
+Wills,   Esenza
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[48/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.10 sec  peak_allocated=18.671 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 15, 'n_remove': 2350, 'vis_len_before': 4162, 'vis_len_after': 1883}, {'layer': 17, 'rank_p': 19, 'n_remove': 1056, 'vis_len_before': 1883, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 332.9 MB
+
+[SparseVLM Answer]
+Aashirvaad
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[49/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.09 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 857 tokens (compression=10.754x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 13, 'n_remove': 2350, 'vis_len_before': 4161, 'vis_len_after': 1882}, {'layer': 17, 'rank_p': 16, 'n_remove': 1057, 'vis_len_before': 1882, 'vis_len_after': 857}]
+  [KV cache, prompt-only] 332.5 MB
+
+[SparseVLM Answer]
+Aashirvaad
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[50/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.00 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 858 tokens (compression=10.741x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 5211, 'vis_len_before': 9216, 'vis_len_after': 4162}, {'layer': 7, 'rank_p': 15, 'n_remove': 2350, 'vis_len_before': 4162, 'vis_len_after': 1883}, {'layer': 17, 'rank_p': 17, 'n_remove': 1057, 'vis_len_before': 1883, 'vis_len_after': 858}]
+  [KV cache, prompt-only] 332.7 MB
+
+[SparseVLM Answer]
+Responsible tourism
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[51/5349] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.20 sec  peak_allocated=18.968 GB  peak_reserved=19.317 GB
+  11008 -> 1020 tokens (compression=10.792x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 6229, 'vis_len_before': 11008, 'vis_len_after': 4966}, {'layer': 7, 'rank_p': 14, 'n_remove': 2806, 'vis_len_before': 4966, 'vis_len_after': 2245}, {'layer': 17, 'rank_p': 15, 'n_remove': 1264, 'vis_len_before': 2245, 'vis_len_after': 1020}]
+  [KV cache, prompt-only] 394.3 MB
+
+[SparseVLM Answer]
+$200
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[52/5349] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.24 sec  peak_allocated=18.972 GB  peak_reserved=19.317 GB
+  11008 -> 1022 tokens (compression=10.771x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 6228, 'vis_len_before': 11008, 'vis_len_after': 4967}, {'layer': 7, 'rank_p': 16, 'n_remove': 2805, 'vis_len_before': 4967, 'vis_len_after': 2247}, {'layer': 17, 'rank_p': 16, 'n_remove': 1264, 'vis_len_before': 2247, 'vis_len_after': 1022}]
+  [KV cache, prompt-only] 394.6 MB
+
+[SparseVLM Answer]
+$ 685
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[53/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.016 GB  peak_reserved=18.358 GB
+  5376 -> 514 tokens (compression=10.459x)  stage_logs=[{'layer': 2, 'rank_p': 23, 'n_remove': 3033, 'vis_len_before': 5376, 'vis_len_after': 2435}, {'layer': 7, 'rank_p': 22, 'n_remove': 1367, 'vis_len_before': 2435, 'vis_len_after': 1110}, {'layer': 17, 'rank_p': 25, 'n_remove': 615, 'vis_len_before': 1110, 'vis_len_after': 514}]
+  [KV cache, prompt-only] 200.8 MB
+
+[SparseVLM Answer]
+82
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[54/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.66 sec  peak_allocated=18.007 GB  peak_reserved=18.358 GB
+  5376 -> 506 tokens (compression=10.625x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 20, 'n_remove': 1366, 'vis_len_before': 2430, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 14, 'n_remove': 619, 'vis_len_before': 1106, 'vis_len_after': 506}]
+  [KV cache, prompt-only] 198.4 MB
+
+[SparseVLM Answer]
+Emotional Enhancement
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[55/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.61 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 21, 'n_remove': 1365, 'vis_len_before': 2430, 'vis_len_after': 1107}, {'layer': 17, 'rank_p': 17, 'n_remove': 618, 'vis_len_before': 1107, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.7 MB
+
+[SparseVLM Answer]
+27
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[56/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.93 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 507 tokens (compression=10.604x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 19, 'n_remove': 1366, 'vis_len_before': 2430, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 16, 'n_remove': 618, 'vis_len_before': 1106, 'vis_len_after': 507}]
+  [KV cache, prompt-only] 198.6 MB
+
+[SparseVLM Answer]
+MEHARRY MEDICAL COLLEGE
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[57/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.00 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 21, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 16, 'n_remove': 2350, 'vis_len_before': 4163, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 21, 'n_remove': 1056, 'vis_len_before': 1884, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.2 MB
+
+[SparseVLM Answer]
+Royal Special Filter
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[58/5349] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.51 sec  peak_allocated=18.963 GB  peak_reserved=19.317 GB
+  11008 -> 1019 tokens (compression=10.803x)  stage_logs=[{'layer': 2, 'rank_p': 13, 'n_remove': 6230, 'vis_len_before': 11008, 'vis_len_after': 4966}, {'layer': 7, 'rank_p': 14, 'n_remove': 2806, 'vis_len_before': 4966, 'vis_len_after': 2245}, {'layer': 17, 'rank_p': 12, 'n_remove': 1265, 'vis_len_before': 2245, 'vis_len_after': 1019}]
+  [KV cache, prompt-only] 393.8 MB
+
+[SparseVLM Answer]
+February 24, 1966
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[59/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.014 GB  peak_reserved=18.358 GB
+  5376 -> 512 tokens (compression=10.5x)  stage_logs=[{'layer': 2, 'rank_p': 21, 'n_remove': 3034, 'vis_len_before': 5376, 'vis_len_after': 2434}, {'layer': 7, 'rank_p': 19, 'n_remove': 1368, 'vis_len_before': 2434, 'vis_len_after': 1108}, {'layer': 17, 'rank_p': 23, 'n_remove': 615, 'vis_len_before': 1108, 'vis_len_after': 512}]
+  [KV cache, prompt-only] 200.2 MB
+
+[SparseVLM Answer]
+64
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[60/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.47 sec  peak_allocated=18.674 GB  peak_reserved=19.023 GB
+  9216 -> 861 tokens (compression=10.704x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 16, 'n_remove': 2350, 'vis_len_before': 4163, 'vis_len_after': 1884}, {'layer': 17, 'rank_p': 22, 'n_remove': 1055, 'vis_len_before': 1884, 'vis_len_after': 861}]
+  [KV cache, prompt-only] 333.4 MB
+
+[SparseVLM Answer]
+Shirts with advanced liquid ammonia treatment and wrinkle-free technology
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[61/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 506 tokens (compression=10.625x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 3037, 'vis_len_before': 5376, 'vis_len_after': 2431}, {'layer': 7, 'rank_p': 18, 'n_remove': 1367, 'vis_len_before': 2431, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 13, 'n_remove': 619, 'vis_len_before': 1106, 'vis_len_after': 506}]
+  [KV cache, prompt-only] 198.5 MB
+
+[SparseVLM Answer]
+16
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[62/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.81 sec  peak_allocated=18.001 GB  peak_reserved=18.358 GB
+  5376 -> 503 tokens (compression=10.688x)  stage_logs=[{'layer': 2, 'rank_p': 12, 'n_remove': 3039, 'vis_len_before': 5376, 'vis_len_after': 2429}, {'layer': 7, 'rank_p': 13, 'n_remove': 1369, 'vis_len_before': 2429, 'vis_len_after': 1102}, {'layer': 17, 'rank_p': 12, 'n_remove': 618, 'vis_len_before': 1102, 'vis_len_after': 503}]
+  [KV cache, prompt-only] 197.4 MB
+
+[SparseVLM Answer]
+General Foods Fund, Inc.
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[63/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.99 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 13, 'n_remove': 2351, 'vis_len_before': 4163, 'vis_len_after': 1883}, {'layer': 17, 'rank_p': 21, 'n_remove': 1055, 'vis_len_before': 1883, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.2 MB
+
+[SparseVLM Answer]
+GOLD FILTER
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[64/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.10 sec  peak_allocated=18.673 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 14, 'n_remove': 2350, 'vis_len_before': 4161, 'vis_len_after': 1882}, {'layer': 17, 'rank_p': 20, 'n_remove': 1055, 'vis_len_before': 1882, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 333.0 MB
+
+[SparseVLM Answer]
+Uttar and Kerala
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[65/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.44 sec  peak_allocated=17.660 GB  peak_reserved=17.968 GB
+  3328 -> 323 tokens (compression=10.303x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 1874, 'vis_len_before': 3328, 'vis_len_after': 1511}, {'layer': 7, 'rank_p': 17, 'n_remove': 847, 'vis_len_before': 1511, 'vis_len_after': 690}, {'layer': 17, 'rank_p': 21, 'n_remove': 379, 'vis_len_before': 690, 'vis_len_after': 323}]
+  [KV cache, prompt-only] 128.2 MB
+
+[SparseVLM Answer]
+fourteen
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[66/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.56 sec  peak_allocated=17.663 GB  peak_reserved=17.973 GB
+  3328 -> 325 tokens (compression=10.24x)  stage_logs=[{'layer': 2, 'rank_p': 26, 'n_remove': 1871, 'vis_len_before': 3328, 'vis_len_after': 1514}, {'layer': 7, 'rank_p': 17, 'n_remove': 848, 'vis_len_before': 1514, 'vis_len_after': 692}, {'layer': 17, 'rank_p': 23, 'n_remove': 379, 'vis_len_before': 692, 'vis_len_after': 325}]
+  [KV cache, prompt-only] 129.4 MB
+
+[SparseVLM Answer]
+58.5
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[67/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.43 sec  peak_allocated=17.659 GB  peak_reserved=17.968 GB
+  3328 -> 323 tokens (compression=10.303x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 1875, 'vis_len_before': 3328, 'vis_len_after': 1510}, {'layer': 7, 'rank_p': 15, 'n_remove': 847, 'vis_len_before': 1510, 'vis_len_after': 689}, {'layer': 17, 'rank_p': 21, 'n_remove': 378, 'vis_len_before': 689, 'vis_len_after': 323}]
+  [KV cache, prompt-only] 127.8 MB
+
+[SparseVLM Answer]
+25
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[68/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.38 sec  peak_allocated=17.659 GB  peak_reserved=17.968 GB
+  3328 -> 322 tokens (compression=10.335x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 1875, 'vis_len_before': 3328, 'vis_len_after': 1510}, {'layer': 7, 'rank_p': 16, 'n_remove': 847, 'vis_len_before': 1510, 'vis_len_after': 689}, {'layer': 17, 'rank_p': 20, 'n_remove': 379, 'vis_len_before': 689, 'vis_len_after': 322}]
+  [KV cache, prompt-only] 127.8 MB
+
+[SparseVLM Answer]
+5
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[69/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.54 sec  peak_allocated=17.657 GB  peak_reserved=17.973 GB
+  3328 -> 319 tokens (compression=10.433x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 1876, 'vis_len_before': 3328, 'vis_len_after': 1509}, {'layer': 7, 'rank_p': 10, 'n_remove': 849, 'vis_len_before': 1509, 'vis_len_after': 686}, {'layer': 17, 'rank_p': 17, 'n_remove': 379, 'vis_len_before': 686, 'vis_len_after': 319}]
+  [KV cache, prompt-only] 127.0 MB
+
+[SparseVLM Answer]
+58.5
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[70/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.54 sec  peak_allocated=17.659 GB  peak_reserved=17.968 GB
+  3328 -> 321 tokens (compression=10.368x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 1875, 'vis_len_before': 3328, 'vis_len_after': 1510}, {'layer': 7, 'rank_p': 12, 'n_remove': 849, 'vis_len_before': 1510, 'vis_len_after': 687}, {'layer': 17, 'rank_p': 19, 'n_remove': 378, 'vis_len_before': 687, 'vis_len_after': 321}]
+  [KV cache, prompt-only] 127.5 MB
+
+[SparseVLM Answer]
+61.5
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[71/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.44 sec  peak_allocated=17.659 GB  peak_reserved=17.968 GB
+  3328 -> 321 tokens (compression=10.368x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 1875, 'vis_len_before': 3328, 'vis_len_after': 1510}, {'layer': 7, 'rank_p': 13, 'n_remove': 848, 'vis_len_before': 1510, 'vis_len_after': 688}, {'layer': 17, 'rank_p': 19, 'n_remove': 379, 'vis_len_before': 688, 'vis_len_after': 321}]
+  [KV cache, prompt-only] 127.5 MB
+
+[SparseVLM Answer]
+43
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[72/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 507 tokens (compression=10.604x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 3037, 'vis_len_before': 5376, 'vis_len_after': 2431}, {'layer': 7, 'rank_p': 12, 'n_remove': 1371, 'vis_len_before': 2431, 'vis_len_after': 1102}, {'layer': 17, 'rank_p': 19, 'n_remove': 614, 'vis_len_before': 1102, 'vis_len_after': 507}]
+  [KV cache, prompt-only] 198.5 MB
+
+[SparseVLM Answer]
+15
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[73/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 509 tokens (compression=10.562x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 3037, 'vis_len_before': 5376, 'vis_len_after': 2431}, {'layer': 7, 'rank_p': 16, 'n_remove': 1368, 'vis_len_before': 2431, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 19, 'n_remove': 615, 'vis_len_before': 1105, 'vis_len_after': 509}]
+  [KV cache, prompt-only] 198.7 MB
+
+[SparseVLM Answer]
+four weeks
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[74/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.71 sec  peak_allocated=18.012 GB  peak_reserved=18.358 GB
+  5376 -> 510 tokens (compression=10.541x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 3036, 'vis_len_before': 5376, 'vis_len_after': 2432}, {'layer': 7, 'rank_p': 18, 'n_remove': 1368, 'vis_len_before': 2432, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 20, 'n_remove': 615, 'vis_len_before': 1106, 'vis_len_after': 510}]
+  [KV cache, prompt-only] 199.4 MB
+
+[SparseVLM Answer]
+caudal vein
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[75/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.99 sec  peak_allocated=18.665 GB  peak_reserved=19.023 GB
+  9216 -> 856 tokens (compression=10.766x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 5213, 'vis_len_before': 9216, 'vis_len_after': 4160}, {'layer': 7, 'rank_p': 16, 'n_remove': 2348, 'vis_len_before': 4160, 'vis_len_after': 1883}, {'layer': 17, 'rank_p': 14, 'n_remove': 1059, 'vis_len_before': 1883, 'vis_len_after': 856}]
+  [KV cache, prompt-only] 332.0 MB
+
+[SparseVLM Answer]
+ITC Limited
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[76/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.009 GB  peak_reserved=18.358 GB
+  5376 -> 509 tokens (compression=10.562x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 3036, 'vis_len_before': 5376, 'vis_len_after': 2432}, {'layer': 7, 'rank_p': 17, 'n_remove': 1368, 'vis_len_before': 2432, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 19, 'n_remove': 616, 'vis_len_before': 1106, 'vis_len_after': 509}]
+  [KV cache, prompt-only] 198.9 MB
+
+[SparseVLM Answer]
+control diet
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[77/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.66 sec  peak_allocated=18.012 GB  peak_reserved=18.358 GB
+  5376 -> 510 tokens (compression=10.541x)  stage_logs=[{'layer': 2, 'rank_p': 19, 'n_remove': 3035, 'vis_len_before': 5376, 'vis_len_after': 2433}, {'layer': 7, 'rank_p': 19, 'n_remove': 1368, 'vis_len_before': 2433, 'vis_len_after': 1107}, {'layer': 17, 'rank_p': 20, 'n_remove': 616, 'vis_len_before': 1107, 'vis_len_after': 510}]
+  [KV cache, prompt-only] 199.6 MB
+
+[SparseVLM Answer]
+293
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[78/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.18 sec  peak_allocated=18.006 GB  peak_reserved=18.358 GB
+  5376 -> 507 tokens (compression=10.604x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 13, 'n_remove': 1369, 'vis_len_before': 2430, 'vis_len_after': 1103}, {'layer': 17, 'rank_p': 17, 'n_remove': 615, 'vis_len_before': 1103, 'vis_len_after': 507}]
+  [KV cache, prompt-only] 198.2 MB
+
+[SparseVLM Answer]
+PLATTE COUNTY VOLUNTEERS AGAINST HUNGER
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[79/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.94 sec  peak_allocated=18.670 GB  peak_reserved=19.023 GB
+  9216 -> 859 tokens (compression=10.729x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 20, 'n_remove': 2346, 'vis_len_before': 4161, 'vis_len_after': 1886}, {'layer': 17, 'rank_p': 17, 'n_remove': 1059, 'vis_len_before': 1886, 'vis_len_after': 859}]
+  [KV cache, prompt-only] 332.9 MB
+
+[SparseVLM Answer]
+itc
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[80/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.65 sec  peak_allocated=18.009 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 15, 'n_remove': 1368, 'vis_len_before': 2430, 'vis_len_after': 1104}, {'layer': 17, 'rank_p': 18, 'n_remove': 615, 'vis_len_before': 1104, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.7 MB
+
+[SparseVLM Answer]
+109
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[81/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.70 sec  peak_allocated=18.012 GB  peak_reserved=18.358 GB
+  5376 -> 511 tokens (compression=10.521x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 3035, 'vis_len_before': 5376, 'vis_len_after': 2433}, {'layer': 7, 'rank_p': 16, 'n_remove': 1369, 'vis_len_before': 2433, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 22, 'n_remove': 614, 'vis_len_before': 1106, 'vis_len_after': 511}]
+  [KV cache, prompt-only] 199.8 MB
+
+[SparseVLM Answer]
+24.7
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[82/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.89 sec  peak_allocated=18.671 GB  peak_reserved=19.023 GB
+  9216 -> 857 tokens (compression=10.754x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 5212, 'vis_len_before': 9216, 'vis_len_after': 4161}, {'layer': 7, 'rank_p': 15, 'n_remove': 2349, 'vis_len_before': 4161, 'vis_len_after': 1883}, {'layer': 17, 'rank_p': 16, 'n_remove': 1058, 'vis_len_before': 1883, 'vis_len_after': 857}]
+  [KV cache, prompt-only] 332.8 MB
+
+[SparseVLM Answer]
+Accounts
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[83/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.016 GB  peak_reserved=18.358 GB
+  5376 -> 511 tokens (compression=10.521x)  stage_logs=[{'layer': 2, 'rank_p': 23, 'n_remove': 3033, 'vis_len_before': 5376, 'vis_len_after': 2435}, {'layer': 7, 'rank_p': 15, 'n_remove': 1371, 'vis_len_before': 2435, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 22, 'n_remove': 614, 'vis_len_before': 1106, 'vis_len_after': 511}]
+  [KV cache, prompt-only] 200.4 MB
+
+[SparseVLM Answer]
+cold storage
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[84/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.71 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 15, 'n_remove': 1368, 'vis_len_before': 2430, 'vis_len_after': 1104}, {'layer': 17, 'rank_p': 18, 'n_remove': 615, 'vis_len_before': 1104, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.6 MB
+
+[SparseVLM Answer]
+8100
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[85/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.81 sec  peak_allocated=18.009 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 3037, 'vis_len_before': 5376, 'vis_len_after': 2431}, {'layer': 7, 'rank_p': 17, 'n_remove': 1368, 'vis_len_before': 2431, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 18, 'n_remove': 616, 'vis_len_before': 1105, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.8 MB
+
+[SparseVLM Answer]
+25,000
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[86/5349] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.71 sec  peak_allocated=18.191 GB  peak_reserved=18.688 GB
+  6400 -> 606 tokens (compression=10.561x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 3615, 'vis_len_before': 6400, 'vis_len_after': 2894}, {'layer': 7, 'rank_p': 15, 'n_remove': 1631, 'vis_len_before': 2894, 'vis_len_after': 1313}, {'layer': 17, 'rank_p': 24, 'n_remove': 730, 'vis_len_before': 1313, 'vis_len_after': 606}]
+  [KV cache, prompt-only] 235.8 MB
+
+[SparseVLM Answer]
+their colleagues
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[87/5349] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.98 sec  peak_allocated=18.184 GB  peak_reserved=18.688 GB
+  6400 -> 600 tokens (compression=10.667x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 3617, 'vis_len_before': 6400, 'vis_len_after': 2892}, {'layer': 7, 'rank_p': 12, 'n_remove': 1632, 'vis_len_before': 2892, 'vis_len_after': 1310}, {'layer': 17, 'rank_p': 17, 'n_remove': 733, 'vis_len_before': 1310, 'vis_len_after': 600}]
+  [KV cache, prompt-only] 234.1 MB
+
+[SparseVLM Answer]
+Dr. Joseph C. Hwang
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[88/5349] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.97 sec  peak_allocated=18.187 GB  peak_reserved=18.688 GB
+  6400 -> 601 tokens (compression=10.649x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 3616, 'vis_len_before': 6400, 'vis_len_after': 2893}, {'layer': 7, 'rank_p': 12, 'n_remove': 1632, 'vis_len_before': 2893, 'vis_len_after': 1311}, {'layer': 17, 'rank_p': 18, 'n_remove': 733, 'vis_len_before': 1311, 'vis_len_after': 601}]
+  [KV cache, prompt-only] 234.5 MB
+
+[SparseVLM Answer]
+Dr. Arley T. Bever
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[89/5349] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.65 sec  peak_allocated=18.189 GB  peak_reserved=18.688 GB
+  6400 -> 602 tokens (compression=10.631x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 3615, 'vis_len_before': 6400, 'vis_len_after': 2894}, {'layer': 7, 'rank_p': 12, 'n_remove': 1633, 'vis_len_before': 2894, 'vis_len_after': 1311}, {'layer': 17, 'rank_p': 19, 'n_remove': 732, 'vis_len_before': 1311, 'vis_len_after': 602}]
+  [KV cache, prompt-only] 235.1 MB
+
+[SparseVLM Answer]
+four
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[90/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.71 sec  peak_allocated=18.012 GB  peak_reserved=18.358 GB
+  5376 -> 510 tokens (compression=10.541x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 3035, 'vis_len_before': 5376, 'vis_len_after': 2433}, {'layer': 7, 'rank_p': 15, 'n_remove': 1370, 'vis_len_before': 2433, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 21, 'n_remove': 614, 'vis_len_before': 1105, 'vis_len_after': 510}]
+  [KV cache, prompt-only] 199.5 MB
+
+[SparseVLM Answer]
+C. MAYER
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[91/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.76 sec  peak_allocated=18.006 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 17, 'n_remove': 1367, 'vis_len_before': 2430, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 17, 'n_remove': 616, 'vis_len_before': 1105, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.3 MB
+
+[SparseVLM Answer]
+Volunteers Steering Committee Meeting
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[92/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.71 sec  peak_allocated=18.003 GB  peak_reserved=18.358 GB
+  5376 -> 507 tokens (compression=10.604x)  stage_logs=[{'layer': 2, 'rank_p': 13, 'n_remove': 3039, 'vis_len_before': 5376, 'vis_len_after': 2429}, {'layer': 7, 'rank_p': 16, 'n_remove': 1367, 'vis_len_before': 2429, 'vis_len_after': 1104}, {'layer': 17, 'rank_p': 17, 'n_remove': 616, 'vis_len_before': 1104, 'vis_len_after': 507}]
+  [KV cache, prompt-only] 198.1 MB
+
+[SparseVLM Answer]
+Volunteers Against Hunger
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[93/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.77 sec  peak_allocated=18.002 GB  peak_reserved=18.358 GB
+  5376 -> 505 tokens (compression=10.646x)  stage_logs=[{'layer': 2, 'rank_p': 13, 'n_remove': 3039, 'vis_len_before': 5376, 'vis_len_after': 2429}, {'layer': 7, 'rank_p': 12, 'n_remove': 1369, 'vis_len_before': 2429, 'vis_len_after': 1102}, {'layer': 17, 'rank_p': 14, 'n_remove': 616, 'vis_len_before': 1102, 'vis_len_after': 505}]
+  [KV cache, prompt-only] 197.7 MB
+
+[SparseVLM Answer]
+Bert Shulson
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[94/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.06 sec  peak_allocated=18.674 GB  peak_reserved=19.023 GB
+  9216 -> 860 tokens (compression=10.716x)  stage_logs=[{'layer': 2, 'rank_p': 21, 'n_remove': 5210, 'vis_len_before': 9216, 'vis_len_after': 4163}, {'layer': 7, 'rank_p': 18, 'n_remove': 2349, 'vis_len_before': 4163, 'vis_len_after': 1885}, {'layer': 17, 'rank_p': 20, 'n_remove': 1057, 'vis_len_before': 1885, 'vis_len_after': 860}]
+  [KV cache, prompt-only] 333.4 MB
+
+[SparseVLM Answer]
+BINGO!
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[95/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.77 sec  peak_allocated=18.009 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 3036, 'vis_len_before': 5376, 'vis_len_after': 2432}, {'layer': 7, 'rank_p': 14, 'n_remove': 1370, 'vis_len_before': 2432, 'vis_len_after': 1104}, {'layer': 17, 'rank_p': 19, 'n_remove': 615, 'vis_len_before': 1104, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.8 MB
+
+[SparseVLM Answer]
+Holiday Inn, Jefferson City
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[96/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.00 sec  peak_allocated=18.678 GB  peak_reserved=19.252 GB
+  9216 -> 864 tokens (compression=10.667x)  stage_logs=[{'layer': 2, 'rank_p': 24, 'n_remove': 5208, 'vis_len_before': 9216, 'vis_len_after': 4165}, {'layer': 7, 'rank_p': 22, 'n_remove': 2347, 'vis_len_before': 4165, 'vis_len_after': 1889}, {'layer': 17, 'rank_p': 24, 'n_remove': 1057, 'vis_len_before': 1889, 'vis_len_after': 864}]
+  [KV cache, prompt-only] 334.4 MB
+
+[SparseVLM Answer]
+Candyman
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[97/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.61 sec  peak_allocated=18.007 GB  peak_reserved=18.358 GB
+  5376 -> 507 tokens (compression=10.604x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 15, 'n_remove': 1368, 'vis_len_before': 2430, 'vis_len_after': 1104}, {'layer': 17, 'rank_p': 17, 'n_remove': 616, 'vis_len_before': 1104, 'vis_len_after': 507}]
+  [KV cache, prompt-only] 198.4 MB
+
+[SparseVLM Answer]
+WANTED
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[98/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=18.007 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 15, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 15, 'n_remove': 1368, 'vis_len_before': 2430, 'vis_len_after': 1104}, {'layer': 17, 'rank_p': 18, 'n_remove': 615, 'vis_len_before': 1104, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.4 MB
+
+[SparseVLM Answer]
+WANTED
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[99/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.76 sec  peak_allocated=18.012 GB  peak_reserved=18.358 GB
+  5376 -> 510 tokens (compression=10.541x)  stage_logs=[{'layer': 2, 'rank_p': 20, 'n_remove': 3035, 'vis_len_before': 5376, 'vis_len_after': 2433}, {'layer': 7, 'rank_p': 17, 'n_remove': 1369, 'vis_len_before': 2433, 'vis_len_after': 1106}, {'layer': 17, 'rank_p': 21, 'n_remove': 615, 'vis_len_before': 1106, 'vis_len_after': 510}]
+  [KV cache, prompt-only] 199.4 MB
+
+[SparseVLM Answer]
+WESTERN TERMINAL CORPORATION
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[100/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.60 sec  peak_allocated=17.656 GB  peak_reserved=17.973 GB
+  3328 -> 318 tokens (compression=10.465x)  stage_logs=[{'layer': 2, 'rank_p': 16, 'n_remove': 1877, 'vis_len_before': 3328, 'vis_len_after': 1508}, {'layer': 7, 'rank_p': 8, 'n_remove': 850, 'vis_len_before': 1508, 'vis_len_after': 684}, {'layer': 17, 'rank_p': 16, 'n_remove': 378, 'vis_len_before': 684, 'vis_len_after': 318}]
+  [KV cache, prompt-only] 126.5 MB
+
+[SparseVLM Answer]
+Menopausal Publication Management
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[101/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.65 sec  peak_allocated=18.011 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 3036, 'vis_len_before': 5376, 'vis_len_after': 2432}, {'layer': 7, 'rank_p': 15, 'n_remove': 1369, 'vis_len_before': 2432, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 17, 'n_remove': 616, 'vis_len_before': 1105, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 199.1 MB
+
+[SparseVLM Answer]
+20 years
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[102/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.70 sec  peak_allocated=17.657 GB  peak_reserved=17.973 GB
+  3328 -> 320 tokens (compression=10.4x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 1875, 'vis_len_before': 3328, 'vis_len_after': 1510}, {'layer': 7, 'rank_p': 18, 'n_remove': 845, 'vis_len_before': 1510, 'vis_len_after': 691}, {'layer': 17, 'rank_p': 15, 'n_remove': 383, 'vis_len_before': 691, 'vis_len_after': 320}]
+  [KV cache, prompt-only] 127.3 MB
+
+[SparseVLM Answer]
+10:00 - AM
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[103/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.98 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 507 tokens (compression=10.604x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 3036, 'vis_len_before': 5376, 'vis_len_after': 2432}, {'layer': 7, 'rank_p': 12, 'n_remove': 1371, 'vis_len_before': 2432, 'vis_len_after': 1103}, {'layer': 17, 'rank_p': 18, 'n_remove': 615, 'vis_len_before': 1103, 'vis_len_after': 507}]
+  [KV cache, prompt-only] 198.5 MB
+
+[SparseVLM Answer]
+RONALD F. B. CAPP
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[104/5349] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.95 sec  peak_allocated=17.657 GB  peak_reserved=17.973 GB
+  3328 -> 319 tokens (compression=10.433x)  stage_logs=[{'layer': 2, 'rank_p': 18, 'n_remove': 1875, 'vis_len_before': 3328, 'vis_len_after': 1510}, {'layer': 7, 'rank_p': 14, 'n_remove': 848, 'vis_len_before': 1510, 'vis_len_after': 688}, {'layer': 17, 'rank_p': 15, 'n_remove': 381, 'vis_len_before': 688, 'vis_len_after': 319}]
+  [KV cache, prompt-only] 127.1 MB
+
+[SparseVLM Answer]
+809-242-6484
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[105/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.01 sec  peak_allocated=18.008 GB  peak_reserved=18.358 GB
+  5376 -> 508 tokens (compression=10.583x)  stage_logs=[{'layer': 2, 'rank_p': 17, 'n_remove': 3036, 'vis_len_before': 5376, 'vis_len_after': 2432}, {'layer': 7, 'rank_p': 19, 'n_remove': 1367, 'vis_len_before': 2432, 'vis_len_after': 1107}, {'layer': 17, 'rank_p': 17, 'n_remove': 618, 'vis_len_before': 1107, 'vis_len_after': 508}]
+  [KV cache, prompt-only] 198.7 MB
+
+[SparseVLM Answer]
+January 18, 2005
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[106/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.76 sec  peak_allocated=18.009 GB  peak_reserved=18.358 GB
+  5376 -> 509 tokens (compression=10.562x)  stage_logs=[{'layer': 2, 'rank_p': 14, 'n_remove': 3038, 'vis_len_before': 5376, 'vis_len_after': 2430}, {'layer': 7, 'rank_p': 22, 'n_remove': 1364, 'vis_len_before': 2430, 'vis_len_after': 1108}, {'layer': 17, 'rank_p': 17, 'n_remove': 618, 'vis_len_before': 1108, 'vis_len_after': 509}]
+  [KV cache, prompt-only] 199.1 MB
+
+[SparseVLM Answer]
+swanson center for nutrition
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[107/5349] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.99 sec  peak_allocated=18.674 GB  peak_reserved=19.023 GB
+  9216 -> 862 tokens (compression=10.691x)  stage_logs=[{'layer': 2, 'rank_p': 23, 'n_remove': 5209, 'vis_len_before': 9216, 'vis_len_after': 4164}, {'layer': 7, 'rank_p': 20, 'n_remove': 2348, 'vis_len_before': 4164, 'vis_len_after': 1887}, {'layer': 17, 'rank_p': 21, 'n_remove': 1057, 'vis_len_before': 1887, 'vis_len_after': 862}]
+  [KV cache, prompt-only] 333.8 MB
+
+[SparseVLM Answer]
+Candyman
+
+[Saved] results/baselines_v2/internvl_sparsevlm_docvqa/out_sparsevlm_short_InternVL3_5-8B_docvqa_b1024.json updated (0/5349 images done)
+
+======================================================================
+[108/5349] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.5666) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.97 sec  peak_allocated=18.006 GB  peak_reserved=18.358 GB
+  5376 -> 506 tokens (compression=10.625x)  stage_logs=[{'layer': 2, 'rank_p': 12, 'n_remove': 3039, 'vis_len_before': 5376, 'vis_len_after': 2429}, {'layer': 7, 'rank_p': 18, 'n_remove': 1366, 'vis_len_before': 2429, 'vis_len_after': 1105}, {'layer': 17, 'rank_p': 14, 'n_remove': 618, 'vis_len_before': 1105, 'vis_len_after': 506}]

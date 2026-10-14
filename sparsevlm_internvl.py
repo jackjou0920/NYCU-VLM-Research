@@ -425,6 +425,12 @@ def auto_tune_lam(
 
     threshold = budget * (1 + overshoot_tol)
     calib_log = []
+    raw_len = pixel_values.shape[0] * model.num_image_token
+    if raw_len <= threshold:
+        # 原圖 token 本來就不超過門檻：任何 λ 都「達標」，這張圖對 λ 沒有資訊。
+        # 回傳 lam_lo 但標記 skip，校準（run_sparsevlm.sh 取中位數）要排除這類圖，
+        # 否則小圖一多，中位數會被拉到 lam_lo（之前 b4096/b5120 校準出 0.005 就是這樣）。
+        return lam_lo, [{"skip": True, "raw_len": raw_len}]
 
     lo, hi = lam_lo, lam_hi
     len_lo = _organic_len(lo)
@@ -647,7 +653,10 @@ def main():
                         merge_filter_ratio=args.merge_filter_ratio,
                         cluster_divisor=args.cluster_divisor, knn_k=args.knn_k,
                     )
-                    print(f"  [auto_lam] chosen lam={lam:.4g}  calib_log={calib_log}")
+                    if calib_log and calib_log[0].get("skip"):
+                        print(f"  [auto_lam] skip (raw tokens {calib_log[0]['raw_len']} <= threshold), lam={lam:.4g}")
+                    else:
+                        print(f"  [auto_lam] chosen lam={lam:.4g}  calib_log={calib_log}")
 
                 print(f"\n[SparseVLM] Running layer-wise progressive pruning (lam={lam:.4g}) ...")
                 with measure_peak_memory("sparsevlm_script_sparsevlm_generate"):

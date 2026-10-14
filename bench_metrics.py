@@ -70,6 +70,10 @@ import internvl_stream as S
 import sparsevlm_internvl as SV
 import fastv_internvl as FV
 import visionzip_internvl as VZ
+import flops as FL
+
+MODEL_LOAD_PEAK_GB = 0.0     # main() 載完模型後設定；mem_delta_gb = peak_alloc_gb - 這個值（扣掉權重）
+BREAKDOWN_KEYS = ["text_prefill", "cover_vit", "prior", "detail_vit", "qattn", "kv_commit", "first_token"]
 
 
 def _sync():
@@ -92,9 +96,21 @@ def _peak_resv_gb():
     return torch.cuda.max_memory_reserved(S.DEVICE) / 1e9 if torch.cuda.is_available() else 0.0
 
 
+def _flops(fc, vit_tiles, segs, extra_tflops=0.0):
+    """TTFT 階段的解析 FLOPs（TFLOPs），見 flops.py。extra_tflops：額外模型（IF-Prune 的小 VLM）。"""
+    v, l = fc.vit(vit_tiles) / 1e12, fc.llm(segs) / 1e12
+    return {"vit_tflops": v, "llm_tflops": l, "total_tflops": v + l + extra_tflops,
+            "aux_tflops": extra_tflops or None}
+
+
 def _agg(rows, keys):
-    """rows: list[dict] → {key: (mean, std)} for the numeric keys."""
+    """rows: list[dict] → {key: (mean, std)} for the numeric keys；另外給 ttft_s 的中位數（key "ttft_s_median"）。"""
     out = {}
+    for r in rows:
+        if r.get("peak_alloc_gb") is not None and "mem_delta_gb" not in r:
+            r["mem_delta_gb"] = r["peak_alloc_gb"] - MODEL_LOAD_PEAK_GB
+    tt = [r["ttft_s"] for r in rows if r.get("ttft_s") is not None]
+    out["ttft_s_median"] = st.median(tt) if tt else None
     for k in keys:
         vals = [r[k] for r in rows if r.get(k) is not None]
         if not vals:
@@ -150,6 +166,14 @@ def main():
                      help="每個 budget 額外跑一次 VisionZip，跟 stream/sparsevlm/fastv 同一組 budget 公平比較")
     ap.add_argument("--visionzip_contextual_ratio", type=float, default=VZ.CONTEXTUAL_RATIO)
 
+    ap.add_argument("--svma_m_fracs", default=None,
+                    help="逗號分隔的 m/K 比例（例如 0.5,0.75,1.0），每個 budget 各量一次 m = max(1, floor(f*K))；"
+                         "不給 = 只量 svma_config 的預設 m。method 命名 stream_b<B>_m<m>")
+    ap.add_argument("--svma_s_mults", default=None,
+                    help="逗號分隔的 S 倍率（例如 0,0.5,1,1.5,2）：m 用預設，S = floor(倍率 * 預設 S(K, m))；"
+                         "可跟 --svma_m_fracs 擇一使用。method 命名 stream_b<B>_m<m>_S<S>")
+    ap.add_argument("--warmup_images", type=int, default=1,
+                    help="前幾張圖照跑但不算進統計（第一次呼叫含 CUDA / kernel 初始化，會拉高 TTFT）")
     ap.add_argument("--save", action="store_true", help="額外存一份 output_json（references+candidates），"
                                                           "拿去跑 evaluate_*.py 算 accuracy")
     ap.add_argument("--out_json", default="bench_metrics_answers.json")
@@ -164,6 +188,9 @@ def main():
     _peak_reset()
     tokenizer, model = build_model(args.model_name, dtype=dtype, device=S.DEVICE)
     model_load_peak = _peak_alloc_gb()
+    global MODEL_LOAD_PEAK_GB
+    MODEL_LOAD_PEAK_GB = model_load_peak
+    fc = FL.FlopCounter(model)
     print(f"model loaded, peak_alloc={model_load_peak:.2f} GB  num_image_token={model.num_image_token}")
 
     ds = S.load_eval_dataset(args.dataset, args.num_images)
@@ -171,7 +198,25 @@ def main():
 
     output_results = {"references": [], "candidates": {}}
 
-    unc_rows, stream_rows = [], {b: [] for b in budgets}
+    fracs = None if args.svma_m_fracs is None else [float(x) for x in args.svma_m_fracs.split(",") if x.strip()]
+    s_mults = None if args.svma_s_mults is None else [float(x) for x in args.svma_s_mults.split(",") if x.strip()]
+
+    def svma_ms(b):
+        """這個 budget 要量的 (m, S) 列表；m / S 為 None = 用預設。"""
+        if s_mults is not None:
+            m = S.default_coverage_tiles(b)
+            s0 = S.default_qattn_tiles(b, m)
+            return [(m, sv) for sv in sorted({int(x * s0) for x in s_mults})]
+        if fracs is None:
+            return [(None, None)]
+        return [(m, None) for m in sorted({max(1, int(f * (b // 256))) for f in fracs})]
+
+    def stream_tag_of(b, ms_):
+        m, sv = ms_
+        return (f"stream_b{b}" + ("" if m is None else f"_m{m}") + ("" if sv is None else f"_S{sv}"))
+
+    unc_rows = []
+    stream_rows = {stream_tag_of(b, c): [] for b in budgets for c in svma_ms(b)}
     sparsevlm_rows = {b: [] for b in budgets} if args.run_sparsevlm else {}
     fastv_rows = {b: [] for b in budgets} if args.run_fastv else {}
     vz_rows = {b: [] for b in budgets} if args.run_visionzip else {}
@@ -185,13 +230,18 @@ def main():
             head_dtype=torch.float32 if args.ifprune_head_dtype == "fp32" else torch.bfloat16)
         assert ifprune_guide.model.num_image_token == model.num_image_token
         ifprune_guide.offload()           # 常駐 CPU，只在 IF-Prune 區段上 GPU
+        fc_guide = FL.FlopCounter(ifprune_guide.model)
 
     for i, d in enumerate(ds):
         q = d["question"]
-        img = d["image"]
+        img = S.get_image(d)
+        keep = i >= args.warmup_images      # warmup 的圖照跑，但不算進統計
         pv = (load_image_tiles_fill(img, input_size=448, max_tiles=args.max_num) if args.lowres_fill
               else load_image_tiles(img, input_size=448, max_num=max_num_grid))
         n_tiles = pv.shape[0]
+        n_vis = n_tiles * model.num_image_token
+        tb_q, ta_q = S.estimate_prompt_token_lengths(
+            tokenizer, *S.split_prompt_at_vision(S.build_prompt(tokenizer, model, q, 1), tokenizer))
 
         # ---- uncompressed（budget 無關）----
         if not args.skip_uncompressed:
@@ -224,40 +274,46 @@ def main():
             unc_kv_mb = S.estimate_kv_cache_mb(
                 model, [unc_total_len] * model.language_model.config.num_hidden_layers)
 
-            unc_rows.append({
+            (unc_rows if keep else []).append({
                 "raw_tiles": n_tiles,
                 "ttft_s": unc_ttft,
                 "peak_alloc_gb": _peak_alloc_gb(),
                 "peak_resv_gb": _peak_resv_gb(),
                 "vision_s": None,
                 "kv_cache_mb": unc_kv_mb,
+                **_flops(fc, n_tiles, FL.full_segments(fc, tb_q, n_vis, ta_q)),
             })
             del adapter
             gc.collect()
             torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
         # ---- SVMA @ each budget（m、S 都由 budget 決定，跟 internvl_stream.py --mode svma 一樣）----
-        for b in ([] if args.lowres_fill else budgets):
-            ms = S.prepare_inputs([img], "svma", b, args.max_num)[0]
-            stream_tag = f"stream_b{b}"
+        for b, cfg in [(b, c) for b in ([] if args.lowres_fill else budgets) for c in svma_ms(b)]:
+            m_eff = S.default_coverage_tiles(b) if cfg[0] is None else cfg[0]
+            s_eff = S.default_qattn_tiles(b, m_eff) if cfg[1] is None else cfg[1]
+            ms = S.prepare_inputs([img], "svma", b, args.max_num, coverage_tiles=m_eff)[0]
+            stream_tag = stream_tag_of(b, cfg)
             output_results["candidates"].setdefault(stream_tag, [])
             adapter = S.InternVLAdapter(tokenizer, model, budget=b)
             _peak_reset()
             answers, all_stats, timing = S.run_online_kv_with_memory_bank(
                 model, adapter, [ms], [q],
                 budget=b,
-                qattn_tiles=S.default_qattn_tiles(b, S.default_coverage_tiles(b)),
+                qattn_tiles=s_eff,
                 max_new_tokens=args.max_new_tokens, dtype=dtype,
             )
             output_results["candidates"][stream_tag].append(answers[0])
             pk = timing.get("_peak_mem_gb", {})
-            stream_rows[b].append({
+            (stream_rows[stream_tag] if keep else []).append({
                 "raw_tiles": n_tiles,
                 "ttft_s": timing.get("TTFT"),
                 "peak_alloc_gb": pk.get("OVERALL", _peak_alloc_gb()),
                 "peak_resv_gb": _peak_resv_gb(),
                 "vision_s": timing.get("Vision+OnlineKV"),
                 "kv_cache_mb": timing.get("_kv_cache_mb") or (all_stats[0].get("kv_cache_mb") if all_stats else None),
+                **_flops(fc, all_stats[0]["vit_encoded_tiles"],
+                         FL.svma_segments(fc, tb_q, ta_q, all_stats[0], S.THUMB_ATTN_LAYERS[1], S.QATTN_LAYER)),
+                **{f"t_{k}": v for k, v in all_stats[0].get("ttft_breakdown", {}).items()},
             })
             del adapter
             gc.collect()
@@ -296,13 +352,15 @@ def main():
                     vit_batch=args.vit_batch, max_new_tokens=args.max_new_tokens,
                 )
                 output_results["candidates"][sv_tag].append(answer)
-                sparsevlm_rows[b].append({
+                (sparsevlm_rows[b] if keep else []).append({
                     "raw_tiles": n_tiles,
                     "ttft_s": sv_ttft,
                     "peak_alloc_gb": _peak_alloc_gb(),
                     "peak_resv_gb": _peak_resv_gb(),
                     "vision_s": None,
                     "kv_cache_mb": sv_stats["kv_cache_mb"],
+                    **_flops(fc, n_tiles, FL.sparsevlm_segments(fc, tb_q, n_vis, ta_q, sv_stats["stage_logs"],
+                                                                sv_stats["final_vis_tokens"])),
                 })
                 gc.collect()
                 torch.cuda.empty_cache() if torch.cuda.is_available() else None
@@ -329,13 +387,14 @@ def main():
                     vit_batch=args.vit_batch, max_new_tokens=args.max_new_tokens,
                 )
                 output_results["candidates"][fv_tag].append(answer)
-                fastv_rows[b].append({
+                (fastv_rows[b] if keep else []).append({
                     "raw_tiles": n_tiles,
                     "ttft_s": fv_ttft,
                     "peak_alloc_gb": _peak_alloc_gb(),
                     "peak_resv_gb": _peak_resv_gb(),
                     "vision_s": None,
                     "kv_cache_mb": fv_stats["kv_cache_mb"],
+                    **_flops(fc, n_tiles, FL.one_shot_prune_segments(fc, tb_q, n_vis, ta_q, b, args.fastv_agg_layer)),
                 })
                 gc.collect()
                 torch.cuda.empty_cache() if torch.cuda.is_available() else None
@@ -364,13 +423,17 @@ def main():
                     vit_batch=args.vit_batch, max_new_tokens=args.max_new_tokens,
                 )
                 output_results["candidates"][ip_tag].append(answer)
-                ifprune_rows[b].append({
+                (ifprune_rows[b] if keep else []).append({
                     "raw_tiles": n_tiles,
                     "ttft_s": ip_ttft,
                     "peak_alloc_gb": _peak_alloc_gb(),
                     "peak_resv_gb": _peak_resv_gb(),
                     "vision_s": None,
                     "kv_cache_mb": ip_stats["kv_cache_mb"],
+                    # 小 VLM（guide）：自己的 ViT 跑全部 tile + 自己的 LLM 跑完整序列（prompt 長度近似用大模型的）
+                    **_flops(fc, n_tiles, FL.one_shot_prune_segments(fc, tb_q, n_vis, ta_q, b, args.ifprune_prune_layer),
+                             extra_tflops=(fc_guide.vit(n_tiles) + fc_guide.llm(
+                                 FL.full_segments(fc_guide, tb_q, n_vis, ta_q))) / 1e12),
                 })
                 gc.collect()
                 torch.cuda.empty_cache() if torch.cuda.is_available() else None
@@ -398,13 +461,14 @@ def main():
                     vit_batch=args.vit_batch, max_new_tokens=args.max_new_tokens,
                 )
                 output_results["candidates"][vz_tag].append(answer)
-                vz_rows[b].append({
+                (vz_rows[b] if keep else []).append({
                     "raw_tiles": n_tiles,
                     "ttft_s": vz_ttft,
                     "peak_alloc_gb": _peak_alloc_gb(),
                     "peak_resv_gb": _peak_resv_gb(),
                     "vision_s": None,
                     "kv_cache_mb": vz_stats["kv_cache_mb"],
+                    **_flops(fc, n_tiles, FL.full_segments(fc, tb_q, vz_stats["final_vis_tokens"], ta_q)),
                 })
                 gc.collect()
                 torch.cuda.empty_cache() if torch.cuda.is_available() else None
@@ -417,15 +481,18 @@ def main():
     # docstring），跟 SparseVLM/H2O/StreamingLLM 等文獻同一種量測方式，
     # 排除掉固定模型權重的稀釋，才看得出壓縮方法本身的效果——peak_alloc_gb
     # 仍然保留，兩者互補（一個是「方法本身省多少」，一個是「實際部署省多少」）。
-    num_keys = ["raw_tiles", "ttft_s", "peak_alloc_gb", "peak_resv_gb", "vision_s", "kv_cache_mb"]
+    num_keys = ["raw_tiles", "ttft_s", "peak_alloc_gb", "peak_resv_gb", "mem_delta_gb", "vision_s", "kv_cache_mb",
+                "vit_tflops", "llm_tflops", "aux_tflops", "total_tflops"] + [f"t_{k}" for k in BREAKDOWN_KEYS]
+    n_measured = max(0, len(ds) - args.warmup_images)
     out_rows = []
     tag = f"model={args.model_name}"
     ds_tag = args.dataset + (f":{S.HRBENCH_SPLIT}" if args.dataset == "hrbench" else "")
-    method_note = "svma m=floor(0.75K), S=default_qattn_tiles(b, m)"
+    method_note = "svma m=floor(COVERAGE_FRAC*K), S=default_qattn_tiles(b, m)"
 
     def _row(method, agg, extra=""):
         r = {"model": args.model_name, "dataset": ds_tag, "method": method,
-             "n_images": len(ds), "model_load_peak_gb": round(model_load_peak, 3),
+             "n_images": n_measured, "model_load_peak_gb": round(model_load_peak, 3),
+             "ttft_s_median": None if agg.get("ttft_s_median") is None else round(agg["ttft_s_median"], 4),
              "note": (extra or method_note)}
         for k in num_keys:
             m, s = agg[k]
@@ -436,8 +503,12 @@ def main():
     if unc_rows:
         out_rows.append(_row("uncompressed", _agg(unc_rows, num_keys), extra="max_num tiles, budget-independent"))
     for b in budgets:
-        if stream_rows[b]:
-            out_rows.append(_row(f"stream_b{b}", _agg(stream_rows[b], num_keys)))
+        for cfg in svma_ms(b):
+            t = stream_tag_of(b, cfg)
+            if stream_rows[t]:
+                m_eff = S.default_coverage_tiles(b) if cfg[0] is None else cfg[0]
+                s_eff = S.default_qattn_tiles(b, m_eff) if cfg[1] is None else cfg[1]
+                out_rows.append(_row(t, _agg(stream_rows[t], num_keys), extra=f"svma m={m_eff}, S={s_eff}"))
         if args.run_sparsevlm:
             sv_note = "auto_lam" if args.sparsevlm_lam is None else f"lam={args.sparsevlm_lam:g}"
             out_rows.append(_row(f"sparsevlm_b{b}", _agg(sparsevlm_rows[b], num_keys), extra=sv_note))
@@ -451,7 +522,7 @@ def main():
             out_rows.append(_row(f"visionzip_b{b}", _agg(vz_rows[b], num_keys),
                                   extra=f"ctx_ratio={args.visionzip_contextual_ratio:.4g}"))
 
-    fields = ["model", "dataset", "method", "n_images", "model_load_peak_gb", "note"]
+    fields = ["model", "dataset", "method", "n_images", "model_load_peak_gb", "note", "ttft_s_median"]
     fields += [k + "_mean" for k in num_keys] + [k + "_std" for k in num_keys]
     with open(args.out_csv, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fields)
@@ -476,15 +547,19 @@ def main():
 
     # stdout 表
     print(f"\n=== metrics  {tag}  {ds_tag}  ({len(ds)} imgs, {method_note}) ===")
-    print(f"{'method':<16}{'raw_tiles':>10}{'TTFT s':>12}{'peak_alloc GB':>16}"
-          f"{'peak_resv GB':>14}{'vision s':>11}{'KV cache MB':>13}")
-    print("-" * 92)
+    print(f"{'method':<20}{'raw_tiles':>10}{'TTFT med s':>12}{'Δmem GB':>10}"
+          f"{'KV cache MB':>13}{'ViT TF':>9}{'LLM TF':>9}{'total TF':>10}")
+    print("-" * 93)
     for r in out_rows:
         def g(k):
             v = r.get(k + "_mean")
             return "   —" if v is None else f"{v:.3f}"
-        print(f"{r['method']:<16}{g('raw_tiles'):>10}{g('ttft_s'):>12}"
-              f"{g('peak_alloc_gb'):>16}{g('peak_resv_gb'):>14}{g('vision_s'):>11}{g('kv_cache_mb'):>13}")
+        med = r.get("ttft_s_median")
+        print(f"{r['method']:<20}{g('raw_tiles'):>10}{('   —' if med is None else f'{med:.3f}'):>12}"
+              f"{g('mem_delta_gb'):>10}{g('kv_cache_mb'):>13}{g('vit_tflops'):>9}{g('llm_tflops'):>9}"
+              f"{g('total_tflops'):>10}")
+        if r.get("t_detail_vit_mean") is not None:
+            print("      TTFT 分段：" + "  ".join(f"{k}={r.get(f't_{k}_mean') or 0:.3f}" for k in BREAKDOWN_KEYS))
     if unc_rows:
         u = out_rows[0]
         for r in out_rows[1:]:

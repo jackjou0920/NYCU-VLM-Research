@@ -161,7 +161,7 @@ def _cls_attention_and_keys(attn_module, x: torch.Tensor):
 # ──────────────────────────────────────────────────────────────────────────
 def visionzip_select_tile(
     tokens: torch.Tensor, score: torch.Tensor, metric: torch.Tensor,
-    keep: int, contextual_ratio: float = CONTEXTUAL_RATIO,
+    keep: int, contextual_ratio: float = CONTEXTUAL_RATIO, score_mode: str = "cls",
 ):
     """
     tokens [N, D]（pixel_shuffle 後、mlp1 前的 4C 維特徵）、score [N]（CLS attention）、
@@ -169,6 +169,12 @@ def visionzip_select_tile(
 
     順序跟官方一致：先是 dominant（依原始位置由小到大，= 官方 masked_select 的順序），
     再是 contextual（依 target 順序）。
+
+    score_mode（診斷用對照組，不是 VisionZip 的一部分；預設 cls = 官方）：
+      cls     ：CLS attention top-K（官方）
+      random  ：隨機挑 dominant（固定 seed 由呼叫端控制）
+      uniform ：dominant 取均勻間隔的位置（空間均勻取樣）
+    contextual 的合併在三種模式下都一樣，只換 dominant 怎麼挑。
     """
     N = tokens.shape[0]
     if keep >= N:
@@ -180,7 +186,15 @@ def visionzip_select_tile(
         raise ValueError(f"keep={keep} 太小，沒有名額留給 dominant token")
 
     # ── Dominant：CLS attention top-K ──
-    topk_idx = score.topk(dominant_num).indices
+    if score_mode == "cls":
+        topk_idx = score.topk(dominant_num).indices
+    elif score_mode == "random":
+        topk_idx = torch.randperm(N, device=tokens.device)[:dominant_num]
+    elif score_mode == "uniform":
+        topk_idx = torch.linspace(0, N - 1, dominant_num, device=tokens.device).round().long().unique()
+        dominant_num = topk_idx.numel()
+    else:
+        raise ValueError(f"unknown score_mode={score_mode}")
     remain_mask = torch.ones(N, dtype=torch.bool, device=tokens.device)
     remain_mask[topk_idx] = False
     dominant_tokens = tokens[~remain_mask]                                # 原始位置遞增
@@ -223,17 +237,21 @@ def split_budget(budget: int, num_tiles: int, tokens_per_tile: int) -> list[int]
 
 @torch.no_grad()
 def encode_tiles_visionzip(model, tile_pixel_values: torch.Tensor, keeps: list[int],
-                           contextual_ratio: float, dtype):
+                           contextual_ratio: float, dtype, score_mode: str = "cls", score_layer: int | None = None):
     """對應 internvl_stream.encode_tile()，差別是在 mlp1 之前插入 VisionZip（論文 Fig.3 /
     官方 LLaVA 版：vision encoder → VisionZip → projector）。
-    回傳 (tokens [sum(keeps), D_llm], (dominant_total, contextual_total))。"""
+    回傳 (tokens [sum(keeps), D_llm], (dominant_total, contextual_total))。
+    score_layer（診斷用，None = 官方：跟 select_layer 同一層）：CLS attention 改從第幾層（0-indexed）取；
+    feature 與 metric 仍來自 select_layer。"""
     select_layer = model.select_layer
     vit = model.vision_model
     num_layers = len(vit.encoder.layers)
     layer_idx = num_layers + select_layer      # 產生 hidden_states[select_layer] 的那一層（官方三者同層）
     assert 0 <= layer_idx < num_layers, f"select_layer={select_layer} 不合法"
 
-    with _capture_attn_input(vit.encoder.layers[layer_idx].attn) as box:
+    s_idx = layer_idx if score_layer is None else (score_layer % num_layers)
+    with _capture_attn_input(vit.encoder.layers[s_idx].attn) as box_s, \
+            _capture_attn_input(vit.encoder.layers[layer_idx].attn) as box:
         if select_layer == -1:
             feats = vit(pixel_values=tile_pixel_values, output_hidden_states=False,
                         return_dict=True).last_hidden_state
@@ -241,7 +259,9 @@ def encode_tiles_visionzip(model, tile_pixel_values: torch.Tensor, keeps: list[i
             feats = vit(pixel_values=tile_pixel_values, output_hidden_states=True,
                         return_dict=True).hidden_states[select_layer]
     cls_attn, key_mean = _cls_attention_and_keys(vit.encoder.layers[layer_idx].attn, box["x"])
-    del box
+    if s_idx != layer_idx:
+        cls_attn, _ = _cls_attention_and_keys(vit.encoder.layers[s_idx].attn, box_s["x"])
+    del box, box_s
 
     B = feats.shape[0]
     patches = feats[:, 1:, :]                                             # 去 CLS，跟 encode_tile 一致
@@ -263,7 +283,7 @@ def encode_tiles_visionzip(model, tile_pixel_values: torch.Tensor, keeps: list[i
 
     kept, dom_total, ctx_total = [], 0, 0
     for b in range(B):
-        k_b, d_b, c_b = visionzip_select_tile(tokens[b], score[b], metric[b], keeps[b], contextual_ratio)
+        k_b, d_b, c_b = visionzip_select_tile(tokens[b], score[b], metric[b], keeps[b], contextual_ratio, score_mode)
         kept.append(k_b)
         dom_total += d_b
         ctx_total += c_b
@@ -280,8 +300,10 @@ def generate_visionzip(
     model, tokenizer, pixel_values: torch.Tensor, question: str, budget: int,
     contextual_ratio: float = CONTEXTUAL_RATIO,
     vit_batch: int = 4, max_new_tokens: int = MAX_NEW_TOKENS,
+    score_mode: str = "cls", score_layer: int | None = None,
 ):
-    """budget = 所有 tile 合計要留給 LLM 的視覺 token 數（跟 fastv / sparsevlm 的 budget 同義）。"""
+    """budget = 所有 tile 合計要留給 LLM 的視覺 token 數（跟 fastv / sparsevlm 的 budget 同義）。
+    score_mode / score_layer：診斷用對照組，預設 = 官方（見 visionzip_select_tile / encode_tiles_visionzip）。"""
     device = DEVICE
     dtype = model.dtype
     num_tiles = pixel_values.shape[0]
@@ -302,7 +324,7 @@ def generate_visionzip(
     for i in range(0, num_tiles, vit_batch):
         chunk = pixel_values[i:i + vit_batch].to(device, dtype=dtype)
         toks, (d, c) = encode_tiles_visionzip(
-            model, chunk, keeps[i:i + vit_batch], contextual_ratio, dtype)
+            model, chunk, keeps[i:i + vit_batch], contextual_ratio, dtype, score_mode, score_layer)
         vision_chunks.append(toks)
         dom_total += d
         ctx_total += c
@@ -356,6 +378,10 @@ def main():
     parser.add_argument("--contextual_ratio", type=float, default=CONTEXTUAL_RATIO,
                          help="contextual / 每個 tile 保留數；預設 5/32，可重現論文 Table 8/9 的每一組數字")
     parser.add_argument("--max_new_tokens", type=int, default=MAX_NEW_TOKENS)
+    parser.add_argument("--score_mode", choices=["cls", "random", "uniform"], default="cls",
+                        help="診斷用對照組：dominant 改成隨機 / 空間均勻挑（預設 cls = 官方）")
+    parser.add_argument("--score_layer", type=int, default=None,
+                        help="診斷用：CLS attention 改從 ViT 第幾層取（0-indexed，可負數）；預設 = select_layer（官方）")
 
     parser.add_argument("--run_standard", action="store_true", help="跑未壓縮的 baseline（model.batch_chat）")
     parser.add_argument("--run_visionzip", action="store_true", help="跑 VisionZip")
@@ -425,6 +451,11 @@ def main():
         ]
 
     tag = f"visionzip_budget={args.budget}"
+    if args.score_mode != "cls":
+        tag += f"_{args.score_mode}"
+    if args.score_layer is not None:
+        tag += f"_L{args.score_layer}"
+    torch.manual_seed(0)
     output_results["candidates"].setdefault(tag, [])
 
     # ── 4. 逐張處理：每個 tile 的選擇各自獨立，理論上可以 batch，但為了跟 fastv / sparsevlm 的
@@ -474,6 +505,7 @@ def main():
                         model, tokenizer, pixel_values, d["question"],
                         budget=args.budget, contextual_ratio=args.contextual_ratio,
                         vit_batch=args.vit_batch, max_new_tokens=args.max_new_tokens,
+                        score_mode=args.score_mode, score_layer=args.score_layer,
                     )
                 visionzip_kv_mb = stats["kv_cache_mb"]
                 print(f"  {stats['raw_vis_tokens']} -> {stats['final_vis_tokens']} tokens "

@@ -36,7 +36,8 @@ import torch
 import torch.nn.functional as F
 
 from internvl_preprocess import build_model, load_image_tiles, load_image_tiles_fill, load_image_multiscale
-from svma_config import default_coverage_tiles, default_qattn_tiles, split_slots
+from svma_config import default_coverage_tiles, default_qattn_tiles, split_slots, DEFAULT_BUDGET
+from process_common import get_image
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -172,6 +173,13 @@ QATTN_LAYER = 20
 
 VIT_BATCH = 4               # ViT micro-batch（系統參數，影響 peak memory / TTFT，不影響選擇結果）
 CHUNK_SIZE = 1024           # LLM chunked-prefill 大小（同上）
+
+
+def _synced_time() -> float:
+    """量 GPU 階段時間用：先 synchronize 再取牆鐘時間。"""
+    if torch.cuda.is_available():
+        torch.cuda.synchronize(DEVICE)
+    return time.time()
 
 
 def clean_answer(answers):
@@ -678,11 +686,14 @@ class InternVLAdapter:
         direct = []          # 直接保留的 (tile_index, tokens)
         scores = {}
         max_resident = 0
+        t_vit = t_qattn = 0.0                                 # TTFT 分段（見 run_online_kv_with_memory_bank）
         for s in range(0, len(cand), VIT_BATCH):
             idxs = cand[s:s + VIT_BATCH]
+            t0 = _synced_time()
             chunk = detail_px[idxs].to(DEVICE, dtype=dtype)
             toks = encode_tile(model, chunk, dtype=dtype)                   # [b, n_tok, D]
             del chunk
+            t_vit += _synced_time() - t0
             max_resident = max(max_resident, len(heap) + len(direct) + len(idxs) + m)
             js = [j for j, idx in enumerate(idxs) if idx not in keep_direct]   # 邊界 tile
             for j, idx in enumerate(idxs):
@@ -691,7 +702,9 @@ class InternVLAdapter:
             if js:
                 sub = toks[js] if len(js) < len(idxs) else toks
                 if need_score:
+                    t0 = _synced_time()
                     sc = qattn_scores_with_prefix(model, sub, prefix_kv, emb_a).tolist()
+                    t_qattn += _synced_time() - t0
                 else:
                     sc = [float(prior.get(idxs[j], 0.0)) for j in js]
                 for v, j in zip(sc, js):
@@ -708,9 +721,11 @@ class InternVLAdapter:
         sel_idx = [idx for idx, _ in items]
         selected = [tok for _, tok in items] + [cover_tokens[t] for t in range(m)]
         del items
+        t0 = _synced_time()
         past_key_values, running_mask, tokens_injected, kv_flushes = self._commit_tiles(
             model, selected, CHUNK_SIZE, past_key_values, running_mask,
         )
+        t_commit = _synced_time() - t0
         del selected
 
         stats = {
@@ -718,6 +733,8 @@ class InternVLAdapter:
             "coverage_tiles": m,
             "vit_encoded_tiles": len(cand) + m,
             "qattn_tiles": int(qattn_tiles),
+            "qattn_scored": len(window) if need_score else 0,   # 實際跑 q_attn 的 tile 數（FLOPs 用）
+            "_t_detail_vit": t_vit, "_t_qattn": t_qattn, "_t_commit": t_commit,
             "boundary_a_b": [a, b],
             "direct_kept": sorted(keep_direct),
             "window": sorted(window),
@@ -796,6 +813,7 @@ def run_online_kv_with_memory_bank(
         m = cover_px.shape[0]
         question = questions[b]
         S_b = default_qattn_tiles(budget, m) if qattn_tiles is None else qattn_tiles
+        t_img = _synced_time()
 
         print("\n" + "=" * 80)
         print(f"[Image {b}] detail={inputs[b]['detail_grid']} cover={inputs[b]['cover_grid']} "
@@ -837,6 +855,7 @@ def run_online_kv_with_memory_bank(
 
         del out, embeds_before, ids_before, tok_before
         _mem_mark("Prefill")
+        t_text_prefill = time.time() - t_img
 
         # --------------------------------------------------------
         # Step B: true online Vision -> TileMemory -> KV
@@ -850,6 +869,8 @@ def run_online_kv_with_memory_bank(
             encode_tile(model, cover_px[i:i + VIT_BATCH].to(DEVICE, dtype=dtype), dtype=dtype)
             for i in range(0, m, VIT_BATCH)
         ], dim=0)                                                         # [m, 256, D]
+        t_cover_vit = _synced_time() - t_vision_start
+        t_prior = 0.0
 
         # prior：一次 [text_before][覆蓋 tile][text_after] 短 forward 算出每塊細節 tile 的 prior；
         # S > 0 時順便留下 [text_before][覆蓋 tile] 的前綴 KV 給 q_attn 重用。沒有細節名額 / 細節 tile 就跳過。
@@ -861,7 +882,8 @@ def run_online_kv_with_memory_bank(
                 text_before, text_after,
                 capture_kv_upto=QATTN_LAYER if S_b > 0 else None,
             )
-            print(f"[Image {b}] coverage prior: m={m} +{time.time() - t_ta:.2f}s")
+            t_prior = _synced_time() - t_ta
+            print(f"[Image {b}] coverage prior: m={m} +{t_prior:.2f}s")
 
         past_key_values, running_mask, stats = adapter.stream_image_to_kv_cascade(
             model=model,
@@ -878,6 +900,7 @@ def run_online_kv_with_memory_bank(
             dtype=dtype,
         )
         del cover_tokens, prefix_kv
+        stats["prior_forward"] = tile_prior is not None
         stats["cover_grid"] = list(inputs[b]["cover_grid"])
         stats["detail_grid"] = list(inputs[b]["detail_grid"])
         a_, b_ = stats["boundary_a_b"]
@@ -941,6 +964,17 @@ def run_online_kv_with_memory_bank(
         torch.cuda.synchronize(DEVICE)
         t_first_token = time.time()
         first_token_times.append(t_first_token - t_start)
+        # TTFT 分段（秒）：text_before prefill / 覆蓋 tile ViT / prior / 細節 tile ViT / q_attn / 寫 KV /
+        # text_after + 第一個 token；batch 內第一張圖的總和 ≈ timing["TTFT"]（另含組 prompt 等 CPU 時間）
+        stats["ttft_breakdown"] = {
+            "text_prefill": round(t_text_prefill, 4),
+            "cover_vit": round(t_cover_vit, 4),
+            "prior": round(t_prior, 4),
+            "detail_vit": round(stats.pop("_t_detail_vit"), 4),
+            "qattn": round(stats.pop("_t_qattn"), 4),
+            "kv_commit": round(stats.pop("_t_commit"), 4),
+            "first_token": round(t_first_token - t_decode_start, 4),
+        }
 
         del ids_after, mask_after, position_ids, next_token_logits, tok_after
 
@@ -1059,6 +1093,21 @@ def _load_infovqa(n):
     return load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=n, prompt_mode=INFOVQA_PROMPT)
 
 
+def _load_infovqa_train_calib(n):
+    """held-out 校準集：InfoVQA train split 用 seed 0 隨機抽 600 題（n 可再取更少）。
+    跟測試用的 val split 沒有重疊，S / m / 預設 budget 只在這裡調。"""
+    from process_common import load_infovqa
+    return load_infovqa(dataset="Ahren09/InfoVQA", split="train", num_image=min(n or 600, 600),
+                        prompt_mode=INFOVQA_PROMPT, sample_seed=0)
+
+
+def _mme_rw_loader(split):
+    def load(n):
+        from process_common import load_mme_realworld
+        return load_mme_realworld(split=split, num_image=n)
+    return load
+
+
 def _hrbench_loader(split):
     def load(n):
         from process_common import load_hrbench
@@ -1069,8 +1118,11 @@ def _hrbench_loader(split):
 DATASETS = {
     "docvqa":     (_load_docvqa, "anls"),
     "infovqa":    (_load_infovqa, "anls"),
+    "infovqa_train_calib": (_load_infovqa_train_calib, "anls"),   # held-out 校準集（train，seed 0 抽 600 題）
     "hrbench_4k": (_hrbench_loader("hrbench_4k"), "hrbench_circular"),
     "hrbench_8k": (_hrbench_loader("hrbench_8k"), "hrbench_circular"),
+    "mme_rw_calib": (_mme_rw_loader("calib"), "mc_accuracy"),   # held-out 校準集（完整版扣掉 Lite，600 題）
+    "mme_rw_lite":  (_mme_rw_loader("lite"), "mc_accuracy"),    # 測試集 MME-RealWorld-Lite（1,919 題）
 }
 
 
@@ -1103,14 +1155,21 @@ def build_meta(datasets) -> list[dict]:
 MODES = ("svma", "uncompressed", "lowres_fill")
 
 
-def run_tag(mode: str, budget: int) -> str:
-    return mode if mode == "uncompressed" else f"{mode}_b{budget}"
+def run_tag(mode: str, budget: int, coverage_tiles: int | None = None, qattn_tiles: int | None = None) -> str:
+    """預設設定的 tag 是 svma_b<B>；有覆寫 m / S（校準掃描用）時加上 _m<m> / _S<S>。"""
+    if mode == "uncompressed":
+        return mode
+    tag = f"{mode}_b{budget}"
+    if mode == "svma" and coverage_tiles is not None:
+        tag += f"_m{coverage_tiles}"
+    if mode == "svma" and qattn_tiles is not None:
+        tag += f"_S{qattn_tiles}"
+    return tag
 
 
-def default_output_json(model_name: str, dataset: str, mode: str, budget: int,
-                        out_root: str = "results/runs") -> str:
+def default_output_json(model_name: str, dataset: str, tag: str, out_root: str = "results/runs") -> str:
     """results/runs/<dataset>/<tag>_<model>.json"""
-    return os.path.join(out_root, dataset, f"{run_tag(mode, budget)}_{os.path.basename(model_name)}.json")
+    return os.path.join(out_root, dataset, f"{tag}_{os.path.basename(model_name)}.json")
 
 
 def load_or_init_results(path: str, meta: list[dict], tag: str) -> tuple[dict, int]:
@@ -1132,12 +1191,13 @@ def load_or_init_results(path: str, meta: list[dict], tag: str) -> tuple[dict, i
     return results, start
 
 
-def prepare_inputs(images, mode: str, budget: int, max_num: int):
+def prepare_inputs(images, mode: str, budget: int, max_num: int, coverage_tiles: int | None = None):
     """把一批 PIL 影像轉成各 mode 的輸入。max_num = 未壓縮時的總 tile 上限（含縮圖），
-    dynamic_preprocess 會再加 1 張縮圖，所以網格上限是 max_num - 1。"""
+    dynamic_preprocess 會再加 1 張縮圖，所以網格上限是 max_num - 1。
+    coverage_tiles：SVMA 的 m；None = svma_config 的預設。"""
     max_num_grid = max(1, max_num - 1)
     if mode == "svma":
-        m = default_coverage_tiles(budget)
+        m = default_coverage_tiles(budget) if coverage_tiles is None else coverage_tiles
         return [load_image_multiscale(img, input_size=448, max_num_grid=max_num_grid, coverage_tiles=m)
                 for img in images]
     if mode == "lowres_fill":
@@ -1153,10 +1213,13 @@ def standard_kv_cache_mb(model, tokenizer, pixel_values, question) -> float:
     return estimate_kv_cache_mb(model, [total] * model.language_model.config.num_hidden_layers)
 
 
-def run_batch(model, tokenizer, adapter, mode: str, inputs, questions, budget: int, dtype=torch.bfloat16):
-    """回傳 (answers, extra)；extra 是每張圖一筆的附加紀錄 {key: list}，跟 answers 對齊。"""
+def run_batch(model, tokenizer, adapter, mode: str, inputs, questions, budget: int, dtype=torch.bfloat16,
+              coverage_tiles: int | None = None, qattn_tiles: int | None = None):
+    """回傳 (answers, extra)；extra 是每張圖一筆的附加紀錄 {key: list}，跟 answers 對齊。
+    coverage_tiles / qattn_tiles：覆寫 SVMA 的 m / S（None = svma_config 的預設）。"""
     if mode == "svma":
-        S = default_qattn_tiles(budget, default_coverage_tiles(budget))
+        m = default_coverage_tiles(budget) if coverage_tiles is None else coverage_tiles
+        S = default_qattn_tiles(budget, m) if qattn_tiles is None else qattn_tiles
         answers, all_stats, timing = run_online_kv_with_memory_bank(
             model, adapter, inputs, questions, budget=budget, qattn_tiles=S, dtype=dtype)
         # batch_size > 1 時同一批共用第一張圖的 TTFT；要逐張 TTFT 就用 --batch_size 1 或 bench_metrics.py
@@ -1174,12 +1237,17 @@ def parse_args(argv=None):
     )
     p.add_argument("--dataset", required=True, choices=sorted(DATASETS))
     p.add_argument("--mode", default="svma", choices=MODES)
-    p.add_argument("--budget", type=int, default=1024, help="每張圖的 vision token 上限（K = budget // 256 塊 tile）；uncompressed 不用")
+    p.add_argument("--budget", type=int, default=DEFAULT_BUDGET,
+                   help="每張圖的 vision token 上限（K = budget // 256 塊 tile）；預設 = svma_config.DEFAULT_BUDGET；uncompressed 不用")
     p.add_argument("--num_images", type=int, default=-1, help="只跑前 N 題（-1 = 全部）")
     p.add_argument("--batch_size", type=int, default=4)
     p.add_argument("--model_name", default="OpenGVLab/InternVL3_5-8B")
     p.add_argument("--max_num", type=int, default=48, help="未壓縮時的總 tile 上限（含縮圖），也是 SVMA 細節網格的上限")
     p.add_argument("--output_json", default=None, help="預設 results/runs/<dataset>/<tag>_<model>.json")
+    p.add_argument("--coverage_tiles", type=int, default=None,
+                   help="SVMA 的覆蓋 tile 數 m（校準掃描用）；不給 = svma_config 的預設 floor(0.75 K)")
+    p.add_argument("--qattn_tiles", type=int, default=None,
+                   help="SVMA 第二階段打分的 tile 數 S（校準掃描用）；不給 = svma_config 的預設 S(K, m)")
     args = p.parse_args(argv)
     if args.mode != "uncompressed" and args.budget < 256:
         p.error(f"--budget 至少要 256（1 塊 tile），收到 {args.budget}")
@@ -1188,8 +1256,8 @@ def parse_args(argv=None):
 
 def main(argv=None):
     args = parse_args(argv)
-    tag = run_tag(args.mode, args.budget)
-    out = args.output_json or default_output_json(args.model_name, args.dataset, args.mode, args.budget)
+    tag = run_tag(args.mode, args.budget, args.coverage_tiles, args.qattn_tiles)
+    out = args.output_json or default_output_json(args.model_name, args.dataset, tag)
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
     torch.manual_seed(RANDOM_SEED)
     t0 = time.time()
@@ -1198,8 +1266,9 @@ def main(argv=None):
     results, start = load_or_init_results(out, build_meta(datasets), tag)
     n = len(datasets)
     if args.mode == "svma":
-        m = default_coverage_tiles(args.budget)
-        print(f"[svma] budget={args.budget}  K={args.budget // 256}  m={m}  S={default_qattn_tiles(args.budget, m)}")
+        m = default_coverage_tiles(args.budget) if args.coverage_tiles is None else args.coverage_tiles
+        S = default_qattn_tiles(args.budget, m) if args.qattn_tiles is None else args.qattn_tiles
+        print(f"[svma] budget={args.budget}  K={args.budget // 256}  m={m}  S={S}")
     print(f"[{tag}] {args.dataset}: {n} 題，從第 {start + 1} 題開始 → {out}")
     if start >= n:
         print("已全部完成，跳過")
@@ -1212,9 +1281,11 @@ def main(argv=None):
     for i in range(start, n, args.batch_size):
         batch = datasets[i:i + args.batch_size]
         questions = [d["question"] for d in batch]
-        inputs = prepare_inputs([d["image"] for d in batch], args.mode, args.budget, args.max_num)
+        inputs = prepare_inputs([get_image(d) for d in batch], args.mode, args.budget, args.max_num,
+                                args.coverage_tiles)
         with measure_peak_memory(f"{tag} [{i + 1}~{i + len(batch)}/{n}]"):
-            answers, extra = run_batch(model, tokenizer, adapter, args.mode, inputs, questions, args.budget)
+            answers, extra = run_batch(model, tokenizer, adapter, args.mode, inputs, questions, args.budget,
+                                       coverage_tiles=args.coverage_tiles, qattn_tiles=args.qattn_tiles)
         results["candidates"][tag] += answers
         for key, vals in extra.items():
             results.setdefault(key, {}).setdefault(tag, []).extend(vals)

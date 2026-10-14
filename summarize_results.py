@@ -27,14 +27,23 @@ from evaluate_hrbench import canon_pred, gold_letter
 
 
 def METRIC_OF(dataset: str) -> str:
-    """跟 run_svma.sh 的 evaluate() 同一個規則：hrbench* 用 CircularEval，其他用 ANLS。"""
-    return "hrbench_circular" if dataset.startswith("hrbench") else "anls"
+    """跟 run_svma.sh 的 evaluate() 同一個規則：hrbench* 用 CircularEval，mme_rw* 用一般選擇題 accuracy，
+    其他用 ANLS。"""
+    if dataset.startswith("hrbench"):
+        return "hrbench_circular"
+    if dataset.startswith("mme_rw"):
+        return "mc_accuracy"
+    return "anls"
 
 
 def unit_scores(data: dict, tag: str, metric: str, num_images: int | None) -> dict:
     """回傳 {unit_id: score}。ANLS：unit = 題目 index；CircularEval：unit = id // 4（4 題全有才算）。"""
     preds, meta = data["candidates"][tag], data["meta"]
     n = min(len(preds), len(meta))
+    if metric == "mc_accuracy":     # 每題一個 unit，輸出字母 == 正解字母
+        if num_images and num_images > 0:
+            n = min(n, num_images)
+        return {i: float(canon_pred(str(preds[i]), meta[i], "letter") == gold_letter(meta[i])) for i in range(n)}
     if metric == "anls":
         if num_images and num_images > 0:
             n = min(n, num_images)
