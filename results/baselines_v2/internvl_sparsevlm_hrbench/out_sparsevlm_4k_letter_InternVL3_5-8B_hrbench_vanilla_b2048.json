@@ -1,0 +1,32 @@
+{
+  "source_json": "results/baselines_v2/internvl_sparsevlm_hrbench/out_sparsevlm_4k_letter_InternVL3_5-8B_hrbench_b2048.json",
+  "metric": "hrbench_accuracy",
+  "prompt_mode": "letter",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "sparsevlm_budget=2048_lam=0.3794",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "sparsevlm_budget=2048_lam=0.3794",
+      "n": 800,
+      "acc": 70.75,
+      "by_category": {
+        "cross": 57.99999999999999,
+        "single": 83.5
+      },
+      "match_ref": NaN,
+      "unparsed": 0.0,
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false,
+      "len_ok": true
+    }
+  ]
+}

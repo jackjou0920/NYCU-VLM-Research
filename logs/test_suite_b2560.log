@@ -1,0 +1,62 @@
+== test suite：25 個工作，GPUS=0 1 ==
+[10-19 23:01] GPU0 docvqa svma 2560
+[10-19 23:01] GPU1 docvqa fastv 2560
+[10-19 23:04] GPU1 docvqa ifprune 2560
+[10-19 23:07] GPU1 infovqa svma 2560
+[10-19 23:08] GPU1 infovqa visionzip 2560
+[10-19 23:09] GPU1 infovqa sparsevlm 2560
+  infovqa sparsevlm b2560：校準 λ=0.1922
+[10-19 23:13] GPU1 hrbench_4k fastv 2560
+[10-19 23:14] GPU1 hrbench_4k ifprune 2560
+[10-19 23:16] GPU1 mme_rw_lite svma 2560
+[10-19 23:16] GPU1 mme_rw_lite visionzip 2560
+[10-19 23:16] GPU1 mme_rw_lite sparsevlm 2560
+  mme_rw_lite sparsevlm b2560：校準 λ=0.1922
+[10-19 23:20] GPU1 vstar fastv 2560
+[10-19 23:20] GPU1 vstar ifprune 2560
+[10-20 01:18] GPU0 docvqa visionzip 2560
+[10-20 03:14] GPU0 docvqa sparsevlm 2560
+  docvqa sparsevlm b2560：校準 λ=0.3794
+[10-20 05:19] GPU0 infovqa fastv 2560
+[10-20 06:17] GPU0 infovqa ifprune 2560
+[10-20 07:36] GPU0 hrbench_4k svma 2560
+[10-20 07:57] GPU0 hrbench_4k visionzip 2560
+[10-20 08:16] GPU0 hrbench_4k sparsevlm 2560
+  hrbench_4k sparsevlm b2560：校準 λ=0.3794
+[10-20 08:42] GPU0 mme_rw_lite fastv 2560
+[10-20 09:26] GPU0 mme_rw_lite ifprune 2560
+[10-20 10:27] GPU0 vstar svma 2560
+[10-20 10:31] GPU0 vstar visionzip 2560
+[10-20 10:35] GPU0 vstar sparsevlm 2560
+  vstar sparsevlm b2560：校準 λ=0.1922
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=2560   5349   62.85                                           
+
+[saved] results/runs/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=2560   2801   57.86                                           
+
+[saved] results/runs/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=2560    200   57.50                                           
+
+[saved] results/runs/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=5120   1919   49.61   -1.98     [-3.3, -0.7]*                 
+
+[saved] results/runs/summary.csv
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=5120    191   82.20   -1.57      [-4.2, +1.1]                 
+
+[saved] results/runs/summary.csv
+[10-20 10:42] done

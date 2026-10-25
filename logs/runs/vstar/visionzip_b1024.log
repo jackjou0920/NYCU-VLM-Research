@@ -1,0 +1,3069 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 90.36it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.43 s
+[load_vstar] 191 題（/home/jackjou/datasets/vstar_bench/test_questions.jsonl）
+Found 191 image(s) to process
+
+======================================================================
+[1/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.93 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (1/191 images done)
+
+======================================================================
+[2/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (2/191 images done)
+
+======================================================================
+[3/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (3/191 images done)
+
+======================================================================
+[4/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (4/191 images done)
+
+======================================================================
+[5/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.541 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 156.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (5/191 images done)
+
+======================================================================
+[6/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (6/191 images done)
+
+======================================================================
+[7/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (7/191 images done)
+
+======================================================================
+[8/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (8/191 images done)
+
+======================================================================
+[9/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.42 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  4096 -> 1024 tokens (compression=4.0x)  keep/tile=[64, 64]  dominant=864  contextual=160
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (9/191 images done)
+
+======================================================================
+[10/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (10/191 images done)
+
+======================================================================
+[11/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.39 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (11/191 images done)
+
+======================================================================
+[12/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (12/191 images done)
+
+======================================================================
+[13/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (13/191 images done)
+
+======================================================================
+[14/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (14/191 images done)
+
+======================================================================
+[15/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.541 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 156.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (15/191 images done)
+
+======================================================================
+[16/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (16/191 images done)
+
+======================================================================
+[17/191] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.371 GB  peak_reserved=17.532 GB
+  5376 -> 1024 tokens (compression=5.25x)  keep/tile=[48, 49]  dominant=856  contextual=168
+  [KV cache, prompt-only] 155.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (17/191 images done)
+
+======================================================================
+[18/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (18/191 images done)
+
+======================================================================
+[19/191] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.65 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  9216 -> 1024 tokens (compression=9.0x)  keep/tile=[28, 29]  dominant=864  contextual=160
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (19/191 images done)
+
+======================================================================
+[20/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (20/191 images done)
+
+======================================================================
+[21/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (21/191 images done)
+
+======================================================================
+[22/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.62 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  8448 -> 1024 tokens (compression=8.25x)  keep/tile=[31, 32]  dominant=859  contextual=165
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (22/191 images done)
+
+======================================================================
+[23/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (23/191 images done)
+
+======================================================================
+[24/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.39 sec  peak_allocated=17.369 GB  peak_reserved=17.543 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 156.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (24/191 images done)
+
+======================================================================
+[25/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (25/191 images done)
+
+======================================================================
+[26/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (26/191 images done)
+
+======================================================================
+[27/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (27/191 images done)
+
+======================================================================
+[28/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.39 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (28/191 images done)
+
+======================================================================
+[29/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.39 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (29/191 images done)
+
+======================================================================
+[30/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (30/191 images done)
+
+======================================================================
+[31/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (31/191 images done)
+
+======================================================================
+[32/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (32/191 images done)
+
+======================================================================
+[33/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (33/191 images done)
+
+======================================================================
+[34/191] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.74 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  11008 -> 1024 tokens (compression=10.75x)  keep/tile=[23, 24]  dominant=852  contextual=172
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (34/191 images done)
+
+======================================================================
+[35/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (35/191 images done)
+
+======================================================================
+[36/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (36/191 images done)
+
+======================================================================
+[37/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (37/191 images done)
+
+======================================================================
+[38/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (38/191 images done)
+
+======================================================================
+[39/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (39/191 images done)
+
+======================================================================
+[40/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (40/191 images done)
+
+======================================================================
+[41/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (41/191 images done)
+
+======================================================================
+[42/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (42/191 images done)
+
+======================================================================
+[43/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (43/191 images done)
+
+======================================================================
+[44/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (44/191 images done)
+
+======================================================================
+[45/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.63 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  8448 -> 1024 tokens (compression=8.25x)  keep/tile=[31, 32]  dominant=859  contextual=165
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (45/191 images done)
+
+======================================================================
+[46/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (46/191 images done)
+
+======================================================================
+[47/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (47/191 images done)
+
+======================================================================
+[48/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (48/191 images done)
+
+======================================================================
+[49/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (49/191 images done)
+
+======================================================================
+[50/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (50/191 images done)
+
+======================================================================
+[51/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (51/191 images done)
+
+======================================================================
+[52/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (52/191 images done)
+
+======================================================================
+[53/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (53/191 images done)
+
+======================================================================
+[54/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (54/191 images done)
+
+======================================================================
+[55/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (55/191 images done)
+
+======================================================================
+[56/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (56/191 images done)
+
+======================================================================
+[57/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (57/191 images done)
+
+======================================================================
+[58/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (58/191 images done)
+
+======================================================================
+[59/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.370 GB  peak_reserved=17.543 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 156.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (59/191 images done)
+
+======================================================================
+[60/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.370 GB  peak_reserved=17.541 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 156.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (60/191 images done)
+
+======================================================================
+[61/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.370 GB  peak_reserved=17.541 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 156.7 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (61/191 images done)
+
+======================================================================
+[62/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (62/191 images done)
+
+======================================================================
+[63/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.67 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  9472 -> 1024 tokens (compression=9.25x)  keep/tile=[27, 28]  dominant=876  contextual=148
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (63/191 images done)
+
+======================================================================
+[64/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (64/191 images done)
+
+======================================================================
+[65/191] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.60 sec  peak_allocated=17.370 GB  peak_reserved=17.534 GB
+  7936 -> 1024 tokens (compression=7.75x)  keep/tile=[33, 34]  dominant=869  contextual=155
+  [KV cache, prompt-only] 155.0 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (65/191 images done)
+
+======================================================================
+[66/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (66/191 images done)
+
+======================================================================
+[67/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (67/191 images done)
+
+======================================================================
+[68/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (68/191 images done)
+
+======================================================================
+[69/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.367 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.3 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (69/191 images done)
+
+======================================================================
+[70/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.72 sec  peak_allocated=17.370 GB  peak_reserved=17.580 GB
+  10496 -> 1024 tokens (compression=10.25x)  keep/tile=[24, 25]  dominant=860  contextual=164
+  [KV cache, prompt-only] 156.8 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (70/191 images done)
+
+======================================================================
+[71/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (71/191 images done)
+
+======================================================================
+[72/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (72/191 images done)
+
+======================================================================
+[73/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (73/191 images done)
+
+======================================================================
+[74/191] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.60 sec  peak_allocated=17.370 GB  peak_reserved=17.534 GB
+  7936 -> 1024 tokens (compression=7.75x)  keep/tile=[33, 34]  dominant=869  contextual=155
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (74/191 images done)
+
+======================================================================
+[75/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (75/191 images done)
+
+======================================================================
+[76/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (76/191 images done)
+
+======================================================================
+[77/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (77/191 images done)
+
+======================================================================
+[78/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (78/191 images done)
+
+======================================================================
+[79/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (79/191 images done)
+
+======================================================================
+[80/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (80/191 images done)
+
+======================================================================
+[81/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (81/191 images done)
+
+======================================================================
+[82/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (82/191 images done)
+
+======================================================================
+[83/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (83/191 images done)
+
+======================================================================
+[84/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.43 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  4096 -> 1024 tokens (compression=4.0x)  keep/tile=[64, 64]  dominant=864  contextual=160
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (84/191 images done)
+
+======================================================================
+[85/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (85/191 images done)
+
+======================================================================
+[86/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (86/191 images done)
+
+======================================================================
+[87/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (87/191 images done)
+
+======================================================================
+[88/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (88/191 images done)
+
+======================================================================
+[89/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (89/191 images done)
+
+======================================================================
+[90/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.9 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (90/191 images done)
+
+======================================================================
+[91/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (91/191 images done)
+
+======================================================================
+[92/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.62 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  8448 -> 1024 tokens (compression=8.25x)  keep/tile=[31, 32]  dominant=859  contextual=165
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (92/191 images done)
+
+======================================================================
+[93/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (93/191 images done)
+
+======================================================================
+[94/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.77 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  11776 -> 1024 tokens (compression=11.5x)  keep/tile=[22, 23]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (94/191 images done)
+
+======================================================================
+[95/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (95/191 images done)
+
+======================================================================
+[96/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (96/191 images done)
+
+======================================================================
+[97/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (97/191 images done)
+
+======================================================================
+[98/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (98/191 images done)
+
+======================================================================
+[99/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (99/191 images done)
+
+======================================================================
+[100/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.72 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  10496 -> 1024 tokens (compression=10.25x)  keep/tile=[24, 25]  dominant=860  contextual=164
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (100/191 images done)
+
+======================================================================
+[101/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.67 sec  peak_allocated=17.369 GB  peak_reserved=17.515 GB
+  9472 -> 1024 tokens (compression=9.25x)  keep/tile=[27, 28]  dominant=876  contextual=148
+  [KV cache, prompt-only] 155.9 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (101/191 images done)
+
+======================================================================
+[102/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.67 sec  peak_allocated=17.370 GB  peak_reserved=17.580 GB
+  9472 -> 1024 tokens (compression=9.25x)  keep/tile=[27, 28]  dominant=876  contextual=148
+  [KV cache, prompt-only] 156.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (102/191 images done)
+
+======================================================================
+[103/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (103/191 images done)
+
+======================================================================
+[104/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (104/191 images done)
+
+======================================================================
+[105/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (105/191 images done)
+
+======================================================================
+[106/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (106/191 images done)
+
+======================================================================
+[107/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (107/191 images done)
+
+======================================================================
+[108/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.43 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  4096 -> 1024 tokens (compression=4.0x)  keep/tile=[64, 64]  dominant=864  contextual=160
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (108/191 images done)
+
+======================================================================
+[109/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (109/191 images done)
+
+======================================================================
+[110/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (110/191 images done)
+
+======================================================================
+[111/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (111/191 images done)
+
+======================================================================
+[112/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (112/191 images done)
+
+======================================================================
+[113/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+D
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (113/191 images done)
+
+======================================================================
+[114/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.77 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  11776 -> 1024 tokens (compression=11.5x)  keep/tile=[22, 23]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (114/191 images done)
+
+======================================================================
+[115/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.67 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  9472 -> 1024 tokens (compression=9.25x)  keep/tile=[27, 28]  dominant=876  contextual=148
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (115/191 images done)
+
+======================================================================
+[116/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (116/191 images done)
+
+======================================================================
+[117/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (117/191 images done)
+
+======================================================================
+[118/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (118/191 images done)
+
+======================================================================
+[119/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (119/191 images done)
+
+======================================================================
+[120/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (120/191 images done)
+
+======================================================================
+[121/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (121/191 images done)
+
+======================================================================
+[122/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (122/191 images done)
+
+======================================================================
+[123/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.6 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (123/191 images done)
+
+======================================================================
+[124/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (124/191 images done)
+
+======================================================================
+[125/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (125/191 images done)
+
+======================================================================
+[126/191] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.66 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  9216 -> 1024 tokens (compression=9.0x)  keep/tile=[28, 29]  dominant=864  contextual=160
+  [KV cache, prompt-only] 154.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (126/191 images done)
+
+======================================================================
+[127/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (127/191 images done)
+
+======================================================================
+[128/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.63 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  8448 -> 1024 tokens (compression=8.25x)  keep/tile=[31, 32]  dominant=859  contextual=165
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (128/191 images done)
+
+======================================================================
+[129/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (129/191 images done)
+
+======================================================================
+[130/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (130/191 images done)
+
+======================================================================
+[131/191] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.66 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  9216 -> 1024 tokens (compression=9.0x)  keep/tile=[28, 29]  dominant=864  contextual=160
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (131/191 images done)
+
+======================================================================
+[132/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (132/191 images done)
+
+======================================================================
+[133/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (133/191 images done)
+
+======================================================================
+[134/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (134/191 images done)
+
+======================================================================
+[135/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (135/191 images done)
+
+======================================================================
+[136/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (136/191 images done)
+
+======================================================================
+[137/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (137/191 images done)
+
+======================================================================
+[138/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (138/191 images done)
+
+======================================================================
+[139/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (139/191 images done)
+
+======================================================================
+[140/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (140/191 images done)
+
+======================================================================
+[141/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (141/191 images done)
+
+======================================================================
+[142/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (142/191 images done)
+
+======================================================================
+[143/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (143/191 images done)
+
+======================================================================
+[144/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (144/191 images done)
+
+======================================================================
+[145/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (145/191 images done)
+
+======================================================================
+[146/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (146/191 images done)
+
+======================================================================
+[147/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (147/191 images done)
+
+======================================================================
+[148/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (148/191 images done)
+
+======================================================================
+[149/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (149/191 images done)
+
+======================================================================
+[150/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (150/191 images done)
+
+======================================================================
+[151/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (151/191 images done)
+
+======================================================================
+[152/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (152/191 images done)
+
+======================================================================
+[153/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (153/191 images done)
+
+======================================================================
+[154/191] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.60 sec  peak_allocated=17.370 GB  peak_reserved=17.534 GB
+  7936 -> 1024 tokens (compression=7.75x)  keep/tile=[33, 34]  dominant=869  contextual=155
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (154/191 images done)
+
+======================================================================
+[155/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (155/191 images done)
+
+======================================================================
+[156/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (156/191 images done)
+
+======================================================================
+[157/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (157/191 images done)
+
+======================================================================
+[158/191] Processing image...
+======================================================================
+  tiles = 22  raw_vis_tokens = 5632
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.50 sec  peak_allocated=17.369 GB  peak_reserved=17.534 GB
+  5632 -> 1024 tokens (compression=5.5x)  keep/tile=[46, 47]  dominant=870  contextual=154
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (158/191 images done)
+
+======================================================================
+[159/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (159/191 images done)
+
+======================================================================
+[160/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (160/191 images done)
+
+======================================================================
+[161/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (161/191 images done)
+
+======================================================================
+[162/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (162/191 images done)
+
+======================================================================
+[163/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.369 GB  peak_reserved=17.541 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 156.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (163/191 images done)
+
+======================================================================
+[164/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (164/191 images done)
+
+======================================================================
+[165/191] Processing image...
+======================================================================
+  tiles = 22  raw_vis_tokens = 5632
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.50 sec  peak_allocated=17.369 GB  peak_reserved=17.534 GB
+  5632 -> 1024 tokens (compression=5.5x)  keep/tile=[46, 47]  dominant=870  contextual=154
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (165/191 images done)
+
+======================================================================
+[166/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (166/191 images done)
+
+======================================================================
+[167/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (167/191 images done)
+
+======================================================================
+[168/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (168/191 images done)
+
+======================================================================
+[169/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (169/191 images done)
+
+======================================================================
+[170/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (170/191 images done)
+
+======================================================================
+[171/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (171/191 images done)
+
+======================================================================
+[172/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (172/191 images done)
+
+======================================================================
+[173/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.43 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  4096 -> 1024 tokens (compression=4.0x)  keep/tile=[64, 64]  dominant=864  contextual=160
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (173/191 images done)
+
+======================================================================
+[174/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (174/191 images done)
+
+======================================================================
+[175/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (175/191 images done)
+
+======================================================================
+[176/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (176/191 images done)
+
+======================================================================
+[177/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (177/191 images done)
+
+======================================================================
+[178/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.78 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  11776 -> 1024 tokens (compression=11.5x)  keep/tile=[22, 23]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (178/191 images done)
+
+======================================================================
+[179/191] Processing image...
+======================================================================
+  tiles = 29  raw_vis_tokens = 7424
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.58 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  7424 -> 1024 tokens (compression=7.25x)  keep/tile=[35, 36]  dominant=870  contextual=154
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (179/191 images done)
+
+======================================================================
+[180/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.77 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  11776 -> 1024 tokens (compression=11.5x)  keep/tile=[22, 23]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (180/191 images done)
+
+======================================================================
+[181/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (181/191 images done)
+
+======================================================================
+[182/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 154.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (182/191 images done)
+
+======================================================================
+[183/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.369 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (183/191 images done)
+
+======================================================================
+[184/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.40 sec  peak_allocated=17.368 GB  peak_reserved=17.534 GB
+  3328 -> 1024 tokens (compression=3.25x)  keep/tile=[78, 79]  dominant=868  contextual=156
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (184/191 images done)
+
+======================================================================
+[185/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (185/191 images done)
+
+======================================================================
+[186/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (186/191 images done)
+
+======================================================================
+[187/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.54 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (187/191 images done)
+
+======================================================================
+[188/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.368 GB  peak_reserved=17.532 GB
+  6400 -> 1024 tokens (compression=6.25x)  keep/tile=[40, 41]  dominant=874  contextual=150
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (188/191 images done)
+
+======================================================================
+[189/191] Processing image...
+======================================================================
+  tiles = 29  raw_vis_tokens = 7424
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.58 sec  peak_allocated=17.370 GB  peak_reserved=17.532 GB
+  7424 -> 1024 tokens (compression=7.25x)  keep/tile=[35, 36]  dominant=870  contextual=154
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (189/191 images done)
+
+======================================================================
+[190/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.72 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  10496 -> 1024 tokens (compression=10.25x)  keep/tile=[24, 25]  dominant=860  contextual=164
+  [KV cache, prompt-only] 155.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (190/191 images done)
+
+======================================================================
+[191/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[VisionZip] dominant + contextual per tile (total keep=1024) ...
+
+[visionzip_script_visionzip_generate] time=0.72 sec  peak_allocated=17.368 GB  peak_reserved=17.515 GB
+  10496 -> 1024 tokens (compression=10.25x)  keep/tile=[24, 25]  dominant=860  contextual=164
+  [KV cache, prompt-only] 155.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json updated (191/191 images done)
+
+All done. Total time: 165.18 s
+Results saved to results/runs/vstar/visionzip_b1024_InternVL3_5-8B.json

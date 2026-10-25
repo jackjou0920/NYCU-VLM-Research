@@ -1,0 +1,39 @@
+[load_vstar] 2 題（/home/jackjou/datasets/vstar_bench/test_questions.jsonl）
+[svma] budget=1024  K=4  m=2  S=5
+[svma_b1024] vstar: 2 題，從第 1 題開始 → results/smoke/suite/vstar/svma_b1024_InternVL3_5-8B.json
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 88.39it/s]
+model loaded in 6.4s, peak alloc 17.06 GB
+
+================================================================================
+[Image 0] detail=(4, 3) cover=(2, 1) budget=1024 S=5
+================================================================================
+[Image 0] coverage prior: m=2 +0.30s
+[Image 0] boundary S=5 (a=2, b=3): direct=[] window=[0, 1, 3, 10, 11] vit_encoded=7/14
+[Image 0] raw=14 tiles -> KV=4 tiles / 1024 tokens; dropped=10; max_resident=6 tiles
+[Image 0] selected_tile_indices=[0, 1]
+[Image 0] KV cache (prompt-only, analytical) = 155.8 MB (1108 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1024 S=5
+================================================================================
+[Image 1] coverage prior: m=2 +0.22s
+[Image 1] boundary S=5 (a=2, b=3): direct=[] window=[2, 12, 18, 19, 22] vit_encoded=7/26
+[Image 1] raw=26 tiles -> KV=4 tiles / 1024 tokens; dropped=22; max_resident=6 tiles
+[Image 1] selected_tile_indices=[12, 18]
+[Image 1] KV cache (prompt-only, analytical) = 155.7 MB (1107 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.40 GB resting_end= 17.23 GB transient=+ 0.18 GB
+  Decode             peak= 17.24 GB resting_end= 17.23 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.40 GB
+
+[svma_b1024 [1~2/2]] time=3.75 sec  peak_allocated=17.245 GB  peak_reserved=17.637 GB
+  Q: What is the material of the glove?
+  A: A
+  Q: What is the color of the dustpan?
+  A: C
+
+All done in 10.6s → results/smoke/suite/vstar/svma_b1024_InternVL3_5-8B.json

@@ -1,0 +1,18 @@
+[load_mme_realworld] lite: 2 題（/home/jackjou/datasets/MME-RealWorld/lite.json）
+[uncompressed] mme_rw_lite: 2 題，從第 1 題開始 → results/smoke/suite/mme_rw_lite/uncompressed_InternVL3_5-8B.json
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 92.99it/s]
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+model loaded in 6.1s, peak alloc 17.06 GB
+
+[uncompressed [1~1/2]] time=3.41 sec  peak_allocated=18.823 GB  peak_reserved=19.462 GB
+  Q: Where is the yellow crane in the picture?
+  A: A
+
+[uncompressed [2~2/2]] time=1.66 sec  peak_allocated=18.001 GB  peak_reserved=18.428 GB
+  Q: Where is the tennis court located in this picture?
+  A: B
+
+All done in 13.6s → results/smoke/suite/mme_rw_lite/uncompressed_InternVL3_5-8B.json

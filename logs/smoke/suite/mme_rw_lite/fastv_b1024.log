@@ -1,0 +1,45 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 87.12it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.60 s
+[load_mme_realworld] lite: 2 題（/home/jackjou/datasets/MME-RealWorld/lite.json）
+Found 2 image(s) to process
+
+======================================================================
+[1/2] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=1.72 sec  peak_allocated=18.203 GB  peak_reserved=18.541 GB
+  6400 -> 1024 tokens (compression=6.25x)  debug_stats={'vis_len_before': 6400, 'vis_len_after': 1024, 'dropped': 5376}
+  [KV cache, prompt-only] 208.1 MB
+
+[FastV Answer]
+A
+
+[Saved] results/smoke/suite/mme_rw_lite/fastv_b1024_InternVL3_5-8B.json updated (0/2 images done)
+
+======================================================================
+[2/2] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=1.15 sec  peak_allocated=17.671 GB  peak_reserved=17.945 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 184.2 MB
+
+[FastV Answer]
+B
+
+[Saved] results/smoke/suite/mme_rw_lite/fastv_b1024_InternVL3_5-8B.json updated (0/2 images done)
+
+All done. Total time: 10.86 s
+Results saved to results/smoke/suite/mme_rw_lite/fastv_b1024_InternVL3_5-8B.json

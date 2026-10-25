@@ -5,6 +5,8 @@
 （預設 uncompressed）的配對差與 95% bootstrap CI —— 只在兩邊都有的題目上比，所以 n 不同的 run 也能比。
   分數：docvqa / infovqa 等 → ANLS（evaluate_anls.calculate_single_anls）
         hrbench* → CircularEval（4 種選項排列全對才算對，id // 4 一組）
+        mme_rw* / vstar / realworldqa → 選擇題 accuracy；realworldqa 的開放短答題（options 為空）
+                 照 lmms-eval：數字英文字轉阿拉伯數字、忽略大小寫與標點後完全比對
 
 用法：
   python summarize_results.py                                  # 所有 dataset
@@ -15,6 +17,7 @@
 from __future__ import annotations
 
 import os
+import re
 import csv
 import glob
 import json
@@ -31,9 +34,25 @@ def METRIC_OF(dataset: str) -> str:
     其他用 ANLS。"""
     if dataset.startswith("hrbench"):
         return "hrbench_circular"
-    if dataset.startswith("mme_rw"):
+    if dataset.startswith(("mme_rw", "vstar", "realworldqa")):
         return "mc_accuracy"
     return "anls"
+
+
+_NUM_WORDS = {w: str(i) for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten eleven twelve".split())}
+
+
+def norm_open(text: str) -> str:
+    """開放短答的正規化（lmms-eval realworldqa：NumberWordsToDigits + ignore_case + ignore_punctuation）。"""
+    words = re.sub(r"[^\w\s]", " ", str(text).strip().lower()).split()
+    return " ".join(_NUM_WORDS.get(w, w) for w in words)
+
+
+def mc_or_open_correct(pred: str, m: dict) -> float:
+    if m.get("options"):
+        return float(canon_pred(pred, m, "letter") == gold_letter(m))
+    return float(norm_open(pred) == norm_open(m["answer"]))
 
 
 def unit_scores(data: dict, tag: str, metric: str, num_images: int | None) -> dict:
@@ -43,7 +62,7 @@ def unit_scores(data: dict, tag: str, metric: str, num_images: int | None) -> di
     if metric == "mc_accuracy":     # 每題一個 unit，輸出字母 == 正解字母
         if num_images and num_images > 0:
             n = min(n, num_images)
-        return {i: float(canon_pred(str(preds[i]), meta[i], "letter") == gold_letter(meta[i])) for i in range(n)}
+        return {i: mc_or_open_correct(str(preds[i]), meta[i]) for i in range(n)}
     if metric == "anls":
         if num_images and num_images > 0:
             n = min(n, num_images)
@@ -130,7 +149,8 @@ def main():
                 ttft = "%.2fs" % r["ttft_s"]
             if r["kv_cache_mb"]:
                 kv = "%.0f" % r["kv_cache_mb"]
-            print(f"  {r['tag']:22s} {r['n_units']:5d} {r['score']:7.2f} {delta:>7s} {ci:>17s} {ttft:>7s} {kv:>8s}")
+            score = "-" if r["score"] is None else f"{r['score']:.2f}"     # CircularEval 湊不滿 4 題一組時沒有分數
+            print(f"  {r['tag']:22s} {r['n_units']:5d} {score:>7s} {delta:>7s} {ci:>17s} {ttft:>7s} {kv:>8s}")
     if all_rows:
         out = os.path.join(args.root, "summary.csv")
         with open(out, "w", newline="", encoding="utf-8") as f:

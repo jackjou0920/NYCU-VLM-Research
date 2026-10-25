@@ -1,0 +1,27 @@
+== test suite：16 個工作，GPUS=0 1 ==
+[10-25 15:20] GPU0 realworldqa uncompressed 
+[10-25 15:20] GPU1 realworldqa svma 1024
+[10-25 15:23] GPU0 realworldqa svma 1536
+[10-25 15:23] GPU1 realworldqa svma 2048
+[10-25 15:26] GPU0 realworldqa fastv 1024
+[10-25 15:26] GPU0 realworldqa fastv 2048
+[10-25 15:27] GPU0 realworldqa visionzip 1536
+[10-25 15:27] GPU0 realworldqa ifprune 1024
+[10-25 15:27] GPU0 realworldqa ifprune 2048
+[10-25 15:27] GPU1 realworldqa fastv 1536
+[10-25 15:30] GPU1 realworldqa visionzip 1024
+[10-25 15:30] GPU0 realworldqa sparsevlm 1536
+  realworldqa sparsevlm b1536：校準 λ=0.1922
+[10-25 15:32] GPU1 realworldqa visionzip 2048
+[10-25 15:35] GPU1 realworldqa ifprune 1536
+[10-25 15:38] GPU1 realworldqa sparsevlm 1024
+  realworldqa sparsevlm b1024：校準 λ=0.1922
+[10-25 15:42] GPU1 realworldqa sparsevlm 2048
+  realworldqa sparsevlm b2048：校準 λ=0.1922
+
+[realworldqa]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=2048    200   67.50   +1.00      [-1.5, +3.5]                 
+
+[saved] results/runs/summary.csv
+[10-25 15:45] done

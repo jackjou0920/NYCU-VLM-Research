@@ -1,0 +1,22 @@
+[load_docvqa] lmms-lab-encoder/DocVQA:validation (prompt_mode=short) -> kept 5349, skipped 0 (no image)
+[svma] budget=5120  K=20  m=10  S=3
+[svma_b5120] docvqa: 5349 題，從第 5350 題開始 → results/runs/docvqa/svma_b5120_InternVL3_5-8B.json
+已全部完成，跳過
+-> 0
+svma_b5120 5349
+
+column                                           length
+--------------------------------------------------------
+<ground truth> JSON meta answers (aligned, from load_docvqa)     5349
+svma_b5120                                         5349
+
+ground truth = JSON meta answers (aligned, from load_docvqa)   |   metric = official ANLS   |   threshold = 0.5   |   baseline = svma_b5120
+paired bootstrap: n_boot=2000, seed=0   (* = 95% CI 不含 0，相對 baseline 顯著)
+
+tag                                               n    ANLS%  exact%   zero%          ΔANLS% vs base (95% CI)
+----------------------------------------------------------------------------------------------------------------
+svma_b5120                                     5349    90.88    84.2     7.4                    —  (baseline)
+
+[saved] results/runs/docvqa/svma_b5120_InternVL3_5-8B.anls.csv  (5349 rows)
+
+[saved] results/runs/docvqa/svma_b5120_InternVL3_5-8B.summary.json  (1 rows)  <- plot_results.py 吃這個

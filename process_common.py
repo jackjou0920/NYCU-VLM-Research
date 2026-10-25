@@ -315,3 +315,77 @@ def get_image(d):
     Image.MAX_IMAGE_PIXELS = None          # remote sensing 圖超過 PIL 預設的 decompression-bomb 上限
     with Image.open(d["image_path"]) as im:
         return im.convert("RGB")
+
+
+VSTAR_ROOT = os.path.expanduser(os.environ.get("VSTAR_ROOT", "~/datasets/vstar_bench"))
+
+
+def load_vstar(num_image=None, root=VSTAR_ROOT):
+    """V* Bench（craigwu/vstar_bench）：direct_attributes 115 題 + relative_position 76 題 = 191 題，選擇題。
+    題目直接用官方 test_questions.jsonl 的 text（已含選項與 "Answer with the option's letter ..." 作答指示）。
+    下載：huggingface_hub.snapshot_download('craigwu/vstar_bench', repo_type='dataset', local_dir=VSTAR_ROOT,
+          allow_patterns=['test_questions.jsonl', 'direct_attributes/*', 'relative_position/*'])
+    圖片延遲開檔（get_image），meta：answer = 正解字母、options = 選項文字、category = 子類別。"""
+    path = os.path.join(root, "test_questions.jsonl")
+    if not os.path.exists(path):
+        raise SystemExit(f"找不到 {path}，請先下載 V* Bench（見 load_vstar docstring）")
+    items = [json.loads(l) for l in open(path)]
+    if num_image is not None and num_image != -1:
+        items = items[:int(num_image)]
+    samples = []
+    for d in items:
+        options = [ln.strip()[3:].strip() for ln in d["text"].splitlines()
+                   if len(ln.strip()) > 3 and ln.strip()[0] == "(" and ln.strip()[2] == ")"]
+        samples.append({
+            "question": d["text"],
+            "image_path": os.path.join(root, d["image"]),
+            "answer": str(d["label"]).strip(),
+            "answer_text": "",
+            "options": options,
+            "question_type": "multiple_choice",
+            "category": d["category"],
+            "id": str(d["question_id"]),
+        })
+    print(f"[load_vstar] {len(samples)} 題（{path}）")
+    return samples
+
+
+RWQA_ROOT = os.path.expanduser(os.environ.get("RWQA_ROOT", "~/datasets/RealWorldQA"))
+
+
+def load_realworldqa(num_image=None, root=RWQA_ROOT):
+    """RealWorldQA（xai-org/RealWorldQA，test 765 題）：選擇題 438 題 + 開放短答 327 題（Yes/No/數字）。
+    題目直接用官方 question（已含選項與作答指示："...only the letter of the correct option..." 或
+    "...a single word or number."）。第一次呼叫時把圖存到 root/imgs/<idx>.png、題目存成 questions.json，
+    之後圖片延遲開檔（get_image）。
+    meta：選擇題 answer = 正解字母、options = 選項文字、question_type = "multiple_choice"；
+          開放題 answer = 正解文字、options = []、question_type = "open"（summarize_results.py 用正規化後完全比對）。"""
+    path = os.path.join(root, "questions.json")
+    if not os.path.exists(path):
+        os.makedirs(os.path.join(root, "imgs"), exist_ok=True)
+        ds = load_dataset("xai-org/RealWorldQA", split="test")
+        items = []
+        for i, d in enumerate(ds):
+            rel = f"imgs/{i:04d}.png"
+            d["image"].convert("RGB").save(os.path.join(root, rel))
+            items.append({"id": str(i), "question": d["question"], "answer": str(d["answer"]).strip(), "image": rel})
+        json.dump(items, open(path, "w"), ensure_ascii=False, indent=1)
+    items = json.load(open(path))
+    if num_image is not None and num_image != -1:
+        items = items[:int(num_image)]
+    samples = []
+    for d in items:
+        options = [ln.strip()[2:].strip() for ln in d["question"].splitlines()
+                   if len(ln.strip()) > 2 and ln.strip()[0] in "ABCDEF" and ln.strip()[1] in ".:"]
+        samples.append({
+            "question": d["question"],
+            "image_path": os.path.join(root, d["image"]),
+            "answer": d["answer"],
+            "answer_text": "",
+            "options": options,
+            "question_type": "multiple_choice" if options else "open",
+            "category": "multiple_choice" if options else "open",
+            "id": d["id"],
+        })
+    print(f"[load_realworldqa] {len(samples)} 題（{path}）")
+    return samples

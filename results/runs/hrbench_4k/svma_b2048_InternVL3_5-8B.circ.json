@@ -1,0 +1,31 @@
+{
+  "source_json": "results/runs/hrbench_4k/svma_b2048_InternVL3_5-8B.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "svma_b2048",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "svma_b2048",
+      "n_groups": 200,
+      "circ_acc": 56.99999999999999,
+      "vanilla_acc": 68.125,
+      "by_category": {
+        "cross": 42.0,
+        "single": 72.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}

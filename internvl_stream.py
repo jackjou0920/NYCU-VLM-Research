@@ -1,14 +1,16 @@
 # ══════════════════════════════════════════════════════════════════════════════
-# SVMA（InternVL）—— 串流 tile 選擇 + 有界 KV，單檔版
+# FoveaTile（InternVL）—— Look Before You Encode: Foveated Tile Streaming for Resolution-Independent
+# VLM Inference。串流 tile 選擇 + 有界 KV，單檔版。
+#   程式內部的 key 仍是 svma（--mode svma、結果 tag svma_b<B>、svma_config.py），跟既有結果檔與腳本相容。
 #
-# 多尺度：budget K 塊 tile = m 塊低解析度全圖覆蓋（fill_grid）+ K - m 塊原解析度細節 tile（--coverage_tiles m；
-#   m = 1 時覆蓋 = 官方縮圖，就是原本的 SVMA）。
+# 兩種尺度：budget K 塊 tile = m 塊 Coverage Tiles（低解析度全圖，fill_grid）+ K - m 塊 Detail Tiles
+#   （官方 dynamic tiling、接近原解析度）（--coverage_tiles m；m = 1 時覆蓋 = 官方縮圖，就是 v0）。
 # 流程（每張圖）：text_before prefill → 覆蓋 tile ViT + prior（一次短 forward）→ 邊界打分選細節 tile
 #   （只對 S 塊邊界 tile 跑 q_attn）→ 細節 tile 依空間順序、覆蓋 tile 在最後寫 KV → text_after + decode。
 #   見 InternVLAdapter.coverage_prior / stream_image_to_kv_cascade。
 #
 # 用法（一次跑一個 dataset × mode × budget，結果存 results/runs/<dataset>/<tag>_<model>.json，可中斷續跑）：
-#   python internvl_stream.py --dataset docvqa --budget 1024                       # SVMA
+#   python internvl_stream.py --dataset docvqa --budget 1024                       # FoveaTile
 #   python internvl_stream.py --dataset hrbench_8k --mode uncompressed
 #   python internvl_stream.py --dataset infovqa --mode lowres_fill --budget 2048 --num_images 500
 #   批次跑多個 dataset / budget + 評分：run_svma.sh；彙整成表：summarize_results.py
@@ -24,7 +26,9 @@
 from __future__ import annotations
 
 import os
+import re
 import gc
+import math
 import heapq
 import time
 import json
@@ -36,7 +40,8 @@ import torch
 import torch.nn.functional as F
 
 from internvl_preprocess import build_model, load_image_tiles, load_image_tiles_fill, load_image_multiscale
-from svma_config import default_coverage_tiles, default_qattn_tiles, split_slots, DEFAULT_BUDGET
+from svma_config import (default_coverage_tiles, default_qattn_tiles, split_slots, grid_qattn_tiles, DEFAULT_BUDGET,
+                         QUERY_MODE, TILE_AGG, PRIOR_HEADS, PRIOR_BASE, PRIOR_BASE_MODE, PRIOR_HEADS_A1)
 from process_common import get_image
 
 
@@ -112,7 +117,7 @@ def estimate_kv_cache_mb(model, seq_lens_per_layer: list[int], batch: int = 1) -
     公式：2(K+V) * batch * num_kv_heads * head_dim * seq_len * dtype_bytes，
     每一層各自算再加總。seq_lens_per_layer 吃一個 per-layer 的 list 而不是
     單一數字，是因為像 SparseVLM 那種在 LLM 內部漸進式剪枝的方法，不同層
-    的 KV cache 長度不一樣；SVMA 在進 LLM 之前就把 token
+    的 KV cache 長度不一樣；FoveaTile 在進 LLM 之前就把 token
     數固定了，所有層長度相同，呼叫端傳 [final_size] * num_layers 即可。
     """
     cfg = model.language_model.config
@@ -170,6 +175,102 @@ THUMB_ATTN_LAYERS = (21, 28)
 #   診斷（InfoVQA b1024 177 張，所有 tile 都當候選）：oracle 最佳 tile 被選進前 K-1 的比例
 #     L12 30.5% / L20 36.2% / ctx+L12 34.5% / ctx+L20 44.1%（隨機約 12%）。tag 後綴 _qa20ctx。
 QATTN_LAYER = 20
+PRIOR_BASE_EPS = 1e-4      # A2 ratio 的 ε（patch attention 正規化後約 1/(m*256) ≈ 1e-3）
+GENERIC_QUESTION = "Describe this image."   # A2 "gen" 基準用的通用問題
+
+# ── 打分 query 與 tile 聚合（svma_config.QUERY_MODE / TILE_AGG）──
+_OPT_LINE = re.compile(r"^\(?([A-F])[.):]\s*(.*)$")
+_INSTR_PREFIXES = ("Answer the question using", "Answer with the option", "Please answer directly",
+                   "Select the best answer", "The choices are listed below", "The best answer is")
+
+
+def split_question(question: str) -> tuple[str, list[str]]:
+    """題目文字 → (問題主幹, 選項文字)。各 dataset 的 prompt 都是「主幹 → 選項行（A. / (A) / A:）→ 作答指示」，
+    主幹 = 第一個選項行或作答指示之前的部分；沒有選項時 options = []。"""
+    stem, opts, after = [], [], False
+    for ln in question.splitlines():
+        s = ln.strip()
+        m = _OPT_LINE.match(s)
+        if m and stem:
+            after = True
+            opts.append(m.group(2).strip())
+        elif s.startswith(_INSTR_PREFIXES):
+            after = True
+        elif not after:
+            stem.append(ln)
+    return ("\n".join(stem).strip() or question.strip()), opts
+
+
+_OPT_PARTS = re.compile(r"^(\s*\(?)([A-F])([.):]\s*)(.*)$")
+
+
+def sort_options(question: str) -> str:
+    """把題目裡的選項文字依字母排序後放回原本的選項行（字母、格式、作答指示都不動）→ 跟原本選項順序無關的題目。
+    沒有選項時原樣回傳。判斷哪些行是選項的規則同 split_question。"""
+    lines = question.splitlines()
+    idx, seen_stem, after = [], False, False
+    for i, ln in enumerate(lines):
+        s = ln.strip()
+        if _OPT_LINE.match(s) and seen_stem:
+            after = True
+            idx.append(i)
+        elif s.startswith(_INSTR_PREFIXES):
+            after = True
+        elif not after and s:
+            seen_stem = True
+    if not idx:
+        return question
+    parts = [_OPT_PARTS.match(lines[i]).groups() for i in idx]
+    for i, (pre, letter, sep, _), text in zip(idx, parts, sorted(p[3].strip() for p in parts)):
+        lines[i] = f"{pre}{letter}{sep}{text}"
+    return "\n".join(lines)
+
+
+def scoring_query(tokenizer, model, question: str, n_tiles: int, text_after: str, mode: str):
+    """回傳 (打分用的 text_after, query 列範圍 (lo, hi) 或 None = 全部)。列 = text_after 的 token 位置。
+    "all" 原樣回傳；"stem" 用原本的 text_after、只取主幹的 token；"stemopt" 另組 [主幹 + 排序後選項] 的 prompt；
+    "sortopt" 選項排序後重組整個 prompt、query 用全部列（沒有選項時 = "all"）。"""
+    if mode == "all":
+        return text_after, None
+    if mode == "sortopt":
+        q2 = sort_options(question)
+        if q2 == question:
+            return text_after, None
+        return split_prompt_at_vision(build_prompt(tokenizer, model, q2, n_tiles), tokenizer)[1], None
+    stem, opts = split_question(question)
+    if mode == "stem":
+        ta, target = text_after, stem
+    elif mode == "stemopt":
+        target = stem + ("\n" + "\n".join(sorted(opts)) if opts else "")
+        ta = split_prompt_at_vision(build_prompt(tokenizer, model, target, n_tiles), tokenizer)[1]
+    else:
+        raise ValueError(f"unknown query mode {mode!r}")
+    c0 = ta.find(target)
+    if c0 < 0:
+        print(f"[scoring_query] 在 text_after 找不到 query，改用全部列：{target[:60]!r}")
+        return ta, None
+    c1 = c0 + len(target)
+    # InternVL 的 tokenizer 是 Python 版、沒有 offset mapping：逐步 decode 前綴得到每個 token 的字元結尾
+    ids = tokenizer([ta]).input_ids[0]
+    ends = [len(tokenizer.decode(ids[:i + 1], skip_special_tokens=False, clean_up_tokenization_spaces=False))
+            for i in range(len(ids))]
+    if not ends or ends[-1] != len(ta):
+        print("[scoring_query] decode 回來的長度跟 text_after 不同，改用全部列")
+        return ta, None
+    idx = [i for i, e in enumerate(ends) if e > c0 and (ends[i - 1] if i else 0) < c1]
+    return ta, (idx[0], idx[-1] + 1)
+
+
+def agg_tile(vals: torch.Tensor, agg: str) -> torch.Tensor:
+    """一塊 tile 內各 patch / token 的分數（最後一維）→ tile 分數："mean" / "max" / "top<f>"（前 f 比例取平均）。"""
+    if agg == "mean":
+        return vals.mean(dim=-1)
+    if agg == "max":
+        return vals.max(dim=-1).values
+    if agg.startswith("top"):
+        k = max(1, math.ceil(float(agg[3:]) * vals.shape[-1]))
+        return vals.topk(k, dim=-1).values.mean(dim=-1)
+    raise ValueError(f"unknown tile agg {agg!r}")
 
 VIT_BATCH = 4               # ViT micro-batch（系統參數，影響 peak memory / TTFT，不影響選擇結果）
 CHUNK_SIZE = 1024           # LLM chunked-prefill 大小（同上）
@@ -323,8 +424,9 @@ def _repeat_kv(x: torch.Tensor, n_rep: int) -> torch.Tensor:
     return x[:, :, None, :, :].expand(b, h, n_rep, s, d).reshape(b, h * n_rep, s, d)
 
 
-def _head_mean_attn_rows(decoder_layer, hidden_states, position_embeddings, q_start: int) -> torch.Tensor:
-    """這一層 attention 的第 q_start..L-1 列（head 平均），回傳 [B, nq, L]。"""
+def _head_mean_attn_rows(decoder_layer, hidden_states, position_embeddings, q_start: int,
+                         heads: list[int] | None = None) -> torch.Tensor:
+    """這一層 attention 的第 q_start..L-1 列（head 平均；heads 給定時只平均這些 head），回傳 [B, nq, L]。"""
 
     sa = decoder_layer.self_attn
     normed = decoder_layer.input_layernorm(hidden_states)
@@ -339,7 +441,8 @@ def _head_mean_attn_rows(decoder_layer, hidden_states, position_embeddings, q_st
     logits = (q.float() @ k.float().transpose(-2, -1)) * sa.scaling          # [B, H, nq, L]
     q_pos = torch.arange(q_start, L, device=logits.device).view(1, 1, -1, 1)
     k_pos = torch.arange(L, device=logits.device).view(1, 1, 1, -1)
-    return logits.masked_fill(k_pos > q_pos, float("-inf")).softmax(dim=-1).mean(dim=1)
+    att = logits.masked_fill(k_pos > q_pos, float("-inf")).softmax(dim=-1)
+    return att.mean(dim=1) if heads is None else att[:, heads].mean(dim=1)
 
 
 def _layer_prefix_kv(decoder_layer, hidden_states, position_embeddings, length: int):
@@ -359,7 +462,8 @@ def _layer_prefix_kv(decoder_layer, hidden_states, position_embeddings, length: 
 
 @torch.no_grad()
 def prefix_attention_rows(model, h: torch.Tensor, q_start: int, layers,
-                          kv_sink: list | None = None, kv_len: int = 0, kv_upto: int = 0) -> dict:
+                          kv_sink: list | None = None, kv_len: int = 0, kv_upto: int = 0,
+                          head_sel: dict | None = None) -> dict:
     """h: [B, L, D] inputs_embeds（position 從 0 起）。跑第 1..max(layers) 層，對每個
     l ∈ layers（1-indexed）回傳該層 attention 的 q_start.. 列（head 平均）{l: [B, nq, L]}。
     第 max(layers) 層只算 q/k，不跑它的 attention 輸出與 MLP；更後面的層完全不跑。
@@ -382,7 +486,8 @@ def prefix_attention_rows(model, h: torch.Tensor, q_start: int, layers,
     out = {}
     for li, decoder_layer in enumerate(lm_model.layers[:stop], start=1):
         if li in layers:
-            out[li] = _head_mean_attn_rows(decoder_layer, h, pos_emb, q_start)
+            out[li] = _head_mean_attn_rows(decoder_layer, h, pos_emb, q_start,
+                                           head_sel.get(li) if head_sel else None)
         if kv_sink is not None and li <= kv_upto:
             kv_sink.append(_layer_prefix_kv(decoder_layer, h, pos_emb, kv_len))
         if li < stop:
@@ -440,7 +545,7 @@ def _head_mean_attn_rows_with_prefix(decoder_layer, h, position_embeddings, pref
 def _qattn_prefix_core(lm_model, layer: int, P: int, tile_tokens: torch.Tensor, emb_after: torch.Tensor,
                        prefix_k: tuple, prefix_v: tuple) -> torch.Tensor:
     """q_attn（含 thumbnail context）的純張量核心。
-    回傳 [B, A]：text_after 每個位置（A 個）對 tile 256 token 的 attention 總和（head 平均）。"""
+    回傳 [B, A, n_tok]：text_after 每個位置（A 個）對 tile 每個 token 的 attention（head 平均）。"""
     B, n_tok, _ = tile_tokens.shape
     h = torch.cat([tile_tokens.to(emb_after.dtype), emb_after.expand(B, -1, -1)], dim=1)
     T = h.shape[1]
@@ -449,23 +554,29 @@ def _qattn_prefix_core(lm_model, layer: int, P: int, tile_tokens: torch.Tensor, 
     for li in range(layer - 1):
         h = _layer_forward_with_prefix(lm_model.layers[li], h, pos_emb, prefix_k[li], prefix_v[li])
     rows = _head_mean_attn_rows_with_prefix(lm_model.layers[layer - 1], h, pos_emb, prefix_k[layer - 1], n_tok)
-    return rows[..., P: P + n_tok].sum(dim=-1)
+    return rows[..., P: P + n_tok]
 
 
 @torch.no_grad()
 def qattn_scores_with_prefix(model, tile_tokens: torch.Tensor, prefix_kv: dict, emb_after: torch.Tensor,
-                             layer: int = QATTN_LAYER) -> torch.Tensor:
+                             layer: int = QATTN_LAYER, rows: tuple | None = None, agg: str = "mean") -> torch.Tensor:
     """q_attn（含覆蓋 tile context）：context = [text_before][覆蓋 tile][tile][text_after]，
     [text_before][覆蓋 tile] 用 prefix_kv（coverage_prior 存的 {"len": P, "kv": [(K, V), ...]}，
     第 1..layer 層）不重算；只對 [tile][text_after] 跑前 layer-1 層 + 第 layer 層的 q/k。
-    數學上等於整段直接 forward。回傳 [B]。"""
+    數學上等於整段直接 forward。rows = 當 query 的 text_after 列範圍 (lo, hi)（None = 全部）；
+    agg = tile 內 token 的聚合（"mean" = v1.0：每列對 tile 的 attention 總和再對列平均）。回傳 [B]。"""
     lm_model = model.language_model.model
     P, kv = int(prefix_kv["len"]), prefix_kv["kv"]
     if len(kv) < layer:
         raise ValueError(f"prefix_kv 只有 {len(kv)} 層，q_attn 要用到第 {layer} 層")
     ks = tuple(k for k, _ in kv[:layer])
     vs = tuple(v for _, v in kv[:layer])
-    return _qattn_prefix_core(lm_model, layer, P, tile_tokens, emb_after, ks, vs).mean(dim=-1).float()
+    att = _qattn_prefix_core(lm_model, layer, P, tile_tokens, emb_after, ks, vs)       # [B, A, n_tok]
+    if rows is not None:
+        att = att[:, rows[0]: rows[1]]
+    if agg == "mean":                       # v1.0 的運算順序（token 總和 → 列平均）
+        return att.sum(dim=-1).mean(dim=-1).float()
+    return agg_tile(att.mean(dim=1), agg).float()
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -519,7 +630,9 @@ class InternVLAdapter:
 
     @torch.no_grad()
     def coverage_prior(self, model, cover_tokens, cover_grid, detail_grid, text_before, text_after,
-                       capture_kv_upto: int | None = None):
+                       capture_kv_upto: int | None = None, rows: tuple | None = None, agg: str = "mean",
+                       heads: tuple | None = None, base: str | None = None, base_mode: str = "ratio",
+                       base_text_after: str | None = None):
         """覆蓋 tile 跑一次 LLM 前段 forward：[text_before][m 塊覆蓋 tile][text_after]，取第
         THUMB_ATTN_LAYERS=(lo, hi) 層（1-indexed、含頭尾）text_after 所有位置對 m*256 個覆蓋 patch 的
         attention → 每個 patch 依它在全圖的位置，累積到它中心落在的細節 tile → 每塊細節 tile 一個 prior。
@@ -529,13 +642,18 @@ class InternVLAdapter:
         回傳 (prior, prefix_kv)：prior = {細節 tile index -> [0,1]}；capture_kv_upto=L 時 prefix_kv =
         [text_before][覆蓋 tile] 第 1..L 層的 {"len": P, "kv": [(K, V), ...]}，給 q_attn 重用，否則 None。
 
+        rows：當 query 的 text_after 列範圍 (lo, hi)（None = 全部，v1.0）；agg：一塊細節 tile 內 patch 的聚合
+        （"mean" = v1.0，見 agg_tile）。
+        heads：[(layer, head)]，只用這些 head（A1）；None = THUMB_ATTN_LAYERS 全部 head（v1.0）。
+        base：問題無關基準（A2）："nl" = text_after 第一列（不多算）、"gen" = base_text_after（通用問題）
+        再跑一次 forward；base_mode "ratio" = p_q / (p_base + ε)、"sub" = p_q - p_base（p 對覆蓋 patch 正規化）。
         成本：一次 forward，長度 ≈ len(text_before) + m*256 + len(text_after)，只跑到第 hi 層；
         跟細節 tile 總數無關；attention 只手算需要的列（不切 eager、不存 [H, L, L]）。
         """
         m, n_patch, _ = cover_tokens.shape
         side = int(round(n_patch ** 0.5))                                 # 16
         cc, cr = cover_grid
-        cols, rows = detail_grid
+        cols, n_rows = detail_grid
         span = m * n_patch
 
         # 1) text_before + 覆蓋 tile + text_after 的 inputs_embeds
@@ -550,36 +668,60 @@ class InternVLAdapter:
 
         # 2) 第 lo..hi 層、text_after 對覆蓋 patch 的 attention，平均 row/layer（head 已平均）
         n_layers = len(model.language_model.model.layers)
-        lo, hi = THUMB_ATTN_LAYERS[0], min(THUMB_ATTN_LAYERS[1], n_layers)
+        if heads is None:
+            lo, hi = THUMB_ATTN_LAYERS[0], min(THUMB_ATTN_LAYERS[1], n_layers)
+            layer_list, head_sel, w = list(range(lo, hi + 1)), None, None
+        else:
+            head_sel = {}
+            for l, hh in heads:
+                head_sel.setdefault(int(l), []).append(int(hh))
+            layer_list = sorted(head_sel)
+            w = [len(head_sel[l]) / len(heads) for l in layer_list]          # 每個 (layer, head) 等權
         kv_sink = [] if capture_kv_upto else None
-        per_layer = prefix_attention_rows(model, inp, q_start, range(lo, hi + 1),
+        per_layer = prefix_attention_rows(model, inp, q_start, layer_list,
                                           kv_sink=kv_sink, kv_len=q_start,
-                                          kv_upto=int(capture_kv_upto or 0))
+                                          kv_upto=int(capture_kv_upto or 0), head_sel=head_sel)
         prefix_kv = {"len": q_start, "kv": kv_sink} if kv_sink is not None else None
-        sal = torch.stack([
-            per_layer[l][0, :, span_start: q_start].mean(dim=0)                  # [m * n_patch]
-            for l in range(lo, hi + 1)
-        ], dim=0).mean(dim=0)
+        r0, r1 = rows if rows is not None else (0, None)
+
+        def _combine(pl, rsl):
+            x = torch.stack([pl[l][0, rsl, span_start: q_start].mean(dim=0) for l in layer_list], dim=0)
+            return x.mean(dim=0) if w is None else (x * torch.tensor(w, device=x.device).unsqueeze(1)).sum(dim=0)
+
+        sal = _combine(per_layer, slice(r0, r1))                               # [m * n_patch]
+        if base is not None:
+            if base == "nl":
+                sb = _combine(per_layer, slice(0, 1))
+            elif base == "gen":
+                eg = emb_layer(self.tokenizer([base_text_after], return_tensors="pt").input_ids.to(DEVICE))
+                ig = torch.cat([emb_b, cover_tokens.reshape(1, span, -1), eg], dim=1)
+                pg = prefix_attention_rows(model, ig, q_start, layer_list, head_sel=head_sel)
+                sb = _combine(pg, slice(0, None))
+                del pg, ig, eg
+            else:
+                raise ValueError(f"unknown prior base {base!r}")
+            p, pb = sal / sal.sum(), sb / sb.sum()
+            sal = p / (pb + PRIOR_BASE_EPS) if base_mode == "ratio" else p - pb
         del per_layer, inp, emb_b, emb_a
         sal = (sal - sal.min()) / (sal.max() - sal.min() + 1e-6)
         sal = sal.reshape(m, side, side).cpu()                                   # 每塊 [16, 16] row-major
 
         # 3) 每個覆蓋 patch 的中心（全圖座標）落在哪塊細節 tile → 累積該 tile 的 saliency
-        acc = [0.0] * (cols * rows)
-        cnt = [0] * (cols * rows)
+        vals = [[] for _ in range(cols * n_rows)]
         for t in range(m):
             tr, tc = divmod(t, cc)
             for pr in range(side):
                 for pc in range(side):
                     gc = min(cols - 1, int((tc * side + pc + 0.5) / (cc * side) * cols))
-                    gr = min(rows - 1, int((tr * side + pr + 0.5) / (cr * side) * rows))
-                    k = gr * cols + gc
-                    acc[k] += float(sal[t, pr, pc])
-                    cnt[k] += 1
-        prior = [acc[k] / cnt[k] if cnt[k] else 0.0 for k in range(cols * rows)]
+                    gr = min(n_rows - 1, int((tr * side + pr + 0.5) / (cr * side) * n_rows))
+                    vals[gr * cols + gc].append(float(sal[t, pr, pc]))
+        if agg == "mean":                   # v1.0 的運算順序（逐一累加 / 個數）
+            prior = [sum(v) / len(v) if v else 0.0 for v in vals]
+        else:
+            prior = [float(agg_tile(torch.tensor(v), agg)) if v else 0.0 for v in vals]
         lo, hi = min(prior), max(prior)
         prior = [(p - lo) / (hi - lo + 1e-6) for p in prior]                    # 再正規化到 [0,1]
-        return {k: prior[k] for k in range(cols * rows)}, prefix_kv
+        return {k: prior[k] for k in range(cols * n_rows)}, prefix_kv
 
     @torch.no_grad()
     def _commit_tiles(self, model, selected, chunk_size, past_key_values, running_mask):
@@ -635,9 +777,11 @@ class InternVLAdapter:
         running_mask,
         prefix_kv=None,
         dtype=torch.bfloat16,
+        score_rows=None,
+        tile_agg="mean",
     ):
         """多尺度 tile 選擇：m 塊覆蓋 tile 一定保留，細節 tile 用 prior 粗排 → 邊界打分選 K - m 塊。
-        仍是 streaming、tile 級選擇、不加模型。m = 1 時就是原本的 SVMA（覆蓋 tile = 縮圖）。
+        仍是 streaming、tile 級選擇、不加模型。m = 1 時就是 v0（覆蓋 tile = 縮圖）。
 
         K = budget // 256，m = cover_tokens.shape[0]，細節名額 slots = K - m。S = qattn_tiles：
           a = min(slots, S // 2)，b = S - a（svma_config.split_slots）
@@ -653,7 +797,8 @@ class InternVLAdapter:
         常駐視覺 token 上限 = slots + VIT_BATCH 塊細節 tile + m 塊覆蓋 tile。
 
         q_attn 的打分 context = [text_before][覆蓋 tile][tile][text_after]；prefix_kv = coverage_prior
-        存的前綴 KV，沒給就在這裡補算（多一個短 forward）。
+        存的前綴 KV，沒給就在這裡補算（多一個短 forward）。text_after 是打分用的版本（scoring_query），
+        score_rows / tile_agg 同 qattn_scores_with_prefix 的 rows / agg。
         """
         num_image_token = model.num_image_token
         K = budget // num_image_token
@@ -703,7 +848,8 @@ class InternVLAdapter:
                 sub = toks[js] if len(js) < len(idxs) else toks
                 if need_score:
                     t0 = _synced_time()
-                    sc = qattn_scores_with_prefix(model, sub, prefix_kv, emb_a).tolist()
+                    sc = qattn_scores_with_prefix(model, sub, prefix_kv, emb_a,
+                                                  rows=score_rows, agg=tile_agg).tolist()
                     t_qattn += _synced_time() - t0
                 else:
                     sc = [float(prior.get(idxs[j], 0.0)) for j in js]
@@ -736,6 +882,7 @@ class InternVLAdapter:
             "qattn_scored": len(window) if need_score else 0,   # 實際跑 q_attn 的 tile 數（FLOPs 用）
             "_t_detail_vit": t_vit, "_t_qattn": t_qattn, "_t_commit": t_commit,
             "boundary_a_b": [a, b],
+            "prior_ranked": ranked,                              # 細節 tile 依 prior 由高到低（診斷用，不影響選擇）
             "direct_kept": sorted(keep_direct),
             "window": sorted(window),
             "candidate_scores": {int(k): v for k, v in scores.items()},
@@ -760,7 +907,7 @@ class InternVLAdapter:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SVMA 主流程：text_before prefill → tile 選擇 + 寫 KV → text_after + decode
+# FoveaTile 主流程：text_before prefill → tile 選擇 + 寫 KV → text_after + decode
 # ══════════════════════════════════════════════════════════════════════════════
 def run_online_kv_with_memory_bank(
     model,
@@ -771,17 +918,33 @@ def run_online_kv_with_memory_bank(
     qattn_tiles: int | None = None,
     max_new_tokens: int = MAX_NEW_TOKENS,
     dtype: torch.dtype = torch.bfloat16,
+    qattn_grid_frac: float | None = None,
+    query_mode: str | None = None,
+    tile_agg: str | None = None,
+    prior_heads: str | None = None,
+    prior_base: str | None = None,
+    prior_base_mode: str | None = None,
 ):
-    """SVMA：每張圖 text_before prefill → 覆蓋 tile 的 ViT + prior → InternVLAdapter.stream_image_to_kv_cascade
+    """FoveaTile：每張圖 text_before prefill → 覆蓋 tile 的 ViT + prior → InternVLAdapter.stream_image_to_kv_cascade
     （邊界打分選細節 tile、細節 tile + 覆蓋 tile 依序寫 KV）→ text_after + greedy decode。
 
     inputs：每張圖一個 internvl_preprocess.load_image_multiscale 的 dict（cover / cover_grid / detail /
-    detail_grid）；覆蓋 tile 數 m = cover 的塊數，m = 1 就是原本的 SVMA。
+    detail_grid）；覆蓋 tile 數 m = cover 的塊數，m = 1 就是 v0。
     qattn_tiles：S；None = 每張圖依 budget 與實際覆蓋塊數自動（svma_config.default_qattn_tiles）。
     budget 是最終 visual token 上限，InternVL3.5-8B budget=2048 = 最多 8 塊 256-token tile（含 m 塊覆蓋 tile）。
     一次只處理一張圖（batch 內逐張），全部 tile token 從不同時存在。
+    query_mode / tile_agg：tile 打分的 query 與聚合；None = svma_config.QUERY_MODE / TILE_AGG。
+    prior_heads / prior_base / prior_base_mode：prior 的 A1 / A2（"v10" / "none" = 關閉）；None = svma_config 的預設。
     回傳 (answers, all_stats, timing)。
     """
+    query_mode = QUERY_MODE if query_mode is None else query_mode
+    tile_agg = TILE_AGG if tile_agg is None else tile_agg
+    prior_heads = (PRIOR_HEADS or "v10") if prior_heads is None else prior_heads
+    prior_base = (PRIOR_BASE or "none") if prior_base is None else prior_base
+    prior_base_mode = PRIOR_BASE_MODE if prior_base_mode is None else prior_base_mode
+    if prior_heads == "a1" and not PRIOR_HEADS_A1:
+        raise ValueError("svma_config.PRIOR_HEADS_A1 還沒填（先跑 analyze_prior_heads.py）")
+    head_list = tuple(PRIOR_HEADS_A1) if prior_heads == "a1" else None
     B = len(inputs)
     assert B == len(questions)
     tokenizer = adapter.get_tokenizer()
@@ -813,6 +976,8 @@ def run_online_kv_with_memory_bank(
         m = cover_px.shape[0]
         question = questions[b]
         S_b = default_qattn_tiles(budget, m) if qattn_tiles is None else qattn_tiles
+        # 3b 候選規則：打分窗口隨細節網格大小放大（預設關閉，見 svma_config.grid_qattn_tiles）
+        S_b = grid_qattn_tiles(budget // model.num_image_token - m, detail_px.shape[0], S_b, qattn_grid_frac)
         t_img = _synced_time()
 
         print("\n" + "=" * 80)
@@ -831,6 +996,11 @@ def run_online_kv_with_memory_bank(
             max(1, (budget + model.num_image_token - 1) // model.num_image_token),
         )
         text_before, text_after = split_prompt_at_vision(prompt, tokenizer)
+        base_after = (split_prompt_at_vision(build_prompt(tokenizer, model, GENERIC_QUESTION, 1), tokenizer)[1]
+                      if prior_base == "gen" else None)
+        score_after, score_rows = scoring_query(
+            tokenizer, model, question, max(1, (budget + model.num_image_token - 1) // model.num_image_token),
+            text_after, query_mode)
 
         tok_before = tokenizer(
             [text_before],
@@ -879,8 +1049,11 @@ def run_online_kv_with_memory_bank(
             t_ta = time.time()
             tile_prior, prefix_kv = adapter.coverage_prior(
                 model, cover_tokens, inputs[b]["cover_grid"], inputs[b]["detail_grid"],
-                text_before, text_after,
+                text_before, score_after,
                 capture_kv_upto=QATTN_LAYER if S_b > 0 else None,
+                rows=score_rows, agg=tile_agg, heads=head_list,
+                base=None if prior_base == "none" else prior_base, base_mode=prior_base_mode,
+                base_text_after=base_after,
             )
             t_prior = _synced_time() - t_ta
             print(f"[Image {b}] coverage prior: m={m} +{t_prior:.2f}s")
@@ -890,7 +1063,7 @@ def run_online_kv_with_memory_bank(
             detail_px=detail_px,
             cover_tokens=cover_tokens,
             text_before=text_before,
-            text_after=text_after,
+            text_after=score_after,
             tile_prior=tile_prior,
             budget=budget,
             qattn_tiles=S_b,
@@ -898,6 +1071,8 @@ def run_online_kv_with_memory_bank(
             running_mask=running_mask,
             prefix_kv=prefix_kv,
             dtype=dtype,
+            score_rows=score_rows,
+            tile_agg=tile_agg,
         )
         del cover_tokens, prefix_kv
         stats["prior_forward"] = tile_prior is not None
@@ -1108,6 +1283,16 @@ def _mme_rw_loader(split):
     return load
 
 
+def _load_vstar(n):
+    from process_common import load_vstar
+    return load_vstar(num_image=n)
+
+
+def _load_realworldqa(n):
+    from process_common import load_realworldqa
+    return load_realworldqa(num_image=n)
+
+
 def _hrbench_loader(split):
     def load(n):
         from process_common import load_hrbench
@@ -1123,6 +1308,8 @@ DATASETS = {
     "hrbench_8k": (_hrbench_loader("hrbench_8k"), "hrbench_circular"),
     "mme_rw_calib": (_mme_rw_loader("calib"), "mc_accuracy"),   # held-out 校準集（完整版扣掉 Lite，600 題）
     "mme_rw_lite":  (_mme_rw_loader("lite"), "mc_accuracy"),    # 測試集 MME-RealWorld-Lite（1,919 題）
+    "vstar":        (_load_vstar, "mc_accuracy"),                 # 測試集 V* Bench（191 題）
+    "realworldqa":  (_load_realworldqa, "mc_accuracy"),           # 測試集 RealWorldQA（765 題，選擇題 + 開放短答）
 }
 
 
@@ -1148,15 +1335,19 @@ def build_meta(datasets) -> list[dict]:
 
 # ══════════════════════════════════════════════════════════════════════════════
 # 一次跑一個 (dataset, mode, budget)：一個 JSON 只放一個 tag
-#   svma         ：多尺度 SVMA（m、S 都由 budget 決定，見 svma_config.py）
+#   svma         ：FoveaTile（m、S 都由 budget 決定，見 svma_config.py；key 沿用 svma）
 #   uncompressed ：官方 batch_chat，未壓縮（跟 budget 無關）
 #   lowres_fill  ：Low-Res-Fill baseline，整張圖縮成 <= K 塊 tile、不加縮圖，再走 batch_chat
 # ══════════════════════════════════════════════════════════════════════════════
 MODES = ("svma", "uncompressed", "lowres_fill")
 
 
-def run_tag(mode: str, budget: int, coverage_tiles: int | None = None, qattn_tiles: int | None = None) -> str:
-    """預設設定的 tag 是 svma_b<B>；有覆寫 m / S（校準掃描用）時加上 _m<m> / _S<S>。"""
+def run_tag(mode: str, budget: int, coverage_tiles: int | None = None, qattn_tiles: int | None = None,
+            qattn_grid_frac: float | None = None, query_mode: str | None = None, tile_agg: str | None = None,
+            prior_heads: str | None = None, prior_base: str | None = None, prior_base_mode: str | None = None) -> str:
+    """預設設定的 tag 是 svma_b<B>；有覆寫 m / S（校準掃描用）時加上 _m<m> / _S<S>。
+    打分 query / 聚合跟 v1.0（"all" / "mean"）不同時加上 _q<mode> / _agg<agg>（以 v1.0 為準，不看目前的預設，
+    這樣改預設之後也不會跟 v1.0 的結果檔撞名）。"""
     if mode == "uncompressed":
         return mode
     tag = f"{mode}_b{budget}"
@@ -1164,6 +1355,17 @@ def run_tag(mode: str, budget: int, coverage_tiles: int | None = None, qattn_til
         tag += f"_m{coverage_tiles}"
     if mode == "svma" and qattn_tiles is not None:
         tag += f"_S{qattn_tiles}"
+    if mode == "svma" and qattn_grid_frac:
+        tag += f"_gf{qattn_grid_frac:g}"
+    if mode == "svma" and (query_mode or QUERY_MODE) != "all":
+        tag += f"_q{query_mode or QUERY_MODE}"
+    if mode == "svma" and (tile_agg or TILE_AGG) != "mean":
+        tag += f"_agg{tile_agg or TILE_AGG}"
+    if mode == "svma" and (prior_heads or PRIOR_HEADS or "v10") != "v10":
+        tag += f"_ph{prior_heads or PRIOR_HEADS}"
+    pb = prior_base or PRIOR_BASE or "none"
+    if mode == "svma" and pb != "none":
+        tag += f"_pb{pb}{prior_base_mode or PRIOR_BASE_MODE}"
     return tag
 
 
@@ -1194,7 +1396,7 @@ def load_or_init_results(path: str, meta: list[dict], tag: str) -> tuple[dict, i
 def prepare_inputs(images, mode: str, budget: int, max_num: int, coverage_tiles: int | None = None):
     """把一批 PIL 影像轉成各 mode 的輸入。max_num = 未壓縮時的總 tile 上限（含縮圖），
     dynamic_preprocess 會再加 1 張縮圖，所以網格上限是 max_num - 1。
-    coverage_tiles：SVMA 的 m；None = svma_config 的預設。"""
+    coverage_tiles：FoveaTile 的 m；None = svma_config 的預設。"""
     max_num_grid = max(1, max_num - 1)
     if mode == "svma":
         m = default_coverage_tiles(budget) if coverage_tiles is None else coverage_tiles
@@ -1206,7 +1408,7 @@ def prepare_inputs(images, mode: str, budget: int, max_num: int, coverage_tiles:
 
 
 def standard_kv_cache_mb(model, tokenizer, pixel_values, question) -> float:
-    """batch_chat 路徑拿不到 past_key_values，用 prompt 長度 + tile 數反推 KV cache（跟 SVMA 同一條公式）。"""
+    """batch_chat 路徑拿不到 past_key_values，用 prompt 長度 + tile 數反推 KV cache（跟 FoveaTile 同一條公式）。"""
     tb, ta = split_prompt_at_vision(build_prompt(tokenizer, model, question, pixel_values.shape[0]), tokenizer)
     tb_len, ta_len = estimate_prompt_token_lengths(tokenizer, tb, ta)
     total = tb_len + pixel_values.shape[0] * model.num_image_token + ta_len
@@ -1214,14 +1416,18 @@ def standard_kv_cache_mb(model, tokenizer, pixel_values, question) -> float:
 
 
 def run_batch(model, tokenizer, adapter, mode: str, inputs, questions, budget: int, dtype=torch.bfloat16,
-              coverage_tiles: int | None = None, qattn_tiles: int | None = None):
+              coverage_tiles: int | None = None, qattn_tiles: int | None = None,
+              qattn_grid_frac: float | None = None, query_mode: str | None = None, tile_agg: str | None = None,
+              prior_heads: str | None = None, prior_base: str | None = None, prior_base_mode: str | None = None):
     """回傳 (answers, extra)；extra 是每張圖一筆的附加紀錄 {key: list}，跟 answers 對齊。
-    coverage_tiles / qattn_tiles：覆寫 SVMA 的 m / S（None = svma_config 的預設）。"""
+    coverage_tiles / qattn_tiles：覆寫 FoveaTile 的 m / S（None = svma_config 的預設）。"""
     if mode == "svma":
         m = default_coverage_tiles(budget) if coverage_tiles is None else coverage_tiles
         S = default_qattn_tiles(budget, m) if qattn_tiles is None else qattn_tiles
         answers, all_stats, timing = run_online_kv_with_memory_bank(
-            model, adapter, inputs, questions, budget=budget, qattn_tiles=S, dtype=dtype)
+            model, adapter, inputs, questions, budget=budget, qattn_tiles=S, dtype=dtype,
+            qattn_grid_frac=qattn_grid_frac, query_mode=query_mode, tile_agg=tile_agg,
+            prior_heads=prior_heads, prior_base=prior_base, prior_base_mode=prior_base_mode)
         # batch_size > 1 時同一批共用第一張圖的 TTFT；要逐張 TTFT 就用 --batch_size 1 或 bench_metrics.py
         return answers, {"ttft": [timing.get("TTFT")] * len(answers),
                          "tile_selection": [s.get("committed_tile_indices", []) for s in all_stats],
@@ -1233,21 +1439,32 @@ def run_batch(model, tokenizer, adapter, mode: str, inputs, questions, budget: i
 
 def parse_args(argv=None):
     p = argparse.ArgumentParser(
-        description="SVMA / baseline 評測：一次跑一個 dataset × mode × budget，結果存成一個 JSON（可中斷續跑）。"
+        description="FoveaTile（--mode svma）/ baseline 評測：一次跑一個 dataset × mode × budget，結果存成一個 JSON（可中斷續跑）。"
     )
     p.add_argument("--dataset", required=True, choices=sorted(DATASETS))
-    p.add_argument("--mode", default="svma", choices=MODES)
+    p.add_argument("--mode", default="svma", choices=MODES, help="svma = FoveaTile（key 沿用舊名）")
     p.add_argument("--budget", type=int, default=DEFAULT_BUDGET,
                    help="每張圖的 vision token 上限（K = budget // 256 塊 tile）；預設 = svma_config.DEFAULT_BUDGET；uncompressed 不用")
     p.add_argument("--num_images", type=int, default=-1, help="只跑前 N 題（-1 = 全部）")
     p.add_argument("--batch_size", type=int, default=4)
     p.add_argument("--model_name", default="OpenGVLab/InternVL3_5-8B")
-    p.add_argument("--max_num", type=int, default=48, help="未壓縮時的總 tile 上限（含縮圖），也是 SVMA 細節網格的上限")
+    p.add_argument("--max_num", type=int, default=48, help="未壓縮時的總 tile 上限（含縮圖），也是 FoveaTile 細節網格的上限")
     p.add_argument("--output_json", default=None, help="預設 results/runs/<dataset>/<tag>_<model>.json")
     p.add_argument("--coverage_tiles", type=int, default=None,
-                   help="SVMA 的覆蓋 tile 數 m（校準掃描用）；不給 = svma_config 的預設 floor(0.75 K)")
+                   help="FoveaTile 的覆蓋 tile 數 m（校準掃描用）；不給 = svma_config 的預設 floor(0.5 K)")
+    p.add_argument("--qattn_grid_frac", type=float, default=None,
+                   help="3b 候選規則：打分窗口（直接保留 + 打分）至少涵蓋細節網格的這個比例（預設關閉）")
     p.add_argument("--qattn_tiles", type=int, default=None,
-                   help="SVMA 第二階段打分的 tile 數 S（校準掃描用）；不給 = svma_config 的預設 S(K, m)")
+                   help="FoveaTile 第二階段打分的 tile 數 S（校準掃描用）；不給 = svma_config 的預設 S(K, m)")
+    p.add_argument("--query_mode", default=None, choices=["all", "stem", "stemopt", "sortopt"],
+                   help="tile 打分的 query（v1.1 校準用）；不給 = svma_config.QUERY_MODE")
+    p.add_argument("--tile_agg", default=None,
+                   help="tile 內分數聚合：mean / max / top<f>（v1.1 校準用）；不給 = svma_config.TILE_AGG")
+    p.add_argument("--prior_heads", default=None, choices=["v10", "a1"],
+                   help="prior 用哪些 head（A1）；不給 = svma_config.PRIOR_HEADS")
+    p.add_argument("--prior_base", default=None, choices=["none", "nl", "gen"],
+                   help="prior 的問題無關基準校正（A2）；不給 = svma_config.PRIOR_BASE")
+    p.add_argument("--prior_base_mode", default=None, choices=["ratio", "sub"])
     args = p.parse_args(argv)
     if args.mode != "uncompressed" and args.budget < 256:
         p.error(f"--budget 至少要 256（1 塊 tile），收到 {args.budget}")
@@ -1256,7 +1473,8 @@ def parse_args(argv=None):
 
 def main(argv=None):
     args = parse_args(argv)
-    tag = run_tag(args.mode, args.budget, args.coverage_tiles, args.qattn_tiles)
+    tag = run_tag(args.mode, args.budget, args.coverage_tiles, args.qattn_tiles, args.qattn_grid_frac,
+                  args.query_mode, args.tile_agg, args.prior_heads, args.prior_base, args.prior_base_mode)
     out = args.output_json or default_output_json(args.model_name, args.dataset, tag)
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
     torch.manual_seed(RANDOM_SEED)
@@ -1268,7 +1486,8 @@ def main(argv=None):
     if args.mode == "svma":
         m = default_coverage_tiles(args.budget) if args.coverage_tiles is None else args.coverage_tiles
         S = default_qattn_tiles(args.budget, m) if args.qattn_tiles is None else args.qattn_tiles
-        print(f"[svma] budget={args.budget}  K={args.budget // 256}  m={m}  S={S}")
+        print(f"[FoveaTile] budget={args.budget}  K={args.budget // 256}  m={m}  S={S}  "
+              f"query={args.query_mode or QUERY_MODE}  agg={args.tile_agg or TILE_AGG}")
     print(f"[{tag}] {args.dataset}: {n} 題，從第 {start + 1} 題開始 → {out}")
     if start >= n:
         print("已全部完成，跳過")
@@ -1285,7 +1504,11 @@ def main(argv=None):
                                 args.coverage_tiles)
         with measure_peak_memory(f"{tag} [{i + 1}~{i + len(batch)}/{n}]"):
             answers, extra = run_batch(model, tokenizer, adapter, args.mode, inputs, questions, args.budget,
-                                       coverage_tiles=args.coverage_tiles, qattn_tiles=args.qattn_tiles)
+                                       coverage_tiles=args.coverage_tiles, qattn_tiles=args.qattn_tiles,
+                                       qattn_grid_frac=args.qattn_grid_frac,
+                                       query_mode=args.query_mode, tile_agg=args.tile_agg,
+                                       prior_heads=args.prior_heads, prior_base=args.prior_base,
+                                       prior_base_mode=args.prior_base_mode)
         results["candidates"][tag] += answers
         for key, vals in extra.items():
             results.setdefault(key, {}).setdefault(tag, []).extend(vals)

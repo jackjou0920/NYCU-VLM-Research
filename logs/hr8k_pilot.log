@@ -1,0 +1,42 @@
+== test suite：16 個工作，GPUS=0 1 ==
+[10-25 16:08] GPU1 hrbench_8k svma 1024
+[10-25 16:08] GPU0 hrbench_8k uncompressed 
+[10-25 16:14] GPU1 hrbench_8k svma 2560
+[10-25 16:17] GPU0 hrbench_8k svma 1536
+[10-25 16:21] GPU1 hrbench_8k fastv 1536
+[10-25 16:23] GPU0 hrbench_8k fastv 1024
+[10-25 16:27] GPU1 hrbench_8k visionzip 1024
+[10-25 16:29] GPU0 hrbench_8k fastv 2560
+[10-25 16:32] GPU1 hrbench_8k visionzip 2560
+[10-25 16:35] GPU0 hrbench_8k visionzip 1536
+[10-25 16:38] GPU1 hrbench_8k ifprune 1536
+[10-25 16:40] GPU0 hrbench_8k ifprune 1024
+[10-25 16:45] GPU1 hrbench_8k sparsevlm 1024
+[10-25 16:47] GPU0 hrbench_8k ifprune 2560
+  hrbench_8k sparsevlm b1024：校準 λ=0.5666
+[10-25 16:53] GPU1 hrbench_8k sparsevlm 2560
+[10-25 16:55] GPU0 hrbench_8k sparsevlm 1536
+  hrbench_8k sparsevlm b2560：校準 λ=0.1922
+  hrbench_8k sparsevlm b1536：校準 λ=0.3794
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed              50   58.00                                       1044
+  svma_b1024                50   54.00   -4.00     [-14.0, +6.0]   0.63s      157
+  svma_b1536                50   46.00  -12.00    [-22.0, -2.0]*   0.72s      229
+  svma_b2560                50   48.00  -10.00     [-22.0, +0.0]   1.00s      373
+  fastv_budget=1024_k=2     50   44.00  -14.00    [-26.0, -4.0]*                 
+  fastv_budget=1536_k=2     50   50.00   -8.00     [-18.0, +2.0]                 
+  fastv_budget=2560_k=2     50   56.00   -2.00      [-8.0, +4.0]                 
+  ifprune_budget=1024_L=2    50   56.00   -2.00     [-14.0, +8.0]                 
+  ifprune_budget=1536_L=2    50   58.00   +0.00    [-10.0, +10.0]                 
+  ifprune_budget=2560_L=2    50   58.00   +0.00    [-10.0, +10.0]                 
+  sparsevlm_budget=1024_lam=0.5666    50   52.00   -6.00     [-16.0, +4.0]                 
+  sparsevlm_budget=1536_lam=0.3794    50   56.00   -2.00      [-8.0, +4.0]                 
+  sparsevlm_budget=2560_lam=0.1922    50   56.00   -2.00     [-12.0, +8.0]                 
+  visionzip_budget=1024     50   48.00  -10.00     [-24.0, +4.0]                 
+  visionzip_budget=1536     50   44.00  -14.00    [-26.0, -2.0]*                 
+  visionzip_budget=2560     50   52.00   -6.00     [-18.0, +6.0]                 
+
+[saved] results/runs/summary.csv
+[10-25 17:04] done

@@ -1,0 +1,184 @@
+device=cuda:0  model=OpenGVLab/InternVL3_5-8B  dataset=hrbench_8k
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 88.16it/s]
+model loaded, peak_alloc=17.06 GB  num_image_token=256
+prompt_mode: letter
+[load_hrbench] DreamMr/HR-Bench:hrbench_8k (prompt_mode=letter) -> kept 11, skipped 0 (no image)
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.12s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[14, 15, 16, 27] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=7 tiles
+[Image 0] selected_tile_indices=[10, 15, 16, 40]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[14, 15, 16, 26] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=7 tiles
+[Image 0] selected_tile_indices=[10, 15, 26, 40]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[14, 15, 16, 26] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=7 tiles
+[Image 0] selected_tile_indices=[10, 15, 26, 40]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[14, 15, 16, 27] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=7 tiles
+[Image 0] selected_tile_indices=[10, 15, 16, 40]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[15, 72, 73, 84] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=8 tiles
+[Image 0] selected_tile_indices=[10, 15, 40, 73]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+  [5/11] done  (raw_tiles=188)
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[15, 72, 73, 84] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=8 tiles
+[Image 0] selected_tile_indices=[10, 15, 40, 73]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[15, 72, 73, 84] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=8 tiles
+[Image 0] selected_tile_indices=[10, 15, 40, 73]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[15, 72, 73, 84] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=8 tiles
+[Image 0] selected_tile_indices=[10, 15, 40, 73]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[61, 62, 73, 84] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=8 tiles
+[Image 0] selected_tile_indices=[10, 40, 61, 73]
+[Image 0] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[61, 62, 73, 84] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=8 tiles
+[Image 0] selected_tile_indices=[10, 40, 61, 73]
+[Image 0] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+  [10/11] done  (raw_tiles=188)
+
+================================================================================
+[Image 0] detail=(11, 17) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 40] window=[15, 62, 73, 84] vit_encoded=8/189
+[Image 0] raw=189 tiles -> KV=6 tiles / 1536 tokens; dropped=183; max_resident=8 tiles
+[Image 0] selected_tile_indices=[10, 15, 40, 73]
+[Image 0] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+  [11/11] done  (raw_tiles=188)
+
+=== metrics  model=OpenGVLab/InternVL3_5-8B  hrbench_8k  (11 imgs, svma m=floor(COVERAGE_FRAC*K), S=default_qattn_tiles(b, m)) ===
+method               raw_tiles  TTFT med s   Δmem GB  KV cache MB   ViT TF   LLM TF  total TF
+---------------------------------------------------------------------------------------------
+stream_b1536           188.000       0.706     0.414      228.628    5.916   39.673    45.589
+      TTFT 分段：text_prefill=0.042  cover_vit=0.024  prior=0.099  detail_vit=0.073  qattn=0.136  kv_commit=0.291  first_token=0.043
+visionzip_b1536        188.000       2.454     0.487      228.628  139.034   23.365   162.398
+
+[saved] results/scaling/metrics_n201_visionzip.csv

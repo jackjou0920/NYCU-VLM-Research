@@ -1,0 +1,126 @@
+== test suite：52 個工作，GPUS=0 1 ==
+[10-16 03:16] GPU1 vstar svma 1024
+[10-16 03:16] GPU0 vstar uncompressed 
+[10-16 03:19] GPU1 vstar svma 3072
+[10-16 03:22] GPU0 vstar svma 2048
+[10-16 03:24] GPU1 vstar svma 5120
+[10-16 03:26] GPU0 vstar svma 4096
+[10-16 03:32] GPU1 vstar fastv 2048
+[10-16 03:32] GPU0 vstar fastv 1024
+[10-16 03:35] GPU1 vstar fastv 4096
+[10-16 03:35] GPU0 vstar fastv 3072
+[10-16 03:39] GPU0 vstar fastv 5120
+[10-16 03:40] GPU1 vstar visionzip 1024
+[10-16 03:43] GPU1 vstar visionzip 3072
+[10-16 03:44] GPU0 vstar visionzip 2048
+[10-16 03:47] GPU1 vstar visionzip 5120
+[10-16 03:48] GPU0 vstar visionzip 4096
+[10-16 03:52] GPU1 vstar ifprune 2048
+[10-16 03:52] GPU0 vstar ifprune 1024
+[10-16 03:57] GPU1 vstar ifprune 4096
+[10-16 03:57] GPU0 vstar ifprune 3072
+[10-16 04:02] GPU0 vstar ifprune 5120
+[10-16 04:03] GPU1 vstar sparsevlm 1024
+  vstar sparsevlm b1024：校準 λ=0.5666
+[10-16 04:09] GPU1 vstar sparsevlm 3072
+[10-16 04:09] GPU0 vstar sparsevlm 2048
+  vstar sparsevlm b3072：校準 λ=0.1922
+  vstar sparsevlm b2048：校準 λ=0.3794
+[10-16 04:15] GPU0 vstar sparsevlm 4096
+[10-16 04:16] GPU1 vstar sparsevlm 5120
+  vstar sparsevlm b5120：校準 λ=0.1922
+  vstar sparsevlm b4096：校準 λ=0.1922
+[10-16 04:22] GPU1 mme_rw_lite svma 1024
+[10-16 04:23] GPU0 mme_rw_lite uncompressed 
+[10-16 05:00] GPU1 mme_rw_lite svma 3072
+[10-16 05:39] GPU0 mme_rw_lite svma 2048
+[10-16 05:55] GPU1 mme_rw_lite svma 5120
+[10-16 06:26] GPU0 mme_rw_lite svma 4096
+[10-16 07:12] GPU1 mme_rw_lite fastv 2048
+[10-16 07:32] GPU0 mme_rw_lite fastv 1024
+[10-16 07:54] GPU1 mme_rw_lite fastv 4096
+[10-16 08:09] GPU0 mme_rw_lite fastv 3072
+[10-16 08:46] GPU1 mme_rw_lite visionzip 1024
+[10-16 08:56] GPU0 mme_rw_lite fastv 5120
+[10-16 09:20] GPU1 mme_rw_lite visionzip 3072
+[10-16 09:51] GPU0 mme_rw_lite visionzip 2048
+[10-16 10:05] GPU1 mme_rw_lite visionzip 5120
+[10-16 10:31] GPU0 mme_rw_lite visionzip 4096
+[10-16 10:59] GPU1 mme_rw_lite ifprune 2048
+[10-16 11:21] GPU0 mme_rw_lite ifprune 1024
+[10-16 11:58] GPU1 mme_rw_lite ifprune 4096
+[10-16 12:14] GPU0 mme_rw_lite ifprune 3072
+[10-16 13:07] GPU1 mme_rw_lite sparsevlm 1024
+  mme_rw_lite sparsevlm b1024：校準 λ=0.5666
+[10-16 13:18] GPU0 mme_rw_lite ifprune 5120
+[10-16 13:51] GPU1 mme_rw_lite sparsevlm 3072
+  mme_rw_lite sparsevlm b3072：校準 λ=0.1922
+[10-16 14:31] GPU0 mme_rw_lite sparsevlm 2048
+  mme_rw_lite sparsevlm b2048：校準 λ=0.3794
+[10-16 14:50] GPU1 mme_rw_lite sparsevlm 5120
+  mme_rw_lite sparsevlm b5120：校準 λ=0.1922
+[10-16 15:22] GPU0 mme_rw_lite sparsevlm 4096
+  mme_rw_lite sparsevlm b4096：校準 λ=0.1922
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             191   83.77                                        924
+  svma_b1024               191   76.44   -7.33    [-13.1, -2.1]*   0.62s      156
+  svma_b2048               191   77.49   -6.28    [-11.5, -1.1]*   0.90s      300
+  svma_b3072               191   81.68   -2.09      [-6.8, +3.1]   1.20s      444
+  svma_b4096               191   84.82   +1.05      [-2.6, +4.7]   1.54s      588
+  svma_b5120               191   83.25   -0.52      [-4.2, +3.1]   1.86s      732
+  fastv_budget=1024_k=2    191   75.39   -8.38    [-13.1, -3.7]*                 
+  fastv_budget=2048_k=2    191   80.63   -3.14      [-6.8, +0.0]                 
+  fastv_budget=3072_k=2    191   82.72   -1.05      [-3.7, +1.6]                 
+  fastv_budget=4096_k=2    191   83.77   +0.00      [-2.1, +2.1]                 
+  fastv_budget=5120_k=2    191   84.29   +0.52      [+0.0, +1.6]                 
+  ifprune_budget=1024_L=2   191   83.25   -0.52      [-4.7, +4.2]                 
+  ifprune_budget=2048_L=2   191   82.72   -1.05      [-5.2, +3.1]                 
+  ifprune_budget=3072_L=2   191   82.20   -1.57      [-4.7, +1.6]                 
+  ifprune_budget=4096_L=2   191   85.34   +1.57      [-1.1, +4.2]                 
+  ifprune_budget=5120_L=2   191   85.34   +1.57      [-0.5, +4.2]                 
+  sparsevlm_budget=1024_lam=0.5666   191   77.49   -6.28    [-11.0, -1.6]*                 
+  sparsevlm_budget=2048_lam=0.3794   191   79.58   -4.19      [-8.4, +0.0]                 
+  sparsevlm_budget=3072_lam=0.1922   191   83.77   +0.00      [-3.1, +3.7]                 
+  sparsevlm_budget=4096_lam=0.1922   191   84.29   +0.52      [-2.6, +4.2]                 
+  sparsevlm_budget=5120_lam=0.1922   191   84.29   +0.52      [-2.6, +4.2]                 
+  visionzip_budget=1024    191   67.02  -16.75   [-23.0, -10.5]*                 
+  visionzip_budget=2048    191   76.96   -6.81    [-11.5, -2.1]*                 
+  visionzip_budget=3072    191   78.53   -5.24     [-9.4, -1.1]*                 
+  visionzip_budget=4096    191   81.15   -2.62      [-6.8, +1.1]                 
+  visionzip_budget=5120    191   82.20   -1.57      [-4.2, +1.1]                 
+
+[saved] results/runs/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed            1919   51.59                                       1160
+  svma_b1024              1919   48.78   -2.81     [-4.6, -0.8]*   0.68s      166
+  svma_b2048              1919   51.22   -0.36      [-2.1, +1.4]   0.93s      309
+  svma_b3072              1919   53.47   +1.88     [+0.1, +3.6]*   1.21s      447
+  svma_b4096              1919   52.42   +0.83      [-0.9, +2.5]   1.53s      588
+  svma_b5120              1919   53.41   +1.82     [+0.2, +3.5]*   1.83s      726
+  fastv_budget=1024_k=2   1919   45.54   -6.04     [-7.7, -4.4]*                 
+  fastv_budget=2048_k=2   1919   48.20   -3.39     [-4.7, -2.0]*                 
+  fastv_budget=3072_k=2   1919   49.66   -1.93     [-3.0, -0.9]*                 
+  fastv_budget=4096_k=2   1919   51.17   -0.42      [-1.4, +0.5]                 
+  fastv_budget=5120_k=2   1919   52.01   +0.42      [-0.4, +1.3]                 
+  ifprune_budget=1024_L=2  1919   48.93   -2.66     [-4.3, -1.0]*                 
+  ifprune_budget=2048_L=2  1919   49.45   -2.14     [-3.6, -0.7]*                 
+  ifprune_budget=3072_L=2  1919   49.77   -1.82     [-3.1, -0.6]*                 
+  ifprune_budget=4096_L=2  1919   50.44   -1.15      [-2.3, +0.0]                 
+  ifprune_budget=5120_L=2  1919   51.22   -0.36      [-1.5, +0.7]                 
+  sparsevlm_budget=1024_lam=0.5666  1919   48.31   -3.28     [-5.1, -1.6]*                 
+  sparsevlm_budget=2048_lam=0.3794  1919   50.55   -1.04      [-2.5, +0.4]                 
+  sparsevlm_budget=3072_lam=0.1922  1919   50.96   -0.63      [-1.8, +0.7]                 
+  sparsevlm_budget=4096_lam=0.1922  1919   51.43   -0.16      [-1.2, +0.9]                 
+  sparsevlm_budget=5120_lam=0.1922  1919   51.38   -0.21      [-1.2, +0.9]                 
+  visionzip_budget=1024   1919   36.58  -15.01   [-17.2, -12.9]*                 
+  visionzip_budget=2048   1919   44.14   -7.45     [-9.4, -5.6]*                 
+  visionzip_budget=3072   1919   47.42   -4.17     [-6.0, -2.4]*                 
+  visionzip_budget=4096   1919   49.77   -1.82     [-3.2, -0.5]*                 
+  visionzip_budget=5120   1919   49.61   -1.98     [-3.3, -0.7]*                 
+
+[saved] results/runs/summary.csv
+[10-16 16:24] done

@@ -1,0 +1,2610 @@
+prompt_mode: letter
+[load_hrbench] DreamMr/HR-Bench:hrbench_8k (prompt_mode=letter) -> kept 200, skipped 0 (no image)
+[svma] budget=1536  K=6  m=3  S=4
+[svma_b1536] hrbench_8k: 200 題，從第 1 題開始 → results/runs/hrbench_8k/svma_b1536_InternVL3_5-8B.json
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 92.45it/s]
+model loaded in 52.3s, peak alloc 17.06 GB
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.15s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1, 6] window=[2, 3, 10, 14] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[1, 2, 6, 14]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1, 6] window=[2, 3, 10, 14] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[1, 2, 6, 14]
+[Image 1] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1, 6] window=[2, 3, 10, 14] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[1, 2, 6, 14]
+[Image 2] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1, 6] window=[2, 3, 10, 14] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[1, 2, 6, 14]
+[Image 3] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [1~4/200]] time=4.05 sec  peak_allocated=17.371 GB  peak_reserved=17.559 GB
+  Q: What is the number displayed above the entrance where the woman is standing?
+  A: A
+  Q: What is the number displayed above the entrance where the woman is standing?
+  A: B
+  Q: What is the number displayed above the entrance where the woman is standing?
+  A: C
+  Q: What is the number displayed above the entrance where the woman is standing?
+  A: D
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[3, 6] window=[1, 10, 13, 14] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[1, 3, 6, 10]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[3, 6] window=[1, 10, 13, 14] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[1, 3, 6, 10]
+[Image 1] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[3, 6] window=[1, 10, 13, 14] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[1, 3, 6, 10]
+[Image 2] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[3, 6] window=[1, 10, 13, 14] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[1, 3, 6, 10]
+[Image 3] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.36 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [5~8/200]] time=3.59 sec  peak_allocated=17.365 GB  peak_reserved=17.562 GB
+  Q: What is the color of the mailbox?
+  A: A
+  Q: What is the color of the mailbox?
+  A: B
+  Q: What is the color of the mailbox?
+  A: C
+  Q: What is the color of the mailbox?
+  A: D
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[3, 6] window=[10, 12, 13, 14] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[3, 6, 10, 14]
+[Image 0] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[3, 6] window=[1, 10, 13, 14] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[3, 6, 10, 14]
+[Image 1] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[3, 6] window=[1, 10, 13, 14] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[3, 6, 10, 14]
+[Image 2] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[3, 6] window=[1, 10, 13, 14] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[3, 6, 10, 14]
+[Image 3] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.36 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [9~12/200]] time=3.58 sec  peak_allocated=17.363 GB  peak_reserved=17.585 GB
+  Q: Is the mailbox on the left or right side of the woman?
+  A: A
+  Q: Is the mailbox on the left or right side of the woman?
+  A: B
+  Q: Is the mailbox on the left or right side of the woman?
+  A: C
+  Q: Is the mailbox on the left or right side of the woman?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[2, 5] window=[13, 14, 19, 20] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[2, 5, 13, 14]
+[Image 0] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[2, 5] window=[13, 14, 19, 20] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[2, 5, 13, 14]
+[Image 1] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[2, 5] window=[13, 14, 19, 20] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[2, 5, 13, 14]
+[Image 2] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[2, 5] window=[13, 14, 19, 20] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[2, 5, 13, 14]
+[Image 3] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [13~16/200]] time=3.60 sec  peak_allocated=17.370 GB  peak_reserved=17.559 GB
+  Q: What is written on the white board in front of the girl in purple shorts?
+  A: A
+  Q: What is written on the white board in front of the girl in purple shorts?
+  A: B
+  Q: What is written on the white board in front of the girl in purple shorts?
+  A: C
+  Q: What is written on the white board in front of the girl in purple shorts?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 19, 20, 22] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[4, 14, 16, 20]
+[Image 0] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 19, 22] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[4, 14, 16, 19]
+[Image 1] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 19, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[4, 14, 16, 19]
+[Image 2] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 19, 22] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[4, 14, 16, 19]
+[Image 3] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [17~20/200]] time=3.60 sec  peak_allocated=17.372 GB  peak_reserved=17.559 GB
+  Q: What is the text written on the blue golf ball holder?
+  A: A
+  Q: What is the text written on the blue golf ball holder?
+  A: B
+  Q: What is the text written on the blue golf ball holder?
+  A: C
+  Q: What is the text written on the blue golf ball holder?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[4, 16] window=[15, 19, 21, 22] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[4, 16, 19, 21]
+[Image 0] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 19, 22] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[4, 14, 16, 19]
+[Image 1] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 19, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[4, 14, 16, 19]
+[Image 2] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[4, 16] window=[15, 19, 21, 22] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[4, 16, 19, 21]
+[Image 3] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [21~24/200]] time=3.62 sec  peak_allocated=17.372 GB  peak_reserved=17.587 GB
+  Q: What is the color of the golf ball holder?
+  A: D
+  Q: What is the color of the golf ball holder?
+  A: C
+  Q: What is the color of the golf ball holder?
+  A: C
+  Q: What is the color of the golf ball holder?
+  A: B
+
+================================================================================
+[Image 0] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 19, 22] vit_encoded=8/31
+[Image 0] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 0] selected_tile_indices=[1, 18, 19]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 19, 22] vit_encoded=8/31
+[Image 1] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 1] selected_tile_indices=[1, 18, 19]
+[Image 1] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 19, 22] vit_encoded=8/31
+[Image 2] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 2] selected_tile_indices=[1, 18, 19]
+[Image 2] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 19, 22] vit_encoded=8/31
+[Image 3] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 3] selected_tile_indices=[1, 18, 19]
+[Image 3] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.50 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.50 GB
+
+[svma_b1536 [25~28/200]] time=3.85 sec  peak_allocated=17.373 GB  peak_reserved=17.583 GB
+  Q: What is the license plate number of the car?
+  A: C
+  Q: What is the license plate number of the car?
+  A: B
+  Q: What is the license plate number of the car?
+  A: C
+  Q: What is the license plate number of the car?
+  A: D
+
+================================================================================
+[Image 0] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 22, 25] vit_encoded=8/31
+[Image 0] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 0] selected_tile_indices=[1, 17, 18]
+[Image 0] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 22, 25] vit_encoded=8/31
+[Image 1] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 1] selected_tile_indices=[1, 17, 18]
+[Image 1] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 22, 25] vit_encoded=8/31
+[Image 2] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 2] selected_tile_indices=[1, 17, 18]
+[Image 2] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1] window=[17, 18, 22, 25] vit_encoded=8/31
+[Image 3] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 3] selected_tile_indices=[1, 17, 18]
+[Image 3] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.49 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.49 GB
+
+[svma_b1536 [29~32/200]] time=3.85 sec  peak_allocated=17.370 GB  peak_reserved=17.580 GB
+  Q: Which side of the car is the person sitting on?
+  A: B
+  Q: Which side of the car is the person sitting on?
+  A: C
+  Q: Which side of the car is the person sitting on?
+  A: B
+  Q: Which side of the car is the person sitting on?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[5, 21] window=[8, 18, 19, 22] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[5, 8, 21, 22]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[5, 21] window=[8, 15, 19, 22] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[5, 15, 21, 22]
+[Image 1] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[5, 21] window=[8, 15, 19, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[5, 15, 21, 22]
+[Image 2] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[5, 21] window=[8, 15, 19, 22] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[5, 15, 21, 22]
+[Image 3] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [33~36/200]] time=3.67 sec  peak_allocated=17.371 GB  peak_reserved=17.578 GB
+  Q: Where is the water bottle placed relative to the person in the image?
+  A: D
+  Q: Where is the water bottle placed relative to the person in the image?
+  A: A
+  Q: Where is the water bottle placed relative to the person in the image?
+  A: D
+  Q: Where is the water bottle placed relative to the person in the image?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[2, 19] window=[8, 13, 14, 20] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[2, 14, 19, 20]
+[Image 0] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[2, 19] window=[8, 13, 14, 20] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[2, 14, 19, 20]
+[Image 1] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[2, 19] window=[8, 13, 14, 20] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[2, 14, 19, 20]
+[Image 2] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[2, 19] window=[8, 13, 14, 20] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[2, 14, 19, 20]
+[Image 3] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [37~40/200]] time=3.66 sec  peak_allocated=17.370 GB  peak_reserved=17.574 GB
+  Q: Which brand is mentioned on the black rectangular device located at the left of the image?
+  A: A
+  Q: Which brand is mentioned on the black rectangular device located at the left of the image?
+  A: B
+  Q: Which brand is mentioned on the black rectangular device located at the left of the image?
+  A: D
+  Q: Which brand is mentioned on the black rectangular device located at the left of the image?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[15, 23] window=[0, 9, 10, 21] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[9, 10, 15, 23]
+[Image 0] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[15, 23] window=[0, 3, 9, 10] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 1] selected_tile_indices=[9, 10, 15, 23]
+[Image 1] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[15, 23] window=[0, 9, 10, 21] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[9, 10, 15, 23]
+[Image 2] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[15, 23] window=[0, 9, 10, 21] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[9, 10, 15, 23]
+[Image 3] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [41~44/200]] time=3.64 sec  peak_allocated=17.370 GB  peak_reserved=17.576 GB
+  Q: What is the text written above the logo on the jacket's sleeve?
+  A: A
+  Q: What is the text written above the logo on the jacket's sleeve?
+  A: A
+  Q: What is the text written above the logo on the jacket's sleeve?
+  A: A
+  Q: What is the text written above the logo on the jacket's sleeve?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[15, 23] window=[3, 4, 9, 10] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 0] selected_tile_indices=[4, 10, 15, 23]
+[Image 0] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[15, 23] window=[3, 4, 9, 10] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 1] selected_tile_indices=[4, 10, 15, 23]
+[Image 1] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[15, 23] window=[3, 4, 9, 10] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 2] selected_tile_indices=[4, 10, 15, 23]
+[Image 2] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[15, 23] window=[3, 4, 9, 10] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 3] selected_tile_indices=[4, 10, 15, 23]
+[Image 3] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [45~48/200]] time=3.58 sec  peak_allocated=17.368 GB  peak_reserved=17.658 GB
+  Q: What type of gloves is the person in the background wearing?
+  A: A
+  Q: What type of gloves is the person in the background wearing?
+  A: B
+  Q: What type of gloves is the person in the background wearing?
+  A: C
+  Q: What type of gloves is the person in the background wearing?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[15, 23] window=[4, 10, 16, 22] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[4, 10, 15, 23]
+[Image 0] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[15, 23] window=[4, 10, 16, 22] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[4, 10, 15, 23]
+[Image 1] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[15, 23] window=[4, 10, 16, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[4, 10, 15, 23]
+[Image 2] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[15, 23] window=[4, 10, 16, 22] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[4, 10, 15, 23]
+[Image 3] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.03 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [49~52/200]] time=3.71 sec  peak_allocated=17.373 GB  peak_reserved=17.578 GB
+  Q: Where is the person standing in relation to the recycle bin?
+  A: D
+  Q: Where is the person standing in relation to the recycle bin?
+  A: D
+  Q: Where is the person standing in relation to the recycle bin?
+  A: D
+  Q: Where is the person standing in relation to the recycle bin?
+  A: C
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0, 2] window=[1, 4, 8, 10] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[0, 2, 8, 10]
+[Image 0] KV cache (prompt-only, analytical) = 231.5 MB (1646 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0, 2] window=[1, 4, 8, 10] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[0, 2, 8, 10]
+[Image 1] KV cache (prompt-only, analytical) = 231.5 MB (1646 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0, 2] window=[1, 4, 8, 10] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[0, 2, 8, 10]
+[Image 2] KV cache (prompt-only, analytical) = 231.5 MB (1646 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0, 2] window=[1, 4, 8, 10] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[0, 2, 8, 10]
+[Image 3] KV cache (prompt-only, analytical) = 231.5 MB (1646 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.03 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [53~56/200]] time=3.76 sec  peak_allocated=17.375 GB  peak_reserved=17.559 GB
+  Q: What is the number written on the sign visible in the background of the image?
+  A: A
+  Q: What is the number written on the sign visible in the background of the image?
+  A: B
+  Q: What is the number written on the sign visible in the background of the image?
+  A: C
+  Q: What is the number written on the sign visible in the background of the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[10, 18] window=[9, 15, 16, 17] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[10, 15, 17, 18]
+[Image 0] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[10, 18] window=[15, 16, 17, 21] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[10, 15, 17, 18]
+[Image 1] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[10, 18] window=[9, 15, 16, 17] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[10, 15, 17, 18]
+[Image 2] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[10, 18] window=[9, 15, 16, 17] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[10, 15, 17, 18]
+[Image 3] KV cache (prompt-only, analytical) = 229.1 MB (1629 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [57~60/200]] time=3.68 sec  peak_allocated=17.370 GB  peak_reserved=17.574 GB
+  Q: What is the color of the sign in the image?
+  A: A
+  Q: What is the color of the sign in the image?
+  A: B
+  Q: What is the color of the sign in the image?
+  A: C
+  Q: What is the color of the sign in the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0, 1] window=[5, 10, 18, 22] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[0, 1, 10, 18]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0, 1] window=[5, 10, 16, 18] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[0, 1, 10, 16]
+[Image 1] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0, 1] window=[5, 10, 18, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[0, 1, 10, 18]
+[Image 2] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0, 1] window=[5, 10, 16, 18] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[0, 1, 10, 16]
+[Image 3] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [61~64/200]] time=3.61 sec  peak_allocated=17.371 GB  peak_reserved=17.587 GB
+  Q: What is the color of the umbrella?
+  A: C
+  Q: What is the color of the umbrella?
+  A: B
+  Q: What is the color of the umbrella?
+  A: A
+  Q: What is the color of the umbrella?
+  A: D
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[6, 16] window=[15, 19, 20, 21] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[6, 16, 20, 21]
+[Image 0] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[6, 16] window=[15, 19, 20, 21] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[6, 16, 20, 21]
+[Image 1] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[6, 16] window=[15, 19, 20, 21] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[6, 16, 20, 21]
+[Image 2] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[6, 16] window=[15, 19, 20, 21] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[6, 16, 20, 21]
+[Image 3] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [65~68/200]] time=3.63 sec  peak_allocated=17.370 GB  peak_reserved=17.559 GB
+  Q: What is the title of the framed poster visible in the image?
+  A: A
+  Q: What is the title of the framed poster visible in the image?
+  A: B
+  Q: What is the title of the framed poster visible in the image?
+  A: C
+  Q: What is the title of the framed poster visible in the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1, 7] window=[4, 12, 15, 16] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[1, 7, 12, 16]
+[Image 0] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1, 7] window=[4, 12, 15, 16] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[1, 7, 12, 16]
+[Image 1] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1, 7] window=[4, 12, 15, 16] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[1, 7, 12, 16]
+[Image 2] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1, 7] window=[4, 12, 15, 16] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[1, 7, 12, 16]
+[Image 3] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [69~72/200]] time=3.64 sec  peak_allocated=17.368 GB  peak_reserved=17.585 GB
+  Q: What is the name of the barge on the left side of the image?
+  A: A
+  Q: What is the name of the barge on the left side of the image?
+  A: A
+  Q: What is the name of the barge on the left side of the image?
+  A: A
+  Q: What is the name of the barge on the left side of the image?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 10, 11, 17] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[2, 3, 10, 20]
+[Image 0] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 10, 11, 17] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[2, 3, 10, 20]
+[Image 1] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 10, 11, 17] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[2, 3, 10, 20]
+[Image 2] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 10, 11, 17] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[2, 3, 10, 20]
+[Image 3] KV cache (prompt-only, analytical) = 229.8 MB (1634 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [73~76/200]] time=3.67 sec  peak_allocated=17.370 GB  peak_reserved=17.578 GB
+  Q: What color is the neon "OPEN" sign hanging above the items for sale?
+  A: A
+  Q: What color is the neon "OPEN" sign hanging above the items for sale?
+  A: B
+  Q: What color is the neon "OPEN" sign hanging above the items for sale?
+  A: C
+  Q: What color is the neon "OPEN" sign hanging above the items for sale?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 6, 12, 13] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[2, 12, 13, 20]
+[Image 0] KV cache (prompt-only, analytical) = 228.9 MB (1628 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 6, 12, 13] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[2, 12, 13, 20]
+[Image 1] KV cache (prompt-only, analytical) = 228.9 MB (1628 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 6, 12, 13] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[2, 12, 13, 20]
+[Image 2] KV cache (prompt-only, analytical) = 228.9 MB (1628 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[2, 20] window=[3, 6, 12, 13] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[2, 12, 13, 20]
+[Image 3] KV cache (prompt-only, analytical) = 228.9 MB (1628 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [77~80/200]] time=3.66 sec  peak_allocated=17.373 GB  peak_reserved=17.574 GB
+  Q: What is written on the road sign directly below the American flag?
+  A: A
+  Q: What is written on the road sign directly below the American flag?
+  A: B
+  Q: What is written on the road sign directly below the American flag?
+  A: C
+  Q: What is written on the road sign directly below the American flag?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1, 9] window=[14, 15, 22, 23] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[1, 9, 14, 15]
+[Image 0] KV cache (prompt-only, analytical) = 233.4 MB (1660 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1, 9] window=[14, 15, 22, 23] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[1, 9, 14, 15]
+[Image 1] KV cache (prompt-only, analytical) = 233.4 MB (1660 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1, 9] window=[14, 15, 22, 23] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[1, 9, 14, 15]
+[Image 2] KV cache (prompt-only, analytical) = 233.4 MB (1660 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1, 9] window=[14, 15, 22, 23] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[1, 9, 14, 15]
+[Image 3] KV cache (prompt-only, analytical) = 233.4 MB (1660 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.38 GB resting_end= 17.35 GB transient=+ 0.03 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [81~84/200]] time=3.76 sec  peak_allocated=17.379 GB  peak_reserved=17.559 GB
+  Q: What is the name or number written on the front of the train?
+  A: A
+  Q: What is the name or number written on the front of the train?
+  A: B
+  Q: What is the name or number written on the front of the train?
+  A: C
+  Q: What is the name or number written on the front of the train?
+  A: D
+
+================================================================================
+[Image 0] detail=(8, 5) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1, 38] window=[3, 5, 30, 37] vit_encoded=8/42
+[Image 0] raw=42 tiles -> KV=6 tiles / 1536 tokens; dropped=36; max_resident=7 tiles
+[Image 0] selected_tile_indices=[1, 30, 37, 38]
+[Image 0] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(8, 5) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1, 38] window=[3, 5, 30, 37] vit_encoded=8/42
+[Image 1] raw=42 tiles -> KV=6 tiles / 1536 tokens; dropped=36; max_resident=7 tiles
+[Image 1] selected_tile_indices=[1, 30, 37, 38]
+[Image 1] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(8, 5) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1, 38] window=[3, 5, 30, 37] vit_encoded=8/42
+[Image 2] raw=42 tiles -> KV=6 tiles / 1536 tokens; dropped=36; max_resident=7 tiles
+[Image 2] selected_tile_indices=[1, 30, 37, 38]
+[Image 2] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(8, 5) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1, 5] window=[3, 30, 37, 38] vit_encoded=8/42
+[Image 3] raw=42 tiles -> KV=6 tiles / 1536 tokens; dropped=36; max_resident=8 tiles
+[Image 3] selected_tile_indices=[1, 5, 37, 38]
+[Image 3] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [85~88/200]] time=3.66 sec  peak_allocated=17.365 GB  peak_reserved=17.562 GB
+  Q: How many dogs are being walked in the image?
+  A: D
+  Q: How many dogs are being walked in the image?
+  A: C
+  Q: How many dogs are being walked in the image?
+  A: D
+  Q: How many dogs are being walked in the image?
+  A: C
+
+================================================================================
+[Image 0] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0] window=[3, 24, 25, 26] vit_encoded=8/31
+[Image 0] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 0] selected_tile_indices=[0, 25, 26]
+[Image 0] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0] window=[3, 24, 25, 26] vit_encoded=8/31
+[Image 1] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 1] selected_tile_indices=[0, 25, 26]
+[Image 1] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0] window=[3, 24, 25, 26] vit_encoded=8/31
+[Image 2] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 2] selected_tile_indices=[0, 25, 26]
+[Image 2] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0] window=[3, 24, 25, 26] vit_encoded=8/31
+[Image 3] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 3] selected_tile_indices=[0, 25, 26]
+[Image 3] KV cache (prompt-only, analytical) = 227.8 MB (1620 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.50 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.36 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.50 GB
+
+[svma_b1536 [89~92/200]] time=3.84 sec  peak_allocated=17.364 GB  peak_reserved=17.597 GB
+  Q: What's color of the bike in the image?
+  A: C
+  Q: What's color of the bike in the image?
+  A: D
+  Q: What's color of the bike in the image?
+  A: D
+  Q: What's color of the bike in the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 0] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 0] selected_tile_indices=[0, 3, 4]
+[Image 0] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 1] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 1] selected_tile_indices=[0, 3, 4]
+[Image 1] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 2] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 2] selected_tile_indices=[0, 3, 4]
+[Image 2] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 3] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 3] selected_tile_indices=[0, 3, 27]
+[Image 3] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.49 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.49 GB
+
+[svma_b1536 [93~96/200]] time=3.86 sec  peak_allocated=17.369 GB  peak_reserved=17.580 GB
+  Q: Tell me the shape of the signboard attached to the building?
+  A: A
+  Q: Tell me the shape of the signboard attached to the building?
+  A: B
+  Q: Tell me the shape of the signboard attached to the building?
+  A: A
+  Q: Tell me the shape of the signboard attached to the building?
+  A: D
+
+================================================================================
+[Image 0] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 0] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 0] selected_tile_indices=[0, 3, 27]
+[Image 0] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 1] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 1] selected_tile_indices=[0, 3, 27]
+[Image 1] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 2] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 2] selected_tile_indices=[0, 3, 27]
+[Image 2] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 24, 27] vit_encoded=8/31
+[Image 3] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 3] selected_tile_indices=[0, 3, 27]
+[Image 3] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.50 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.50 GB
+
+[svma_b1536 [97~100/200]] time=3.86 sec  peak_allocated=17.372 GB  peak_reserved=17.583 GB
+  Q: What's the text written on the signboard in the image?
+  A: D
+  Q: What's the text written on the signboard in the image?
+  A: B
+  Q: What's the text written on the signboard in the image?
+  A: D
+  Q: What's the text written on the signboard in the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 15, 16] vit_encoded=8/31
+[Image 0] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 0] selected_tile_indices=[0, 15, 16]
+[Image 0] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 15, 16] vit_encoded=8/31
+[Image 1] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 1] selected_tile_indices=[0, 15, 16]
+[Image 1] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 15, 16] vit_encoded=8/31
+[Image 2] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 2] selected_tile_indices=[0, 15, 16]
+[Image 2] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(7, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0] window=[3, 4, 15, 25] vit_encoded=8/31
+[Image 3] raw=31 tiles -> KV=6 tiles / 1536 tokens; dropped=25; max_resident=7 tiles
+[Image 3] selected_tile_indices=[0, 15, 25]
+[Image 3] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.50 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.50 GB
+
+[svma_b1536 [101~104/200]] time=3.87 sec  peak_allocated=17.372 GB  peak_reserved=17.583 GB
+  Q: What's the relative position of the orange building compared to the cylindrical green building?
+  A: A
+  Q: What's the relative position of the orange building compared to the cylindrical green building?
+  A: B
+  Q: What's the relative position of the orange building compared to the cylindrical green building?
+  A: B
+  Q: What's the relative position of the orange building compared to the cylindrical green building?
+  A: D
+
+================================================================================
+[Image 0] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[13] window=[12, 31, 36, 37] vit_encoded=8/43
+[Image 0] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 0] selected_tile_indices=[13, 36, 37]
+[Image 0] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.17s
+[Image 1] boundary S=4 (a=2, b=2): direct=[13] window=[12, 31, 36, 37] vit_encoded=8/43
+[Image 1] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 1] selected_tile_indices=[13, 36, 37]
+[Image 1] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[13] window=[12, 31, 36, 37] vit_encoded=8/43
+[Image 2] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 2] selected_tile_indices=[13, 36, 37]
+[Image 2] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[13] window=[12, 31, 36, 37] vit_encoded=8/43
+[Image 3] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 3] selected_tile_indices=[13, 36, 37]
+[Image 3] KV cache (prompt-only, analytical) = 230.9 MB (1642 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.50 GB resting_end= 17.35 GB transient=+ 0.15 GB
+  Decode             peak= 17.38 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.50 GB
+
+[svma_b1536 [105~108/200]] time=3.94 sec  peak_allocated=17.377 GB  peak_reserved=17.637 GB
+  Q: What is the name of the place mentioned on the signboard above the left door?
+  A: A
+  Q: What is the name of the place mentioned on the signboard above the left door?
+  A: B
+  Q: What is the name of the place mentioned on the signboard above the left door?
+  A: B
+  Q: What is the name of the place mentioned on the signboard above the left door?
+  A: C
+
+================================================================================
+[Image 0] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 34, 35] vit_encoded=8/43
+[Image 0] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 0] selected_tile_indices=[13, 24, 34]
+[Image 0] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 34, 35] vit_encoded=8/43
+[Image 1] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 1] selected_tile_indices=[13, 24, 34]
+[Image 1] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 34, 35] vit_encoded=8/43
+[Image 2] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 2] selected_tile_indices=[13, 24, 34]
+[Image 2] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 34, 35] vit_encoded=8/43
+[Image 3] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 3] selected_tile_indices=[13, 24, 34]
+[Image 3] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.49 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.49 GB
+
+[svma_b1536 [109~112/200]] time=3.86 sec  peak_allocated=17.368 GB  peak_reserved=17.580 GB
+  Q: What color is the backpack carried by the man wearing a yellow shirt?
+  A: A
+  Q: What color is the backpack carried by the man wearing a yellow shirt?
+  A: B
+  Q: What color is the backpack carried by the man wearing a yellow shirt?
+  A: C
+  Q: What color is the backpack carried by the man wearing a yellow shirt?
+  A: D
+
+================================================================================
+[Image 0] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 34, 35] vit_encoded=8/43
+[Image 0] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 0] selected_tile_indices=[13, 24, 34]
+[Image 0] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 33, 34] vit_encoded=8/43
+[Image 1] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 1] selected_tile_indices=[13, 24, 34]
+[Image 1] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 33, 34] vit_encoded=8/43
+[Image 2] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 2] selected_tile_indices=[13, 24, 34]
+[Image 2] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(10, 4) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[13] window=[12, 24, 33, 34] vit_encoded=8/43
+[Image 3] raw=43 tiles -> KV=6 tiles / 1536 tokens; dropped=37; max_resident=7 tiles
+[Image 3] selected_tile_indices=[13, 24, 34]
+[Image 3] KV cache (prompt-only, analytical) = 229.5 MB (1632 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.49 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.49 GB
+
+[svma_b1536 [113~116/200]] time=3.83 sec  peak_allocated=17.371 GB  peak_reserved=17.580 GB
+  Q: On which side of the man wearing a yellow shirt is the girl wearing a blue top sitting?
+  A: A
+  Q: On which side of the man wearing a yellow shirt is the girl wearing a blue top sitting?
+  A: B
+  Q: On which side of the man wearing a yellow shirt is the girl wearing a blue top sitting?
+  A: C
+  Q: On which side of the man wearing a yellow shirt is the girl wearing a blue top sitting?
+  A: D
+
+================================================================================
+[Image 0] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 20] vit_encoded=8/48
+[Image 0] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 0] selected_tile_indices=[1, 6, 20]
+[Image 0] KV cache (prompt-only, analytical) = 231.0 MB (1643 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 20] vit_encoded=8/48
+[Image 1] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 1] selected_tile_indices=[1, 6, 20]
+[Image 1] KV cache (prompt-only, analytical) = 231.0 MB (1643 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 20] vit_encoded=8/48
+[Image 2] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 2] selected_tile_indices=[1, 6, 20]
+[Image 2] KV cache (prompt-only, analytical) = 231.0 MB (1643 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 20] vit_encoded=8/48
+[Image 3] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 3] selected_tile_indices=[1, 6, 20]
+[Image 3] KV cache (prompt-only, analytical) = 231.0 MB (1643 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.50 GB resting_end= 17.35 GB transient=+ 0.15 GB
+  Decode             peak= 17.38 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.50 GB
+
+[svma_b1536 [117~120/200]] time=3.88 sec  peak_allocated=17.377 GB  peak_reserved=17.637 GB
+  Q: What is the time shown on the clock?
+  A: D
+  Q: What is the time shown on the clock?
+  A: B
+  Q: What is the time shown on the clock?
+  A: B
+  Q: What is the time shown on the clock?
+  A: B
+
+================================================================================
+[Image 0] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=3 +0.14s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 31] vit_encoded=8/48
+[Image 0] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 0] selected_tile_indices=[1, 6, 31]
+[Image 0] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=3 +0.14s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 31] vit_encoded=8/48
+[Image 1] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 1] selected_tile_indices=[1, 6, 31]
+[Image 1] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=3 +0.14s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 31] vit_encoded=8/48
+[Image 2] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 2] selected_tile_indices=[1, 6, 31]
+[Image 2] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(9, 5) cover=(3, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=3 +0.14s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1] window=[4, 6, 7, 31] vit_encoded=8/48
+[Image 3] raw=48 tiles -> KV=6 tiles / 1536 tokens; dropped=42; max_resident=7 tiles
+[Image 3] selected_tile_indices=[1, 6, 31]
+[Image 3] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.50 GB resting_end= 17.34 GB transient=+ 0.15 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.50 GB
+
+[svma_b1536 [121~124/200]] time=3.87 sec  peak_allocated=17.372 GB  peak_reserved=17.583 GB
+  Q: Which direction is the river flowing relative to the clock tower?
+  A: C
+  Q: Which direction is the river flowing relative to the clock tower?
+  A: C
+  Q: Which direction is the river flowing relative to the clock tower?
+  A: B
+  Q: Which direction is the river flowing relative to the clock tower?
+  A: C
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[4, 17] window=[8, 9, 10, 13] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[4, 8, 9, 17]
+[Image 0] KV cache (prompt-only, analytical) = 230.8 MB (1641 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[4, 17] window=[8, 9, 13, 14] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[4, 8, 9, 17]
+[Image 1] KV cache (prompt-only, analytical) = 230.8 MB (1641 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[4, 17] window=[8, 9, 13, 14] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[4, 8, 9, 17]
+[Image 2] KV cache (prompt-only, analytical) = 230.8 MB (1641 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[4, 17] window=[8, 9, 13, 14] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[4, 8, 9, 17]
+[Image 3] KV cache (prompt-only, analytical) = 230.8 MB (1641 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [125~128/200]] time=3.72 sec  peak_allocated=17.373 GB  peak_reserved=17.578 GB
+  Q: What's located in the middle of the water?
+  A: B
+  Q: What's located in the middle of the water?
+  A: D
+  Q: What's located in the middle of the water?
+  A: D
+  Q: What's located in the middle of the water?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[2, 12] window=[15, 16, 18, 23] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[2, 12, 16, 23]
+[Image 0] KV cache (prompt-only, analytical) = 230.5 MB (1639 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[2, 12] window=[15, 16, 18, 23] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[2, 12, 16, 23]
+[Image 1] KV cache (prompt-only, analytical) = 230.5 MB (1639 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[2, 12] window=[15, 16, 18, 23] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[2, 12, 16, 23]
+[Image 2] KV cache (prompt-only, analytical) = 230.5 MB (1639 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[2, 12] window=[15, 16, 18, 23] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[2, 12, 16, 23]
+[Image 3] KV cache (prompt-only, analytical) = 230.5 MB (1639 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [129~132/200]] time=3.67 sec  peak_allocated=17.369 GB  peak_reserved=17.585 GB
+  Q: What is the speed limit indicated by the sign in the image?
+  A: A
+  Q: What is the speed limit indicated by the sign in the image?
+  A: B
+  Q: What is the speed limit indicated by the sign in the image?
+  A: C
+  Q: What is the speed limit indicated by the sign in the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=1 +0.07s
+[Image 0] boundary S=4 (a=2, b=2): direct=[24, 29, 30] window=[0, 26, 32, 35] vit_encoded=8/37
+[Image 0] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 0] selected_tile_indices=[0, 24, 29, 30, 35]
+[Image 0] KV cache (prompt-only, analytical) = 230.2 MB (1637 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=1 +0.07s
+[Image 1] boundary S=4 (a=2, b=2): direct=[24, 29, 30] window=[0, 28, 32, 35] vit_encoded=8/37
+[Image 1] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 1] selected_tile_indices=[24, 28, 29, 30, 35]
+[Image 1] KV cache (prompt-only, analytical) = 230.2 MB (1637 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=1 +0.07s
+[Image 2] boundary S=4 (a=2, b=2): direct=[24, 29, 30] window=[0, 26, 32, 35] vit_encoded=8/37
+[Image 2] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 2] selected_tile_indices=[0, 24, 29, 30, 35]
+[Image 2] KV cache (prompt-only, analytical) = 230.2 MB (1637 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=1 +0.07s
+[Image 3] boundary S=4 (a=2, b=2): direct=[24, 29, 30] window=[0, 26, 32, 35] vit_encoded=8/37
+[Image 3] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 3] selected_tile_indices=[24, 26, 29, 30, 35]
+[Image 3] KV cache (prompt-only, analytical) = 230.2 MB (1637 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.45 GB resting_end= 17.35 GB transient=+ 0.10 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.45 GB
+
+[svma_b1536 [133~136/200]] time=3.53 sec  peak_allocated=17.371 GB  peak_reserved=17.562 GB
+  Q: What is the year inscribed on the sundial?
+  A: A
+  Q: What is the year inscribed on the sundial?
+  A: B
+  Q: What is the year inscribed on the sundial?
+  A: C
+  Q: What is the year inscribed on the sundial?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[5, 17] window=[3, 11, 13, 23] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 0] selected_tile_indices=[5, 11, 13, 17]
+[Image 0] KV cache (prompt-only, analytical) = 233.7 MB (1662 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[5, 17] window=[3, 11, 13, 23] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 1] selected_tile_indices=[5, 11, 13, 17]
+[Image 1] KV cache (prompt-only, analytical) = 233.7 MB (1662 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[5, 17] window=[3, 11, 13, 23] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 2] selected_tile_indices=[5, 11, 13, 17]
+[Image 2] KV cache (prompt-only, analytical) = 233.7 MB (1662 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[5, 17] window=[3, 11, 13, 23] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=7 tiles
+[Image 3] selected_tile_indices=[5, 11, 13, 17]
+[Image 3] KV cache (prompt-only, analytical) = 233.7 MB (1662 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.38 GB resting_end= 17.35 GB transient=+ 0.03 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [137~140/200]] time=3.79 sec  peak_allocated=17.380 GB  peak_reserved=17.608 GB
+  Q: What is the message written on the sign?
+  A: A
+  Q: What is the message written on the sign?
+  A: B
+  Q: What is the message written on the sign?
+  A: C
+  Q: What is the message written on the sign?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=1 +0.07s
+[Image 0] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[10, 23, 26, 30] vit_encoded=8/37
+[Image 0] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 0] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 0] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=1 +0.07s
+[Image 1] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[23, 26, 30, 35] vit_encoded=8/37
+[Image 1] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 1] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 1] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=1 +0.07s
+[Image 2] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[23, 26, 30, 35] vit_encoded=8/37
+[Image 2] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 2] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 2] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=1 +0.07s
+[Image 3] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[23, 26, 30, 35] vit_encoded=8/37
+[Image 3] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 3] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 3] KV cache (prompt-only, analytical) = 229.9 MB (1635 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.45 GB resting_end= 17.35 GB transient=+ 0.10 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.45 GB
+
+[svma_b1536 [141~144/200]] time=3.54 sec  peak_allocated=17.370 GB  peak_reserved=17.562 GB
+  Q: What are the hazard numbers displayed on the left side storage container's label?
+  A: C
+  Q: What are the hazard numbers displayed on the left side storage container's label?
+  A: A
+  Q: What are the hazard numbers displayed on the left side storage container's label?
+  A: B
+  Q: What are the hazard numbers displayed on the left side storage container's label?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=1 +0.07s
+[Image 0] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[22, 23, 26, 30] vit_encoded=8/37
+[Image 0] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 0] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 0] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=1 +0.07s
+[Image 1] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[22, 23, 26, 30] vit_encoded=8/37
+[Image 1] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 1] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 1] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=1 +0.07s
+[Image 2] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[22, 23, 26, 30] vit_encoded=8/37
+[Image 2] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 2] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 2] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 6) cover=(1, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=1 +0.07s
+[Image 3] boundary S=4 (a=2, b=2): direct=[5, 19, 27] window=[22, 23, 26, 30] vit_encoded=8/37
+[Image 3] raw=37 tiles -> KV=6 tiles / 1536 tokens; dropped=31; max_resident=8 tiles
+[Image 3] selected_tile_indices=[5, 19, 23, 27, 30]
+[Image 3] KV cache (prompt-only, analytical) = 229.2 MB (1630 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.45 GB resting_end= 17.35 GB transient=+ 0.10 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.45 GB
+
+[svma_b1536 [145~148/200]] time=3.52 sec  peak_allocated=17.369 GB  peak_reserved=17.559 GB
+  Q: What is the color of the "1" on the left side hazard label of the storage container?
+  A: A
+  Q: What is the color of the "1" on the left side hazard label of the storage container?
+  A: B
+  Q: What is the color of the "1" on the left side hazard label of the storage container?
+  A: C
+  Q: What is the color of the "1" on the left side hazard label of the storage container?
+  A: D
+
+================================================================================
+[Image 0] detail=(7, 6) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1, 5] window=[19, 25, 26, 33] vit_encoded=8/44
+[Image 0] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 0] selected_tile_indices=[1, 5, 19, 25]
+[Image 0] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 6) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1, 5] window=[19, 25, 26, 33] vit_encoded=8/44
+[Image 1] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 1] selected_tile_indices=[1, 5, 19, 25]
+[Image 1] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 6) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1, 5] window=[19, 24, 25, 33] vit_encoded=8/44
+[Image 2] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 2] selected_tile_indices=[1, 5, 19, 25]
+[Image 2] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(7, 6) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1, 5] window=[19, 25, 26, 33] vit_encoded=8/44
+[Image 3] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 3] selected_tile_indices=[1, 5, 19, 25]
+[Image 3] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [149~152/200]] time=3.65 sec  peak_allocated=17.367 GB  peak_reserved=17.559 GB
+  Q: What's the color of the Surveillance camera?
+  A: D
+  Q: What's the color of the Surveillance camera?
+  A: C
+  Q: What's the color of the Surveillance camera?
+  A: D
+  Q: What's the color of the Surveillance camera?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 7) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0, 24] window=[2, 31, 34, 37] vit_encoded=8/44
+[Image 0] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 0] selected_tile_indices=[0, 24, 31, 37]
+[Image 0] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 7) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0, 24] window=[2, 31, 34, 37] vit_encoded=8/44
+[Image 1] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 1] selected_tile_indices=[0, 24, 31, 37]
+[Image 1] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 7) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0, 24] window=[2, 31, 34, 37] vit_encoded=8/44
+[Image 2] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 2] selected_tile_indices=[0, 24, 31, 37]
+[Image 2] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 7) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0, 24] window=[2, 31, 34, 37] vit_encoded=8/44
+[Image 3] raw=44 tiles -> KV=6 tiles / 1536 tokens; dropped=38; max_resident=8 tiles
+[Image 3] selected_tile_indices=[0, 24, 31, 37]
+[Image 3] KV cache (prompt-only, analytical) = 230.3 MB (1638 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [153~156/200]] time=3.66 sec  peak_allocated=17.372 GB  peak_reserved=17.559 GB
+  Q: What's the text written on the sign attached to the wall of building?
+  A: B
+  Q: What's the text written on the sign attached to the wall of building?
+  A: D
+  Q: What's the text written on the sign attached to the wall of building?
+  A: D
+  Q: What's the text written on the sign attached to the wall of building?
+  A: C
+
+================================================================================
+[Image 0] detail=(4, 3) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0, 1] window=[3, 4, 5, 6] vit_encoded=8/14
+[Image 0] raw=14 tiles -> KV=6 tiles / 1536 tokens; dropped=8; max_resident=8 tiles
+[Image 0] selected_tile_indices=[0, 1, 4, 5]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 3) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[0, 1] window=[3, 4, 5, 6] vit_encoded=8/14
+[Image 1] raw=14 tiles -> KV=6 tiles / 1536 tokens; dropped=8; max_resident=8 tiles
+[Image 1] selected_tile_indices=[0, 1, 4, 5]
+[Image 1] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 3) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[0, 1] window=[3, 4, 5, 6] vit_encoded=8/14
+[Image 2] raw=14 tiles -> KV=6 tiles / 1536 tokens; dropped=8; max_resident=8 tiles
+[Image 2] selected_tile_indices=[0, 1, 4, 5]
+[Image 2] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 3) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[0, 1] window=[3, 4, 5, 6] vit_encoded=8/14
+[Image 3] raw=14 tiles -> KV=6 tiles / 1536 tokens; dropped=8; max_resident=8 tiles
+[Image 3] selected_tile_indices=[0, 1, 4, 5]
+[Image 3] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [157~160/200]] time=3.62 sec  peak_allocated=17.371 GB  peak_reserved=17.587 GB
+  Q: What's the color of the car?
+  A: B
+  Q: What's the color of the car?
+  A: B
+  Q: What's the color of the car?
+  A: C
+  Q: What's the color of the car?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[4, 14] window=[18, 19, 20, 21] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[4, 14, 18, 19]
+[Image 0] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[4, 14] window=[0, 19, 20, 21] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[4, 14, 19, 21]
+[Image 1] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[4, 14] window=[0, 19, 20, 21] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[4, 14, 19, 21]
+[Image 2] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[4, 14] window=[18, 19, 20, 21] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[4, 14, 18, 19]
+[Image 3] KV cache (prompt-only, analytical) = 227.5 MB (1618 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.36 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [161~164/200]] time=3.63 sec  peak_allocated=17.365 GB  peak_reserved=17.562 GB
+  Q: What color is the girl's shirt?
+  A: A
+  Q: What color is the girl's shirt?
+  A: B
+  Q: What color is the girl's shirt?
+  A: C
+  Q: What color is the girl's shirt?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 17, 18] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[4, 14, 16, 17]
+[Image 0] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 17, 18] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[4, 15, 16, 17]
+[Image 1] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 18, 23] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[4, 14, 15, 16]
+[Image 2] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[4, 16] window=[14, 15, 18, 23] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[4, 14, 15, 16]
+[Image 3] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.36 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [165~168/200]] time=3.62 sec  peak_allocated=17.364 GB  peak_reserved=17.562 GB
+  Q: What's color of the car?
+  A: A
+  Q: What's color of the car?
+  A: B
+  Q: What's color of the car?
+  A: A
+  Q: What's color of the car?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[4, 12] window=[13, 14, 19, 21] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[4, 12, 13, 21]
+[Image 0] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[4, 12] window=[13, 14, 19, 21] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[4, 12, 13, 21]
+[Image 1] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[4, 12] window=[13, 14, 18, 19] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[4, 12, 13, 18]
+[Image 2] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[4, 12] window=[13, 14, 18, 19] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[4, 12, 13, 18]
+[Image 3] KV cache (prompt-only, analytical) = 228.4 MB (1624 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [169~172/200]] time=3.64 sec  peak_allocated=17.367 GB  peak_reserved=17.559 GB
+  Q: What's the primary color of the person's clothing in the image?
+  A: A
+  Q: What's the primary color of the person's clothing in the image?
+  A: B
+  Q: What's the primary color of the person's clothing in the image?
+  A: C
+  Q: What's the primary color of the person's clothing in the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[2, 4] window=[7, 19, 20, 22] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[2, 4, 20, 22]
+[Image 0] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[2, 4] window=[7, 19, 20, 22] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[2, 4, 20, 22]
+[Image 1] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[2, 4] window=[7, 19, 20, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[2, 4, 20, 22]
+[Image 2] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[2, 4] window=[7, 19, 20, 22] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[2, 4, 20, 22]
+[Image 3] KV cache (prompt-only, analytical) = 229.6 MB (1633 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [173~176/200]] time=3.64 sec  peak_allocated=17.373 GB  peak_reserved=17.585 GB
+  Q: What's the color of the flag in the image?
+  A: C
+  Q: What's the color of the flag in the image?
+  A: A
+  Q: What's the color of the flag in the image?
+  A: B
+  Q: What's the color of the flag in the image?
+  A: A
+
+================================================================================
+[Image 0] detail=(3, 5) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[7, 11] window=[10, 12, 13, 14] vit_encoded=8/17
+[Image 0] raw=17 tiles -> KV=6 tiles / 1536 tokens; dropped=11; max_resident=8 tiles
+[Image 0] selected_tile_indices=[7, 10, 11, 12]
+[Image 0] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(3, 5) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[7, 11] window=[10, 12, 13, 14] vit_encoded=8/17
+[Image 1] raw=17 tiles -> KV=6 tiles / 1536 tokens; dropped=11; max_resident=8 tiles
+[Image 1] selected_tile_indices=[7, 10, 11, 12]
+[Image 1] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(3, 5) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[7, 11] window=[10, 12, 13, 14] vit_encoded=8/17
+[Image 2] raw=17 tiles -> KV=6 tiles / 1536 tokens; dropped=11; max_resident=8 tiles
+[Image 2] selected_tile_indices=[7, 10, 11, 12]
+[Image 2] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(3, 5) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[7, 11] window=[10, 12, 13, 14] vit_encoded=8/17
+[Image 3] raw=17 tiles -> KV=6 tiles / 1536 tokens; dropped=11; max_resident=8 tiles
+[Image 3] selected_tile_indices=[7, 10, 11, 12]
+[Image 3] KV cache (prompt-only, analytical) = 230.6 MB (1640 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [177~180/200]] time=3.64 sec  peak_allocated=17.372 GB  peak_reserved=17.559 GB
+  Q: What street is indicated by the sign on the pole near the center bottom of the image?
+  A: A
+  Q: What street is indicated by the sign on the pole near the center bottom of the image?
+  A: B
+  Q: What street is indicated by the sign on the pole near the center bottom of the image?
+  A: C
+  Q: What street is indicated by the sign on the pole near the center bottom of the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[1, 13] window=[12, 14, 18, 21] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[1, 12, 13, 21]
+[Image 0] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[1, 13] window=[12, 14, 18, 21] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[1, 12, 13, 21]
+[Image 1] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[1, 13] window=[12, 14, 21, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[1, 12, 13, 22]
+[Image 2] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[1, 13] window=[12, 14, 18, 21] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[1, 12, 13, 21]
+[Image 3] KV cache (prompt-only, analytical) = 228.7 MB (1626 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [181~184/200]] time=3.63 sec  peak_allocated=17.368 GB  peak_reserved=17.559 GB
+  Q: What's the number written on the boat?
+  A: A
+  Q: What's the number written on the boat?
+  A: C
+  Q: What's the number written on the boat?
+  A: A
+  Q: What's the number written on the boat?
+  A: A
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[8, 13] window=[12, 16, 17, 18] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[8, 13, 17, 18]
+[Image 0] KV cache (prompt-only, analytical) = 228.2 MB (1623 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[8, 13] window=[12, 16, 17, 18] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[8, 13, 17, 18]
+[Image 1] KV cache (prompt-only, analytical) = 228.2 MB (1623 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[8, 13] window=[12, 16, 17, 18] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[8, 13, 17, 18]
+[Image 2] KV cache (prompt-only, analytical) = 228.2 MB (1623 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[8, 13] window=[12, 16, 17, 18] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[8, 13, 17, 18]
+[Image 3] KV cache (prompt-only, analytical) = 228.2 MB (1623 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.36 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [185~188/200]] time=3.63 sec  peak_allocated=17.363 GB  peak_reserved=17.583 GB
+  Q: What color is the shirt worn by the person in the image?
+  A: A
+  Q: What color is the shirt worn by the person in the image?
+  A: B
+  Q: What color is the shirt worn by the person in the image?
+  A: C
+  Q: What color is the shirt worn by the person in the image?
+  A: D
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[9, 18] window=[15, 20, 21, 22] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[9, 18, 21, 22]
+[Image 0] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[9, 18] window=[15, 20, 21, 22] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[9, 18, 21, 22]
+[Image 1] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[9, 18] window=[15, 20, 21, 22] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[9, 18, 21, 22]
+[Image 2] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[9, 18] window=[15, 20, 21, 22] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[9, 18, 21, 22]
+[Image 3] KV cache (prompt-only, analytical) = 227.4 MB (1617 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.36 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [189~192/200]] time=3.63 sec  peak_allocated=17.364 GB  peak_reserved=17.562 GB
+  Q: What's color of the flag?
+  A: A
+  Q: What's color of the flag?
+  A: B
+  Q: What's color of the flag?
+  A: C
+  Q: What's color of the flag?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[20, 23] window=[6, 9, 12, 18] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 0] selected_tile_indices=[6, 9, 20, 23]
+[Image 0] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[20, 23] window=[6, 9, 12, 18] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 1] selected_tile_indices=[6, 9, 20, 23]
+[Image 1] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[20, 23] window=[6, 9, 12, 18] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 2] selected_tile_indices=[6, 9, 20, 23]
+[Image 2] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[20, 23] window=[6, 9, 12, 18] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=6 tiles
+[Image 3] selected_tile_indices=[6, 9, 20, 23]
+[Image 3] KV cache (prompt-only, analytical) = 228.5 MB (1625 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+[svma_b1536 [193~196/200]] time=3.59 sec  peak_allocated=17.368 GB  peak_reserved=17.658 GB
+  Q: What's the color of the uniform of the figurine on the shelf?
+  A: D
+  Q: What's the color of the uniform of the figurine on the shelf?
+  A: C
+  Q: What's the color of the uniform of the figurine on the shelf?
+  A: D
+  Q: What's the color of the uniform of the figurine on the shelf?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[6, 7] window=[4, 10, 15, 16] vit_encoded=8/26
+[Image 0] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 0] selected_tile_indices=[6, 7, 10, 15]
+[Image 0] KV cache (prompt-only, analytical) = 228.1 MB (1622 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 1] coverage prior: m=2 +0.10s
+[Image 1] boundary S=4 (a=2, b=2): direct=[6, 7] window=[4, 8, 10, 15] vit_encoded=8/26
+[Image 1] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 1] selected_tile_indices=[6, 7, 10, 15]
+[Image 1] KV cache (prompt-only, analytical) = 228.1 MB (1622 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 2] coverage prior: m=2 +0.10s
+[Image 2] boundary S=4 (a=2, b=2): direct=[6, 7] window=[4, 8, 10, 15] vit_encoded=8/26
+[Image 2] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 2] selected_tile_indices=[6, 7, 10, 15]
+[Image 2] KV cache (prompt-only, analytical) = 228.1 MB (1622 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(2, 1) budget=1536 S=4
+================================================================================
+[Image 3] coverage prior: m=2 +0.10s
+[Image 3] boundary S=4 (a=2, b=2): direct=[6, 7] window=[4, 8, 10, 15] vit_encoded=8/26
+[Image 3] raw=26 tiles -> KV=6 tiles / 1536 tokens; dropped=20; max_resident=8 tiles
+[Image 3] selected_tile_indices=[6, 7, 10, 15]
+[Image 3] KV cache (prompt-only, analytical) = 228.1 MB (1622 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.47 GB resting_end= 17.34 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.47 GB
+
+[svma_b1536 [197~200/200]] time=3.63 sec  peak_allocated=17.367 GB  peak_reserved=17.557 GB
+  Q: What's the color of the visible vehicle in the image?
+  A: A
+  Q: What's the color of the visible vehicle in the image?
+  A: B
+  Q: What's the color of the visible vehicle in the image?
+  A: C
+  Q: What's the color of the visible vehicle in the image?
+  A: D
+
+All done in 347.7s → results/runs/hrbench_8k/svma_b1536_InternVL3_5-8B.json

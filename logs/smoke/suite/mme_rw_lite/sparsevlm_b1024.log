@@ -1,0 +1,46 @@
+  mme_rw_lite sparsevlm b1024：校準 λ=0.473
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 88.71it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 6.14 s
+[load_mme_realworld] lite: 2 題（/home/jackjou/datasets/MME-RealWorld/lite.json）
+Found 2 image(s) to process
+
+======================================================================
+[1/2] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.473) ...
+
+[sparsevlm_script_sparsevlm_generate] time=2.01 sec  peak_allocated=18.273 GB  peak_reserved=18.723 GB
+  6400 -> 1024 tokens (compression=6.25x)  stage_logs=[{'layer': 2, 'rank_p': 39, 'n_remove': 3009, 'vis_len_before': 6400, 'vis_len_after': 3482}, {'layer': 7, 'rank_p': 72, 'n_remove': 1613, 'vis_len_before': 3482, 'vis_len_after': 1918}, {'layer': 17, 'rank_p': 20, 'n_remove': 898, 'vis_len_before': 1918, 'vis_len_after': 1048, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 312.0 MB
+
+[SparseVLM Answer]
+C
+
+[Saved] results/smoke/suite/mme_rw_lite/sparsevlm_b1024_InternVL3_5-8B.json updated (0/2 images done)
+
+======================================================================
+[2/2] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.473) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.15 sec  peak_allocated=17.709 GB  peak_reserved=18.033 GB
+  3328 -> 562 tokens (compression=5.922x)  stage_logs=[{'layer': 2, 'rank_p': 26, 'n_remove': 1562, 'vis_len_before': 3328, 'vis_len_after': 1813}, {'layer': 7, 'rank_p': 83, 'n_remove': 818, 'vis_len_before': 1813, 'vis_len_after': 1020}, {'layer': 17, 'rank_p': 21, 'n_remove': 473, 'vis_len_before': 1020, 'vis_len_after': 562}]
+  [KV cache, prompt-only] 176.0 MB
+
+[SparseVLM Answer]
+B
+
+[Saved] results/smoke/suite/mme_rw_lite/sparsevlm_b1024_InternVL3_5-8B.json updated (0/2 images done)
+
+All done. Total time: 11.75 s
+Results saved to results/smoke/suite/mme_rw_lite/sparsevlm_b1024_InternVL3_5-8B.json

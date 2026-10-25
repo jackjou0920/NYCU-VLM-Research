@@ -1,0 +1,75 @@
+== test suite：25 個工作，GPUS=0 1 ==
+[10-19 00:32] GPU0 docvqa svma 2560
+[10-19 00:32] GPU1 docvqa fastv 2560
+  [error] docvqa svma b2560，看 logs/runs/docvqa/svma_b2560.log
+[10-19 00:35] GPU0 docvqa visionzip 2560
+  [error] docvqa visionzip b2560，看 logs/runs/docvqa/visionzip_b2560.log
+[10-19 00:35] GPU0 docvqa sparsevlm 2560
+  docvqa sparsevlm b2560：校準 λ=0.1
+  [error] docvqa sparsevlm b2560，看 logs/runs/docvqa/sparsevlm_b2560.log
+[10-19 00:36] GPU0 infovqa fastv 2560
+  [error] infovqa fastv b2560，看 logs/runs/infovqa/fastv_b2560.log
+[10-19 00:36] GPU0 infovqa ifprune 2560
+  [error] infovqa ifprune b2560，看 logs/runs/infovqa/ifprune_b2560.log
+[10-19 00:36] GPU0 hrbench_4k svma 2560
+  [error] hrbench_4k svma b2560，看 logs/runs/hrbench_4k/svma_b2560.log
+[10-19 00:37] GPU0 hrbench_4k visionzip 2560
+  [error] hrbench_4k visionzip b2560，看 logs/runs/hrbench_4k/visionzip_b2560.log
+[10-19 00:38] GPU0 hrbench_4k sparsevlm 2560
+  hrbench_4k sparsevlm b2560：校準 λ=0.1
+  [error] hrbench_4k sparsevlm b2560，看 logs/runs/hrbench_4k/sparsevlm_b2560.log
+[10-19 00:38] GPU0 mme_rw_lite fastv 2560
+  [error] mme_rw_lite fastv b2560，看 logs/runs/mme_rw_lite/fastv_b2560.log
+[10-19 00:38] GPU0 mme_rw_lite ifprune 2560
+  [error] mme_rw_lite ifprune b2560，看 logs/runs/mme_rw_lite/ifprune_b2560.log
+[10-19 00:38] GPU0 vstar svma 2560
+  [error] vstar svma b2560，看 logs/runs/vstar/svma_b2560.log
+[10-19 00:38] GPU0 vstar visionzip 2560
+  [error] vstar visionzip b2560，看 logs/runs/vstar/visionzip_b2560.log
+[10-19 00:38] GPU0 vstar sparsevlm 2560
+  vstar sparsevlm b2560：校準 λ=0.1
+  [error] vstar sparsevlm b2560，看 logs/runs/vstar/sparsevlm_b2560.log
+[10-19 02:30] GPU1 docvqa ifprune 2560
+[10-19 04:56] GPU1 infovqa svma 2560
+[10-19 06:03] GPU1 infovqa visionzip 2560
+[10-19 06:58] GPU1 infovqa sparsevlm 2560
+  infovqa sparsevlm b2560：校準 λ=0.1922
+[10-19 08:08] GPU1 hrbench_4k fastv 2560
+[10-19 08:28] GPU1 hrbench_4k ifprune 2560
+[10-19 08:55] GPU1 mme_rw_lite svma 2560
+[10-19 09:44] GPU1 mme_rw_lite visionzip 2560
+[10-19 10:26] GPU1 mme_rw_lite sparsevlm 2560
+  mme_rw_lite sparsevlm b2560：校準 λ=0.1922
+[10-19 11:23] GPU1 vstar fastv 2560
+[10-19 11:27] GPU1 vstar ifprune 2560
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=1536   5349   48.69                                           
+
+[saved] results/runs/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=2560   2801   57.86                                           
+
+[saved] results/runs/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=1536    200   49.00                                           
+
+[saved] results/runs/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=5120   1919   49.61   -1.98     [-3.3, -0.7]*                 
+
+[saved] results/runs/summary.csv
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  visionzip_budget=5120    191   82.20   -1.57      [-4.2, +1.1]                 
+
+[saved] results/runs/summary.csv
+[10-19 11:32] done

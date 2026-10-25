@@ -1,0 +1,17 @@
+dataset,tag,metric,n_units,score,ttft_s,kv_cache_mb,ref,delta,ci_lo,ci_hi,n_common
+hrbench_8k,uncompressed,hrbench_circular,50,58.0,,1043.7,uncompressed,,,,
+hrbench_8k,svma_b1024,hrbench_circular,50,54.0,0.626,157.4,uncompressed,-4.0,-14.0,6.0,50
+hrbench_8k,svma_b1536,hrbench_circular,50,46.0,0.721,229.4,uncompressed,-12.0,-22.0,-2.0,50
+hrbench_8k,svma_b2560,hrbench_circular,50,48.0,1.004,373.4,uncompressed,-10.0,-22.0,0.0,50
+hrbench_8k,fastv_budget=1024_k=2,hrbench_circular,50,44.0,,,uncompressed,-14.0,-26.0,-4.0,50
+hrbench_8k,fastv_budget=1536_k=2,hrbench_circular,50,50.0,,,uncompressed,-8.0,-18.0,2.0,50
+hrbench_8k,fastv_budget=2560_k=2,hrbench_circular,50,56.0,,,uncompressed,-2.0,-8.0,4.0,50
+hrbench_8k,ifprune_budget=1024_L=2,hrbench_circular,50,56.0,,,uncompressed,-2.0,-14.0,8.0,50
+hrbench_8k,ifprune_budget=1536_L=2,hrbench_circular,50,58.0,,,uncompressed,0.0,-10.0,10.0,50
+hrbench_8k,ifprune_budget=2560_L=2,hrbench_circular,50,58.0,,,uncompressed,0.0,-10.0,10.0,50
+hrbench_8k,sparsevlm_budget=1024_lam=0.5666,hrbench_circular,50,52.0,,,uncompressed,-6.0,-16.0,4.0,50
+hrbench_8k,sparsevlm_budget=1536_lam=0.3794,hrbench_circular,50,56.0,,,uncompressed,-2.0,-8.0,4.0,50
+hrbench_8k,sparsevlm_budget=2560_lam=0.1922,hrbench_circular,50,56.0,,,uncompressed,-2.0,-12.0,8.0,50
+hrbench_8k,visionzip_budget=1024,hrbench_circular,50,48.0,,,uncompressed,-10.0,-24.0,4.0,50
+hrbench_8k,visionzip_budget=1536,hrbench_circular,50,44.0,,,uncompressed,-14.0,-26.0,-2.0,50
+hrbench_8k,visionzip_budget=2560,hrbench_circular,50,52.0,,,uncompressed,-6.0,-18.0,6.0,50

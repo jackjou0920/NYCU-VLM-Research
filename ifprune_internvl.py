@@ -94,6 +94,7 @@ import os
 import time
 
 import torch
+from process_common import get_image
 import torch.nn as nn
 from huggingface_hub import hf_hub_download
 from safetensors.torch import load_file
@@ -473,7 +474,7 @@ def main():
     parser.add_argument("--run_ifprune", action="store_true", help="跑 IF-Prune")
 
     parser.add_argument("--use_ds", action="store_true", help="Use HF dataset instead of local images")
-    parser.add_argument("--dataset", type=str, default="hrbench", choices=["docvqa", "infovqa", "hrbench"],
+    parser.add_argument("--dataset", type=str, default="hrbench", choices=["docvqa", "infovqa", "hrbench", "mme_rw_lite", "vstar", "realworldqa"],
                         help="which HF dataset to load when --use_ds is set")
     parser.add_argument("--num_images", type=int, default=None, help="Number of images/questions to inference (None means all)")
     parser.add_argument("--image", type=str, default="img_datasets/4000x6000.jpg", help="image")
@@ -519,6 +520,10 @@ def main():
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
+        elif args.dataset in ("mme_rw_lite", "vstar", "realworldqa"):
+            # 大圖、圖片延遲開檔：沿用 internvl_stream 的資料集註冊（process_common.load_mme_realworld / load_vstar）
+            from internvl_stream import load_eval_dataset
+            datasets = load_eval_dataset(args.dataset, args.num_images)
         else:
             return
     else:
@@ -554,11 +559,17 @@ def main():
 
     # ── 4. 逐張處理：不同圖片 tile 數不同，序列長度天生不同，固定一次一張 ──
     for i, d in enumerate(datasets):
+        # 斷點續跑：這張圖兩邊都已經有結果就跳過（2026-10-14 補上：之前沒做完的 JSON 重跑會從第 1 張
+        # 重新 append，答案跟 meta 錯位；只動續跑邏輯，不影響方法本身）
+        need_ref = args.run_standard and len(output_results["references"]) <= i
+        need_cand = args.run_ifprune and len(output_results["candidates"].get(tag, [])) <= i
+        if not (need_ref or need_cand):
+            continue
         print(f"\n{'='*70}")
         print(f"[{i+1}/{len(datasets)}] Processing image...")
         print(f"{'='*70}")
 
-        pixel_values = load_image_tiles(d["image"], input_size=448, max_num=max(1, args.max_num - 1))
+        pixel_values = load_image_tiles(get_image(d), input_size=448, max_num=max(1, args.max_num - 1))
         print(f"  tiles = {pixel_values.shape[0]}  raw_vis_tokens = {pixel_values.shape[0] * model.num_image_token}")
 
         torch.cuda.reset_peak_memory_stats(DEVICE)
@@ -567,7 +578,7 @@ def main():
         ifprune_kv_mb = None
 
         try:
-            if args.run_standard and len(output_results["references"]) < len(datasets):
+            if need_ref:
                 _set_attn_implementation(model, baseline_attn_impl)
 
                 num_layers = model.language_model.config.num_hidden_layers
@@ -588,7 +599,7 @@ def main():
                       f"({total_len} tokens x {num_layers} layers)")
                 print(f"\n[Baseline Answer]\n{ref[0]}")
 
-            if args.run_ifprune:
+            if need_cand:
                 output_results["candidates"].setdefault(tag, [])
 
                 print(f"\n[IF-Prune] small-VLM guided pruning at layer {args.prune_layer} "

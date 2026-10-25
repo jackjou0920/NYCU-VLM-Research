@@ -1,0 +1,3221 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 88.07it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.59 s
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 92.65it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.55 s
+[load_realworldqa] 200 題（/home/jackjou/datasets/RealWorldQA/questions.json）
+Found 200 image(s) to process
+
+======================================================================
+[1/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.97 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.1 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (1/200 images done)
+
+======================================================================
+[2/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.8 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (2/200 images done)
+
+======================================================================
+[3/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (3/200 images done)
+
+======================================================================
+[4/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+green
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (4/200 images done)
+
+======================================================================
+[5/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.52 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.8 MB
+
+[VisionZip Answer]
+C.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (5/200 images done)
+
+======================================================================
+[6/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.6 MB
+
+[VisionZip Answer]
+bus
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (6/200 images done)
+
+======================================================================
+[7/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (7/200 images done)
+
+======================================================================
+[8/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (8/200 images done)
+
+======================================================================
+[9/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (9/200 images done)
+
+======================================================================
+[10/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (10/200 images done)
+
+======================================================================
+[11/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.6 MB
+
+[VisionZip Answer]
+3
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (11/200 images done)
+
+======================================================================
+[12/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.6 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (12/200 images done)
+
+======================================================================
+[13/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.549 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 232.6 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (13/200 images done)
+
+======================================================================
+[14/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (14/200 images done)
+
+======================================================================
+[15/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (15/200 images done)
+
+======================================================================
+[16/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.554 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 234.6 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (16/200 images done)
+
+======================================================================
+[17/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 226.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (17/200 images done)
+
+======================================================================
+[18/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.1 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (18/200 images done)
+
+======================================================================
+[19/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (19/200 images done)
+
+======================================================================
+[20/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.6 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (20/200 images done)
+
+======================================================================
+[21/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (21/200 images done)
+
+======================================================================
+[22/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (22/200 images done)
+
+======================================================================
+[23/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.7 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (23/200 images done)
+
+======================================================================
+[24/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.3 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (24/200 images done)
+
+======================================================================
+[25/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.545 GB  peak_reserved=17.635 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 228.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (25/200 images done)
+
+======================================================================
+[26/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (26/200 images done)
+
+======================================================================
+[27/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (27/200 images done)
+
+======================================================================
+[28/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.43 sec  peak_allocated=17.545 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 228.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (28/200 images done)
+
+======================================================================
+[29/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (29/200 images done)
+
+======================================================================
+[30/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.551 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 233.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (30/200 images done)
+
+======================================================================
+[31/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (31/200 images done)
+
+======================================================================
+[32/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (32/200 images done)
+
+======================================================================
+[33/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.43 sec  peak_allocated=17.546 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 229.6 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (33/200 images done)
+
+======================================================================
+[34/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.9 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (34/200 images done)
+
+======================================================================
+[35/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (35/200 images done)
+
+======================================================================
+[36/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (36/200 images done)
+
+======================================================================
+[37/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (37/200 images done)
+
+======================================================================
+[38/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (38/200 images done)
+
+======================================================================
+[39/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.7 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (39/200 images done)
+
+======================================================================
+[40/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.6 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (40/200 images done)
+
+======================================================================
+[41/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (41/200 images done)
+
+======================================================================
+[42/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (42/200 images done)
+
+======================================================================
+[43/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (43/200 images done)
+
+======================================================================
+[44/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.44 sec  peak_allocated=17.546 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 229.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (44/200 images done)
+
+======================================================================
+[45/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (45/200 images done)
+
+======================================================================
+[46/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (46/200 images done)
+
+======================================================================
+[47/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (47/200 images done)
+
+======================================================================
+[48/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.47 sec  peak_allocated=17.546 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 228.9 MB
+
+[VisionZip Answer]
+C.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (48/200 images done)
+
+======================================================================
+[49/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (49/200 images done)
+
+======================================================================
+[50/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (50/200 images done)
+
+======================================================================
+[51/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.47 sec  peak_allocated=17.546 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 229.1 MB
+
+[VisionZip Answer]
+C.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (51/200 images done)
+
+======================================================================
+[52/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.6 MB
+
+[VisionZip Answer]
+right
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (52/200 images done)
+
+======================================================================
+[53/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (53/200 images done)
+
+======================================================================
+[54/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.1 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (54/200 images done)
+
+======================================================================
+[55/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.45 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.8 MB
+
+[VisionZip Answer]
+No.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (55/200 images done)
+
+======================================================================
+[56/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (56/200 images done)
+
+======================================================================
+[57/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (57/200 images done)
+
+======================================================================
+[58/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+Red
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (58/200 images done)
+
+======================================================================
+[59/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.7 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (59/200 images done)
+
+======================================================================
+[60/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.1 MB
+
+[VisionZip Answer]
+yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (60/200 images done)
+
+======================================================================
+[61/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.7 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (61/200 images done)
+
+======================================================================
+[62/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.4 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (62/200 images done)
+
+======================================================================
+[63/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.6 MB
+
+[VisionZip Answer]
+yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (63/200 images done)
+
+======================================================================
+[64/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.549 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (64/200 images done)
+
+======================================================================
+[65/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.550 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 233.3 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (65/200 images done)
+
+======================================================================
+[66/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+Yellow
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (66/200 images done)
+
+======================================================================
+[67/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (67/200 images done)
+
+======================================================================
+[68/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (68/200 images done)
+
+======================================================================
+[69/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.6 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (69/200 images done)
+
+======================================================================
+[70/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.44 sec  peak_allocated=17.543 GB  peak_reserved=17.652 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 227.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (70/200 images done)
+
+======================================================================
+[71/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.42 sec  peak_allocated=17.558 GB  peak_reserved=17.664 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 234.3 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (71/200 images done)
+
+======================================================================
+[72/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+no
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (72/200 images done)
+
+======================================================================
+[73/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.550 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 233.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (73/200 images done)
+
+======================================================================
+[74/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.555 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 235.0 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (74/200 images done)
+
+======================================================================
+[75/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.52 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.8 MB
+
+[VisionZip Answer]
+C.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (75/200 images done)
+
+======================================================================
+[76/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.52 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.8 MB
+
+[VisionZip Answer]
+C.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (76/200 images done)
+
+======================================================================
+[77/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+5
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (77/200 images done)
+
+======================================================================
+[78/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (78/200 images done)
+
+======================================================================
+[79/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.4 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (79/200 images done)
+
+======================================================================
+[80/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (80/200 images done)
+
+======================================================================
+[81/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 226.4 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (81/200 images done)
+
+======================================================================
+[82/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.549 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 232.6 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (82/200 images done)
+
+======================================================================
+[83/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (83/200 images done)
+
+======================================================================
+[84/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.6 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (84/200 images done)
+
+======================================================================
+[85/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.2 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (85/200 images done)
+
+======================================================================
+[86/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (86/200 images done)
+
+======================================================================
+[87/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (87/200 images done)
+
+======================================================================
+[88/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.7 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (88/200 images done)
+
+======================================================================
+[89/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (89/200 images done)
+
+======================================================================
+[90/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.7 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (90/200 images done)
+
+======================================================================
+[91/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (91/200 images done)
+
+======================================================================
+[92/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.0 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (92/200 images done)
+
+======================================================================
+[93/200] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.83 sec  peak_allocated=17.555 GB  peak_reserved=17.635 GB
+  11008 -> 1536 tokens (compression=7.167x)  keep/tile=[35, 36]  dominant=1290  contextual=246
+  [KV cache, prompt-only] 234.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (93/200 images done)
+
+======================================================================
+[94/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.52 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.5 MB
+
+[VisionZip Answer]
+C.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (94/200 images done)
+
+======================================================================
+[95/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (95/200 images done)
+
+======================================================================
+[96/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.4 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (96/200 images done)
+
+======================================================================
+[97/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.44 sec  peak_allocated=17.545 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 228.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (97/200 images done)
+
+======================================================================
+[98/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.42 sec  peak_allocated=17.550 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 230.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (98/200 images done)
+
+======================================================================
+[99/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (99/200 images done)
+
+======================================================================
+[100/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+green
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (100/200 images done)
+
+======================================================================
+[101/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.8 MB
+
+[VisionZip Answer]
+red
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (101/200 images done)
+
+======================================================================
+[102/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (102/200 images done)
+
+======================================================================
+[103/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.44 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 230.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (103/200 images done)
+
+======================================================================
+[104/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+red
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (104/200 images done)
+
+======================================================================
+[105/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.6 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (105/200 images done)
+
+======================================================================
+[106/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.2 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (106/200 images done)
+
+======================================================================
+[107/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.44 sec  peak_allocated=17.546 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 229.2 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (107/200 images done)
+
+======================================================================
+[108/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (108/200 images done)
+
+======================================================================
+[109/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (109/200 images done)
+
+======================================================================
+[110/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.1 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (110/200 images done)
+
+======================================================================
+[111/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (111/200 images done)
+
+======================================================================
+[112/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (112/200 images done)
+
+======================================================================
+[113/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (113/200 images done)
+
+======================================================================
+[114/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.1 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (114/200 images done)
+
+======================================================================
+[115/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (115/200 images done)
+
+======================================================================
+[116/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.46 sec  peak_allocated=17.550 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 230.9 MB
+
+[VisionZip Answer]
+B.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (116/200 images done)
+
+======================================================================
+[117/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.42 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.4 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (117/200 images done)
+
+======================================================================
+[118/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.549 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 232.7 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (118/200 images done)
+
+======================================================================
+[119/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (119/200 images done)
+
+======================================================================
+[120/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.4 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (120/200 images done)
+
+======================================================================
+[121/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (121/200 images done)
+
+======================================================================
+[122/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.1 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (122/200 images done)
+
+======================================================================
+[123/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.4 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (123/200 images done)
+
+======================================================================
+[124/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (124/200 images done)
+
+======================================================================
+[125/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (125/200 images done)
+
+======================================================================
+[126/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.6 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (126/200 images done)
+
+======================================================================
+[127/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.4 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (127/200 images done)
+
+======================================================================
+[128/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.45 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+55
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (128/200 images done)
+
+======================================================================
+[129/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (129/200 images done)
+
+======================================================================
+[130/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (130/200 images done)
+
+======================================================================
+[131/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (131/200 images done)
+
+======================================================================
+[132/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.550 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 233.6 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (132/200 images done)
+
+======================================================================
+[133/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (133/200 images done)
+
+======================================================================
+[134/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.9 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (134/200 images done)
+
+======================================================================
+[135/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (135/200 images done)
+
+======================================================================
+[136/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 230.2 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (136/200 images done)
+
+======================================================================
+[137/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 226.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (137/200 images done)
+
+======================================================================
+[138/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (138/200 images done)
+
+======================================================================
+[139/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.2 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (139/200 images done)
+
+======================================================================
+[140/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (140/200 images done)
+
+======================================================================
+[141/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.52 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.5 MB
+
+[VisionZip Answer]
+C.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (141/200 images done)
+
+======================================================================
+[142/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (142/200 images done)
+
+======================================================================
+[143/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (143/200 images done)
+
+======================================================================
+[144/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+no
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (144/200 images done)
+
+======================================================================
+[145/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (145/200 images done)
+
+======================================================================
+[146/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.9 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (146/200 images done)
+
+======================================================================
+[147/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.45 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.8 MB
+
+[VisionZip Answer]
+B.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (147/200 images done)
+
+======================================================================
+[148/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (148/200 images done)
+
+======================================================================
+[149/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.6 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (149/200 images done)
+
+======================================================================
+[150/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.4 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (150/200 images done)
+
+======================================================================
+[151/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (151/200 images done)
+
+======================================================================
+[152/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.52 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.8 MB
+
+[VisionZip Answer]
+B.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (152/200 images done)
+
+======================================================================
+[153/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.549 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 232.6 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (153/200 images done)
+
+======================================================================
+[154/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.44 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 231.9 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (154/200 images done)
+
+======================================================================
+[155/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.4 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (155/200 images done)
+
+======================================================================
+[156/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (156/200 images done)
+
+======================================================================
+[157/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (157/200 images done)
+
+======================================================================
+[158/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.2 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (158/200 images done)
+
+======================================================================
+[159/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.7 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (159/200 images done)
+
+======================================================================
+[160/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.45 sec  peak_allocated=17.551 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 231.6 MB
+
+[VisionZip Answer]
+B.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (160/200 images done)
+
+======================================================================
+[161/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.8 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (161/200 images done)
+
+======================================================================
+[162/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (162/200 images done)
+
+======================================================================
+[163/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (163/200 images done)
+
+======================================================================
+[164/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.8 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (164/200 images done)
+
+======================================================================
+[165/200] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.69 sec  peak_allocated=17.547 GB  peak_reserved=17.635 GB
+  7936 -> 1536 tokens (compression=5.167x)  keep/tile=[49, 50]  dominant=1288  contextual=248
+  [KV cache, prompt-only] 230.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (165/200 images done)
+
+======================================================================
+[166/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.652 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.5 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (166/200 images done)
+
+======================================================================
+[167/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (167/200 images done)
+
+======================================================================
+[168/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.7 MB
+
+[VisionZip Answer]
+blue
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (168/200 images done)
+
+======================================================================
+[169/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (169/200 images done)
+
+======================================================================
+[170/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.545 GB  peak_reserved=17.635 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 228.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (170/200 images done)
+
+======================================================================
+[171/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (171/200 images done)
+
+======================================================================
+[172/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.2 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (172/200 images done)
+
+======================================================================
+[173/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (173/200 images done)
+
+======================================================================
+[174/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (174/200 images done)
+
+======================================================================
+[175/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.1 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (175/200 images done)
+
+======================================================================
+[176/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.549 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 232.2 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (176/200 images done)
+
+======================================================================
+[177/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (177/200 images done)
+
+======================================================================
+[178/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.8 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (178/200 images done)
+
+======================================================================
+[179/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.547 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 230.5 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (179/200 images done)
+
+======================================================================
+[180/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.548 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (180/200 images done)
+
+======================================================================
+[181/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.547 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 228.1 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (181/200 images done)
+
+======================================================================
+[182/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (182/200 images done)
+
+======================================================================
+[183/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.44 sec  peak_allocated=17.557 GB  peak_reserved=17.664 GB
+  2304 -> 1536 tokens (compression=1.5x)  keep/tile=[170, 171]  dominant=1293  contextual=243
+  [KV cache, prompt-only] 234.8 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (183/200 images done)
+
+======================================================================
+[184/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.8 MB
+
+[VisionZip Answer]
+No
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (184/200 images done)
+
+======================================================================
+[185/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.7 MB
+
+[VisionZip Answer]
+no
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (185/200 images done)
+
+======================================================================
+[186/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.546 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 229.9 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (186/200 images done)
+
+======================================================================
+[187/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.544 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.3 MB
+
+[VisionZip Answer]
+0
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (187/200 images done)
+
+======================================================================
+[188/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.545 GB  peak_reserved=17.635 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 228.4 MB
+
+[VisionZip Answer]
+B
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (188/200 images done)
+
+======================================================================
+[189/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+no
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (189/200 images done)
+
+======================================================================
+[190/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (190/200 images done)
+
+======================================================================
+[191/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.544 GB  peak_reserved=17.635 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 228.1 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (191/200 images done)
+
+======================================================================
+[192/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.53 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.2 MB
+
+[VisionZip Answer]
+A.
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (192/200 images done)
+
+======================================================================
+[193/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.8 MB
+
+[VisionZip Answer]
+Yes
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (193/200 images done)
+
+======================================================================
+[194/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 227.1 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (194/200 images done)
+
+======================================================================
+[195/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.49 sec  peak_allocated=17.551 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 233.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (195/200 images done)
+
+======================================================================
+[196/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.546 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 225.0 MB
+
+[VisionZip Answer]
+2
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (196/200 images done)
+
+======================================================================
+[197/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.545 GB  peak_reserved=17.650 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 224.9 MB
+
+[VisionZip Answer]
+1
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (197/200 images done)
+
+======================================================================
+[198/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 229.9 MB
+
+[VisionZip Answer]
+A
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (198/200 images done)
+
+======================================================================
+[199/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.48 sec  peak_allocated=17.548 GB  peak_reserved=17.637 GB
+  3328 -> 1536 tokens (compression=2.167x)  keep/tile=[118, 119]  dominant=1300  contextual=236
+  [KV cache, prompt-only] 231.5 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (199/200 images done)
+
+======================================================================
+[200/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[VisionZip] dominant + contextual per tile (total keep=1536) ...
+
+[visionzip_script_visionzip_generate] time=0.41 sec  peak_allocated=17.549 GB  peak_reserved=17.662 GB
+  1792 -> 1536 tokens (compression=1.167x)  keep/tile=[219, 220]  dominant=1298  contextual=238
+  [KV cache, prompt-only] 230.1 MB
+
+[VisionZip Answer]
+C
+
+[Saved] results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json updated (200/200 images done)
+
+All done. Total time: 139.05 s
+Results saved to results/runs/realworldqa/visionzip_b1536_InternVL3_5-8B.json

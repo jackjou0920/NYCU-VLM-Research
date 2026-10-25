@@ -60,6 +60,7 @@ import os
 import time
 
 import torch
+from process_common import get_image
 import torch.nn.functional as F
 from transformers.cache_utils import DynamicCache
 from transformers.masking_utils import create_causal_mask
@@ -378,6 +379,14 @@ def generate_sparsevlm(
     return answer, stats
 
 
+def budget_lam(raw_vis_tokens: int, budget: int, lam: float) -> float:
+    """實驗流程的 budget 規則（不是 SparseVLM 演算法的一部分）：原圖 token 數 <= budget 時不剪枝（λ = 0），
+    跟其他方法的 final = min(budget, raw) 一致。Eq.7 的剔除數 λ(L_v - rank(P)) 跟 budget 無關，固定 λ 下
+    小圖會被剪到遠低於 budget（DocVQA b4096：不需壓縮的 43% 題目 91.0 → 75.9）。官方實驗的圖都是固定
+    576 token、一定超過 budget，所以官方碼沒有這個情況。2026-10-14 使用者同意採用，論文附錄要註明。"""
+    return 0.0 if raw_vis_tokens <= budget else lam
+
+
 # ──────────────────────────────────────────────────────────────────────────
 # 自動校準 λ：讓 Eq.7 的 3-stage 漸進剪枝『自然』壓到接近 budget，公平代表
 # SparseVLM 本身的機制（不是靠 generate_sparsevlm() 最後那步保底硬裁切在
@@ -503,7 +512,7 @@ def main():
     )
 
     parser.add_argument("--use_ds", action="store_true", help="Use HF dataset instead of local images")
-    parser.add_argument("--dataset", type=str, default="hrbench", choices=["docvqa", "infovqa", "hrbench"],
+    parser.add_argument("--dataset", type=str, default="hrbench", choices=["docvqa", "infovqa", "hrbench", "mme_rw_lite", "vstar", "realworldqa"],
                         help="which HF dataset to load when --use_ds is set")
     parser.add_argument("--num_images", type=int, default=None, help="Number of images/questions to inference (None means all)")
     parser.add_argument("--image", type=str, default="img_datasets/4000x6000.jpg", help="image")
@@ -542,6 +551,10 @@ def main():
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
+        elif args.dataset in ("mme_rw_lite", "vstar", "realworldqa"):
+            # 大圖、圖片延遲開檔：沿用 internvl_stream 的資料集註冊（process_common.load_mme_realworld / load_vstar）
+            from internvl_stream import load_eval_dataset
+            datasets = load_eval_dataset(args.dataset, args.num_images)
         else:
             return
     else:
@@ -551,7 +564,7 @@ def main():
 
     if args.probe_lam:
         d = datasets[0]
-        pixel_values = load_image_tiles(d["image"], input_size=448, max_num=max(1, args.max_num - 1))
+        pixel_values = load_image_tiles(get_image(d), input_size=448, max_num=max(1, args.max_num - 1))
         print(f"\n[probe_lam] tiles={pixel_values.shape[0]}, "
               f"raw_vis_tokens={pixel_values.shape[0] * model.num_image_token}")
         for lam in (float(x) for x in args.probe_lam.split(",")):
@@ -598,11 +611,17 @@ def main():
     #        圖片剪完的序列長度天生不同，沒辦法像 internvl_stream.py 那樣同批
     #        padding 對齊，所以這裡固定一次一張（batch_size 恆為 1）──
     for i, d in enumerate(datasets):
+        # 斷點續跑：這張圖兩邊都已經有結果就跳過（2026-10-14 補上：之前沒做完的 JSON 重跑會從第 1 張
+        # 重新 append，答案跟 meta 錯位；只動續跑邏輯，不影響方法本身）
+        need_ref = args.run_standard and len(output_results["references"]) <= i
+        need_cand = args.run_sparsevlm and len(output_results["candidates"].get(tag, [])) <= i
+        if not (need_ref or need_cand):
+            continue
         print(f"\n{'='*70}")
         print(f"[{i+1}/{len(datasets)}] Processing image...")
         print(f"{'='*70}")
 
-        pixel_values = load_image_tiles(d["image"], input_size=448, max_num=max(1, args.max_num - 1))
+        pixel_values = load_image_tiles(get_image(d), input_size=448, max_num=max(1, args.max_num - 1))
         print(f"  tiles = {pixel_values.shape[0]}  raw_vis_tokens = {pixel_values.shape[0] * model.num_image_token}")
 
         torch.cuda.reset_peak_memory_stats(DEVICE)
@@ -611,7 +630,7 @@ def main():
         sparsevlm_kv_mb = None
 
         try:
-            if args.run_standard and len(output_results["references"]) < len(datasets):
+            if need_ref:
                 _set_attn_implementation(model, baseline_attn_impl)   # 跟你原本 pipeline 用同一種 attention 後端
 
                 # prompt-only KV cache（生成任何 token 之前）：baseline 是黑盒的
@@ -637,7 +656,7 @@ def main():
                       f"({total_len} tokens x {num_layers} layers)")
                 print(f"\n[Baseline Answer]\n{ref[0]}")
 
-            if args.run_sparsevlm:
+            if need_cand:
                 # 不在這裡整段切 eager：sparsevlm_prefill() 內部只在真正呼叫
                 # pruning_loc 那幾層 self_attn 的當下切，其餘層維持目前的
                 # attn_implementation（此刻是 baseline_attn_impl）。
@@ -657,6 +676,10 @@ def main():
                         print(f"  [auto_lam] skip (raw tokens {calib_log[0]['raw_len']} <= threshold), lam={lam:.4g}")
                     else:
                         print(f"  [auto_lam] chosen lam={lam:.4g}  calib_log={calib_log}")
+                raw_tokens = pixel_values.shape[0] * model.num_image_token
+                if budget_lam(raw_tokens, args.budget, lam) != lam:
+                    print(f"  [budget] raw tokens {raw_tokens} <= budget {args.budget}：不剪枝（λ=0）")
+                    lam = 0.0
 
                 print(f"\n[SparseVLM] Running layer-wise progressive pruning (lam={lam:.4g}) ...")
                 with measure_peak_memory("sparsevlm_script_sparsevlm_generate"):

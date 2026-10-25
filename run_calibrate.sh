@@ -10,6 +10,7 @@
 # 用法：
 #   ./run_calibrate.sh                                   # 階段 A，預設校準集與 budget
 #   STAGE=S ./run_calibrate.sh                          # 階段 B，m = floor(M_FRAC * K)，M_FRAC 預設 0.5
+#   STAGE=G GRID_FRACS="0.3 0.4 0.5" ./run_calibrate.sh  # 3b：打分窗口隨細節網格放大（--qattn_grid_frac），m、S 用預設
 #   CALIB_SETS="infovqa_train_calib" BUDGETS="1024 2048" GPUS="0 1" ./run_calibrate.sh
 # ─────────────────────────────────────────────────────────────────────────────
 set -uo pipefail
@@ -21,6 +22,7 @@ read -r -a CALIB_SETS <<< "${CALIB_SETS:-infovqa_train_calib}"
 read -r -a BUDGETS <<< "${BUDGETS:-1024 1536 2048 2560 3072}"
 read -r -a GPUS <<< "${GPUS:-}"
 M_FRAC=${M_FRAC:-0.5}
+read -r -a GRID_FRACS <<< "${GRID_FRACS:-0.3 0.4 0.5}"
 BATCH=${BATCH:-4}
 OUT_ROOT=results/calib
 LOG_ROOT=logs/calib
@@ -35,10 +37,11 @@ s = default_qattn_tiles($1, $2)
 # 預設 S 本身不再跑：階段 A 的 svma_b<B>_m<m>（m = floor(M_FRAC*K)）就是同一組設定
 print(' '.join(map(str, sorted({0, s // 2, s, (3 * s) // 2, 2 * s} - {s}))))"; }
 
-run_one() {   # $1 dataset $2 budget $3 m $4 S(可空)
-    local ds=$1 b=$2 m=$3 S=${4:-} tag extra json log
+run_one() {   # $1 dataset $2 budget $3 m $4 S（可空，"-" = 預設）$5 grid_frac（可空）
+    local ds=$1 b=$2 m=$3 S=${4:-} gf=${5:-} tag extra json log
     tag="svma_b${b}_m${m}"; extra="--coverage_tiles $m"
-    if [ -n "$S" ]; then tag="${tag}_S${S}"; extra="$extra --qattn_tiles $S"; fi
+    if [ -n "$S" ] && [ "$S" != "-" ]; then tag="${tag}_S${S}"; extra="$extra --qattn_tiles $S"; fi
+    if [ -n "$gf" ]; then tag="${tag}_gf${gf}"; extra="$extra --qattn_grid_frac $gf"; fi
     json="$OUT_ROOT/$ds/${tag}_${MTAG}.json"; log="$LOG_ROOT/$ds/${tag}.log"
     mkdir -p "$OUT_ROOT/$ds" "$LOG_ROOT/$ds"
     echo "[$(date '+%m-%d %H:%M')] $ds $tag"
@@ -53,6 +56,9 @@ for ds in "${CALIB_SETS[@]}"; do
     for b in "${BUDGETS[@]}"; do
         if [ "$STAGE" = m ]; then
             for m in $(m_grid "$b"); do jobs+=("$ds $b $m"); done
+        elif [ "$STAGE" = G ]; then
+            m=$($PY -c "print(max(1, int($b // 256 * $M_FRAC)))")
+            for gf in "${GRID_FRACS[@]}"; do jobs+=("$ds $b $m - $gf"); done
         else
             m=$($PY -c "print(max(1, int($b // 256 * $M_FRAC)))")
             for S in $(s_grid "$b" "$m"); do jobs+=("$ds $b $m $S"); done

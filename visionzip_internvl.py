@@ -94,6 +94,7 @@ import os
 import time
 
 import torch
+from process_common import get_image
 import torch.nn.functional as F
 
 from internvl_stream import (
@@ -387,7 +388,7 @@ def main():
     parser.add_argument("--run_visionzip", action="store_true", help="跑 VisionZip")
 
     parser.add_argument("--use_ds", action="store_true", help="Use HF dataset instead of local images")
-    parser.add_argument("--dataset", type=str, default="hrbench", choices=["docvqa", "infovqa", "hrbench"],
+    parser.add_argument("--dataset", type=str, default="hrbench", choices=["docvqa", "infovqa", "hrbench", "mme_rw_lite", "vstar", "realworldqa"],
                         help="which HF dataset to load when --use_ds is set")
     parser.add_argument("--num_images", type=int, default=None, help="Number of images/questions to inference (None means all)")
     parser.add_argument("--image", type=str, default="img_datasets/4000x6000.jpg", help="image")
@@ -423,6 +424,10 @@ def main():
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
+        elif args.dataset in ("mme_rw_lite", "vstar", "realworldqa"):
+            # 大圖、圖片延遲開檔：沿用 internvl_stream 的資料集註冊（process_common.load_mme_realworld / load_vstar）
+            from internvl_stream import load_eval_dataset
+            datasets = load_eval_dataset(args.dataset, args.num_images)
         else:
             return
     else:
@@ -470,7 +475,7 @@ def main():
         print(f"[{i+1}/{len(datasets)}] Processing image...")
         print(f"{'='*70}")
 
-        pixel_values = load_image_tiles(d["image"], input_size=448, max_num=max(1, args.max_num - 1))
+        pixel_values = load_image_tiles(get_image(d), input_size=448, max_num=max(1, args.max_num - 1))
         print(f"  tiles = {pixel_values.shape[0]}  raw_vis_tokens = {pixel_values.shape[0] * model.num_image_token}")
 
         torch.cuda.reset_peak_memory_stats(DEVICE)

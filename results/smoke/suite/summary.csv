@@ -1,0 +1,7 @@
+dataset,tag,metric,n_units,score,ttft_s,kv_cache_mb,ref,delta,ci_lo,ci_hi,n_common
+mme_rw_lite,uncompressed,mc_accuracy,2,100.0,,706.2,uncompressed,,,,
+mme_rw_lite,svma_b1024,mc_accuracy,2,50.0,1.685,166.2,uncompressed,-50.0,-100.0,0.0,2
+mme_rw_lite,fastv_budget=1024_k=2,mc_accuracy,2,100.0,,,uncompressed,0.0,0.0,0.0,2
+mme_rw_lite,ifprune_budget=1024_L=2,mc_accuracy,2,100.0,,,uncompressed,0.0,0.0,0.0,2
+mme_rw_lite,sparsevlm_budget=1024_lam=0.473,mc_accuracy,2,50.0,,,uncompressed,-50.0,-100.0,0.0,2
+mme_rw_lite,visionzip_budget=1024,mc_accuracy,2,100.0,,,uncompressed,0.0,0.0,0.0,2

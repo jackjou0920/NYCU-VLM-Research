@@ -1,0 +1,18 @@
+[load_vstar] 2 題（/home/jackjou/datasets/vstar_bench/test_questions.jsonl）
+[uncompressed] vstar: 2 題，從第 1 題開始 → results/smoke/suite/vstar/uncompressed_InternVL3_5-8B.json
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 88.25it/s]
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+model loaded in 6.5s, peak alloc 17.06 GB
+
+[uncompressed [1~1/2]] time=2.12 sec  peak_allocated=17.980 GB  peak_reserved=18.428 GB
+  Q: What is the material of the glove?
+  A: A
+
+[uncompressed [2~2/2]] time=2.61 sec  peak_allocated=18.802 GB  peak_reserved=19.285 GB
+  Q: What is the color of the dustpan?
+  A: C
+
+All done in 11.8s → results/smoke/suite/vstar/uncompressed_InternVL3_5-8B.json

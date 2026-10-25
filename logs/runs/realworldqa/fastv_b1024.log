@@ -1,0 +1,3221 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 84.47it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.67 s
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 84.82it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.53 s
+[load_realworldqa] 200 題（/home/jackjou/datasets/RealWorldQA/questions.json）
+Found 200 image(s) to process
+
+======================================================================
+[1/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.91 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.1 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[2/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.8 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[3/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[4/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+green
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[5/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.48 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.8 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[6/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.6 MB
+
+[FastV Answer]
+bus
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[7/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.5 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[8/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[9/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.395 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.9 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[10/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.42 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.2 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[11/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.6 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[12/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.399 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.6 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[13/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.664 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 178.6 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[14/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.5 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[15/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[16/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.669 GB  peak_reserved=17.945 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 180.6 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[17/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 160.8 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[18/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.1 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[19/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.395 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.9 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[20/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.6 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[21/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.4 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[22/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[23/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.7 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[24/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.42 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.3 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[25/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.42 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 174.9 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[26/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[27/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.1 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[28/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.37 sec  peak_allocated=17.482 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 166.7 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[29/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.48 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.8 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[30/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.665 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 179.9 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[31/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[32/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[33/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.37 sec  peak_allocated=17.483 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 167.6 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[34/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.42 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.9 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[35/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.42 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[36/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.2 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[37/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+3
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[38/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.42 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.2 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[39/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.7 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[40/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.6 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[41/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[42/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.398 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.2 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[43/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.4 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[44/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.37 sec  peak_allocated=17.483 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 167.4 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[45/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[46/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[47/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.7 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[48/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.483 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 166.9 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[49/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[50/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.4 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[51/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.483 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 167.1 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[52/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.6 MB
+
+[FastV Answer]
+right
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[53/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[54/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.1 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[55/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.40 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.8 MB
+
+[FastV Answer]
+No.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[56/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+no
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[57/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[58/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+green
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[59/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.7 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[60/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.1 MB
+
+[FastV Answer]
+yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[61/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.7 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[62/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.4 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[63/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.34 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.6 MB
+
+[FastV Answer]
+yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[64/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.46 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.9 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[65/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.664 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 179.3 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[66/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+Yellow
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[67/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.48 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.1 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[68/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.9 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[69/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.6 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[70/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.38 sec  peak_allocated=17.482 GB  peak_reserved=17.740 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 165.9 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[71/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.36 sec  peak_allocated=17.408 GB  peak_reserved=17.652 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 168.3 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[72/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+no
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[73/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.664 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 179.2 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[74/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.669 GB  peak_reserved=17.945 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 181.0 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[75/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.48 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.8 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[76/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.48 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.8 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[77/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+5
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[78/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[79/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.4 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[80/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[81/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 160.4 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[82/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.664 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 178.6 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[83/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.5 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[84/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.6 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[85/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.2 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[86/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[87/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[88/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.7 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[89/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[90/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.7 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[91/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.4 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[92/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.0 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[93/200] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.84 sec  peak_allocated=18.996 GB  peak_reserved=19.606 GB
+  11008 -> 1024 tokens (compression=10.75x)  debug_stats={'vis_len_before': 11008, 'vis_len_after': 1024, 'dropped': 9984}
+  [KV cache, prompt-only] 240.7 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[94/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.49 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.5 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[95/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.2 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[96/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.4 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[97/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.37 sec  peak_allocated=17.482 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 166.1 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[98/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.403 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 164.9 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[99/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[100/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+green
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[101/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.8 MB
+
+[FastV Answer]
+Red
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[102/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[103/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.38 sec  peak_allocated=17.484 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 168.5 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[104/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+red
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[105/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.6 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[106/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.2 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[107/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.38 sec  peak_allocated=17.483 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 167.2 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[108/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.8 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[109/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[110/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.1 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[111/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[112/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.398 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.2 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[113/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.395 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.9 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[114/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.1 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[115/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.398 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.4 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[116/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.41 sec  peak_allocated=17.403 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 164.9 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[117/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.4 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[118/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.664 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 178.7 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[119/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.1 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[120/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.4 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[121/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.9 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[122/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.1 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[123/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.4 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[124/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[125/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[126/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.6 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[127/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.4 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[128/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[129/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[130/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[131/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[132/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.665 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 179.6 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[133/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.8 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[134/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.395 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.9 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[135/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.398 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.2 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[136/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.399 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 164.2 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[137/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 160.8 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[138/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[139/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.2 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[140/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[141/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.49 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.5 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[142/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.41 sec  peak_allocated=17.399 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.8 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[143/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[144/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+no
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[145/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[146/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.41 sec  peak_allocated=17.399 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.9 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[147/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.41 sec  peak_allocated=17.399 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.8 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[148/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.36 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.8 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[149/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.6 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[150/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.4 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[151/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.5 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[152/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.49 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.8 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[153/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.664 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 178.6 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[154/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.38 sec  peak_allocated=17.488 GB  peak_reserved=17.748 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 169.9 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[155/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.4 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[156/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.5 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[157/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[158/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.2 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[159/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.7 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[160/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.41 sec  peak_allocated=17.404 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 165.6 MB
+
+[FastV Answer]
+B.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[161/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.8 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[162/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[163/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[164/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.8 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[165/200] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.67 sec  peak_allocated=18.456 GB  peak_reserved=18.983 GB
+  7936 -> 1024 tokens (compression=7.75x)  debug_stats={'vis_len_before': 7936, 'vis_len_after': 1024, 'dropped': 6912}
+  [KV cache, prompt-only] 212.5 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[166/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.394 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.5 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[167/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.1 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[168/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.7 MB
+
+[FastV Answer]
+blue
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[169/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.8 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[170/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.660 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 174.4 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[171/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[172/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.49 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.2 MB
+
+[FastV Answer]
+C.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[173/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.8 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[174/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[175/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.1 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[176/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.664 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 178.2 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[177/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[178/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.8 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[179/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 176.5 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[180/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.397 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.8 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[181/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.36 sec  peak_allocated=17.396 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 162.1 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[182/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.661 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.8 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[183/200] Processing image...
+======================================================================
+  tiles = 9  raw_vis_tokens = 2304
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.39 sec  peak_allocated=17.493 GB  peak_reserved=17.752 GB
+  2304 -> 1024 tokens (compression=2.25x)  debug_stats={'vis_len_before': 2304, 'vis_len_after': 1024, 'dropped': 1280}
+  [KV cache, prompt-only] 172.8 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[184/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.8 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[185/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.7 MB
+
+[FastV Answer]
+No
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[186/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.662 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 175.9 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[187/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.3 MB
+
+[FastV Answer]
+0
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[188/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.660 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 174.4 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[189/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+no
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[190/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[191/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.43 sec  peak_allocated=17.660 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 174.1 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[192/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.49 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.2 MB
+
+[FastV Answer]
+A.
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[193/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.8 MB
+
+[FastV Answer]
+Yes
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[194/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.36 sec  peak_allocated=17.393 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 161.1 MB
+
+[FastV Answer]
+B
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[195/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.44 sec  peak_allocated=17.665 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 179.9 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[196/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.392 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 159.0 MB
+
+[FastV Answer]
+2
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[197/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.391 GB  peak_reserved=17.641 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 158.9 MB
+
+[FastV Answer]
+1
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[198/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.36 sec  peak_allocated=17.399 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 163.9 MB
+
+[FastV Answer]
+A
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[199/200] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.45 sec  peak_allocated=17.663 GB  peak_reserved=17.939 GB
+  3328 -> 1024 tokens (compression=3.25x)  debug_stats={'vis_len_before': 3328, 'vis_len_after': 1024, 'dropped': 2304}
+  [KV cache, prompt-only] 177.5 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+======================================================================
+[200/200] Processing image...
+======================================================================
+  tiles = 7  raw_vis_tokens = 1792
+
+[FastV] Running one-shot pruning at layer 2 (keep=1024) ...
+
+[fastv_script_fastv_generate] time=0.35 sec  peak_allocated=17.399 GB  peak_reserved=17.650 GB
+  1792 -> 1024 tokens (compression=1.75x)  debug_stats={'vis_len_before': 1792, 'vis_len_after': 1024, 'dropped': 768}
+  [KV cache, prompt-only] 164.1 MB
+
+[FastV Answer]
+C
+
+[Saved] results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json updated (0/200 images done)
+
+All done. Total time: 130.73 s
+Results saved to results/runs/realworldqa/fastv_b1024_InternVL3_5-8B.json

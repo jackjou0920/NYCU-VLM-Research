@@ -1,0 +1,53 @@
+device=cuda:0  model=OpenGVLab/InternVL3_5-8B  dataset=hrbench_8k
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 94.58it/s]
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+model loaded, peak_alloc=17.06 GB  num_image_token=256
+prompt_mode: letter
+[load_hrbench] DreamMr/HR-Bench:hrbench_8k (prompt_mode=letter) -> kept 2, skipped 0 (no image)
+
+================================================================================
+[Image 0] detail=(2, 3) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0, 1] window=[2, 3, 4, 5] vit_encoded=8/8
+[Image 0] raw=8 tiles -> KV=6 tiles / 1536 tokens; dropped=2; max_resident=8 tiles
+[Image 0] selected_tile_indices=[0, 1, 2, 3]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+
+================================================================================
+[Image 0] detail=(2, 3) cover=(1, 2) budget=1536 S=4
+================================================================================
+[Image 0] coverage prior: m=2 +0.10s
+[Image 0] boundary S=4 (a=2, b=2): direct=[0, 1] window=[2, 3, 4, 5] vit_encoded=8/8
+[Image 0] raw=8 tiles -> KV=6 tiles / 1536 tokens; dropped=2; max_resident=8 tiles
+[Image 0] selected_tile_indices=[0, 1, 2, 3]
+[Image 0] KV cache (prompt-only, analytical) = 230.1 MB (1636 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.48 GB resting_end= 17.35 GB transient=+ 0.13 GB
+  Decode             peak= 17.37 GB resting_end= 17.35 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.48 GB
+  [2/2] done  (raw_tiles=7)
+
+=== metrics  model=OpenGVLab/InternVL3_5-8B  hrbench_8k  (2 imgs, svma m=floor(COVERAGE_FRAC*K), S=default_qattn_tiles(b, m)) ===
+method               raw_tiles  TTFT med s   Δmem GB  KV cache MB   ViT TF   LLM TF  total TF
+---------------------------------------------------------------------------------------------
+uncompressed             7.000       0.405     0.528      266.062    5.177   27.339    32.516
+stream_b1536             7.000       0.692     0.420      230.060    5.916   40.264    46.180
+      TTFT 分段：text_prefill=0.046  cover_vit=0.022  prior=0.096  detail_vit=0.074  qattn=0.129  kv_commit=0.281  first_token=0.042
+  stream_b1536   Δkv_cache=-36.0 MB  (-13.5%)
+  stream_b1536   Δpeak_alloc=-0.11 GB  (-0.6%)   ΔTTFT=+0.287 s (+70.9%)
+
+[saved] results/smoke/scal/metrics_n13_uncompressed.csv

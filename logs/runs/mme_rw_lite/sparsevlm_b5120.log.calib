@@ -1,0 +1,493 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 90.37it/s]
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+Load model time: 5.50 s
+[load_mme_realworld] lite: 32 題（/home/jackjou/datasets/MME-RealWorld/lite.json）
+Found 32 image(s) to process
+
+======================================================================
+[1/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.82 sec  peak_allocated=19.087 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 39, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 81, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 17, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.2 MB
+
+[SparseVLM Answer]
+A
+
+======================================================================
+[2/32] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+  [auto_lam] skip (raw tokens 3328 <= threshold), lam=0.005
+  [budget] raw tokens 3328 <= budget 5120：不剪枝（λ=0）
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0) ...
+
+[sparsevlm_script_sparsevlm_generate] time=0.77 sec  peak_allocated=18.270 GB  peak_reserved=18.635 GB
+  3328 -> 3328 tokens (compression=1.0x)  stage_logs=[{'layer': 2, 'rank_p': 26, 'n_remove': 0, 'vis_len_before': 3328, 'vis_len_after': 3328}, {'layer': 7, 'rank_p': 82, 'n_remove': 0, 'vis_len_before': 3328, 'vis_len_after': 3328}, {'layer': 17, 'rank_p': 21, 'n_remove': 0, 'vis_len_before': 3328, 'vis_len_after': 3328}]
+  [KV cache, prompt-only] 490.2 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[3/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.34 sec  peak_allocated=19.108 GB  peak_reserved=19.730 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 51, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 86, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 30, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 831.4 MB
+
+[SparseVLM Answer]
+A
+
+======================================================================
+[4/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.34 sec  peak_allocated=19.099 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 42, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 85, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 20, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 830.5 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[5/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 8}, {'lam': 0.7537499999999999, 'organic_len': 227}, {'lam': 0.37937499999999996, 'organic_len': 2434}, {'lam': 0.19218749999999998, 'organic_len': 5127}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.57 sec  peak_allocated=19.235 GB  peak_reserved=20.456 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 49, 'n_remove': 1811, 'vis_len_before': 9472, 'vis_len_after': 7716}, {'layer': 7, 'rank_p': 95, 'n_remove': 1465, 'vis_len_before': 7716, 'vis_len_after': 6296}, {'layer': 17, 'rank_p': 22, 'n_remove': 1206, 'vis_len_before': 6296, 'vis_len_after': 5127, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 891.4 MB
+
+[SparseVLM Answer]
+C
+
+======================================================================
+[6/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 5}, {'lam': 1.5025, 'organic_len': 8}, {'lam': 0.7537499999999999, 'organic_len': 219}, {'lam': 0.37937499999999996, 'organic_len': 2425}, {'lam': 0.19218749999999998, 'organic_len': 5126}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.57 sec  peak_allocated=19.231 GB  peak_reserved=20.351 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 58, 'n_remove': 1809, 'vis_len_before': 9472, 'vis_len_after': 7718}, {'layer': 7, 'rank_p': 86, 'n_remove': 1467, 'vis_len_before': 7718, 'vis_len_after': 6296}, {'layer': 17, 'rank_p': 15, 'n_remove': 1207, 'vis_len_before': 6296, 'vis_len_after': 5126, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 890.2 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[7/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.34 sec  peak_allocated=19.088 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 41, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 83, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 11, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.0 MB
+
+[SparseVLM Answer]
+C
+
+======================================================================
+[8/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.34 sec  peak_allocated=19.091 GB  peak_reserved=19.835 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 39, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 73, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 21, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.5 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[9/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 5}, {'lam': 0.7537499999999999, 'organic_len': 223}, {'lam': 0.37937499999999996, 'organic_len': 2424}, {'lam': 0.19218749999999998, 'organic_len': 5124}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.57 sec  peak_allocated=19.226 GB  peak_reserved=20.351 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 49, 'n_remove': 1811, 'vis_len_before': 9472, 'vis_len_after': 7716}, {'layer': 7, 'rank_p': 76, 'n_remove': 1468, 'vis_len_before': 7716, 'vis_len_after': 6293}, {'layer': 17, 'rank_p': 17, 'n_remove': 1206, 'vis_len_before': 6293, 'vis_len_after': 5124, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 889.6 MB
+
+[SparseVLM Answer]
+C
+
+======================================================================
+[10/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.084 GB  peak_reserved=19.606 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 42, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 71, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 10, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 828.6 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[11/32] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 10851}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 5}, {'lam': 0.7537499999999999, 'organic_len': 247}, {'lam': 0.37937499999999996, 'organic_len': 2811}, {'lam': 0.19218749999999998, 'organic_len': 5952}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.77 sec  peak_allocated=19.410 GB  peak_reserved=20.649 GB
+  11008 -> 5120 tokens (compression=2.15x)  stage_logs=[{'layer': 2, 'rank_p': 59, 'n_remove': 2104, 'vis_len_before': 11008, 'vis_len_after': 8968}, {'layer': 7, 'rank_p': 75, 'n_remove': 1709, 'vis_len_before': 8968, 'vis_len_after': 7311}, {'layer': 17, 'rank_p': 18, 'n_remove': 1402, 'vis_len_before': 7311, 'vis_len_after': 5952, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 972.0 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[12/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.096 GB  peak_reserved=19.705 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 54, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 86, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 21, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.9 MB
+
+[SparseVLM Answer]
+C
+
+======================================================================
+[13/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.089 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 50, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 84, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 22, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.2 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[14/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 6}, {'lam': 0.7537499999999999, 'organic_len': 226}, {'lam': 0.37937499999999996, 'organic_len': 2429}, {'lam': 0.19218749999999998, 'organic_len': 5126}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.58 sec  peak_allocated=19.231 GB  peak_reserved=20.221 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 50, 'n_remove': 1811, 'vis_len_before': 9472, 'vis_len_after': 7716}, {'layer': 7, 'rank_p': 89, 'n_remove': 1466, 'vis_len_before': 7716, 'vis_len_after': 6295}, {'layer': 17, 'rank_p': 20, 'n_remove': 1206, 'vis_len_before': 6295, 'vis_len_after': 5126, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 890.5 MB
+
+[SparseVLM Answer]
+A
+
+======================================================================
+[15/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.092 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 54, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 86, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 21, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.6 MB
+
+[SparseVLM Answer]
+A
+
+======================================================================
+[16/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.36 sec  peak_allocated=19.111 GB  peak_reserved=19.730 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 39, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 99, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 22, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 831.7 MB
+
+[SparseVLM Answer]
+A
+
+======================================================================
+[17/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.080 GB  peak_reserved=19.606 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 30, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 69, 'n_remove': 32, 'vis_len_before': 6370, 'vis_len_after': 6340}, {'layer': 17, 'rank_p': 19, 'n_remove': 32, 'vis_len_before': 6340, 'vis_len_after': 6310, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 828.2 MB
+
+[SparseVLM Answer]
+C
+
+======================================================================
+[18/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.097 GB  peak_reserved=19.606 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 43, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 87, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 16, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 830.2 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[19/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.089 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 41, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 77, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 18, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.2 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[20/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 6}, {'lam': 0.7537499999999999, 'organic_len': 219}, {'lam': 0.37937499999999996, 'organic_len': 2427}, {'lam': 0.19218749999999998, 'organic_len': 5125}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.58 sec  peak_allocated=19.225 GB  peak_reserved=20.221 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 48, 'n_remove': 1811, 'vis_len_before': 9472, 'vis_len_after': 7716}, {'layer': 7, 'rank_p': 85, 'n_remove': 1467, 'vis_len_before': 7716, 'vis_len_after': 6294}, {'layer': 17, 'rank_p': 19, 'n_remove': 1206, 'vis_len_before': 6294, 'vis_len_after': 5125, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 889.9 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[21/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 5}, {'lam': 0.7537499999999999, 'organic_len': 222}, {'lam': 0.37937499999999996, 'organic_len': 2427}, {'lam': 0.19218749999999998, 'organic_len': 5126}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.58 sec  peak_allocated=19.225 GB  peak_reserved=20.221 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 57, 'n_remove': 1809, 'vis_len_before': 9472, 'vis_len_after': 7718}, {'layer': 7, 'rank_p': 88, 'n_remove': 1466, 'vis_len_before': 7718, 'vis_len_after': 6297}, {'layer': 17, 'rank_p': 11, 'n_remove': 1208, 'vis_len_before': 6297, 'vis_len_after': 5126, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 889.9 MB
+
+[SparseVLM Answer]
+C
+
+======================================================================
+[22/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 5}, {'lam': 0.7537499999999999, 'organic_len': 218}, {'lam': 0.37937499999999996, 'organic_len': 2425}, {'lam': 0.19218749999999998, 'organic_len': 5119}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.58 sec  peak_allocated=19.218 GB  peak_reserved=20.219 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 51, 'n_remove': 1811, 'vis_len_before': 9472, 'vis_len_after': 7716}, {'layer': 7, 'rank_p': 54, 'n_remove': 1473, 'vis_len_before': 7716, 'vis_len_after': 6288}, {'layer': 17, 'rank_p': 16, 'n_remove': 1205, 'vis_len_before': 6288, 'vis_len_after': 5120}]
+  [KV cache, prompt-only] 888.8 MB
+
+[SparseVLM Answer]
+A
+
+======================================================================
+[23/32] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 10851}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 5}, {'lam': 0.7537499999999999, 'organic_len': 248}, {'lam': 0.37937499999999996, 'organic_len': 2805}, {'lam': 0.19218749999999998, 'organic_len': 5947}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.79 sec  peak_allocated=19.409 GB  peak_reserved=20.649 GB
+  11008 -> 5120 tokens (compression=2.15x)  stage_logs=[{'layer': 2, 'rank_p': 29, 'n_remove': 2110, 'vis_len_before': 11008, 'vis_len_after': 8962}, {'layer': 7, 'rank_p': 62, 'n_remove': 1710, 'vis_len_before': 8962, 'vis_len_after': 7304}, {'layer': 17, 'rank_p': 18, 'n_remove': 1400, 'vis_len_before': 7304, 'vis_len_after': 5947, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 971.4 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[24/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.085 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 47, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 85, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 21, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 828.9 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[25/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 6}, {'lam': 0.7537499999999999, 'organic_len': 224}, {'lam': 0.37937499999999996, 'organic_len': 2434}, {'lam': 0.19218749999999998, 'organic_len': 5129}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.59 sec  peak_allocated=19.246 GB  peak_reserved=20.368 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 64, 'n_remove': 1808, 'vis_len_before': 9472, 'vis_len_after': 7719}, {'layer': 7, 'rank_p': 102, 'n_remove': 1464, 'vis_len_before': 7719, 'vis_len_after': 6300}, {'layer': 17, 'rank_p': 15, 'n_remove': 1208, 'vis_len_before': 6300, 'vis_len_after': 5129, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 892.6 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[26/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 5}, {'lam': 1.5025, 'organic_len': 8}, {'lam': 0.7537499999999999, 'organic_len': 221}, {'lam': 0.37937499999999996, 'organic_len': 2427}, {'lam': 0.19218749999999998, 'organic_len': 5125}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.59 sec  peak_allocated=19.225 GB  peak_reserved=20.221 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 56, 'n_remove': 1810, 'vis_len_before': 9472, 'vis_len_after': 7717}, {'layer': 7, 'rank_p': 79, 'n_remove': 1468, 'vis_len_before': 7717, 'vis_len_after': 6294}, {'layer': 17, 'rank_p': 18, 'n_remove': 1206, 'vis_len_before': 6294, 'vis_len_after': 5125, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 889.9 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[27/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.092 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 47, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 91, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 19, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.6 MB
+
+[SparseVLM Answer]
+B
+
+======================================================================
+[28/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 6}, {'lam': 0.7537499999999999, 'organic_len': 221}, {'lam': 0.37937499999999996, 'organic_len': 2426}, {'lam': 0.19218749999999998, 'organic_len': 5123}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.58 sec  peak_allocated=19.222 GB  peak_reserved=20.349 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 44, 'n_remove': 1812, 'vis_len_before': 9472, 'vis_len_after': 7715}, {'layer': 7, 'rank_p': 78, 'n_remove': 1468, 'vis_len_before': 7715, 'vis_len_after': 6292}, {'layer': 17, 'rank_p': 17, 'n_remove': 1206, 'vis_len_before': 6292, 'vis_len_after': 5123, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 889.4 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[29/32] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+  [auto_lam] chosen lam=0.1922  calib_log=[{'lam': 0.005, 'organic_len': 9337}, {'lam': 3.0, 'organic_len': 2}, {'lam': 1.5025, 'organic_len': 5}, {'lam': 0.7537499999999999, 'organic_len': 223}, {'lam': 0.37937499999999996, 'organic_len': 2429}, {'lam': 0.19218749999999998, 'organic_len': 5127}, {'converged': True}]
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.1922) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.59 sec  peak_allocated=19.235 GB  peak_reserved=20.456 GB
+  9472 -> 5120 tokens (compression=1.85x)  stage_logs=[{'layer': 2, 'rank_p': 60, 'n_remove': 1809, 'vis_len_before': 9472, 'vis_len_after': 7718}, {'layer': 7, 'rank_p': 84, 'n_remove': 1467, 'vis_len_before': 7718, 'vis_len_after': 6296}, {'layer': 17, 'rank_p': 22, 'n_remove': 1206, 'vis_len_before': 6296, 'vis_len_after': 5127, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 891.5 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[30/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.095 GB  peak_reserved=19.705 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 48, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 86, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 19, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.8 MB
+
+[SparseVLM Answer]
+D
+
+======================================================================
+[31/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.090 GB  peak_reserved=19.736 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 37, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 75, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 20, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 829.3 MB
+
+[SparseVLM Answer]
+A
+
+======================================================================
+[32/32] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+  [auto_lam] skip (raw tokens 6400 <= threshold), lam=0.005
+
+[SparseVLM] Running layer-wise progressive pruning (lam=0.005) ...
+
+[sparsevlm_script_sparsevlm_generate] time=1.35 sec  peak_allocated=19.099 GB  peak_reserved=19.705 GB
+  6400 -> 5120 tokens (compression=1.25x)  stage_logs=[{'layer': 2, 'rank_p': 43, 'n_remove': 32, 'vis_len_before': 6400, 'vis_len_after': 6370}, {'layer': 7, 'rank_p': 71, 'n_remove': 31, 'vis_len_before': 6370, 'vis_len_after': 6341}, {'layer': 17, 'rank_p': 21, 'n_remove': 32, 'vis_len_before': 6341, 'vis_len_after': 6311, 'clipped_to_budget': True}]
+  [KV cache, prompt-only] 830.3 MB
+
+[SparseVLM Answer]
+B
+
+All done. Total time: 182.52 s

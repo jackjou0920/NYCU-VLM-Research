@@ -1,0 +1,3075 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 86.41it/s]
+/home/jackjou/.virtualenvs/vlm/lib/python3.12/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+[IF-Prune] loading small VLM skeleton from OpenGVLab/InternVL2_5-1B ...
+[IF-Prune] loading IF-Prune weights from ZachSun/internvl2_5_1b_pruning_kl_lora32 ...
+[IF-Prune] attached 168 LoRA modules (scale=2, unmerged)
+Small VLM loaded, peak CUDA alloc: 18.99 GB
+Load model time: 8.21 s
+[load_vstar] 191 題（/home/jackjou/datasets/vstar_bench/test_questions.jsonl）
+Found 191 image(s) to process
+
+======================================================================
+[1/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.50 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.6671s
+  [KV cache, prompt-only] 479.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[2/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4134s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[3/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.67 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.413s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[4/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.67 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.413s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[5/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.67 sec  peak_allocated=20.451 GB  peak_reserved=21.070 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4129s
+  [KV cache, prompt-only] 742.1 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[6/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.67 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4131s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[7/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.02 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.221s
+  [KV cache, prompt-only] 479.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[8/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4145s
+  [KV cache, prompt-only] 742.0 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[9/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.23 sec  peak_allocated=20.129 GB  peak_reserved=20.596 GB
+  4096 -> 4096 tokens (compression=1.0x)  small-VLM guide=0.2648s
+  [KV cache, prompt-only] 587.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[10/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.67 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4156s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[11/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.02 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2214s
+  [KV cache, prompt-only] 479.8 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[12/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.02 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2203s
+  [KV cache, prompt-only] 479.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[13/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4164s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[14/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4157s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[15/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.451 GB  peak_reserved=21.070 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4152s
+  [KV cache, prompt-only] 742.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[16/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4157s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[17/191] Processing image...
+======================================================================
+  tiles = 21  raw_vis_tokens = 5376
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.56 sec  peak_allocated=20.413 GB  peak_reserved=20.967 GB
+  5376 -> 5120 tokens (compression=1.05x)  small-VLM guide=0.3545s
+  [KV cache, prompt-only] 734.0 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[18/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4161s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[19/191] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.01 sec  peak_allocated=20.540 GB  peak_reserved=21.194 GB
+  9216 -> 5120 tokens (compression=1.8x)  small-VLM guide=0.5989s
+  [KV cache, prompt-only] 763.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[20/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4167s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[21/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4154s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[22/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.92 sec  peak_allocated=20.514 GB  peak_reserved=21.204 GB
+  8448 -> 5120 tokens (compression=1.65x)  small-VLM guide=0.5483s
+  [KV cache, prompt-only] 757.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[23/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4154s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[24/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.357 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2217s
+  [KV cache, prompt-only] 480.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[25/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4156s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[26/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4165s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[27/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4176s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[28/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2221s
+  [KV cache, prompt-only] 479.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[29/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2217s
+  [KV cache, prompt-only] 479.8 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[30/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2223s
+  [KV cache, prompt-only] 479.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[31/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.418s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[32/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4203s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[33/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4186s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[34/191] Processing image...
+======================================================================
+  tiles = 43  raw_vis_tokens = 11008
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.25 sec  peak_allocated=20.598 GB  peak_reserved=21.137 GB
+  11008 -> 5120 tokens (compression=2.15x)  small-VLM guide=0.7291s
+  [KV cache, prompt-only] 777.8 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[35/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4211s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[36/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4196s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[37/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4188s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[38/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4189s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[39/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4211s
+  [KV cache, prompt-only] 740.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[40/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4202s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[41/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4218s
+  [KV cache, prompt-only] 740.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[42/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.421s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[43/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4224s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[44/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4217s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[45/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.94 sec  peak_allocated=20.514 GB  peak_reserved=21.204 GB
+  8448 -> 5120 tokens (compression=1.65x)  small-VLM guide=0.5571s
+  [KV cache, prompt-only] 757.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[46/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[47/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4206s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[48/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.419s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[49/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4208s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[50/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4224s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[51/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.421s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[52/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4205s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[53/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4182s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[54/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4198s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[55/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4222s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[56/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4203s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[57/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4209s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[58/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4193s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[59/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.922 GB  peak_reserved=20.357 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2235s
+  [KV cache, prompt-only] 480.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[60/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.452 GB  peak_reserved=21.072 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4217s
+  [KV cache, prompt-only] 742.9 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[61/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.451 GB  peak_reserved=21.072 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4208s
+  [KV cache, prompt-only] 742.7 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[62/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4205s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[63/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.07 sec  peak_allocated=20.547 GB  peak_reserved=21.263 GB
+  9472 -> 5120 tokens (compression=1.85x)  small-VLM guide=0.6288s
+  [KV cache, prompt-only] 765.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[64/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.419s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[65/191] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.88 sec  peak_allocated=20.495 GB  peak_reserved=21.259 GB
+  7936 -> 5120 tokens (compression=1.55x)  small-VLM guide=0.5204s
+  [KV cache, prompt-only] 753.0 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[66/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4202s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[67/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4201s
+  [KV cache, prompt-only] 742.0 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[68/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4203s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[69/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4175s
+  [KV cache, prompt-only] 740.3 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[70/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.19 sec  peak_allocated=20.583 GB  peak_reserved=21.072 GB
+  10496 -> 5120 tokens (compression=2.05x)  small-VLM guide=0.6946s
+  [KV cache, prompt-only] 774.8 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[71/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4199s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[72/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4192s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[73/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2224s
+  [KV cache, prompt-only] 479.8 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[74/191] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.88 sec  peak_allocated=20.496 GB  peak_reserved=21.259 GB
+  7936 -> 5120 tokens (compression=1.55x)  small-VLM guide=0.5205s
+  [KV cache, prompt-only] 753.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[75/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4199s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[76/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4194s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[77/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[78/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2231s
+  [KV cache, prompt-only] 479.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[79/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4206s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[80/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4196s
+  [KV cache, prompt-only] 740.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[81/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4205s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[82/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4204s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[83/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4213s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[84/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.25 sec  peak_allocated=20.129 GB  peak_reserved=20.596 GB
+  4096 -> 4096 tokens (compression=1.0x)  small-VLM guide=0.2663s
+  [KV cache, prompt-only] 587.7 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[85/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4177s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[86/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4193s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[87/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4189s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[88/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4188s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[89/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4209s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[90/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4183s
+  [KV cache, prompt-only] 742.0 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[91/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4185s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[92/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.94 sec  peak_allocated=20.514 GB  peak_reserved=21.204 GB
+  8448 -> 5120 tokens (compression=1.65x)  small-VLM guide=0.5552s
+  [KV cache, prompt-only] 757.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[93/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4197s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[94/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.34 sec  peak_allocated=20.622 GB  peak_reserved=21.257 GB
+  11776 -> 5120 tokens (compression=2.3x)  small-VLM guide=0.777s
+  [KV cache, prompt-only] 783.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[95/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4204s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[96/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2219s
+  [KV cache, prompt-only] 479.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[97/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4185s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[98/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4178s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[99/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4206s
+  [KV cache, prompt-only] 740.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[100/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.18 sec  peak_allocated=20.581 GB  peak_reserved=21.066 GB
+  10496 -> 5120 tokens (compression=2.05x)  small-VLM guide=0.693s
+  [KV cache, prompt-only] 773.8 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[101/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.06 sec  peak_allocated=20.548 GB  peak_reserved=21.263 GB
+  9472 -> 5120 tokens (compression=1.85x)  small-VLM guide=0.6255s
+  [KV cache, prompt-only] 766.0 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[102/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.07 sec  peak_allocated=20.549 GB  peak_reserved=21.274 GB
+  9472 -> 5120 tokens (compression=1.85x)  small-VLM guide=0.6279s
+  [KV cache, prompt-only] 766.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[103/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4174s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[104/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2235s
+  [KV cache, prompt-only] 479.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[105/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4175s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[106/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[107/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4188s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[108/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.24 sec  peak_allocated=20.129 GB  peak_reserved=20.596 GB
+  4096 -> 4096 tokens (compression=1.0x)  small-VLM guide=0.2659s
+  [KV cache, prompt-only] 587.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[109/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4177s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[110/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4186s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[111/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4188s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[112/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4156s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[113/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4175s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+D
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[114/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.33 sec  peak_allocated=20.620 GB  peak_reserved=21.257 GB
+  11776 -> 5120 tokens (compression=2.3x)  small-VLM guide=0.7751s
+  [KV cache, prompt-only] 782.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[115/191] Processing image...
+======================================================================
+  tiles = 37  raw_vis_tokens = 9472
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.06 sec  peak_allocated=20.547 GB  peak_reserved=21.263 GB
+  9472 -> 5120 tokens (compression=1.85x)  small-VLM guide=0.622s
+  [KV cache, prompt-only] 765.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[116/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[117/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4186s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[118/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.417s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[119/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4195s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[120/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4186s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[121/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.418s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[122/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4167s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[123/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.418s
+  [KV cache, prompt-only] 740.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[124/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4188s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[125/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4175s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[126/191] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.02 sec  peak_allocated=20.539 GB  peak_reserved=21.194 GB
+  9216 -> 5120 tokens (compression=1.8x)  small-VLM guide=0.6038s
+  [KV cache, prompt-only] 762.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[127/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4189s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[128/191] Processing image...
+======================================================================
+  tiles = 33  raw_vis_tokens = 8448
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.94 sec  peak_allocated=20.514 GB  peak_reserved=21.204 GB
+  8448 -> 5120 tokens (compression=1.65x)  small-VLM guide=0.5523s
+  [KV cache, prompt-only] 757.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[129/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4179s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[130/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4176s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[131/191] Processing image...
+======================================================================
+  tiles = 36  raw_vis_tokens = 9216
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.02 sec  peak_allocated=20.539 GB  peak_reserved=21.194 GB
+  9216 -> 5120 tokens (compression=1.8x)  small-VLM guide=0.6033s
+  [KV cache, prompt-only] 763.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[132/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4191s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[133/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4179s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[134/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4191s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[135/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4194s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[136/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2218s
+  [KV cache, prompt-only] 479.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[137/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4182s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[138/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4173s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[139/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4179s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[140/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.417s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[141/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4186s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[142/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[143/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4192s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[144/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[145/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4174s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[146/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.418s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[147/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4176s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[148/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.418s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[149/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4179s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[150/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.417s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[151/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4179s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[152/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4174s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[153/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4173s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[154/191] Processing image...
+======================================================================
+  tiles = 31  raw_vis_tokens = 7936
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.87 sec  peak_allocated=20.496 GB  peak_reserved=21.259 GB
+  7936 -> 5120 tokens (compression=1.55x)  small-VLM guide=0.5172s
+  [KV cache, prompt-only] 753.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[155/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4195s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[156/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4183s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[157/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4183s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[158/191] Processing image...
+======================================================================
+  tiles = 22  raw_vis_tokens = 5632
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.60 sec  peak_allocated=20.423 GB  peak_reserved=21.003 GB
+  5632 -> 5120 tokens (compression=1.1x)  small-VLM guide=0.3665s
+  [KV cache, prompt-only] 735.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[159/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4174s
+  [KV cache, prompt-only] 741.7 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[160/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4166s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[161/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[162/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4168s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[163/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.451 GB  peak_reserved=21.070 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4181s
+  [KV cache, prompt-only] 742.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[164/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4173s
+  [KV cache, prompt-only] 742.0 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[165/191] Processing image...
+======================================================================
+  tiles = 22  raw_vis_tokens = 5632
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.59 sec  peak_allocated=20.423 GB  peak_reserved=21.003 GB
+  5632 -> 5120 tokens (compression=1.1x)  small-VLM guide=0.3677s
+  [KV cache, prompt-only] 735.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[166/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4175s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[167/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4191s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[168/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4174s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[169/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4182s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[170/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4178s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[171/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4179s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[172/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4189s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[173/191] Processing image...
+======================================================================
+  tiles = 16  raw_vis_tokens = 4096
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.24 sec  peak_allocated=20.129 GB  peak_reserved=20.596 GB
+  4096 -> 4096 tokens (compression=1.0x)  small-VLM guide=0.2656s
+  [KV cache, prompt-only] 587.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[174/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4192s
+  [KV cache, prompt-only] 741.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[175/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2228s
+  [KV cache, prompt-only] 479.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[176/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4174s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[177/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4171s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[178/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.33 sec  peak_allocated=20.621 GB  peak_reserved=21.257 GB
+  11776 -> 5120 tokens (compression=2.3x)  small-VLM guide=0.7734s
+  [KV cache, prompt-only] 783.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[179/191] Processing image...
+======================================================================
+  tiles = 29  raw_vis_tokens = 7424
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.81 sec  peak_allocated=20.479 GB  peak_reserved=21.263 GB
+  7424 -> 5120 tokens (compression=1.45x)  small-VLM guide=0.4847s
+  [KV cache, prompt-only] 749.2 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[180/191] Processing image...
+======================================================================
+  tiles = 46  raw_vis_tokens = 11776
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.34 sec  peak_allocated=20.621 GB  peak_reserved=21.257 GB
+  11776 -> 5120 tokens (compression=2.3x)  small-VLM guide=0.7764s
+  [KV cache, prompt-only] 783.1 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[181/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.73 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4564s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[182/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.70 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.417s
+  [KV cache, prompt-only] 740.8 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[183/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.69 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4197s
+  [KV cache, prompt-only] 741.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[184/191] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.03 sec  peak_allocated=19.921 GB  peak_reserved=20.338 GB
+  3328 -> 3328 tokens (compression=1.0x)  small-VLM guide=0.2214s
+  [KV cache, prompt-only] 479.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[185/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4176s
+  [KV cache, prompt-only] 741.1 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[186/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4164s
+  [KV cache, prompt-only] 741.5 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[187/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4156s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[188/191] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.68 sec  peak_allocated=20.447 GB  peak_reserved=21.118 GB
+  6400 -> 5120 tokens (compression=1.25x)  small-VLM guide=0.4166s
+  [KV cache, prompt-only] 741.4 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[189/191] Processing image...
+======================================================================
+  tiles = 29  raw_vis_tokens = 7424
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=1.81 sec  peak_allocated=20.479 GB  peak_reserved=21.263 GB
+  7424 -> 5120 tokens (compression=1.45x)  small-VLM guide=0.4846s
+  [KV cache, prompt-only] 749.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[190/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.18 sec  peak_allocated=20.580 GB  peak_reserved=21.066 GB
+  10496 -> 5120 tokens (compression=2.05x)  small-VLM guide=0.6871s
+  [KV cache, prompt-only] 773.4 MB
+
+[IF-Prune Answer]
+B
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+======================================================================
+[191/191] Processing image...
+======================================================================
+  tiles = 41  raw_vis_tokens = 10496
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=5120) ...
+
+[ifprune_script_ifprune_generate] time=2.17 sec  peak_allocated=20.580 GB  peak_reserved=21.066 GB
+  10496 -> 5120 tokens (compression=2.05x)  small-VLM guide=0.6885s
+  [KV cache, prompt-only] 773.2 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json updated (0/191 images done)
+
+All done. Total time: 386.38 s
+Results saved to results/runs/vstar/ifprune_b5120_InternVL3_5-8B.json

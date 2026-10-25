@@ -139,6 +139,9 @@ def main():
 
     ap.add_argument("--run_sparsevlm", action="store_true",
                      help="每個 budget 額外跑一次 SparseVLM，跟 stream_b<K> 同一組 budget 公平比較")
+    ap.add_argument("--sparsevlm_lams", default=None,
+                    help="每個 budget 各自的固定 λ，例如 1024:0.5666,2048:0.3794（跟 accuracy 實驗用同一組 λ）；"
+                         "沒列到的 budget 退回 --sparsevlm_lam / auto_lam")
     ap.add_argument("--sparsevlm_lam", type=float, default=None,
                      help="固定 λ，不做 auto_tune_lam 校準（預設會自動校準，關掉的話"
                           "可能不公平代表 SparseVLM，見 SV.auto_tune_lam() docstring）")
@@ -172,6 +175,8 @@ def main():
     ap.add_argument("--svma_s_mults", default=None,
                     help="逗號分隔的 S 倍率（例如 0,0.5,1,1.5,2）：m 用預設，S = floor(倍率 * 預設 S(K, m))；"
                          "可跟 --svma_m_fracs 擇一使用。method 命名 stream_b<B>_m<m>_S<S>")
+    ap.add_argument("--svma_grid_fracs", default=None,
+                    help="逗號分隔的 qattn_grid_frac（0 = 關閉 = 預設），m、S 用預設；method 命名 stream_b<B>_gf<f>")
     ap.add_argument("--warmup_images", type=int, default=1,
                     help="前幾張圖照跑但不算進統計（第一次呼叫含 CUDA / kernel 初始化，會拉高 TTFT）")
     ap.add_argument("--save", action="store_true", help="額外存一份 output_json（references+candidates），"
@@ -181,6 +186,7 @@ def main():
     args = ap.parse_args()
 
     budgets = [int(b) for b in args.budgets.split(",") if b.strip()]
+    lam_map = {int(k): float(v) for k, v in (x.split(":") for x in (args.sparsevlm_lams or "").split(",") if x.strip())}
     dtype = torch.bfloat16
     print(f"device={S.DEVICE}  model={args.model_name}  dataset={args.dataset}"
           + (f":{S.HRBENCH_SPLIT}" if args.dataset == "hrbench" else ""))
@@ -200,9 +206,12 @@ def main():
 
     fracs = None if args.svma_m_fracs is None else [float(x) for x in args.svma_m_fracs.split(",") if x.strip()]
     s_mults = None if args.svma_s_mults is None else [float(x) for x in args.svma_s_mults.split(",") if x.strip()]
+    g_fracs = None if args.svma_grid_fracs is None else [float(x) for x in args.svma_grid_fracs.split(",") if x.strip()]
 
     def svma_ms(b):
-        """這個 budget 要量的 (m, S) 列表；m / S 為 None = 用預設。"""
+        """這個 budget 要量的 (m, S[, grid_frac]) 列表；m / S 為 None = 用預設。"""
+        if g_fracs is not None:
+            return [(None, None, g) for g in g_fracs]
         if s_mults is not None:
             m = S.default_coverage_tiles(b)
             s0 = S.default_qattn_tiles(b, m)
@@ -212,8 +221,10 @@ def main():
         return [(m, None) for m in sorted({max(1, int(f * (b // 256))) for f in fracs})]
 
     def stream_tag_of(b, ms_):
-        m, sv = ms_
-        return (f"stream_b{b}" + ("" if m is None else f"_m{m}") + ("" if sv is None else f"_S{sv}"))
+        m, sv = ms_[0], ms_[1]
+        gf = ms_[2] if len(ms_) > 2 else None
+        return (f"stream_b{b}" + ("" if m is None else f"_m{m}") + ("" if sv is None else f"_S{sv}")
+                + (f"_gf{gf:g}" if gf else ""))
 
     unc_rows = []
     stream_rows = {stream_tag_of(b, c): [] for b in budgets for c in svma_ms(b)}
@@ -299,7 +310,7 @@ def main():
             answers, all_stats, timing = S.run_online_kv_with_memory_bank(
                 model, adapter, [ms], [q],
                 budget=b,
-                qattn_tiles=s_eff,
+                qattn_tiles=s_eff, qattn_grid_frac=(cfg[2] if len(cfg) > 2 else None),
                 max_new_tokens=args.max_new_tokens, dtype=dtype,
             )
             output_results["candidates"][stream_tag].append(answers[0])
@@ -325,7 +336,7 @@ def main():
                 sv_tag = f"sparsevlm_b{b}"
                 output_results["candidates"].setdefault(sv_tag, [])
 
-                lam = args.sparsevlm_lam
+                lam = lam_map.get(b, args.sparsevlm_lam)
                 if lam is None:
                     lam, _calib_log = SV.auto_tune_lam(
                         model, tokenizer, pv, q, budget=b,
@@ -335,6 +346,7 @@ def main():
                         vit_batch=args.vit_batch,
                     )
 
+                lam = SV.budget_lam(n_vis, b, lam)     # 原圖 token <= budget 時不剪枝（見 SV.budget_lam）
                 # TTFT 不含 auto_tune_lam 校準（那是逐張調參成本；accuracy pass 用的是校準好的
                 # 固定 λ，推論延遲看的是給定 λ 之後的一次 forward）。
                 _peak_reset()
@@ -510,7 +522,8 @@ def main():
                 s_eff = S.default_qattn_tiles(b, m_eff) if cfg[1] is None else cfg[1]
                 out_rows.append(_row(t, _agg(stream_rows[t], num_keys), extra=f"svma m={m_eff}, S={s_eff}"))
         if args.run_sparsevlm:
-            sv_note = "auto_lam" if args.sparsevlm_lam is None else f"lam={args.sparsevlm_lam:g}"
+            lb = lam_map.get(b, args.sparsevlm_lam)
+            sv_note = "auto_lam" if lb is None else f"lam={lb:g}"
             out_rows.append(_row(f"sparsevlm_b{b}", _agg(sparsevlm_rows[b], num_keys), extra=sv_note))
         if args.run_fastv:
             out_rows.append(_row(f"fastv_b{b}", _agg(fastv_rows[b], num_keys),

@@ -1,0 +1,51 @@
+Current device      : cuda:0
+Model data type     : torch.bfloat16
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 86.59it/s]
+/home/jackjou/.virtualenvs/vlm/lib/python3.12/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+num_image_token per tile : 256
+Model loaded, peak CUDA alloc: 17.06 GB
+[IF-Prune] loading small VLM skeleton from OpenGVLab/InternVL2_5-1B ...
+[IF-Prune] loading IF-Prune weights from ZachSun/internvl2_5_1b_pruning_kl_lora32 ...
+[IF-Prune] attached 168 LoRA modules (scale=2, unmerged)
+Small VLM loaded, peak CUDA alloc: 18.99 GB
+Load model time: 16.72 s
+[load_vstar] 2 題（/home/jackjou/datasets/vstar_bench/test_questions.jsonl）
+Found 2 image(s) to process
+
+======================================================================
+[1/2] Processing image...
+======================================================================
+  tiles = 13  raw_vis_tokens = 3328
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=1024) ...
+
+[ifprune_script_ifprune_generate] time=1.62 sec  peak_allocated=19.444 GB  peak_reserved=19.835 GB
+  3328 -> 1024 tokens (compression=3.25x)  small-VLM guide=0.972s
+  [KV cache, prompt-only] 173.8 MB
+
+[IF-Prune Answer]
+A
+
+[Saved] results/smoke/suite/vstar/ifprune_b1024_InternVL3_5-8B.json updated (0/2 images done)
+
+======================================================================
+[2/2] Processing image...
+======================================================================
+  tiles = 25  raw_vis_tokens = 6400
+
+[IF-Prune] small-VLM guided pruning at layer 2 (keep=1024) ...
+
+[ifprune_script_ifprune_generate] time=2.33 sec  peak_allocated=19.848 GB  peak_reserved=20.351 GB
+  6400 -> 1024 tokens (compression=6.25x)  small-VLM guide=0.8662s
+  [KV cache, prompt-only] 197.7 MB
+
+[IF-Prune Answer]
+C
+
+[Saved] results/smoke/suite/vstar/ifprune_b1024_InternVL3_5-8B.json updated (0/2 images done)
+
+All done. Total time: 21.30 s
+Results saved to results/smoke/suite/vstar/ifprune_b1024_InternVL3_5-8B.json
