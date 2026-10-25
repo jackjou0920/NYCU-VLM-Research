@@ -97,7 +97,7 @@ import torch
 from process_common import get_image
 import torch.nn.functional as F
 
-from internvl_stream import (
+from foveatile_internvl import (
     MAX_NEW_TOKENS, build_prompt, clean_answer, generate_answer_standard,
     split_prompt_at_vision, build_model, load_image_tiles,
     DEVICE, measure_peak_memory,
@@ -239,7 +239,7 @@ def split_budget(budget: int, num_tiles: int, tokens_per_tile: int) -> list[int]
 @torch.no_grad()
 def encode_tiles_visionzip(model, tile_pixel_values: torch.Tensor, keeps: list[int],
                            contextual_ratio: float, dtype, score_mode: str = "cls", score_layer: int | None = None):
-    """對應 internvl_stream.encode_tile()，差別是在 mlp1 之前插入 VisionZip（論文 Fig.3 /
+    """對應 foveatile_internvl.encode_tile()，差別是在 mlp1 之前插入 VisionZip（論文 Fig.3 /
     官方 LLaVA 版：vision encoder → VisionZip → projector）。
     回傳 (tokens [sum(keeps), D_llm], (dominant_total, contextual_total))。
     score_layer（診斷用，None = 官方：跟 select_layer 同一層）：CLS attention 改從第幾層（0-indexed）取；
@@ -371,7 +371,7 @@ def generate_visionzip(
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", type=str, default="OpenGVLab/InternVL3_5-8B")
-    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 internvl_stream.py 同語意")
+    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 foveatile_internvl.py 同語意")
     parser.add_argument("--vit_batch", type=int, default=4)
     parser.add_argument("--budget", type=int, default=512,
                          help="所有 tile 合計保留的視覺 token 數，平均分給每個 tile（LLaVA-NeXT 官方也是"
@@ -418,15 +418,15 @@ def main():
             datasets = load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
                                     num_image=args.num_images, prompt_mode=DOCVQA_PROMPT)
         elif args.dataset == "infovqa":
-            # InfoVQA validation（HF split 名為 "val"）：同 internvl_stream.py
+            # InfoVQA validation（HF split 名為 "val"）：同 foveatile_internvl.py
             datasets = load_infovqa(dataset="Ahren09/InfoVQA", split="val",
                                     num_image=args.num_images, prompt_mode=INFOVQA_PROMPT)
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
         elif args.dataset in ("mme_rw_lite", "vstar", "realworldqa"):
-            # 大圖、圖片延遲開檔：沿用 internvl_stream 的資料集註冊（process_common.load_mme_realworld / load_vstar）
-            from internvl_stream import load_eval_dataset
+            # 大圖、圖片延遲開檔：沿用 foveatile_internvl 的資料集註冊（process_common.load_mme_realworld / load_vstar）
+            from foveatile_internvl import load_eval_dataset
             datasets = load_eval_dataset(args.dataset, args.num_images)
         else:
             return

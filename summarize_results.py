@@ -1,7 +1,7 @@
 """
-彙整 results/runs/<dataset>/*.json（internvl_stream.py 的輸出，一個 JSON 一個 tag）成一張表。
+彙整 results/runs/<dataset>/*.json（foveatile_internvl.py 的輸出，一個 JSON 一個 tag）成一張表。
 
-每個 dataset、每個 tag：題數、分數、平均 TTFT（SVMA 才有）、平均 KV cache，以及相對參考 tag
+每個 dataset、每個 tag：題數、分數、平均 TTFT（FoveaTile 才有）、平均 KV cache，以及相對參考 tag
 （預設 uncompressed）的配對差與 95% bootstrap CI —— 只在兩邊都有的題目上比，所以 n 不同的 run 也能比。
   分數：docvqa / infovqa 等 → ANLS（evaluate_anls.calculate_single_anls）
         hrbench* → CircularEval（4 種選項排列全對才算對，id // 4 一組）
@@ -10,7 +10,7 @@
 
 用法：
   python summarize_results.py                                  # 所有 dataset
-  python summarize_results.py --datasets docvqa hrbench_8k --ref svma_b1024
+  python summarize_results.py --datasets docvqa hrbench_8k --ref foveatile_b1024
   python summarize_results.py --num_images 500                 # docvqa / infovqa 只看前 500 題
 輸出：終端機表格 + <root>/summary.csv
 """
@@ -30,7 +30,7 @@ from evaluate_hrbench import canon_pred, gold_letter
 
 
 def METRIC_OF(dataset: str) -> str:
-    """跟 run_svma.sh 的 evaluate() 同一個規則：hrbench* 用 CircularEval，mme_rw* 用一般選擇題 accuracy，
+    """跟 run_foveatile.sh 的 evaluate() 同一個規則：hrbench* 用 CircularEval，mme_rw* 用一般選擇題 accuracy，
     其他用 ANLS。"""
     if dataset.startswith("hrbench"):
         return "hrbench_circular"
@@ -86,9 +86,9 @@ def paired_delta(a: dict, b: dict, n_boot: int = 2000, seed: int = 0):
 
 
 def tag_order(tag: str):
-    """uncompressed → lowres_fill_b* → svma_b* → 其他，同類依 budget 排序。"""
+    """uncompressed → lowres_fill_b* → foveatile_b* → 其他，同類依 budget 排序。"""
     kind, _, b = tag.rpartition("_b")
-    rank = {"": 0, "lowres_fill": 1, "svma": 2}
+    rank = {"": 0, "lowres_fill": 1, "foveatile": 2}
     if tag == "uncompressed":
         return (0, 0, tag)
     return (rank.get(kind, 3), int(b) if b.isdigit() else 0, tag)

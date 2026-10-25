@@ -22,7 +22,7 @@ bench_metrics.py 用，不用改評測腳本。
         --image img_datasets/img01.jpg --budget 512 --lam 0.1 \
         --run_standard --run_sparsevlm --save
 
-peak memory 量測跟 internvl_stream.py 用同一個 measure_peak_memory()
+peak memory 量測跟 foveatile_internvl.py 用同一個 measure_peak_memory()
 context manager 包住 baseline 跟 sparsevlm 各自的生成過程，數字可以直接
 跟你原本方法的 output log 對照，不需要额外校準。
 
@@ -66,7 +66,7 @@ from transformers.cache_utils import DynamicCache
 from transformers.masking_utils import create_causal_mask
 from transformers.models.qwen3.modeling_qwen3 import apply_rotary_pos_emb, repeat_kv
 
-from internvl_stream import (
+from foveatile_internvl import (
     MAX_NEW_TOKENS, build_prompt, clean_answer, generate_answer_standard,
     split_prompt_at_vision, encode_tile, build_model, load_image_tiles,
     DEVICE, measure_peak_memory,
@@ -475,7 +475,7 @@ def auto_tune_lam(
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", type=str, default="OpenGVLab/InternVL3_5-8B")
-    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 internvl_stream.py 同語意")
+    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 foveatile_internvl.py 同語意")
     parser.add_argument("--vit_batch", type=int, default=4)
     parser.add_argument("--budget", type=int, default=512, help="target visual-token budget after all pruning stages")
     parser.add_argument("--lam", type=float, default=0.1, help="Eq.7 的 λ，沒有官方數值，先用 --probe_lam 掃一輪；"
@@ -536,7 +536,7 @@ def main():
     torch.cuda.synchronize(DEVICE)
     print(f"Load model time: {time.time() - t0:.2f} s")
 
-    # ── 2. 載入圖像與問題（跟 internvl_stream.py 同一套 --use_ds/--dataset 選項，
+    # ── 2. 載入圖像與問題（跟 foveatile_internvl.py 同一套 --use_ds/--dataset 選項，
     #        方便直接沿用既有的 evaluate_mmmu.py / evaluate_anls.py /
     #        evaluate_hrbench*.py，不用另外寫一套 dataset 對齊邏輯）──
     if args.use_ds:
@@ -545,15 +545,15 @@ def main():
             datasets = load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
                                     num_image=args.num_images, prompt_mode=DOCVQA_PROMPT)
         elif args.dataset == "infovqa":
-            # InfoVQA validation（HF split 名為 "val"）：同 internvl_stream.py
+            # InfoVQA validation（HF split 名為 "val"）：同 foveatile_internvl.py
             datasets = load_infovqa(dataset="Ahren09/InfoVQA", split="val",
                                     num_image=args.num_images, prompt_mode=INFOVQA_PROMPT)
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
         elif args.dataset in ("mme_rw_lite", "vstar", "realworldqa"):
-            # 大圖、圖片延遲開檔：沿用 internvl_stream 的資料集註冊（process_common.load_mme_realworld / load_vstar）
-            from internvl_stream import load_eval_dataset
+            # 大圖、圖片延遲開檔：沿用 foveatile_internvl 的資料集註冊（process_common.load_mme_realworld / load_vstar）
+            from foveatile_internvl import load_eval_dataset
             datasets = load_eval_dataset(args.dataset, args.num_images)
         else:
             return
@@ -608,7 +608,7 @@ def main():
         return
 
     # ── 4. 逐張處理：SparseVLM 的剪枝決策依賴單張圖的完整 attention 矩陣，不同
-    #        圖片剪完的序列長度天生不同，沒辦法像 internvl_stream.py 那樣同批
+    #        圖片剪完的序列長度天生不同，沒辦法像 foveatile_internvl.py 那樣同批
     #        padding 對齊，所以這裡固定一次一張（batch_size 恆為 1）──
     for i, d in enumerate(datasets):
         # 斷點續跑：這張圖兩邊都已經有結果就跳過（2026-10-14 補上：之前沒做完的 JSON 重跑會從第 1 張

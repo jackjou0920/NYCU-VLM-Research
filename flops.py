@@ -83,8 +83,8 @@ def sparsevlm_segments(fc: FlopCounter, tb: int, n_vis: int, ta: int, stage_logs
     return segs
 
 
-def svma_segments(fc: FlopCounter, tb: int, ta: int, stats: dict, prior_layers: int, qattn_layers: int):
-    """SVMA：text_before prefill → prior 短 forward（到第 prior_layers 層）→ 每塊邊界 tile 的 q_attn
+def foveatile_segments(fc: FlopCounter, tb: int, ta: int, stats: dict, prior_layers: int, qattn_layers: int):
+    """FoveaTile：text_before prefill → prior 短 forward（到第 prior_layers 層）→ 每塊邊界 tile 的 q_attn
     （[tile][text_after] 接在 [text_before][覆蓋 tile] 前綴後，跑 qattn_layers 層）→ 寫 KV（全部層）→ text_after。"""
     m = int(stats["coverage_tiles"])
     n_img = fc.num_image_token

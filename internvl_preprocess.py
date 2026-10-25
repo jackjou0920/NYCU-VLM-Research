@@ -124,12 +124,12 @@ COVER_MAX_STRETCH = 1.75   # 覆蓋網格的長寬比拉伸上限。v0 用 1.5�
 
 def load_image_multiscale(image, input_size=448, max_num_grid=47, coverage_tiles=1,
                           max_stretch=COVER_MAX_STRETCH):
-    """多尺度 SVMA 的輸入：
+    """多尺度 FoveaTile 的輸入：
       cover  ：整張圖 resize 成 fill_grid(·, coverage_tiles, max_stretch) 的網格（低解析度全圖覆蓋，常駐 KV；
                切不滿 m 塊時用最接近的較小網格，實際塊數看 cover_grid）
       detail ：官方 dynamic_preprocess 的網格 tile（上限 max_num_grid 塊，不含縮圖），之後挑 K - m 塊寫進 KV。
                （試過依原生解析度切的細節網格：HR-Bench 4K 小幅提升、8K 明顯變差、文件類持平或變差，已移除）
-    coverage_tiles = 1 時 cover 就是官方的 1x1 縮圖，跟原本的 SVMA 一樣。
+    coverage_tiles = 1 時 cover 就是官方的 1x1 縮圖，跟原本的 FoveaTile 一樣。
     detail 不比 cover 細（塊數 <= cover 塊數，例如原圖本來就只切 1 塊）時，細節 tile 沒有意義，回傳 0 塊。
     回傳 dict(cover=[m, 3, H, W], cover_grid=(cols, rows), detail=[N, 3, H, W], detail_grid=(cols, rows))。"""
     transform = build_transform(input_size)

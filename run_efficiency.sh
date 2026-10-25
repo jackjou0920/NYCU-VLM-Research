@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
 # 效率總表（docs/03_experiment_plan.md P0 #1）：每個測試集取 NUM_IMAGES 張圖（前 1 張 warmup 不計），
-# 用 bench_metrics.py 量 uncompressed / SVMA / FastV / SparseVLM / VisionZip / IF-Prune × BUDGETS 的
-# TTFT（中位數）、記憶體增量（扣權重）、KV cache、FLOPs，以及 SVMA 的 TTFT 分段。
+# 用 bench_metrics.py 量 uncompressed / FoveaTile / FastV / SparseVLM / VisionZip / IF-Prune × BUDGETS 的
+# TTFT（中位數）、記憶體增量（扣權重）、KV cache、FLOPs，以及 FoveaTile 的 TTFT 分段。
 #   - SparseVLM 用 accuracy 實驗校準出的 λ（每個 budget 一個值），原圖 token <= budget 時不剪枝
 #   - 每張 GPU 同時只跑一個程序，數字才乾淨；資料集輪流分到 GPUS
 # 結果：results/efficiency/metrics_<dataset>.csv；log：logs/efficiency/<dataset>.log

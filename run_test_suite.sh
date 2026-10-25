@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-# 測試集全套：DATASETS × {uncompressed, SVMA, FastV, VisionZip, IF-Prune, SparseVLM} × BUDGETS。
+# 測試集全套：DATASETS × {uncompressed, FoveaTile, FastV, VisionZip, IF-Prune, SparseVLM} × BUDGETS。
 # 所有結果放 results/runs/<dataset>/<method>_b<B>_<model>.json（uncompressed 沒有 budget），
 # 之後用 summarize_results.py 一次彙整（選擇題 accuracy / ANLS / CircularEval 依 dataset 自動選）。
 #
-#   uncompressed / SVMA ：internvl_stream.py（SVMA 用 svma_config 的預設 m、S）
+#   uncompressed / FoveaTile ：foveatile_internvl.py（FoveaTile 用 foveatile_config 的預設 m、S）
 #   FastV / VisionZip / IF-Prune：各自的 *_internvl.py，照論文 / 官方預設超參數
 #   SparseVLM ：先用 CALIB_IMAGES 張圖校準 λ（auto_lam 取中位數，只看 token 數、不看答案），再跑全量；
 #               原圖 token <= budget 的圖不剪枝（sparsevlm_internvl.budget_lam）
@@ -14,7 +14,7 @@
 #
 # 用法：
 #   nohup ./run_test_suite.sh > logs/test_suite.log 2>&1 &
-#   DATASETS="vstar" METHODS="svma fastv" BUDGETS="1024 2048" GPUS="0" ./run_test_suite.sh
+#   DATASETS="vstar" METHODS="foveatile fastv" BUDGETS="1024 2048" GPUS="0" ./run_test_suite.sh
 # ─────────────────────────────────────────────────────────────────────────────
 set -uo pipefail
 cd "$(dirname "$0")"
@@ -22,7 +22,7 @@ cd "$(dirname "$0")"
 PY=${PY:-$HOME/.virtualenvs/vlm/bin/python}
 MODEL=${MODEL:-OpenGVLab/InternVL3_5-8B}
 read -r -a DATASETS <<< "${DATASETS:-vstar mme_rw_lite}"
-read -r -a METHODS <<< "${METHODS:-uncompressed svma fastv visionzip ifprune sparsevlm}"
+read -r -a METHODS <<< "${METHODS:-uncompressed foveatile fastv visionzip ifprune sparsevlm}"
 read -r -a BUDGETS <<< "${BUDGETS:-1024 2048 3072 4096 5120}"
 read -r -a GPUS <<< "${GPUS:-0 1}"
 NUM_IMAGES=${NUM_IMAGES:--1}
@@ -54,14 +54,14 @@ run_job() {   # $1 dataset $2 method $3 budget（uncompressed 給 0）
     else json="$OUT/$ds/${m}_b${b}_$MTAG.json"; log="$LOG/$ds/${m}_b${b}.log"; fi
     wait_my_gpu || { echo "  [skip] $ds $m b$b（等 GPU 超時）"; return; }
     echo "[$(date '+%m-%d %H:%M')] GPU$CUDA_VISIBLE_DEVICES $ds $m ${b/#0/}"
-    # baseline 腳本的 --dataset 只認 hrbench，4K / 8K 用 HRBENCH_SPLIT 環境變數指定（internvl_stream.py 直接認 hrbench_4k）
+    # baseline 腳本的 --dataset 只認 hrbench，4K / 8K 用 HRBENCH_SPLIT 環境變數指定（foveatile_internvl.py 直接認 hrbench_4k）
     local bds=$ds
     if [[ $ds == hrbench_* ]]; then bds=hrbench; export HRBENCH_SPLIT=$ds; fi
     common="--use_ds --dataset $bds --num_images $NUM_IMAGES --model_name $MODEL --save --output_json $json"
     case $m in
-        uncompressed) $PY internvl_stream.py --dataset "$ds" --mode uncompressed --batch_size 1 \
+        uncompressed) $PY foveatile_internvl.py --dataset "$ds" --mode uncompressed --batch_size 1 \
                           --num_images "$NUM_IMAGES" --model_name "$MODEL" --output_json "$json" >> "$log" 2>&1 ;;
-        svma)         $PY internvl_stream.py --dataset "$ds" --mode svma --budget "$b" --batch_size 4 \
+        foveatile)    $PY foveatile_internvl.py --dataset "$ds" --mode foveatile --budget "$b" --batch_size 4 \
                           --num_images "$NUM_IMAGES" --model_name "$MODEL" --output_json "$json" >> "$log" 2>&1 ;;
         fastv)        $PY fastv_internvl.py $common --budget "$b" --run_fastv >> "$log" 2>&1 ;;
         visionzip)    $PY visionzip_internvl.py $common --budget "$b" --run_visionzip >> "$log" 2>&1 ;;

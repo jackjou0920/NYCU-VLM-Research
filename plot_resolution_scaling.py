@@ -11,7 +11,7 @@ OUT = "figures/resolution_scaling"
 LOG = "--log" in sys.argv  # log-log axes variant
 
 # (key in summary.json, label, color, marker) -- same encoding as plot_budget_curves.py
-METHODS = [("stream", "FoveaTile (ours)", "#2a78d6", "o"),
+METHODS = [("foveatile", "FoveaTile (ours)", "#2a78d6", "o"),
            ("ifprune", "IF-Prune", "#eb6834", "s"),
            ("fastv", "FastV", "#1baf7a", "^"),
            ("sparsevlm", "SparseVLM", "#eda100", "D"),
@@ -22,19 +22,19 @@ MAX_NUMS = [7, 25, 97, 145, 201]
 PANELS = [("ttft_s_median", "TTFT (s)"), ("mem_delta_gb_mean", "Memory increase (GB)")]
 
 summ = json.load(open(SUMMARY))
-tiles = [int(float(summ[f"{n}|stream"]["raw_tiles_mean"])) for n in MAX_NUMS]
+tiles = [int(float(summ[f"{n}|foveatile"]["raw_tiles_mean"])) for n in MAX_NUMS]
 
 plt.rcParams.update({"font.size": 9, "axes.spines.top": False, "axes.spines.right": False})
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.6))
 for ax, (col, ylabel) in zip(axes, PANELS):
     for key, label, color, marker in reversed(METHODS):
         ys = [float(summ[f"{n}|{key}"][col]) for n in MAX_NUMS]
-        ours, full = key == "stream", key == "uncompressed"
+        ours, full = key == "foveatile", key == "uncompressed"
         ax.plot(tiles, ys, color=color, marker=marker, ms=5, lw=2 if ours else 1.5,
                 ls="--" if full else "-", label=label, zorder=3 if ours else 2)
     # ratio callout at the largest input: uncompressed / FoveaTile
     n = MAX_NUMS[-1]
-    ours_y, full_y = float(summ[f"{n}|stream"][col]), float(summ[f"{n}|uncompressed"][col])
+    ours_y, full_y = float(summ[f"{n}|foveatile"][col]), float(summ[f"{n}|uncompressed"][col])
     ax.annotate("", xy=(tiles[-1], full_y), xytext=(tiles[-1], ours_y),
                 arrowprops=dict(arrowstyle="<->", color="#2a78d6", lw=1, shrinkA=6, shrinkB=6))
     mid = (full_y * ours_y) ** 0.5 if LOG else (full_y + ours_y) / 2

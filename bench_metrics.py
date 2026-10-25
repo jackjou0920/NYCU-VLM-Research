@@ -1,6 +1,6 @@
 """
 主張指標 harness：量「peak memory / KV cache / accuracy vs budget」，
-未壓縮 / streaming(你的方法) / SparseVLM 三方對照，同一組 budget 公平比較。
+未壓縮 / FoveaTile / baseline 對照，同一組 budget 公平比較。
 
 論文的賣點是「省 peak memory、accuracy 不掉太多」，純 accuracy 腳本量不到記憶體，
 這支獨立跑一小批圖（預設 24 張就夠，記憶體指標不需要大 n；accuracy 要準的話
@@ -8,18 +8,18 @@
 
   uncompressed  ：batch_chat 路徑，max_new_tokens=1 → TTFT；prefill 當下的 peak
                   allocated / reserved。budget 無關（吃滿 --max_num 個 tile）。
-  stream b<K>   ：run_online_kv_with_memory_bank，回傳的 timing["TTFT"] /
+  foveatile b<K>：run_online_kv_with_memory_bank，回傳的 timing["TTFT"] /
                   timing["Vision+OnlineKV"] / timing["_peak_mem_gb"]["OVERALL"]。
   sparsevlm b<K>：generate_sparsevlm()，預設用 auto_tune_lam() 自動校準 λ 讓
                   Eq.7 的漸進剪枝『自然』壓到接近 budget（不是靠保底硬裁切），
-                  公平代表 SparseVLM 本身的機制，跟 stream_b<K> 站在同一個
+                  公平代表 SparseVLM 本身的機制，跟 foveatile_b<K> 站在同一個
                   『最終 token 數』基準上比較（--sparsevlm_lam 可以關掉自動校準，
                   改用固定 λ，代價是可能不公平代表 SparseVLM，見 sparsevlm_
                   internvl.py 的 auto_tune_lam() docstring）。
   fastv b<K>    ：generate_fastv()，budget 直接對應官方的 ATTENTION_RANK
                   （保留幾個 image token），final_vis_tokens 恆等於
                   min(budget, raw_vis_tokens)，沒有 SparseVLM 那種需要校準的
-                  超參數，跟 stream_b<K>/sparsevlm_b<K> 站在同一個『最終
+                  超參數，跟 foveatile_b<K>/sparsevlm_b<K> 站在同一個『最終
                   token 數』基準上比較。
 
   ifprune b<K>  ：generate_ifprune()，小 VLM（InternVL2.5-1B + KL head）單次 forward 給每個視覺
@@ -31,7 +31,7 @@
                   （平均分給每個 tile，見 visionzip_internvl.py 檔頭）。token 在進 LLM 前
                   就縮短，所以每層 KV 一樣長。method 命名 visionzip_b<K>。
                   TTFT 另外用 max_new_tokens=1 量一次（含 ViT + VisionZip + prefill +
-                  第一個 token，跟 stream 的 timing["TTFT"] 同一個定義）。
+                  第一個 token，跟 FoveaTile 的 timing["TTFT"] 同一個定義）。
 
 TTFT 定義（所有方法一致）：另外跑一次 max_new_tokens=1，量牆鐘時間（含 ViT + 方法本身
 + prefill + 第一個 token）；答案與 peak memory 則來自 --max_new_tokens 那次完整生成。
@@ -40,7 +40,7 @@ SparseVLM 的 TTFT 不含 auto_tune_lam 校準（見該處註解）。
 每個 (model, dataset, method, budget) 匯總 mean±std 到一份 CSV（peak_alloc_gb /
 kv_cache_mb 兩種記憶體指標都有，見 S.estimate_kv_cache_mb() docstring 為什麼
 兩個都要看）。加 --save 還會另外存一份 output_json（{"references":[...],
-"candidates":{tag:[...]}}），格式跟 internvl_stream.py / sparsevlm_internvl.py
+"candidates":{tag:[...]}}），格式跟 foveatile_internvl.py / sparsevlm_internvl.py
 一致，可以直接餵給既有的 evaluate_anls.py / evaluate_hrbench*.py /
 evaluate_mmmu.py 算 accuracy——這支腳本本身不重算 accuracy（不同 dataset 的
 算法不一樣，直接沿用你已經寫好、驗證過的評測腳本比自己重寫可靠）。
@@ -51,9 +51,9 @@ evaluate_mmmu.py 算 accuracy——這支腳本本身不重算 accuracy（不同
       --run_sparsevlm --run_fastv --save --out_json compare_hrbench.json \
       --out_csv metrics_internvl8b_hrbench4k.csv
   python evaluate_hrbench.py --input_json compare_hrbench.json --prompt_mode open \
-      --baseline_tag "stream_b4096" ...   # accuracy，tag 命名見下方 candidates key
+      --baseline_tag "foveatile_b4096" ...   # accuracy，tag 命名見下方 candidates key
 
-  （HR-Bench split / prompt、DocVQA prompt 沒有旗標，改 internvl_stream.py 頂端的
+  （HR-Bench split / prompt、DocVQA prompt 沒有旗標，改 foveatile_internvl.py 頂端的
    HRBENCH_SPLIT / HRBENCH_PROMPT / DOCVQA_PROMPT 常數）
 """
 import gc
@@ -66,7 +66,7 @@ import statistics as st
 import torch
 
 from internvl_preprocess import build_model, load_image_tiles, load_image_tiles_fill
-import internvl_stream as S
+import foveatile_internvl as S
 import sparsevlm_internvl as SV
 import fastv_internvl as FV
 import visionzip_internvl as VZ
@@ -126,7 +126,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--model_name", default="OpenGVLab/InternVL3_5-8B")
     ap.add_argument("--dataset", default="hrbench_4k", choices=["hrbench"] + sorted(S.DATASETS),
-                    help="同 internvl_stream.py；hrbench = 舊名稱，split 看環境變數 HRBENCH_SPLIT")
+                    help="同 foveatile_internvl.py；hrbench = 舊名稱，split 看環境變數 HRBENCH_SPLIT")
     ap.add_argument("--num_images", type=int, default=24)
     ap.add_argument("--max_num", type=int, default=48, help="dynamic tiles 上限（含縮圖）")
     ap.add_argument("--budgets", default="1024,2048,4096")
@@ -135,10 +135,10 @@ def main():
     ap.add_argument("--skip_uncompressed", action="store_true")
     ap.add_argument("--lowres_fill", action="store_true",
                     help="Low-Res（fill）：uncompressed 改吃 load_image_tiles_fill（網格 <= --max_num、不加縮圖），"
-                         "不跑 streaming（沒有縮圖可當 prior）")
+                         "不跑 FoveaTile（沒有縮圖可當 prior）")
 
     ap.add_argument("--run_sparsevlm", action="store_true",
-                     help="每個 budget 額外跑一次 SparseVLM，跟 stream_b<K> 同一組 budget 公平比較")
+                     help="每個 budget 額外跑一次 SparseVLM，跟 foveatile_b<K> 同一組 budget 公平比較")
     ap.add_argument("--sparsevlm_lams", default=None,
                     help="每個 budget 各自的固定 λ，例如 1024:0.5666,2048:0.3794（跟 accuracy 實驗用同一組 λ）；"
                          "沒列到的 budget 退回 --sparsevlm_lam / auto_lam")
@@ -151,7 +151,7 @@ def main():
     ap.add_argument("--sparsevlm_auto_lam_overshoot_tol", type=float, default=0.5)
 
     ap.add_argument("--run_fastv", action="store_true",
-                     help="每個 budget 額外跑一次 FastV，跟 stream_b<K>/sparsevlm_b<K> 同一組 budget 公平比較")
+                     help="每個 budget 額外跑一次 FastV，跟 foveatile_b<K>/sparsevlm_b<K> 同一組 budget 公平比較")
     ap.add_argument("--fastv_agg_layer", type=int, default=2,
                      help="AGG_LAYER：第幾層之後剪枝，官方預設 2（見 fastv_internvl.py）")
 
@@ -166,17 +166,15 @@ def main():
                      help="bf16 = 官方數值（預設）；fp32 = 偏離官方的 ablation")
 
     ap.add_argument("--run_visionzip", action="store_true",
-                     help="每個 budget 額外跑一次 VisionZip，跟 stream/sparsevlm/fastv 同一組 budget 公平比較")
+                     help="每個 budget 額外跑一次 VisionZip，跟 foveatile/sparsevlm/fastv 同一組 budget 公平比較")
     ap.add_argument("--visionzip_contextual_ratio", type=float, default=VZ.CONTEXTUAL_RATIO)
 
-    ap.add_argument("--svma_m_fracs", default=None,
+    ap.add_argument("--foveatile_m_fracs", default=None,
                     help="逗號分隔的 m/K 比例（例如 0.5,0.75,1.0），每個 budget 各量一次 m = max(1, floor(f*K))；"
-                         "不給 = 只量 svma_config 的預設 m。method 命名 stream_b<B>_m<m>")
-    ap.add_argument("--svma_s_mults", default=None,
+                         "不給 = 只量 foveatile_config 的預設 m。method 命名 foveatile_b<B>_m<m>")
+    ap.add_argument("--foveatile_s_mults", default=None,
                     help="逗號分隔的 S 倍率（例如 0,0.5,1,1.5,2）：m 用預設，S = floor(倍率 * 預設 S(K, m))；"
-                         "可跟 --svma_m_fracs 擇一使用。method 命名 stream_b<B>_m<m>_S<S>")
-    ap.add_argument("--svma_grid_fracs", default=None,
-                    help="逗號分隔的 qattn_grid_frac（0 = 關閉 = 預設），m、S 用預設；method 命名 stream_b<B>_gf<f>")
+                         "可跟 --foveatile_m_fracs 擇一使用。method 命名 foveatile_b<B>_m<m>_S<S>")
     ap.add_argument("--warmup_images", type=int, default=1,
                     help="前幾張圖照跑但不算進統計（第一次呼叫含 CUDA / kernel 初始化，會拉高 TTFT）")
     ap.add_argument("--save", action="store_true", help="額外存一份 output_json（references+candidates），"
@@ -204,14 +202,11 @@ def main():
 
     output_results = {"references": [], "candidates": {}}
 
-    fracs = None if args.svma_m_fracs is None else [float(x) for x in args.svma_m_fracs.split(",") if x.strip()]
-    s_mults = None if args.svma_s_mults is None else [float(x) for x in args.svma_s_mults.split(",") if x.strip()]
-    g_fracs = None if args.svma_grid_fracs is None else [float(x) for x in args.svma_grid_fracs.split(",") if x.strip()]
+    fracs = None if args.foveatile_m_fracs is None else [float(x) for x in args.foveatile_m_fracs.split(",") if x.strip()]
+    s_mults = None if args.foveatile_s_mults is None else [float(x) for x in args.foveatile_s_mults.split(",") if x.strip()]
 
-    def svma_ms(b):
-        """這個 budget 要量的 (m, S[, grid_frac]) 列表；m / S 為 None = 用預設。"""
-        if g_fracs is not None:
-            return [(None, None, g) for g in g_fracs]
+    def foveatile_configs(b):
+        """這個 budget 要量的 (m, S) 列表；m / S 為 None = 用預設。"""
         if s_mults is not None:
             m = S.default_coverage_tiles(b)
             s0 = S.default_qattn_tiles(b, m)
@@ -220,14 +215,12 @@ def main():
             return [(None, None)]
         return [(m, None) for m in sorted({max(1, int(f * (b // 256))) for f in fracs})]
 
-    def stream_tag_of(b, ms_):
-        m, sv = ms_[0], ms_[1]
-        gf = ms_[2] if len(ms_) > 2 else None
-        return (f"stream_b{b}" + ("" if m is None else f"_m{m}") + ("" if sv is None else f"_S{sv}")
-                + (f"_gf{gf:g}" if gf else ""))
+    def foveatile_tag_of(b, ms_):
+        m, sv = ms_
+        return f"foveatile_b{b}" + ("" if m is None else f"_m{m}") + ("" if sv is None else f"_S{sv}")
 
     unc_rows = []
-    stream_rows = {stream_tag_of(b, c): [] for b in budgets for c in svma_ms(b)}
+    foveatile_rows = {foveatile_tag_of(b, c): [] for b in budgets for c in foveatile_configs(b)}
     sparsevlm_rows = {b: [] for b in budgets} if args.run_sparsevlm else {}
     fastv_rows = {b: [] for b in budgets} if args.run_fastv else {}
     vz_rows = {b: [] for b in budgets} if args.run_visionzip else {}
@@ -265,7 +258,7 @@ def main():
                 generation_config=dict(max_new_tokens=1, do_sample=False),
             )
             _sync()
-            unc_ttft = time.time() - t0     # 只到第一個 token，跟 stream 的 timing["TTFT"] 同一個定義
+            unc_ttft = time.time() - t0     # 只到第一個 token，跟 FoveaTile 的 timing["TTFT"] 同一個定義
             ref = S.generate_answer_standard(
                 model, tokenizer, [pv], [q],
                 generation_config=dict(max_new_tokens=args.max_new_tokens, do_sample=False),
@@ -298,24 +291,24 @@ def main():
             gc.collect()
             torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
-        # ---- SVMA @ each budget（m、S 都由 budget 決定，跟 internvl_stream.py --mode svma 一樣）----
-        for b, cfg in [(b, c) for b in ([] if args.lowres_fill else budgets) for c in svma_ms(b)]:
+        # ---- FoveaTile @ each budget（m、S 都由 budget 決定，跟 foveatile_internvl.py --mode foveatile 一樣）----
+        for b, cfg in [(b, c) for b in ([] if args.lowres_fill else budgets) for c in foveatile_configs(b)]:
             m_eff = S.default_coverage_tiles(b) if cfg[0] is None else cfg[0]
             s_eff = S.default_qattn_tiles(b, m_eff) if cfg[1] is None else cfg[1]
-            ms = S.prepare_inputs([img], "svma", b, args.max_num, coverage_tiles=m_eff)[0]
-            stream_tag = stream_tag_of(b, cfg)
-            output_results["candidates"].setdefault(stream_tag, [])
+            ms = S.prepare_inputs([img], "foveatile", b, args.max_num, coverage_tiles=m_eff)[0]
+            foveatile_tag = foveatile_tag_of(b, cfg)
+            output_results["candidates"].setdefault(foveatile_tag, [])
             adapter = S.InternVLAdapter(tokenizer, model, budget=b)
             _peak_reset()
             answers, all_stats, timing = S.run_online_kv_with_memory_bank(
                 model, adapter, [ms], [q],
                 budget=b,
-                qattn_tiles=s_eff, qattn_grid_frac=(cfg[2] if len(cfg) > 2 else None),
+                qattn_tiles=s_eff,
                 max_new_tokens=args.max_new_tokens, dtype=dtype,
             )
-            output_results["candidates"][stream_tag].append(answers[0])
+            output_results["candidates"][foveatile_tag].append(answers[0])
             pk = timing.get("_peak_mem_gb", {})
-            (stream_rows[stream_tag] if keep else []).append({
+            (foveatile_rows[foveatile_tag] if keep else []).append({
                 "raw_tiles": n_tiles,
                 "ttft_s": timing.get("TTFT"),
                 "peak_alloc_gb": pk.get("OVERALL", _peak_alloc_gb()),
@@ -323,14 +316,14 @@ def main():
                 "vision_s": timing.get("Vision+OnlineKV"),
                 "kv_cache_mb": timing.get("_kv_cache_mb") or (all_stats[0].get("kv_cache_mb") if all_stats else None),
                 **_flops(fc, all_stats[0]["vit_encoded_tiles"],
-                         FL.svma_segments(fc, tb_q, ta_q, all_stats[0], S.THUMB_ATTN_LAYERS[1], S.QATTN_LAYER)),
+                         FL.foveatile_segments(fc, tb_q, ta_q, all_stats[0], S.THUMB_ATTN_LAYERS[1], S.QATTN_LAYER)),
                 **{f"t_{k}": v for k, v in all_stats[0].get("ttft_breakdown", {}).items()},
             })
             del adapter
             gc.collect()
             torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
-        # ---- SparseVLM @ each budget（同一組 budget，才能跟 stream_b<K> 公平比較）----
+        # ---- SparseVLM @ each budget（同一組 budget，才能跟 foveatile_b<K> 公平比較）----
         if args.run_sparsevlm:
             for b in budgets:
                 sv_tag = f"sparsevlm_b{b}"
@@ -377,7 +370,7 @@ def main():
                 gc.collect()
                 torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
-        # ---- FastV @ each budget（同一組 budget，才能跟 stream_b<K>/sparsevlm_b<K>
+        # ---- FastV @ each budget（同一組 budget，才能跟 foveatile_b<K>/sparsevlm_b<K>
         #      公平比較）。budget 直接對應 ATTENTION_RANK，沒有校準步驟。----
         if args.run_fastv:
             for b in budgets:
@@ -499,7 +492,7 @@ def main():
     out_rows = []
     tag = f"model={args.model_name}"
     ds_tag = args.dataset + (f":{S.HRBENCH_SPLIT}" if args.dataset == "hrbench" else "")
-    method_note = "svma m=floor(COVERAGE_FRAC*K), S=default_qattn_tiles(b, m)"
+    method_note = "foveatile m=floor(COVERAGE_FRAC*K), S=default_qattn_tiles(b, m)"
 
     def _row(method, agg, extra=""):
         r = {"model": args.model_name, "dataset": ds_tag, "method": method,
@@ -515,12 +508,12 @@ def main():
     if unc_rows:
         out_rows.append(_row("uncompressed", _agg(unc_rows, num_keys), extra="max_num tiles, budget-independent"))
     for b in budgets:
-        for cfg in svma_ms(b):
-            t = stream_tag_of(b, cfg)
-            if stream_rows[t]:
+        for cfg in foveatile_configs(b):
+            t = foveatile_tag_of(b, cfg)
+            if foveatile_rows[t]:
                 m_eff = S.default_coverage_tiles(b) if cfg[0] is None else cfg[0]
                 s_eff = S.default_qattn_tiles(b, m_eff) if cfg[1] is None else cfg[1]
-                out_rows.append(_row(t, _agg(stream_rows[t], num_keys), extra=f"svma m={m_eff}, S={s_eff}"))
+                out_rows.append(_row(t, _agg(foveatile_rows[t], num_keys), extra=f"foveatile m={m_eff}, S={s_eff}"))
         if args.run_sparsevlm:
             lb = lam_map.get(b, args.sparsevlm_lam)
             sv_note = "auto_lam" if lb is None else f"lam={lb:g}"

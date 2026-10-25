@@ -70,7 +70,7 @@ def load_local(image, batch_size, num_image=None):
 
 def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
                  num_image=None, prompt_mode="short"):
-    """DocVQA loader（給 internvl_stream.py 用）。跟 load_hrbench 同一套設計：
+    """DocVQA loader（給 foveatile_internvl.py 用）。跟 load_hrbench 同一套設計：
 
     prompt_mode 對應兩種要比的設定（跟 HRBENCH_PROMPT 的 letter/open 是同一個精神）：
 
@@ -81,7 +81,7 @@ def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="vali
           vs uncompressed reference」（跟 evaluate_anls.py --similarity / HR-Bench
           open 模式同一套）。
 
-    每筆額外回傳 answer / answers / id，讓 internvl_stream.py 存進輸出 JSON 的
+    每筆額外回傳 answer / answers / id，讓 foveatile_internvl.py 存進輸出 JSON 的
     meta（比照 load_hrbench）：
       - answers：DocVQA 官方允許的多個可接受答案（list），ANLS 要取 max。
       - id：HF dataset 原始的 questionId，不是攤平後的位置索引。
@@ -136,7 +136,7 @@ def load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="vali
 
 def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_mode="short",
                  sample_seed=None):
-    """InfoVQA loader（給 internvl_stream.py 用）。設計比照 load_docvqa：
+    """InfoVQA loader（給 foveatile_internvl.py 用）。設計比照 load_docvqa：
 
     prompt_mode：
       "short"（預設，官方 ANLS 協定）：question 後面加一句作答指示，輸出短答案。
@@ -146,7 +146,7 @@ def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_
     image_url。注意 validation split 在這個 dataset 裡叫 "val"，不是 "validation"。
     sample_seed：None = 依原始順序取前 num_image 題；給整數時改成用這個 seed 隨機抽 num_image 題
     （held-out 校準集用，例如 train split 抽 600 題；抽到的順序固定，可重現）。
-    每筆額外回傳 answer / answers / id，讓 internvl_stream.py 存進輸出 JSON 的 meta，
+    每筆額外回傳 answer / answers / id，讓 foveatile_internvl.py 存進輸出 JSON 的 meta，
     ANLS 直接讀 meta，不用重載 HF dataset（避免跳圖造成的對齊位移，理由同 load_docvqa）。
     """
     if prompt_mode not in ("short", "open"):
@@ -193,7 +193,7 @@ def load_infovqa(dataset="Ahren09/InfoVQA", split="val", num_image=None, prompt_
 
 
 def load_hrbench(dataset="DreamMr/HR-Bench", split="hrbench_4k", num_image=None, prompt_mode="letter"):
-    """HR-Bench loader（給 internvl_stream.py 用）。
+    """HR-Bench loader（給 foveatile_internvl.py 用）。
 
     HR-Bench 每筆長這樣（欄位名固定）：
         question : "What is the number displayed above the entrance ..."
@@ -217,7 +217,7 @@ def load_hrbench(dataset="DreamMr/HR-Bench", split="hrbench_4k", num_image=None,
         evaluate 時改用 answer_text（正解選項的文字）去比對模型的自由輸出。
 
     每筆額外回傳 answer / answer_text / options / question_type / category / id，
-    讓 internvl_stream.py 存進輸出 JSON 的 meta，evaluate 直接讀、不用重載 dataset。
+    讓 foveatile_internvl.py 存進輸出 JSON 的 meta，evaluate 直接讀、不用重載 dataset。
     """
     print("prompt_mode:", prompt_mode)
     if prompt_mode not in ("letter", "open"):
@@ -279,7 +279,7 @@ def load_mme_realworld(split="calib", num_image=None, root=MME_RW_ROOT):
       split="lite" ：測試集 MME-RealWorld-Lite（1,919 題）
 
     圖片很大（remote sensing 常超過 5000x5000），所以不預先讀進記憶體：每筆只放 image_path，
-    用 get_image(d) 在用到時才開檔（internvl_stream.py 已改用 get_image）。
+    用 get_image(d) 在用到時才開檔（foveatile_internvl.py 已改用 get_image）。
     meta：answer = 正解字母，options = 去掉 "(A) " 前綴的選項文字，category = Subtask/Category。
     """
     path = os.path.join(root, {"calib": "calib600.json", "lite": "lite.json"}[split])

@@ -10,7 +10,7 @@ CSV = "results/paper/main_internvl.csv"
 OUT = "figures/pareto_retention"
 
 # (key, label, color, marker) -- same encoding as plot_budget_curves.py
-METHODS = [("svma", "FoveaTile (ours)", "#2a78d6", "o"),
+METHODS = [("foveatile", "FoveaTile (ours)", "#2a78d6", "o"),
            ("ifprune", "IF-Prune", "#eb6834", "s"),
            ("fastv", "FastV", "#1baf7a", "^"),
            ("sparsevlm", "SparseVLM", "#eda100", "D"),
@@ -42,7 +42,7 @@ XLABELS = ["Mean TTFT (s)  ← faster", "Mean memory increase (GB)  ← less"]
 for i, ax in enumerate(axes):
     for key, label, color, marker in reversed(METHODS):
         xs, ys = zip(*[(mean[(key, b)][i], mean[(key, b)][2]) for b in BUDGETS])
-        ours = key == "svma"
+        ours = key == "foveatile"
         ax.plot(xs, ys, color=color, marker=marker, ms=5, lw=2 if ours else 1.5, label=label,
                 zorder=3 if ours else 2)
         if ours:
@@ -50,7 +50,7 @@ for i, ax in enumerate(axes):
                 dx, dy, ha = label_offset(i, b)
                 ax.annotate(str(b), (x, y), xytext=(dx, dy), textcoords="offset points", ha=ha,
                             fontsize=7, color="#52514e")
-    d = mean[("svma", DEFAULT_BUDGET)]
+    d = mean[("foveatile", DEFAULT_BUDGET)]
     ax.scatter([d[i]], [d[2]], marker="*", s=260, color="#2a78d6", edgecolor="white", lw=1.2, zorder=4,
                label=f"FoveaTile default (b{DEFAULT_BUDGET})")
     ax.scatter([full_mean[i]], [100], marker="X", s=70, color="#52514e", zorder=4, label="Uncompressed")

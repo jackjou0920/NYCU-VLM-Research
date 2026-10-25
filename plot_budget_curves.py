@@ -12,7 +12,7 @@ OUT = "figures/budget_curves"
 DATASETS = [("docvqa", "DocVQA"), ("infovqa", "InfoVQA"), ("hrbench_4k", "HR-Bench 4K"),
             ("mme_rw_lite", "MME-RW Lite"), ("vstar", "V*")]
 # (key, label, color, marker) -- FoveaTile first so it gets slot 1 and draws on top
-METHODS = [("svma", "FoveaTile (ours)", "#2a78d6", "o"),
+METHODS = [("foveatile", "FoveaTile (ours)", "#2a78d6", "o"),
            ("ifprune", "IF-Prune", "#eb6834", "s"),
            ("fastv", "FastV", "#1baf7a", "^"),
            ("sparsevlm", "SparseVLM", "#eda100", "D"),
@@ -34,8 +34,8 @@ axes = axes.ravel()
 for ax, (ds, title) in zip(axes, DATASETS):
     for key, label, color, marker in reversed(METHODS):
         ys = [scores[(ds, key)][b] for b in BUDGETS]
-        ax.plot(BUDGETS, ys, color=color, marker=marker, ms=5, lw=2 if key == "svma" else 1.5,
-                label=label, zorder=3 if key == "svma" else 2)
+        ax.plot(BUDGETS, ys, color=color, marker=marker, ms=5, lw=2 if key == "foveatile" else 1.5,
+                label=label, zorder=3 if key == "foveatile" else 2)
     ax.axhline(full[ds], color="#52514e", ls="--", lw=1.2, label="Uncompressed", zorder=1)
     ax.set_title(title, fontsize=10)
     ax.set_xticks(BUDGETS)

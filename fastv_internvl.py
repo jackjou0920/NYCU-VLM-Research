@@ -5,7 +5,7 @@
 fork 才寫這個檔案，剪枝『決策』本身逐行對照官方碼，見 fastv_core.py 開頭的詳細
 說明與行號）。跟 sparsevlm_internvl.py 走同一條路：靠手動逐層呼叫 Qwen3Model
 的 decoder layers，在指定層插入 fastv_core.py 的剪枝邏輯，讓視覺 token 真的在
-LLM decoder 內部被剔除——只「讀取」internvl_stream.py / sparsevlm_internvl.py
+LLM decoder 內部被剔除——只「讀取」foveatile_internvl.py / sparsevlm_internvl.py
 既有的公用函式，完全沒有修改任何一行既有檔案。輸出的 JSON 格式跟
 internvl_svm.py / sparsevlm_internvl.py 一致，可以直接丟給既有的
 evaluate_anls.py / evaluate_hrbench.py / bench_metrics.py 用。
@@ -54,7 +54,7 @@ from transformers.cache_utils import DynamicCache
 from transformers.masking_utils import create_causal_mask
 from transformers.models.qwen3.modeling_qwen3 import apply_rotary_pos_emb, repeat_kv
 
-from internvl_stream import (
+from foveatile_internvl import (
     MAX_NEW_TOKENS, build_prompt, clean_answer, generate_answer_standard,
     split_prompt_at_vision, encode_tile, build_model, load_image_tiles,
     DEVICE, measure_peak_memory,
@@ -362,7 +362,7 @@ def generate_fastv(
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", type=str, default="OpenGVLab/InternVL3_5-8B")
-    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 internvl_stream.py 同語意")
+    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 foveatile_internvl.py 同語意")
     parser.add_argument("--vit_batch", type=int, default=4)
     parser.add_argument("--budget", type=int, default=512,
                          help="ATTENTION_RANK：剪枝那一層之後保留的 image token 數"
@@ -408,15 +408,15 @@ def main():
             datasets = load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
                                     num_image=args.num_images, prompt_mode=DOCVQA_PROMPT)
         elif args.dataset == "infovqa":
-            # InfoVQA validation（HF split 名為 "val"）：同 internvl_stream.py
+            # InfoVQA validation（HF split 名為 "val"）：同 foveatile_internvl.py
             datasets = load_infovqa(dataset="Ahren09/InfoVQA", split="val",
                                     num_image=args.num_images, prompt_mode=INFOVQA_PROMPT)
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
         elif args.dataset in ("mme_rw_lite", "vstar", "realworldqa"):
-            # 大圖、圖片延遲開檔：沿用 internvl_stream 的資料集註冊（process_common.load_mme_realworld / load_vstar）
-            from internvl_stream import load_eval_dataset
+            # 大圖、圖片延遲開檔：沿用 foveatile_internvl 的資料集註冊（process_common.load_mme_realworld / load_vstar）
+            from foveatile_internvl import load_eval_dataset
             datasets = load_eval_dataset(args.dataset, args.num_images)
         else:
             return

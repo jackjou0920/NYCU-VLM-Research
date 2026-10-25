@@ -1,8 +1,8 @@
-# 02 相關工作比較：HiRED、GlobalCom2、RAP 與 SVMA
+# 02 相關工作比較：HiRED、GlobalCom2、RAP 與 FoveaTile
 
 ## 結論
 
-SVMA 有創新點，但**不在「用全圖資訊決定每塊 tile 留多少」**，因為那正是 GlobalCom2 的核心。SVMA 能站得住的新穎性在三個地方：
+FoveaTile 有創新點，但**不在「用全圖資訊決定每塊 tile 留多少」**，因為那正是 GlobalCom2 的核心。FoveaTile 能站得住的新穎性在三個地方：
 
 1. **選擇時看問題**，而且分數來自 VLM 本身，不需要額外模型。
 2. **在進 ViT 前就丟 tile**，被丟掉的區域不用跑 vision encoder。
@@ -10,7 +10,7 @@ SVMA 有創新點，但**不在「用全圖資訊決定每塊 tile 留多少」*
 
 ## 1. 四個方法的機制比較
 
-| 面向 | HiRED（AAAI'25） | GlobalCom2（AAAI'26） | RAP（ICML'25 oral） | **SVMA** |
+| 面向 | HiRED（AAAI'25） | GlobalCom2（AAAI'26） | RAP（ICML'25 oral） | **FoveaTile** |
 |---|---|---|---|---|
 | 解決的問題 | 高解析度帶來太多 token，要降低推論成本 | 同左 | 高解析度看不清細節，目標是提高 accuracy | 降低推論成本，並讓成本有上限 |
 | 打分依據 | ViT 的 CLS attention | thumbnail 的 CLS attention，加上每個 crop 自己的 CLS attention（α=0.5 混合） | 外部 retriever（VisRAG）算問題和 crop 的相似度 | VLM 本身：coverage prior，再對邊界 tile 算中層 q_attn |
@@ -31,7 +31,7 @@ SVMA 有創新點，但**不在「用全圖資訊決定每塊 tile 留多少」*
 ```
                     看問題
                       ↑
-           RAP ●      │      ● SVMA
+           RAP ●      │      ● FoveaTile
    （要額外模型、      │   （VLM 自己打分、
     多次 forward）     │     單次串流）
   慢 ←────────────────┼────────────────→ 快
@@ -41,14 +41,14 @@ SVMA 有創新點，但**不在「用全圖資訊決定每塊 tile 留多少」*
                       │   （只看 ViT、不看問題）
 ```
 
-SVMA 的位置：「看問題」的能力向 RAP 看齊，成本向 HiRED / GlobalCom2 看齊，而且是四個裡唯一不用把整張圖都送進 ViT、KV 也有上限的方法。
+FoveaTile 的位置：「看問題」的能力向 RAP 看齊，成本向 HiRED / GlobalCom2 看齊，而且是四個裡唯一不用把整張圖都送進 ViT、KV 也有上限的方法。
 
 ## 3. 新穎性強弱
 
 **較強，可以當主要貢獻：**
 
-1. **看問題的 tile 選擇，分數來自 VLM 本身。** HiRED 和 GlobalCom2 只用 ViT 的視覺顯著性；在 InfoVQA、HR-Bench 這種答案只在一小塊區域、而且取決於問題的任務上，這是本質上的差別。要用 ablation 證明（把 SVMA 的 prior 換成 CLS attention，其他固定）。
-2. **串流建構、成本有上限。** 另外兩篇都要先把 N 塊 crop 全部編碼完才開始丟。SVMA 只為留下的 tile 和邊界 tile 跑 ViT。要靠**縮放實驗**才能變成實際優勢。
+1. **看問題的 tile 選擇，分數來自 VLM 本身。** HiRED 和 GlobalCom2 只用 ViT 的視覺顯著性；在 InfoVQA、HR-Bench 這種答案只在一小塊區域、而且取決於問題的任務上，這是本質上的差別。要用 ablation 證明（把 FoveaTile 的 prior 換成 CLS attention，其他固定）。
+2. **串流建構、成本有上限。** 另外兩篇都要先把 N 塊 crop 全部編碼完才開始丟。FoveaTile 只為留下的 tile 和邊界 tile 跑 ViT。要靠**縮放實驗**才能變成實際優勢。
 3. **Cascade 式的邊界打分。** 只對排名卡在臨界的 S 塊付出 q_attn 的成本，是一個 accuracy 和 TTFT 可以調整的旋鈕。
 
 **較弱，容易被 reviewer 打：**
@@ -58,13 +58,13 @@ SVMA 的位置：「看問題」的能力向 RAP 看齊，成本向 HiRED / Glob
 
 ## 4. 跟每個方法比的優勢與風險
 
-| 對手 | SVMA 的主要優勢 | SVMA 的風險 | 需要的證據 |
+| 對手 | FoveaTile 的主要優勢 | FoveaTile 的風險 | 需要的證據 |
 |---|---|---|---|
 | HiRED | 看問題；丟掉的 tile 不跑 ViT；整塊 tile 保留空間結構 | 一般 benchmark 上，挑 token 可能比整塊 tile 精細 | prior ablation：打分換成 CLS attention，其他固定 |
 | GlobalCom2 | 看問題；成本有上限；在 ViT 之前就丟 | 「全域資訊引導 budget 分配」它已經做了；它的記憶體降幅數字很漂亮 | 跟 GlobalCom2+FastV 比；在相同設定下比 vision FLOPs 和峰值記憶體 |
-| RAP | 不用額外模型；單次 forward；TTFT 可能差一個數量級；KV 有上限 | RAP 在 HR-Bench、V\* 上的 accuracy 可能比 SVMA 高很多 | accuracy 對 TTFT 的 Pareto 圖；RAP-fixed-K 變體分開比較打分方式和搜尋的貢獻 |
+| RAP | 不用額外模型；單次 forward；TTFT 可能差一個數量級；KV 有上限 | RAP 在 HR-Bench、V\* 上的 accuracy 可能比 FoveaTile 高很多 | accuracy 對 TTFT 的 Pareto 圖；RAP-fixed-K 變體分開比較打分方式和搜尋的貢獻 |
 
-**可以寫進論文的觀察：** RAP 的 RE-Search 用 MLLM 回答「Yes」的機率來決定 K。SVMA 的 confidence-gated cascade 實驗已經發現，answer confidence 沒辦法可靠地逐題選出最好的 m，在文件類任務上幾乎沒用。這可以當作對「用 confidence 自動決定保留多少」的實證討論，也回答為什麼 SVMA 用固定的 m。
+**可以寫進論文的觀察：** RAP 的 RE-Search 用 MLLM 回答「Yes」的機率來決定 K。FoveaTile 的 confidence-gated cascade 實驗已經發現，answer confidence 沒辦法可靠地逐題選出最好的 m，在文件類任務上幾乎沒用。這可以當作對「用 confidence 自動決定保留多少」的實證討論，也回答為什麼 FoveaTile 用固定的 m。
 
 ## 5. 建議的貢獻寫法
 
@@ -72,9 +72,9 @@ SVMA 的位置：「看問題」的能力向 RAP 看齊，成本向 HiRED / Glob
 
 撐起這句話需要的實驗（細節見 [03_experiment_plan.md](03_experiment_plan.md)）：
 
-1. Prior ablation：CLS attention（HiRED 式）、thumbnail 引導（GlobalCom2 式）、SVMA 的 q_attn。
-2. 縮放曲線：tile 數 12 到 200 時，HiRED、GlobalCom2、SVMA 的 vision FLOPs、峰值記憶體、TTFT。
-3. 直接比較：HiRED、GlobalCom2 移植到 InternVL；並在 LLaVA-OV 上跑 SVMA 對照原論文數字。
+1. Prior ablation：CLS attention（HiRED 式）、thumbnail 引導（GlobalCom2 式）、FoveaTile 的 q_attn。
+2. 縮放曲線：tile 數 12 到 200 時，HiRED、GlobalCom2、FoveaTile 的 vision FLOPs、峰值記憶體、TTFT。
+3. 直接比較：HiRED、GlobalCom2 移植到 InternVL；並在 LLaVA-OV 上跑 FoveaTile 對照原論文數字。
 
 ## Sources
 

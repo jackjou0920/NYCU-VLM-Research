@@ -58,7 +58,7 @@
      系列內驗證過的事，換到 3.5-8B 是外推，請當成你實驗的一個假設看待。
   2) 論文/官方以 ratio K% 指定保留比例（keep = int(vis_len * K)）；你的其他方法都用
      絕對 budget（最終保留的視覺 token 數），這裡 keep_count = min(budget, vis_len)，
-     等價於 K = budget / vis_len，好跟 stream_b<K> / fastv_b<K> 同基準比較。
+     等價於 K = budget / vis_len，好跟 foveatile_b<K> / fastv_b<K> 同基準比較。
   3) 官方沒有 KV cache 相容的多 token 生成之外的額外工程（HF generate 走 attention
      mask 裁切）。這裡的 prefill / decode 沿用 fastv_internvl.py 已經驗證過的
      『手動逐層 + 各層 KV 長度可以不同』做法，只是把 FastV 的「上一層 attention
@@ -102,7 +102,7 @@ from transformers import AutoModel, AutoTokenizer
 from transformers.cache_utils import DynamicCache
 from transformers.masking_utils import create_causal_mask
 
-from internvl_stream import (
+from foveatile_internvl import (
     MAX_NEW_TOKENS, IMG_START_TOKEN, IMG_END_TOKEN, IMG_CONTEXT_TOKEN,
     build_prompt, clean_answer, generate_answer_standard,
     split_prompt_at_vision, encode_tile, build_model, load_image_tiles,
@@ -186,7 +186,7 @@ class IFPruneGuide:
         model.img_context_token_id = self.img_context_id
 
     def offload(self):
-        """把小 VLM 移到 CPU。bench_metrics.py 用：同一個 process 裡還要跑 uncompressed / stream /
+        """把小 VLM 移到 CPU。bench_metrics.py 用：同一個 process 裡還要跑 uncompressed / FoveaTile /
         fastv 等其他方法，常駐的小模型（~2GB）不該算進它們的 peak memory；只在 IF-Prune 區段
         onload() 回 GPU，peak 才只算在 IF-Prune 頭上（部署時小模型本來就常駐，這樣才公平）。"""
         self.model.to("cpu")
@@ -460,7 +460,7 @@ def main():
                         help="小 VLM 骨架（InternVL2.5-1B 官方 HF remote code）")
     parser.add_argument("--head_dtype", choices=["fp32", "bf16"], default="bf16",
                         help="KL head 的計算精度；bf16 = 官方數值（預設），fp32 = 偏離官方的 ablation（見檔頭第 4 點）")
-    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 internvl_stream.py 同語意")
+    parser.add_argument("--max_num", type=int, default=48, help="dynamic tile 上限（含縮圖），跟 foveatile_internvl.py 同語意")
     parser.add_argument("--vit_batch", type=int, default=4)
     parser.add_argument("--budget", type=int, default=512,
                         help="剪枝後保留的視覺 token 數（= 官方 keep_ratio * vis_len）")
@@ -514,15 +514,15 @@ def main():
             datasets = load_docvqa(dataset="lmms-lab-encoder/DocVQA", subject="DocVQA", split="validation",
                                     num_image=args.num_images, prompt_mode=DOCVQA_PROMPT)
         elif args.dataset == "infovqa":
-            # InfoVQA validation（HF split 名為 "val"）：同 internvl_stream.py
+            # InfoVQA validation（HF split 名為 "val"）：同 foveatile_internvl.py
             datasets = load_infovqa(dataset="Ahren09/InfoVQA", split="val",
                                     num_image=args.num_images, prompt_mode=INFOVQA_PROMPT)
         elif args.dataset == "hrbench":
             datasets = load_hrbench(dataset="DreamMr/HR-Bench", split=HRBENCH_SPLIT,
                                      num_image=args.num_images, prompt_mode=HRBENCH_PROMPT)
         elif args.dataset in ("mme_rw_lite", "vstar", "realworldqa"):
-            # 大圖、圖片延遲開檔：沿用 internvl_stream 的資料集註冊（process_common.load_mme_realworld / load_vstar）
-            from internvl_stream import load_eval_dataset
+            # 大圖、圖片延遲開檔：沿用 foveatile_internvl 的資料集註冊（process_common.load_mme_realworld / load_vstar）
+            from foveatile_internvl import load_eval_dataset
             datasets = load_eval_dataset(args.dataset, args.num_images)
         else:
             return

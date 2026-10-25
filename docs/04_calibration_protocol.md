@@ -1,11 +1,11 @@
-# 04 SVMA 超參數的 held-out 校準流程（凍結版本 v1.0 的來源）
+# 04 FoveaTile 超參數的 held-out 校準流程（凍結版本 v1.0 的來源）
 
 整理於 2026-10-17，給論文的 Method（超參數選擇）與 Appendix（完整校準紀錄、偏離事先規則的地方）使用。
 凍結版本的設定表見 [03_experiment_plan.md](03_experiment_plan.md) §2.6。
 
 ## 0. 一句話摘要（論文可直接改寫）
 
-> SVMA 的所有超參數（覆蓋 tile 比例 m/K、打分窗口 S、預設 budget）都只在兩個與測試集不重疊的 held-out 校準集上決定：InfoVQA train 的 600 題與 MME-RealWorld 扣掉 Lite 後的 600 題。測試集不參與任何選擇。選擇依序為：(A) 掃 m/K，(B) 量保留率與 TTFT 決定預設 budget，(C) 固定 m 掃 S。之後提出的一個候選改動（打分窗口隨細節網格放大）在 held-out 上用事先定好的三條標準檢驗，沒有通過，因此未採用。
+> FoveaTile 的所有超參數（覆蓋 tile 比例 m/K、打分窗口 S、預設 budget）都只在兩個與測試集不重疊的 held-out 校準集上決定：InfoVQA train 的 600 題與 MME-RealWorld 扣掉 Lite 後的 600 題。測試集不參與任何選擇。選擇依序為：(A) 掃 m/K，(B) 量保留率與 TTFT 決定預設 budget，(C) 固定 m 掃 S。之後提出的一個候選改動（打分窗口隨細節網格放大）在 held-out 上用事先定好的三條標準檢驗，沒有通過，因此未採用。
 
 ## 1. 原則
 
@@ -45,7 +45,7 @@
 ### 2.3 衡量指標
 
 - **分數**：各校準集的 ANLS / accuracy（%）。
-- **保留率**：SVMA 分數 ÷ 同一校準集的 uncompressed 分數。uncompressed：InfoVQA train 83.9、MME-RW calib 59.5。
+- **保留率**：FoveaTile 分數 ÷ 同一校準集的 uncompressed 分數。uncompressed：InfoVQA train 83.9、MME-RW calib 59.5。
 - **平均保留率**：兩個校準集保留率的平均。
 - **最差任務保留率**：6 組（InfoVQA + MME-RW 的 5 個 subtask）中保留率最低的一組。
 - **TTFT**：`bench_metrics.py`，每個校準集取 51 張圖、第 1 張 warmup 不計、取中位數，每張 GPU 只跑一個程序（RTX A6000）。uncompressed：InfoVQA train 1.21 s、MME-RW calib 2.81 s。
@@ -54,7 +54,7 @@
 ## 3. 階段 A：覆蓋 tile 比例 m/K（2026-10-13~14）
 
 - **做法**：每個 budget 掃 m ∈ {1, K/4, K/2, 3K/4, K}（去重），S 用當時的暫定規則（舊表依細節名額等比例縮小）。b1024~b3072，兩個校準集 × 23 組。
-- **程式**：`STAGE=m ./run_calibrate.sh`；結果 `results/calib/<dataset>/svma_b<B>_m<m>_*.json`。
+- **程式**：`STAGE=m ./run_calibrate.sh`；結果 `results/calib/<dataset>/foveatile_b<B>_m<m>_*.json`。
 
 各校準集分數：
 
@@ -92,7 +92,7 @@
 ## 4. 保留率、TTFT 與預設 budget（2026-10-14）
 
 - **做法**：兩個校準集都跑 uncompressed（batch 1）；在乾淨環境量 m/K ∈ {0.5, 0.75, 1.0} 的 TTFT。
-- **程式**：`bench_metrics.py --svma_m_fracs 0.5,0.75,1.0 --warmup_images 1`；結果 `results/calib/metrics/metrics_<dataset>.csv`。
+- **程式**：`bench_metrics.py --foveatile_m_fracs 0.5,0.75,1.0 --warmup_images 1`；結果 `results/calib/metrics/metrics_<dataset>.csv`。
 
 | budget | m/K=0.5 平均保留率 / TTFT | m/K=0.75 | m=K（純覆蓋） |
 |---|---|---|---|
@@ -123,7 +123,7 @@
 ## 5. 階段 B：打分窗口 S（2026-10-14）
 
 - **做法**：固定 m = ⌊K/2⌋，S ∈ {0, S0/2, S0, 1.5 S0, 2 S0}（S0 = 舊規則在 m=K/2 下的值：b1024 10、b1536 9、b2048 8、b2560 7、b3072 7）。兩個校準集 × 5 個 budget，accuracy 600 題、TTFT 50 張圖。
-- **程式**：`run_calibrate_stageB.sh`（`STAGE=S ./run_calibrate.sh` + `bench_metrics.py --svma_s_mults 0,0.5,1,1.5,2`）；結果 `results/calib/<dataset>/svma_b<B>_m<m>_S<S>_*.json`、`results/calib/metrics/metrics_S_<dataset>.csv`。
+- **程式**：`run_calibrate_stageB.sh`（`STAGE=S ./run_calibrate.sh` + `bench_metrics.py --foveatile_s_mults 0,0.5,1,1.5,2`）；結果 `results/calib/<dataset>/foveatile_b<B>_m<m>_S<S>_*.json`、`results/calib/metrics/metrics_S_<dataset>.csv`。
 - **事先定的規則**：每個 budget，平均保留率與最差任務保留率都在最佳值 1 個百分點內的 S 中取最小；b1536 另外希望 TTFT ≤ 0.8 s（最差任務掉不超過 2 個百分點）。
 
 | budget | S | 平均保留率 | 最差組 | TTFT |
@@ -144,7 +144,7 @@
 ## 6. 診斷（3a，2026-10-16~17，只看測試集、不改設定）
 
 - **動機**：v1.0 在測試集上 b1024 顯著輸 IF-Prune（DocVQA −2.81、InfoVQA −2.98、V* −6.81），HR-Bench 4K 新舊設定差距不顯著。
-- **做法**：V* 每題有目標物件的 bbox；以「bbox 中心落在哪塊細節 tile」判斷目標 tile，對照 SVMA 實際選進 KV 的 tile 與 prior 排名（`internvl_stream.py` stats 新增 `prior_ranked`，只記錄、不影響選擇）。結果 `results/diagnostics/vstar_selection/`。
+- **做法**：V* 每題有目標物件的 bbox；以「bbox 中心落在哪塊細節 tile」判斷目標 tile，對照 FoveaTile 實際選進 KV 的 tile 與 prior 排名（`foveatile_internvl.py` stats 新增 `prior_ranked`，只記錄、不影響選擇）。結果 `results/diagnostics/vstar_selection/`。
 
 | budget | 命中率 | 命中時正確率 | 沒命中時正確率 | prior 沒排進窗口 | 進窗口但 q_attn 沒選 | 目標進窗口後 q_attn 選中率（隨機） |
 |---|---|---|---|---|---|---|
@@ -158,9 +158,9 @@
 
 ## 7. 候選改動 3b：打分窗口隨細節網格放大（2026-10-16~17，未採用）
 
-- **規則**：直接保留 + 打分的塊數 ≥ ⌈f × 細節網格塊數⌉（`svma_config.grid_qattn_tiles`；`--qattn_grid_frac f`，預設關閉）。
+- **規則**：直接保留 + 打分的塊數 ≥ ⌈f × 細節網格塊數⌉（`experiments/candidates_rejected/svma_config.grid_qattn_tiles`；`experiments/candidates_rejected/internvl_stream.py --qattn_grid_frac f`；已從主程式移除）。
 - **掃描**：f ∈ {0.2, 0.3, 0.4, 0.5}（使用者同意的是 0.3 / 0.4 / 0.5；smoke test 發現 MME-RW 的圖幾乎都切滿 45 塊、f=0.4 要打分 18 塊，所以多加較便宜的 0.2），m、S 用現行預設，兩個校準集 × b1024~b3072。
-- **程式**：`run_calibrate_stageG.sh`；結果 `results/calib/<dataset>/svma_b<B>_m<m>_gf<f>_*.json`、`results/calib/metrics/metrics_G_<dataset>.csv`。
+- **程式**：`experiments/candidates_rejected/run_calibrate_stageG.sh`；結果 `results/calib/<dataset>/foveatile_b<B>_m<m>_gf<f>_*.json`、`results/calib/metrics/metrics_G_<dataset>.csv`。
 - **事先定的三條標準（全部通過才採用）**：
   1. 平均保留率不比現行預設低超過 0.5 個百分點；
   2. MME-RW 的局部細節題（Remote Sensing + Monitoring + Autonomous Driving，360 題）相對現行預設顯著進步；
@@ -199,11 +199,11 @@ b1536 TTFT（兩個校準集平均，現行 0.76 s）：f=0.2 +0.15 s、0.3 +0.3
   1. HR-Bench 4K 的 v1.0 在 27% 的組（同題 4 種選項排列）選到的 tile 不一樣。原因是 prior / q_attn 的 query 是 text_after 全部的位置（含選項、作答指示、template）。CircularEval 要 4 題全對，選擇不穩直接扣分（b2560 這 55 組比 token 級方法低 9~15 分；選擇一致的 145 組 FoveaTile 反而最好）。
   2. HR-4K 的落後集中在 single（單一小物件）題；prior 對每塊細節 tile 取 patch 平均，小物件的尖峰被背景稀釋。
   3. HR-8K pilot（50 組）中 FoveaTile 隨 budget 增加不升反降，指向 tile 選擇是瓶頸。
-- **改動（`svma_config.QUERY_MODE` / `TILE_AGG`；`--query_mode` / `--tile_agg`）**：
+- **改動（`experiments/candidates_rejected/svma_config.QUERY_MODE` / `TILE_AGG`；`--query_mode` / `--tile_agg`）**：
   - A：query ∈ {`all`（v1.0）, `stem`（只用問題主幹的 token 列；causal attention 下主幹看不到選項，數學上與選項順序無關）, `stemopt`（另組「主幹 + 依字母排序的選項」當打分 query）}
   - B：tile 聚合 ∈ {`mean`（v1.0）, `top0.1`, `top0.25`（tile 內前 10% / 25% 的 patch 或 token 取平均）}，prior 與 q_attn 都套用
 - **實作驗證**：新程式碼在 `all`/`mean` 下與 v1.0 校準結果 bit-identical（MME-RW calib b1536 前 12 題答案 12/12、tile 12/12）；HR-4K 前 10 組（只看 tile、不看答案）選擇一致率 v1.0 7/10 → `stem` / `stemopt` / `stem+top0.1` 都是 10/10。
-- **掃描**：8 個變體（3 × 3 扣掉 v1.0）× b1024 / b1536 / b2560 × 兩個校準集 = 48 組；m、S 用 v1.0 預設；v1.0 對照沿用 `svma_b<B>_m<m>_S<S>` 既有結果。程式 `run_calibrate_v11.sh`。
+- **掃描**：8 個變體（3 × 3 扣掉 v1.0）× b1024 / b1536 / b2560 × 兩個校準集 = 48 組；m、S 用 v1.0 預設；v1.0 對照沿用 `foveatile_b<B>_m<m>_S<S>` 既有結果。程式 `experiments/candidates_rejected/run_calibrate_v11.sh`。
 - **事先定的判斷標準（結果出來前寫下）**：
   - **採用為改進（三條全部通過）**——同 3b：
     1. 3 個 budget 各自的平均保留率都不比 v1.0 低超過 0.5 個百分點；
@@ -224,7 +224,7 @@ b1536 TTFT（兩個校準集平均，現行 0.76 s）：f=0.2 +0.15 s、0.3 +0.3
 ## 7c. 候選改動：prior 的 head 選擇（A1）與問題無關基準校正（A2）（2026-10-25，進行中）
 
 - **動機（測試集診斷）**：V* 上 FoveaTile 命中目標 tile 時正確率 87.9（b1536，高於 uncompressed 83.8），沒命中時 48.0；輸給 token 級方法的題目約 60% 是沒命中。命中率 b1536 只有 73.8%，短邊 < 30 px 的目標只有 68.5%。→ 改進 prior 的排序。
-- **校準集（新建，held-out，有 bbox）**：`prepare_needle_calib.py`，COCO val2017 的圖拼成 4×4（2248×1500），每張挑一個整張大圖只出現一次的物件、拼圖後短邊 6~60 px，題目照 V* direct_attributes 格式問顏色（選項隨機，不評答案）。300 張，seed 0；前 150 張 `fit`、後 150 張 `val`。目標短邊中位數 30 px、< 30 px 佔 52%（V* 47%）。
+- **校準集（新建，held-out，有 bbox）**：`experiments/candidates_rejected/prepare_needle_calib.py`，COCO val2017 的圖拼成 4×4（2248×1500），每張挑一個整張大圖只出現一次的物件、拼圖後短邊 6~60 px，題目照 V* direct_attributes 格式問顏色（選項隨機，不評答案）。300 張，seed 0；前 150 張 `fit`、後 150 張 `val`。目標短邊中位數 30 px、< 30 px 佔 52%（V* 47%）。
   - 為什麼不用 HR-Bench 8K 校準：HR-4K 與 HR-8K 的 159 個問題文字完全相同（題目 + 選項 169 組一致），8K 校準、4K 測試等於在測試題上調；而且 HR-Bench 沒有 bbox，無法逐 head 量命中率。
 - **指標**：候選召回率 = 目標 tile（與 bbox 重疊的細節 tile；每個目標至少一塊）落在 prior 前 C 名（C = 直接保留 + 打分窗口 = slots − a + S；b1024 / b1536 / b2560 = 5 / 5 / 7）。只跑 prior 那次 forward，不生成答案。
 - **變體**：
@@ -235,10 +235,10 @@ b1536 TTFT（兩個校準集平均，現行 0.76 s）：f=0.2 +0.15 s、0.3 +0.3
   1. 在 `val` 上取 3 個 budget 平均候選召回率最高的變體；跟較簡單的變體差距 < 1 個百分點時取較簡單的（v1.0 < A2-`\n` < A1 < A2-generic，依額外成本排序）。
   2. 選出的變體 `val` 召回率要比 v1.0 高 ≥ 3 個百分點（約 V* 命中率的雜訊幅度），否則不進入 accuracy 驗證。
   3. 通過後在 MME-RW + InfoVQA 校準集（b1024 / b1536 / b2560）用 3b 的三條標準驗證 accuracy；通過才凍結並跑測試集（V*、HR-4K、HR-8K）。
-- **命中率結果（2026-10-25 21:00，`results/diagnostics/prior_heads/needle_calib/analysis.txt`）**：
+- **命中率結果（2026-10-25 21:00，`results/archive/diagnostics_prior_heads/needle_calib/analysis.txt`）**：
   - v1.0 val 平均 72.7%（b1024 / b1536 / b2560 = 69.3 / 69.3 / 79.3）。A2 單獨幾乎沒效果（72.4~72.9）；A1 是主要增益：top2 76.4、top4 75.1、top32 75.3。
   - fit 上單 head 召回率最高：(18, 26) 77.6、(19, 18) 75.1、(25, 12) 73.8……；比 v1.0 好的單 head 只有 9 個（共 21 層 × 32 = 672）。
-  - 規則 1：val 最高 `A1-top2+A2-gen-ratio` 77.6；差距 < 1 的較簡單者為 `A1-top2+A2-nl-ratio` 76.9 → **選 A1-top2+A2-nl-ratio**（head = (18, 26)、(19, 18)，`svma_config.PRIOR_HEADS_A1`）。
+  - 規則 1：val 最高 `A1-top2+A2-gen-ratio` 77.6；差距 < 1 的較簡單者為 `A1-top2+A2-nl-ratio` 76.9 → **選 A1-top2+A2-nl-ratio**（head = (18, 26)、(19, 18)，`experiments/candidates_rejected/svma_config.PRIOR_HEADS_A1`）。
   - 規則 2：76.9 − 72.7 = **+4.2 ≥ 3 → 通過**，進入 accuracy 驗證。
   - 實作驗證：pipeline 的 `coverage_prior(heads=…, base="nl", base_mode="ratio")` 與離線分析的前 5 名一致 10/10；v1.0 重建與 pipeline 一致 60/60。
   - 附帶：選出的 head 在第 18~19 層，prior forward 只需跑到第 20 層（q_attn 本來就要到第 20 層），預期 TTFT 不增反減。
@@ -271,10 +271,10 @@ b1536 TTFT（兩個校準集平均，現行 0.76 s）：f=0.2 +0.15 s、0.3 +0.3
 python prepare_mme_realworld.py                                  # 校準集 + Lite
 STAGE=m GPUS="0 1" CALIB_SETS="infovqa_train_calib mme_rw_calib" ./run_calibrate.sh   # 階段 A
 python bench_metrics.py --dataset <calib> --num_images 51 --warmup_images 1 \
-    --budgets 1024,1536,2048,2560,3072 --svma_m_fracs 0.5,0.75,1.0 --out_csv ...      # 第 4 節 TTFT
-python internvl_stream.py --dataset <calib> --mode uncompressed --batch_size 1          # 第 4 節 uncompressed
+    --budgets 1024,1536,2048,2560,3072 --foveatile_m_fracs 0.5,0.75,1.0 --out_csv ...      # 第 4 節 TTFT
+python foveatile_internvl.py --dataset <calib> --mode uncompressed --batch_size 1          # 第 4 節 uncompressed
 ./run_calibrate_stageB.sh                                        # 階段 B（accuracy + TTFT）
-./run_calibrate_stageG.sh                                        # 3b
+experiments/candidates_rejected/run_calibrate_stageG.sh                                        # 3b
 python summarize_results.py --root results/calib                 # 彙整分數與配對 CI
 ```
 
@@ -287,4 +287,4 @@ python summarize_results.py --root results/calib                 # 彙整分數�
 | 2026-10-14 | 保留率 / TTFT 量測 → 使用者選方案 A（m/K=0.5、b1536）；階段 B（S 掃描，40 組）→ 使用者同意 S0/2 |
 | 2026-10-15~16 | v1.0 在 5 個測試集與所有 baseline 上跑完 |
 | 2026-10-16~17 | 3a 診斷（V*）→ 3b 候選規則（40 組）→ 未通過 |
-| 2026-10-17 | 凍結 SVMA v1.0（03_experiment_plan.md §2.6） |
+| 2026-10-17 | 凍結 FoveaTile v1.0（03_experiment_plan.md §2.6） |

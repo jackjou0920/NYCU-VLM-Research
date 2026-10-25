@@ -1,0 +1,31 @@
+{
+  "source_json": "results/runs/hrbench_4k/svma_b3072_InternVL3_5-8B.json",
+  "metric": "hrbench_circular_accuracy",
+  "prompt_mode": "letter",
+  "group_by": "id",
+  "categories": [
+    "cross",
+    "single"
+  ],
+  "baseline_tag": "foveatile_b3072",
+  "n_boot": 2000,
+  "seed": 0,
+  "rows": [
+    {
+      "tag": "foveatile_b3072",
+      "n_groups": 200,
+      "circ_acc": 59.5,
+      "vanilla_acc": 68.875,
+      "by_category": {
+        "cross": 44.0,
+        "single": 75.0
+      },
+      "delta": 0.0,
+      "ci_lo": 0.0,
+      "ci_hi": 0.0,
+      "significant": false,
+      "is_baseline": true,
+      "is_reference": false
+    }
+  ]
+}

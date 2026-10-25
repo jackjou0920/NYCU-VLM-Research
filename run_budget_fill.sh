@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 補一個 budget 的完整測試結果（最早用來補預設點 b1536，之後補 b2560；方案 A：正文 budget 網格 = 1024~3072 每 512 一點）。
-#   1. accuracy：5 個測試集 × {SVMA, FastV, VisionZip, IF-Prune, SparseVLM} × BUDGET（run_test_suite.sh）
+#   1. accuracy：5 個測試集 × {FoveaTile, FastV, VisionZip, IF-Prune, SparseVLM} × BUDGET（run_test_suite.sh）
 #   2. 效率：同樣的方法 × BUDGET（run_efficiency.sh），SparseVLM 用第 1 步各資料集校準出的 λ
 # WAIT_FOR=<log 檔> 時，等那個檔案出現 done 才開始（避免干擾其他實驗的 TTFT）。
 # 用法：BUDGET=2560 nohup ./run_budget_fill.sh > logs/b2560.log 2>&1 &
@@ -34,7 +34,7 @@ if [ -n "$WAIT_FOR" ]; then
 fi
 wait_gpus "$ACC_FREE_GB"
 echo "[$(date '+%m-%d %H:%M')] 開始 b$BUDGET accuracy"
-DATASETS="$DATASETS" METHODS="svma fastv visionzip ifprune sparsevlm" BUDGETS="$BUDGET" GPUS="0 1" \
+DATASETS="$DATASETS" METHODS="foveatile fastv visionzip ifprune sparsevlm" BUDGETS="$BUDGET" GPUS="0 1" \
     ./run_test_suite.sh > "logs/test_suite_b$BUDGET.log" 2>&1
 
 wait_gpus "$EFF_FREE_GB"
