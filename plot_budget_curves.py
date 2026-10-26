@@ -10,7 +10,7 @@ CSV = "results/paper/main_internvl.csv"
 OUT = "figures/budget_curves"
 
 DATASETS = [("docvqa", "DocVQA"), ("infovqa", "InfoVQA"), ("hrbench_4k", "HR-Bench 4K"),
-            ("mme_rw_lite", "MME-RW Lite"), ("vstar", "V*")]
+            ("mme_rw_lite", "MME-RW Lite"), ("vstar", "V* Bench")]
 # (key, label, color, marker) -- FoveaTile first so it gets slot 1 and draws on top
 METHODS = [("foveatile", "FoveaTile (ours)", "#2a78d6", "o"),
            ("ifprune", "IF-Prune", "#eb6834", "s"),

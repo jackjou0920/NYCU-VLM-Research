@@ -29,6 +29,8 @@ from __future__ import annotations
 
 import os
 import gc
+import zlib
+import random
 import heapq
 import time
 import json
@@ -174,6 +176,15 @@ THUMB_ATTN_LAYERS = (21, 28)
 #   診斷（InfoVQA b1024 177 張，所有 tile 都當候選）：oracle 最佳 tile 被選進前 K-1 的比例
 #     L12 30.5% / L20 36.2% / ctx+L12 34.5% / ctx+L20 44.1%（隨機約 12%）。tag 後綴 _qa20ctx。
 QATTN_LAYER = 20
+REF_NUM_LAYERS = 36        # 上面兩個層號是在 InternVL3.5-8B（36 層）上定的
+
+
+def attn_layers(n_layers: int) -> tuple[tuple[int, int], int]:
+    """依 LLM 層數換算 prior 的層區間與 q_attn 的層（相對深度不變，四捨五入）：回傳 ((lo, hi), l_q)。
+    36 層（8B / 4B）= ((21, 28), 20)；40 層（14B）= ((23, 31), 22)。換算規則在跑其他尺寸之前定好，不另外調。"""
+    r = n_layers / REF_NUM_LAYERS
+    rnd = lambda x: max(1, min(n_layers, int(x * r + 0.5)))
+    return (rnd(THUMB_ATTN_LAYERS[0]), rnd(THUMB_ATTN_LAYERS[1])), rnd(QATTN_LAYER)
 
 VIT_BATCH = 4               # ViT micro-batch（系統參數，影響 peak memory / TTFT，不影響選擇結果）
 CHUNK_SIZE = 1024           # LLM chunked-prefill 大小（同上）
@@ -459,12 +470,14 @@ def _qattn_prefix_core(lm_model, layer: int, P: int, tile_tokens: torch.Tensor, 
 
 @torch.no_grad()
 def qattn_scores_with_prefix(model, tile_tokens: torch.Tensor, prefix_kv: dict, emb_after: torch.Tensor,
-                             layer: int = QATTN_LAYER) -> torch.Tensor:
+                             layer: int | None = None) -> torch.Tensor:
     """q_attn（含覆蓋 tile context）：context = [text_before][覆蓋 tile][tile][text_after]，
     [text_before][覆蓋 tile] 用 prefix_kv（coverage_prior 存的 {"len": P, "kv": [(K, V), ...]}，
     第 1..layer 層）不重算；只對 [tile][text_after] 跑前 layer-1 層 + 第 layer 層的 q/k。
     數學上等於整段直接 forward。tile 分數 = text_after 每列對 tile 的 attention 總和，再對列平均。回傳 [B]。"""
     lm_model = model.language_model.model
+    if layer is None:
+        layer = attn_layers(len(lm_model.layers))[1]
     P, kv = int(prefix_kv["len"]), prefix_kv["kv"]
     if len(kv) < layer:
         raise ValueError(f"prefix_kv 只有 {len(kv)} 層，q_attn 要用到第 {layer} 層")
@@ -555,7 +568,7 @@ class InternVLAdapter:
 
         # 2) 第 lo..hi 層、text_after 對覆蓋 patch 的 attention，平均 row/layer（head 已平均）
         n_layers = len(model.language_model.model.layers)
-        lo, hi = THUMB_ATTN_LAYERS[0], min(THUMB_ATTN_LAYERS[1], n_layers)
+        lo, hi = attn_layers(n_layers)[0]
         layer_list = list(range(lo, hi + 1))
         kv_sink = [] if capture_kv_upto else None
         per_layer = prefix_attention_rows(model, inp, q_start, layer_list,
@@ -673,12 +686,13 @@ class InternVLAdapter:
         if need_score:
             emb = self.get_input_embeddings(model)
             emb_a = emb(self.tokenizer([text_after], return_tensors="pt").input_ids.to(DEVICE))
-            if prefix_kv is None or len(prefix_kv["kv"]) < QATTN_LAYER:
+            l_q = attn_layers(len(model.language_model.model.layers))[1]
+            if prefix_kv is None or len(prefix_kv["kv"]) < l_q:
                 emb_b = emb(self.tokenizer([text_before], return_tensors="pt").input_ids.to(DEVICE))
                 pre = torch.cat([emb_b, cover_tokens.reshape(1, -1, cover_tokens.shape[-1]).to(emb_b.dtype)], dim=1)
                 sink = []
-                prefix_attention_rows(model, pre, pre.shape[1] - 1, {QATTN_LAYER},
-                                      kv_sink=sink, kv_len=pre.shape[1], kv_upto=QATTN_LAYER)
+                prefix_attention_rows(model, pre, pre.shape[1] - 1, {l_q},
+                                      kv_sink=sink, kv_len=pre.shape[1], kv_upto=l_q)
                 prefix_kv = {"len": pre.shape[1], "kv": sink}
                 del pre, emb_b
 
@@ -772,6 +786,7 @@ def run_online_kv_with_memory_bank(
     qattn_tiles: int | None = None,
     max_new_tokens: int = MAX_NEW_TOKENS,
     dtype: torch.dtype = torch.bfloat16,
+    random_prior: bool = False,
 ):
     """FoveaTile：每張圖 text_before prefill → 覆蓋 tile 的 ViT + prior → InternVLAdapter.stream_image_to_kv_cascade
     （邊界打分選細節 tile、細節 tile + 覆蓋 tile 依序寫 KV）→ text_after + greedy decode。
@@ -781,6 +796,8 @@ def run_online_kv_with_memory_bank(
     qattn_tiles：S；None = 每張圖依 budget 與實際覆蓋塊數自動（foveatile_config.default_qattn_tiles）。
     budget 是最終 visual token 上限，InternVL3.5-8B budget=2048 = 最多 8 塊 256-token tile（含 m 塊覆蓋 tile）。
     一次只處理一張圖（batch 內逐張），全部 tile token 從不同時存在。
+    random_prior：ablation 用。prior 的 forward 照跑（q_attn 需要它的前綴 KV，成本不變），但細節 tile 的 prior
+    換成隨機分數（種子 = 題目文字的 crc32，可重現）。
     回傳 (answers, all_stats, timing)。
     """
     B = len(inputs)
@@ -881,10 +898,13 @@ def run_online_kv_with_memory_bank(
             tile_prior, prefix_kv = adapter.coverage_prior(
                 model, cover_tokens, inputs[b]["cover_grid"], inputs[b]["detail_grid"],
                 text_before, text_after,
-                capture_kv_upto=QATTN_LAYER if S_b > 0 else None,
+                capture_kv_upto=attn_layers(len(model.language_model.model.layers))[1] if S_b > 0 else None,
             )
             t_prior = _synced_time() - t_ta
-            print(f"[Image {b}] coverage prior: m={m} +{t_prior:.2f}s")
+            if random_prior:
+                rng = random.Random(RANDOM_SEED + zlib.crc32(question.encode("utf-8")))
+                tile_prior = {k: rng.random() for k in tile_prior}
+            print(f"[Image {b}] coverage prior: m={m} +{t_prior:.2f}s" + (" (random ablation)" if random_prior else ""))
 
         past_key_values, running_mask, stats = adapter.stream_image_to_kv_cascade(
             model=model,
@@ -1168,8 +1188,9 @@ def build_meta(datasets) -> list[dict]:
 MODES = ("foveatile", "uncompressed", "lowres_fill")
 
 
-def run_tag(mode: str, budget: int, coverage_tiles: int | None = None, qattn_tiles: int | None = None) -> str:
-    """預設設定的 tag 是 foveatile_b<B>；有覆寫 m / S（校準掃描用）時加上 _m<m> / _S<S>。"""
+def run_tag(mode: str, budget: int, coverage_tiles: int | None = None, qattn_tiles: int | None = None,
+            random_prior: bool = False) -> str:
+    """預設設定的 tag 是 foveatile_b<B>；有覆寫 m / S（校準掃描用）時加上 _m<m> / _S<S>；random prior 加 _randprior。"""
     if mode == "uncompressed":
         return mode
     tag = f"{mode}_b{budget}"
@@ -1177,6 +1198,8 @@ def run_tag(mode: str, budget: int, coverage_tiles: int | None = None, qattn_til
         tag += f"_m{coverage_tiles}"
     if mode == "foveatile" and qattn_tiles is not None:
         tag += f"_S{qattn_tiles}"
+    if mode == "foveatile" and random_prior:
+        tag += "_randprior"
     return tag
 
 
@@ -1227,14 +1250,14 @@ def standard_kv_cache_mb(model, tokenizer, pixel_values, question) -> float:
 
 
 def run_batch(model, tokenizer, adapter, mode: str, inputs, questions, budget: int, dtype=torch.bfloat16,
-              coverage_tiles: int | None = None, qattn_tiles: int | None = None):
+              coverage_tiles: int | None = None, qattn_tiles: int | None = None, random_prior: bool = False):
     """回傳 (answers, extra)；extra 是每張圖一筆的附加紀錄 {key: list}，跟 answers 對齊。
     coverage_tiles / qattn_tiles：覆寫 FoveaTile 的 m / S（None = foveatile_config 的預設）。"""
     if mode == "foveatile":
         m = default_coverage_tiles(budget) if coverage_tiles is None else coverage_tiles
         S = default_qattn_tiles(budget, m) if qattn_tiles is None else qattn_tiles
         answers, all_stats, timing = run_online_kv_with_memory_bank(
-            model, adapter, inputs, questions, budget=budget, qattn_tiles=S, dtype=dtype)
+            model, adapter, inputs, questions, budget=budget, qattn_tiles=S, dtype=dtype, random_prior=random_prior)
         # batch_size > 1 時同一批共用第一張圖的 TTFT；要逐張 TTFT 就用 --batch_size 1 或 bench_metrics.py
         return answers, {"ttft": [timing.get("TTFT")] * len(answers),
                          "tile_selection": [s.get("committed_tile_indices", []) for s in all_stats],
@@ -1261,6 +1284,8 @@ def parse_args(argv=None):
                    help="FoveaTile 的覆蓋 tile 數 m（校準掃描用）；不給 = foveatile_config 的預設 floor(0.5 K)")
     p.add_argument("--qattn_tiles", type=int, default=None,
                    help="FoveaTile 第二階段打分的 tile 數 S（校準掃描用）；不給 = foveatile_config 的預設 S(K, m)")
+    p.add_argument("--random_prior", action="store_true",
+                   help="ablation：細節 tile 的 prior 換成隨機分數（其餘不變），tag 加 _randprior")
     args = p.parse_args(argv)
     if args.mode != "uncompressed" and args.budget < 256:
         p.error(f"--budget 至少要 256（1 塊 tile），收到 {args.budget}")
@@ -1269,7 +1294,7 @@ def parse_args(argv=None):
 
 def main(argv=None):
     args = parse_args(argv)
-    tag = run_tag(args.mode, args.budget, args.coverage_tiles, args.qattn_tiles)
+    tag = run_tag(args.mode, args.budget, args.coverage_tiles, args.qattn_tiles, args.random_prior)
     out = args.output_json or default_output_json(args.model_name, args.dataset, tag)
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
     torch.manual_seed(RANDOM_SEED)
@@ -1298,7 +1323,8 @@ def main(argv=None):
                                 args.coverage_tiles)
         with measure_peak_memory(f"{tag} [{i + 1}~{i + len(batch)}/{n}]"):
             answers, extra = run_batch(model, tokenizer, adapter, args.mode, inputs, questions, args.budget,
-                                       coverage_tiles=args.coverage_tiles, qattn_tiles=args.qattn_tiles)
+                                       coverage_tiles=args.coverage_tiles, qattn_tiles=args.qattn_tiles,
+                                       random_prior=args.random_prior)
         results["candidates"][tag] += answers
         for key, vals in extra.items():
             results.setdefault(key, {}).setdefault(tag, []).extend(vals)

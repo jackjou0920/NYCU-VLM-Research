@@ -1,0 +1,23 @@
+\providecommand{\pend}{\textcolor{red}{?}}
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{2.6pt}
+  \begin{tabular}{l ccc cc c}
+    \toprule
+    Variant & Info & MME & Local & Avg. & Worst & TTFT \\
+    \midrule
+    \rowcolor{oursbg}
+    \method & 94.4 & 97.1 & 100.1 & 95.8 & 85.4 & 0.92 \\
+    Coverage only, $m{=}K$ & 95.8 & 95.6 & 95.8 & 95.7 & 77.5 & 0.58 \\
+    Thumbnail, $m{=}1$ & 86.6 & 90.8 & 95.6 & 88.7 & 75.7 & -- \\
+    Prior only, $S{=}0$ & 94.5 & 93.6 & 92.6 & 94.1 & 78.5 & 0.73 \\
+    Window $2\times$ & 94.2 & 97.6 & 98.4 & 95.9 & 85.0 & 1.11 \\
+    Window $4\times$ & 94.5 & 96.6 & 97.0 & 95.5 & 80.9 & 1.48 \\
+    Random prior & \pend & \pend & \pend & \pend & \pend & \pend \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Ablations} on the held-out calibration sets (Info: InfoVQA train; MME: MME-RealWorld without its Lite subset; 600 questions each), as a percentage of the uncompressed score, averaged over $B\in\{1024,1536,2048,2560,3072\}$. Local: MME-RealWorld remote sensing, monitoring, and autonomous driving, where answers depend on small regions. Worst: lowest percentage among InfoVQA and the five MME-RealWorld subtasks, averaged over budgets. Window sizes are relative to the default $S$; TTFT in seconds.}
+  \label{tab:ablation}
+\end{table}

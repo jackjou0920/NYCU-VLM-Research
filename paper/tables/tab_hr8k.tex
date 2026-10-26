@@ -1,0 +1,25 @@
+\providecommand{\pend}{\textcolor{red}{?}}
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{3.2pt}
+  \begin{tabular}{l ccc ccc}
+    \toprule
+    & \multicolumn{3}{c}{25 tiles} & \multicolumn{3}{c}{188 tiles} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}
+    Method & Acc. & TTFT & Mem. & Acc. & TTFT & Mem. \\
+    \midrule
+    Uncompressed & 56.5 & 1.44 & 1.79 & 49.0 & 17.22 & 12.90 \\
+    \midrule
+    FastV & \textbf{54.0} & 0.63 & 1.16 & 42.5 & 3.19 & 8.34 \\
+    SparseVLM & 53.5 & 0.76 & 1.18 & \pend & 4.09 & 8.44 \\
+    VisionZip & 44.5 & \textbf{0.58} & 0.49 & 27.0 & 2.45 & 0.49 \\
+    IF-Prune & 52.5 & 1.04 & 2.81 & \textbf{52.0} & 7.00 & 8.28 \\
+    \rowcolor{oursbg}
+    \method (ours) & 52.0 & 0.70 & \textbf{0.42} & 47.0 & \textbf{0.71} & \textbf{0.41} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Higher input resolution at a fixed budget} ($B=1536$) on HR-Bench 8K. Raising the tile cap from $N_{\max}=47$ to 200 splits each image into 188 tiles instead of about 25. Acc.\ is CircularEval accuracy, TTFT in seconds, Mem.\ in GB.}
+  \label{tab:hr8k}
+\end{table}

@@ -1,0 +1,25 @@
+\providecommand{\pend}{\textcolor{red}{?}}
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{2pt}
+  \begin{tabular}{l cc cc cc cc}
+    \toprule
+    & \multicolumn{2}{c}{HR-4K} & \multicolumn{2}{c}{HR-8K} & \multicolumn{4}{c}{V$^*$ Bench} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-9}
+    Method & S & C & S & C & Attr. & Pos. & Hit & Miss \\
+    \midrule
+    Uncompressed & 77.0 & 47.0 & 66.0 & 47.0 & 85.2 & 81.6 & 86.8 & 76.4 \\
+    \midrule
+    FastV & 73.0 & \textbf{45.0} & 63.0 & \textbf{45.0} & 80.0 & 77.6 & 83.1 & \textbf{69.1} \\
+    SparseVLM & 75.0 & 44.0 & 66.0 & 41.0 & 80.0 & \textbf{78.9} & 85.3 & 65.5 \\
+    VisionZip & 62.0 & 36.0 & 59.0 & 30.0 & 75.7 & 61.8 & 73.5 & 61.8 \\
+    IF-Prune & \textbf{76.0} & 39.0 & \textbf{68.0} & 37.0 & \textbf{85.2} & 76.3 & 86.8 & \textbf{69.1} \\
+    \rowcolor{oursbg}
+    \method (ours) & 71.0 & 42.0 & 61.0 & 43.0 & 77.4 & 77.6 & \textbf{88.2} & 50.9 \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Where \method helps and where it fails} ($B=1536$). HR-Bench is split into single- (S) and cross-instance (C) questions (CircularEval), V$^*$ Bench into attribute and relative-position questions. Hit / Miss split V$^*$ Bench by whether the detail tiles selected by \method cover the target (136 hit, 55 miss); every method is evaluated on the same split.}
+  \label{tab:analysis}
+\end{table}

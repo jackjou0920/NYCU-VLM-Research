@@ -15,6 +15,7 @@
 # 用法：
 #   nohup ./run_test_suite.sh > logs/test_suite.log 2>&1 &
 #   DATASETS="vstar" METHODS="foveatile fastv" BUDGETS="1024 2048" GPUS="0" ./run_test_suite.sh
+#   MAX_NUM=201 OUT=results/runs_maxnum201 LOG_DIR=logs/runs_maxnum201 DATASETS="hrbench_8k" ./run_test_suite.sh
 # ─────────────────────────────────────────────────────────────────────────────
 set -uo pipefail
 cd "$(dirname "$0")"
@@ -27,6 +28,7 @@ read -r -a BUDGETS <<< "${BUDGETS:-1024 2048 3072 4096 5120}"
 read -r -a GPUS <<< "${GPUS:-0 1}"
 NUM_IMAGES=${NUM_IMAGES:--1}
 CALIB_IMAGES=${CALIB_IMAGES:-32}
+MAX_NUM=${MAX_NUM:-48}           # dynamic tile 上限（含縮圖）；主實驗一律 48，放寬上限的實驗另外指定並換 OUT
 MTAG=$(basename "$MODEL")
 MIN_FREE_GB=${MIN_FREE_GB:-30}     # 每個工作開始前，這張卡至少要有這麼多空間（GPU 跟別人共用；0 = 不檢查）
 MAX_WAIT_H=${MAX_WAIT_H:-24}       # 每次最多等幾小時，超過就跳過這個工作（不動別人的程序）
@@ -57,17 +59,17 @@ run_job() {   # $1 dataset $2 method $3 budget（uncompressed 給 0）
     # baseline 腳本的 --dataset 只認 hrbench，4K / 8K 用 HRBENCH_SPLIT 環境變數指定（foveatile_internvl.py 直接認 hrbench_4k）
     local bds=$ds
     if [[ $ds == hrbench_* ]]; then bds=hrbench; export HRBENCH_SPLIT=$ds; fi
-    common="--use_ds --dataset $bds --num_images $NUM_IMAGES --model_name $MODEL --save --output_json $json"
+    common="--use_ds --dataset $bds --num_images $NUM_IMAGES --model_name $MODEL --max_num $MAX_NUM --save --output_json $json"
     case $m in
-        uncompressed) $PY foveatile_internvl.py --dataset "$ds" --mode uncompressed --batch_size 1 \
+        uncompressed) $PY foveatile_internvl.py --dataset "$ds" --mode uncompressed --batch_size 1 --max_num "$MAX_NUM" \
                           --num_images "$NUM_IMAGES" --model_name "$MODEL" --output_json "$json" >> "$log" 2>&1 ;;
-        foveatile)    $PY foveatile_internvl.py --dataset "$ds" --mode foveatile --budget "$b" --batch_size 4 \
+        foveatile)    $PY foveatile_internvl.py --dataset "$ds" --mode foveatile --budget "$b" --batch_size 4 --max_num "$MAX_NUM" \
                           --num_images "$NUM_IMAGES" --model_name "$MODEL" --output_json "$json" >> "$log" 2>&1 ;;
         fastv)        $PY fastv_internvl.py $common --budget "$b" --run_fastv >> "$log" 2>&1 ;;
         visionzip)    $PY visionzip_internvl.py $common --budget "$b" --run_visionzip >> "$log" 2>&1 ;;
         ifprune)      $PY ifprune_internvl.py $common --budget "$b" --run_ifprune >> "$log" 2>&1 ;;
         sparsevlm)
-            lam=$($PY sparsevlm_internvl.py --use_ds --dataset "$bds" --num_images "$CALIB_IMAGES" --model_name "$MODEL" \
+            lam=$($PY sparsevlm_internvl.py --use_ds --dataset "$bds" --num_images "$CALIB_IMAGES" --model_name "$MODEL" --max_num "$MAX_NUM" \
                       --budget "$b" --max_new_tokens 1 --auto_lam --run_sparsevlm 2>&1 | tee -a "$log.calib" \
                   | grep -oP '\[auto_lam\] chosen lam=\K[0-9.eE+-]+' \
                   | $PY -c "import sys,statistics as s; v=[float(x) for x in sys.stdin.read().split()]; print(round(s.median(v),4) if v else 0.1)")

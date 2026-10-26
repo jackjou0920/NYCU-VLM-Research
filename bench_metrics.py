@@ -67,6 +67,12 @@ import torch
 
 from internvl_preprocess import build_model, load_image_tiles, load_image_tiles_fill
 import foveatile_internvl as S
+
+
+def _fovea_layers(model):
+    """FLOPs 用：(prior 跑到第幾層, q_attn 層)，依模型層數換算（同 foveatile_internvl.attn_layers）。"""
+    (_, hi), l_q = S.attn_layers(model.language_model.config.num_hidden_layers)
+    return hi, l_q
 import sparsevlm_internvl as SV
 import fastv_internvl as FV
 import visionzip_internvl as VZ
@@ -316,7 +322,7 @@ def main():
                 "vision_s": timing.get("Vision+OnlineKV"),
                 "kv_cache_mb": timing.get("_kv_cache_mb") or (all_stats[0].get("kv_cache_mb") if all_stats else None),
                 **_flops(fc, all_stats[0]["vit_encoded_tiles"],
-                         FL.foveatile_segments(fc, tb_q, ta_q, all_stats[0], S.THUMB_ATTN_LAYERS[1], S.QATTN_LAYER)),
+                         FL.foveatile_segments(fc, tb_q, ta_q, all_stats[0], *_fovea_layers(model))),
                 **{f"t_{k}": v for k, v in all_stats[0].get("ttft_breakdown", {}).items()},
             })
             del adapter
