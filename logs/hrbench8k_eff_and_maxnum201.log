@@ -10,3 +10,33 @@
 [10-26 13:01] GPU1 hrbench_8k sparsevlm 1536
 [10-26 13:16] GPU0 hrbench_8k fastv 2560
   hrbench_8k sparsevlm b1536：校準 λ=0.7537
+[10-26 14:13] GPU0 hrbench_8k visionzip 2560
+[10-26 14:59] GPU0 hrbench_8k ifprune 2560
+[10-26 16:33] GPU0 hrbench_8k sparsevlm 2560
+  hrbench_8k sparsevlm b2560：校準 λ=0.7537
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             200   49.00                                       5536
+  foveatile_b1536          200   47.00   -2.00      [-8.5, +4.5]   0.73s      230
+  foveatile_b2560          200   52.50   +3.50      [-2.5, +9.0]   1.00s      374
+  fastv_budget=1536_k=2    200   42.50   -6.50    [-13.0, -0.5]*                 
+  fastv_budget=2560_k=2    200   48.00   -1.00      [-6.0, +4.5]                 
+  ifprune_budget=1536_L=2   200   52.00   +3.00      [-2.0, +8.0]                 
+  ifprune_budget=2560_L=2   200   52.50   +3.50      [-1.5, +8.5]                 
+  sparsevlm_budget=1536_lam=0.7537   200   51.50   +2.50      [-3.0, +8.0]                 
+  sparsevlm_budget=2560_lam=0.7537   200   52.50   +3.50      [-1.5, +9.0]                 
+  visionzip_budget=1536    200   27.00  -22.00   [-29.0, -15.0]*                 
+  visionzip_budget=2560    200   33.50  -15.50    [-23.0, -8.5]*                 
+
+[saved] results/runs_maxnum201/summary.csv
+[10-26 17:51] done
+== test suite：15 個工作，GPUS=0 1 ==
+[10-26 17:51] GPU0 hrbench_8k foveatile 1024
+[10-26 17:51] GPU1 hrbench_8k foveatile 2048
+[10-26 18:21] GPU0 hrbench_8k foveatile 3072
+[10-26 18:26] GPU1 hrbench_8k fastv 1024
+[10-26 19:01] GPU0 hrbench_8k fastv 2048
+[10-26 19:20] GPU1 hrbench_8k fastv 3072
+[10-26 20:01] GPU0 hrbench_8k visionzip 1024
+[10-26 20:17] GPU1 hrbench_8k visionzip 2048

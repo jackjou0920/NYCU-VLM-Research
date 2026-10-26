@@ -2,7 +2,8 @@
 實驗補完後重跑一次即可：python results/paper/build_paper_results.py
 
 輸出：
-  paper/tables/tab_main.tex      Table：8B 主表（budget 區塊 × 方法 × 6 個測試集 + 平均保留率 + TTFT / 記憶體 / FLOPs）
+  paper/tables/tab_memcap.tex    Table：記憶體上限下能達到的最高平均保留率（8B）
+  paper/tables/tab_main.tex      Table：8B 主表（budget 區塊 × 方法 × 5 個測試集（HR-8K 另外在 tab_hr8k） + 平均保留率 + TTFT / 記憶體 / FLOPs）
   paper/tables/tab_scale.tex     Table：4B / 8B / 14B @ b1536
   paper/tables/tab_hr8k.tex      Table：HR-Bench 8K，tile 上限 47（約 25 塊）vs 上限 200（188 塊）@ b1536
   paper/tables/tab_analysis.tex  Table：題型拆分 + V* Bench 命中 / 沒命中 @ b1536
@@ -21,8 +22,10 @@ OUT_TAB, OUT_FIG = "paper/tables", "paper/figures"
 os.makedirs(OUT_TAB, exist_ok=True)
 
 MODELS = {"4B": "InternVL3_5-4B", "8B": "InternVL3_5-8B", "14B": "InternVL3_5-14B"}
+# 主表 / 平均保留率 / 記憶體上限表 / Pareto / 模型尺寸表用的 5 個測試集；HR-Bench 8K 另外在 tab_hr8k（兩種 tile 上限）
+# 與 tab_analysis 報告（使用者 2026-10-26 決定）
 DS = [("docvqa", "DocVQA"), ("infovqa", "InfoVQA"), ("mme_rw_lite", "MME-RW"),
-      ("hrbench_4k", "HR-4K"), ("hrbench_8k", "HR-8K"), ("vstar", "V$^*$ Bench")]
+      ("hrbench_4k", "HR-Bench 4K"), ("vstar", "V$^*$ Bench")]
 METHODS = [("fastv", "FastV~\\cite{fastv}"), ("sparsevlm", "SparseVLM~\\cite{sparsevlm}"),
            ("visionzip", "VisionZip~\\cite{visionzip}"), ("ifprune", "IF-Prune~\\cite{ifprune}"),
            ("foveatile", "\\method (ours)")]
@@ -116,30 +119,48 @@ def best_of(vals, lower=False):
 
 
 # ─────────────────────────────── Table：8B 主表 ───────────────────────────────
+def rank_fmt(x, vals, nd=1, suffix=""):
+    """最佳粗體、第二名底線（只看非 None 的值，越大越好；同分同名次）。"""
+    if x is None:
+        return PEND
+    s = f"{x:.{nd}f}{suffix}"
+    distinct = sorted({round(v, nd) for v in vals if v is not None}, reverse=True)
+    if distinct and round(x, nd) == distinct[0]:
+        return f"\\textbf{{{s}}}"
+    if len(distinct) > 1 and round(x, nd) == distinct[1]:
+        return f"\\underline{{{s}}}"
+    return s
+
+
+def saving(unc_v, v):
+    return None if (unc_v is None or v is None) else unc_v / v
+
+
 def tab_main():
     unc = summary("uncompressed", 0)
+    X = "$\\times$"
     L = [PREAMBLE, "\\begin{table*}[t]", "  \\centering", "  \\footnotesize", "  \\setlength{\\tabcolsep}{4pt}",
-         "  \\begin{tabular}{l cc c ccc c ccc}", "    \\toprule",
-         "    & \\multicolumn{2}{c}{Document} & Real-world & \\multicolumn{3}{c}{High resolution} & & "
-         "\\multicolumn{3}{c}{Cost per image} \\\\",
-         "    \\cmidrule(lr){2-3}\\cmidrule(lr){4-4}\\cmidrule(lr){5-7}\\cmidrule(lr){9-11}",
-         "    Method & " + " & ".join(n for _, n in DS) + " & Avg.\\ (\\%) & TTFT$\\downarrow$ & "
-         "Mem.$\\downarrow$ & TFLOPs$\\downarrow$ \\\\", "    \\midrule",
-         "    \\multicolumn{11}{c}{\\textit{Upper bound: all visual tokens}} \\\\",
-         f"    Uncompressed & " + " & ".join(fmt(x) for x in unc["raw"]) + " & 100.0 & "
-         f"{fmt(unc['ttft'], 2)} & {fmt(unc['mem'], 2)} & {fmt(unc['flops'], 0)} \\\\"]
+         "  \\begin{tabular}{l cc c cc c ccc}", "    \\toprule",
+         "    & \\multicolumn{2}{c}{Document} & Real-world & \\multicolumn{2}{c}{High resolution} & & "
+         "\\multicolumn{3}{c}{Saving \\vs uncompressed$\\uparrow$} \\\\",
+         "    \\cmidrule(lr){2-3}\\cmidrule(lr){4-4}\\cmidrule(lr){5-6}\\cmidrule(lr){8-10}",
+         "    Method & " + " & ".join(n for _, n in DS) + " & Avg.\\ (\\%) & TTFT & Memory & FLOPs \\\\",
+         "    \\midrule",
+         "    \\multicolumn{10}{c}{\\textit{Upper bound: all visual tokens}} \\\\",
+         "    Uncompressed & " + " & ".join(fmt(x) for x in unc["raw"]) + f" & 100.0 & 1.0{X} & 1.0{X} & 1.0{X} \\\\"]
     for b in MAIN_BLOCKS:
         S = {m: summary(m, b) for m, _ in METHODS}
+        for m in S:                                   # 成本換成相對 uncompressed 的節省倍率（越大越好）
+            S[m]["sx"] = {k: saving(unc[k], S[m][k]) for k in ("ttft", "mem", "flops")}
         kr = keep_ratio(b)
         L += ["    \\midrule",
-              f"    \\multicolumn{{11}}{{c}}{{\\textit{{Budget $B={b}$ visual tokens"
+              f"    \\multicolumn{{10}}{{c}}{{\\textit{{Budget $B={b}$ visual tokens"
               + (" (default)" if b == DEFAULT_B else "")
               + (f", $\\approx${kr:.0f}\\% of all visual tokens" if kr is not None else "") + "}} \\\\"]
-        best_raw = [best_of([S[m]["raw"][i] for m, _ in METHODS]) for i in range(len(DS))]
-        best = {k: best_of([S[m][k] for m, _ in METHODS], lower=k != "avg") for k in ("avg", "ttft", "mem", "flops")}
+        col = lambda i: [S[m]["raw"][i] for m, _ in METHODS]
         for m, name in METHODS:
             s = S[m]
-            cells = [bold_if(x, bb) for x, bb in zip(s["raw"], best_raw)]
+            cells = [rank_fmt(x, col(i)) for i, x in enumerate(s["raw"])]
             if m == "foveatile":                     # 跟該欄最強 baseline 的配對 bootstrap：↑ 顯著較好、↓ 顯著較差
                 for i, (d, _) in enumerate(DS):
                     base = [(S[mm]["raw"][i], mm) for mm, _ in METHODS if mm != "foveatile" and S[mm]["raw"][i] is not None]
@@ -147,32 +168,73 @@ def tab_main():
                     if base and ours is not None:
                         delta, lo, hi, _n = R.paired_delta(ours, unit_scores(d, max(base)[1], b))
                         cells[i] += "$^{\\uparrow}$" if lo > 0 else ("$^{\\downarrow}$" if hi < 0 else "")
-            row1 = " & ".join(cells)
-            row2 = " & ".join("{\\scriptsize " + fmt(x) + "}" for x in s["ret"])
+            row2 = " & ".join("{\\scriptsize " + fmt(x) + ("\\%" if x is not None else "") + "}" for x in s["ret"])
             drop = "" if s["avg"] is None else f"{{\\scriptsize ($\\downarrow${100 - s['avg']:.1f})}}"
+            costs = [rank_fmt(s["sx"][k], [S[mm]["sx"][k] for mm, _ in METHODS], 1, X) for k in ("ttft", "mem", "flops")]
             color = "    \\rowcolor{oursbg}\n" if m == "foveatile" else ""
-            L += [f"{color}    {name} & {row1} & {bold_if(s['avg'], best['avg'])} & & & \\\\",
-                  f"{color}    & {row2} & {drop} & "
-                  f"\\multirow{{-2}}{{*}}{{{bold_if(s['ttft'], best['ttft'], 2)}}} & "
-                  f"\\multirow{{-2}}{{*}}{{{bold_if(s['mem'], best['mem'], 2)}}} & "
-                  f"\\multirow{{-2}}{{*}}{{{bold_if(s['flops'], best['flops'], 0)}}} \\\\"]
+            L += [f"{color}    {name} & " + " & ".join(cells) + f" & {rank_fmt(s['avg'], [S[mm]['avg'] for mm, _ in METHODS])} & & & \\\\",
+                  f"{color}    & {row2} & {drop} & " + " & ".join(f"\\multirow{{-2}}{{*}}{{{c}}}" for c in costs) + " \\\\"]
     L += ["    \\bottomrule", "  \\end{tabular}",
           "  \\caption{\\textbf{Accuracy and cost on InternVL3.5-8B.} For each method, the first row is the score on "
           "each benchmark (ANLS for DocVQA and InfoVQA, CircularEval accuracy for HR-Bench, accuracy otherwise) and "
-          "the second row is its percentage of the uncompressed model. Avg.\\ is the mean percentage over the six "
-          "benchmarks. $^{\\uparrow}$/$^{\\downarrow}$: \\method is significantly better/worse than the strongest "
-          "baseline on that benchmark (paired bootstrap, 95\\%); unmarked differences are not significant. Cost is the median time to first token (TTFT, s), the peak memory on top of the model weights (GB), "
-          "and the prefill FLOPs, averaged over the six benchmarks (50 images each, one A6000). Best compressed "
-          "result per budget in bold. Results for $B\\in\\{1024,2048,4096,5120\\}$ are in the supplementary "
-          "material and in \\cref{fig:pareto}.}",
+          "the second row is its percentage of the uncompressed model; Avg.\\ is the mean percentage over the five "
+          "benchmarks. HR-Bench 8K is reported separately in \\cref{tab:hr8k}. Cost is reported as the saving relative to the uncompressed model (higher is better) in "
+          "median time to first token, peak memory on top of the model weights, and prefill FLOPs, averaged over "
+          "the five benchmarks (absolute values in the supplementary material); IF-Prune uses \\emph{more} memory "
+          "than the uncompressed model because of its guide model. $^{\\uparrow}$/$^{\\downarrow}$: \\method is "
+          "significantly better/worse than the strongest baseline on that benchmark (paired bootstrap, 95\\%); "
+          "unmarked differences are not significant. Best compressed result per budget in \\textbf{bold}, second "
+          "\\underline{underlined}.}",
           "  \\label{tab:main}", "\\end{table*}"]
     open(f"{OUT_TAB}/tab_main.tex", "w").write("\n".join(L) + "\n")
+
+
+# ─────────────────────────────── Table：記憶體上限下的 accuracy ───────────────────────────────
+MEM_CAPS = [0.5, 1.0, None]          # None = 只受 uncompressed 自己的記憶體限制（下面另外算）
+
+
+def tab_memcap():
+    """每個方法在 b1024~b3072 中，記憶體增量不超過上限的設定裡最高的平均保留率（括號為所用 budget）。"""
+    unc = summary("uncompressed", 0)
+    caps = [0.5, 1.0, unc["mem"], None]
+    heads = ["$\\leq$0.5\\,GB", "$\\leq$1\\,GB", f"$\\leq${unc['mem']:.0f}\\,GB$^\\dagger$" if unc["mem"] else "$\\leq$Uncomp.", "None"]
+    allS = {(m, b): summary(m, b) for m, _ in METHODS for b in BUDGETS_ALL}
+    table = {}
+    for m, _ in METHODS:
+        row = []
+        for cap in caps:
+            cands = [(s["avg"], b) for (mm, b), s in allS.items()
+                     if mm == m and s["avg"] is not None and s["mem"] is not None and (cap is None or s["mem"] <= cap)]
+            row.append(max(cands) if cands else None)
+        table[m] = row
+    L = [PREAMBLE, "\\begin{table}[t]", "  \\centering", "  \\footnotesize", "  \\setlength{\\tabcolsep}{2.2pt}",
+         "  \\begin{tabular}{l cccc}", "    \\toprule",
+         "    & \\multicolumn{4}{c}{Memory limit per image} \\\\", "    \\cmidrule(lr){2-5}",
+         "    Method & " + " & ".join(heads) + " \\\\", "    \\midrule"]
+    for m, _ in METHODS:
+        cells = []
+        for j, v in enumerate(table[m]):
+            if v is None:
+                cells.append("--")
+                continue
+            col = [table[mm][j][0] for mm, _ in METHODS if table[mm][j] is not None]
+            cells.append(rank_fmt(v[0], col) + f"\\,{{\\tiny ({v[1]})}}")
+        color = "    \\rowcolor{oursbg}\n" if m == "foveatile" else ""
+        L.append(f"{color}    {SHORT[m]} & " + " & ".join(cells) + " \\\\")
+    L += ["    \\bottomrule", "  \\end{tabular}",
+          "  \\caption{\\textbf{Accuracy under a memory limit} on InternVL3.5-8B: the best mean percentage of the "
+          "uncompressed score (five benchmarks of \\cref{tab:main}) that each method reaches with budgets "
+          "$B\\in\\{1024,\\dots,3072\\}$ while its peak memory on top of the model weights stays within the limit "
+          "(budget in parentheses; --: no budget fits; $^\\dagger$the memory of the uncompressed model). FastV, SparseVLM, and IF-Prune need at least 1.3\\,GB at "
+          "any budget, and IF-Prune needs more memory than the uncompressed model.}",
+          "  \\label{tab:memcap}", "\\end{table}"]
+    open(f"{OUT_TAB}/tab_memcap.tex", "w").write("\n".join(L) + "\n")
 
 
 # ─────────────────────────────── Table：模型尺寸 ───────────────────────────────
 def tab_scale():
     L = [PREAMBLE, "\\begin{table*}[t]", "  \\centering", "  \\footnotesize", "  \\setlength{\\tabcolsep}{4.5pt}",
-         "  \\begin{tabular}{l cccccc c cc}", "    \\toprule",
+         "  \\begin{tabular}{l ccccc c cc}", "    \\toprule",
          "    Method & " + " & ".join(n for _, n in DS) + " & Avg.\\ (\\%) & TTFT (s)$\\downarrow$ & "
          "Mem.\\ (GB)$\\downarrow$ \\\\"]
     for model in ("4B", "8B", "14B"):
@@ -180,7 +242,7 @@ def tab_scale():
         S = {m: summary(m, DEFAULT_B, model) for m, _ in METHODS}
         best_ret = [best_of([S[m]["ret"][i] for m, _ in METHODS]) for i in range(len(DS))]
         best = {k: best_of([S[m][k] for m, _ in METHODS], lower=k != "avg") for k in ("avg", "ttft", "mem")}
-        L += ["    \\midrule", f"    \\multicolumn{{10}}{{c}}{{\\textit{{InternVL3.5-{model}, $B={DEFAULT_B}$}}}} \\\\",
+        L += ["    \\midrule", f"    \\multicolumn{{9}}{{c}}{{\\textit{{InternVL3.5-{model}, $B={DEFAULT_B}$}}}} \\\\",
               "    Uncompressed (score) & " + " & ".join(fmt(x) for x in unc["raw"]) +
               f" & 100.0 & {fmt(unc['ttft'], 2)} & {fmt(unc['mem'], 2)} \\\\"]
         for m, _ in METHODS:
@@ -497,6 +559,6 @@ def figures():
 
 
 if __name__ == "__main__":
-    tab_main(); tab_scale(); tab_hr8k(); tab_analysis(); tab_ablation(); dump_csv(); figures()
+    tab_main(); tab_memcap(); tab_scale(); tab_hr8k(); tab_analysis(); tab_ablation(); dump_csv(); figures()
     n = sum(open(f"{OUT_TAB}/{f}").read().count(PEND) - 1 for f in os.listdir(OUT_TAB) if f.endswith(".tex"))
     print(f"tables -> {OUT_TAB}/, figures -> {OUT_FIG}/；待補的格子：{n}")

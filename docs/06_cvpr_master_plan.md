@@ -17,7 +17,7 @@
 | 1 Introduction | `paper/sec/1_intro.tex` | **未寫**。Fig. 1 teaser 建議：成本 vs tile 數 + 平均保留率 vs 記憶體；"foveated" 引 RAM（`refs_method.bib` 的 `ram`） |
 | 2 Related Work | `paper/sec/2_related.tex` | **未寫**。三段：token pruning（FastV、SparseVLM、VisionZip、IF-Prune）、高解析度壓縮（HiRED、GlobalCom2）、zoom-in / search（ViCrop、V*、ZoomEye、DyFo、RAP）。要寫清楚跟 ViCrop、GlobalCom2 的差別（02 文件） |
 | 3 Method | `paper/sec/3_method.tex` | **完成**（已核對程式碼；Fig. 2 overview、Fig. 3 boundary scoring、Alg. 1、Tab. 1 成本） |
-| 4 Experiments | `paper/sec/4_experiments.tex` | **草稿完成**；`\TODO` 待補：4.4 模型尺寸、HR-8K 188 塊的 SparseVLM、同時請求數（估計值→實測）、random prior |
+| 4 Experiments | `paper/sec/4_experiments.tex` | **草稿完成**（4.1 Setup、4.2 主結果、4.3 解析度、4.4 模型尺寸、4.5 Ablation）；`\TODO` 待補：模型尺寸、同時請求數（估計值→實測）、random prior |
 | 5 Conclusion + Limitations | `paper/sec/5_conclusion.tex` | **未寫**。限制見第 6 節 |
 | Supplementary | — | **未寫**：校準流程（`docs/04_calibration_protocol.md` 改寫）、baseline 移植細節、所有 budget 的完整表 + CI、負面結果（3b、v1.1、A1/A2）、layer 在 InfoVQA val 上選的揭露 |
 
@@ -31,7 +31,7 @@ Overleaf 上傳清單：
 
 ## 2. 圖表怎麼產生
 
-- 第 4 章所有表格與圖：`python results/paper/build_paper_results.py` → `paper/tables/tab_{main,scale,hr8k,analysis,ablation}.tex`、
+- 第 4 章所有表格與圖：`python results/paper/build_paper_results.py` → `paper/tables/tab_{memcap,main,scale,hr8k,analysis,ablation}.tex`、
   `paper/figures/fig_{pareto,scaling}.pdf`、`results/paper/main_6ds.csv`。**實驗補完後重跑一次即可**，缺的格子會印紅色 `?`（`\pend`）
 - 第 3 章的兩張圖：`python paper/figures/make_method_figures.py`（範例 = V* Bench direct_attributes 第 51 題，資料在
   `paper/figures/method_examples_vstar_b1536.json`，由 `paper/figures/extract_method_example.py` 產生）
@@ -48,7 +48,7 @@ Overleaf 上傳清單：
 ### 背景執行中（2026-10-26 13:40 的狀態）
 | 工作 | 腳本 / log | 結果 | 預計 |
 |---|---|---|---|
-| HR-8K tile 上限 201（188 塊）× 所有方法 × b1024~b3072 | PID 3466489；`logs/hrbench8k_eff_and_maxnum201.log` | `results/runs_maxnum201/hrbench_8k/` | 10/26 晚上 |
+| HR-8K tile 上限 201（188 塊）× 所有方法 × b1024~b3072（b1536、b2560 已完成；第二輪 10/26 17:51 起，使用者決定繼續跑） | PID 3466489；`logs/hrbench8k_eff_and_maxnum201.log` | `results/runs_maxnum201/hrbench_8k/` | 10/27 凌晨 |
 | random prior ablation（held-out × 5 budget） | `run_ablation_randprior.sh`；`logs/calib/randprior.log` | `results/calib/<ds>/*_randprior_*.json` | 上一項結束後約 1.5 小時 |
 | InternVL3.5-4B → 14B × 6 測試集 × 6 方法 × b1536 | `run_model_scale.sh`；`logs/model_scale.log` | `results/runs/<ds>/*_InternVL3_5-{4B,14B}.json` | 約 10/28 晚上 |
 
@@ -67,16 +67,22 @@ Overleaf 上傳清單：
 - 換模型不重調 m、S；attention 層號依相對深度換算（`foveatile_internvl.attn_layers`：36 層 = (21–28, 20)，40 層 = (23–31, 22)），已驗證 8B 輸出逐題不變
 - 資料集名稱寫 **V\* Bench**；HR-Bench 主設定 tile 上限 47（8K 約切 25 塊），188 塊是另外的縮放實驗
 - 主表區塊放 b1536 / b2560 / b3072；b1024、b2048 放 Pareto 圖與附錄（所有方法同一組 budget）
+- 主表 / 平均保留率 / 記憶體上限表 / Pareto / 模型尺寸表都用 **5 個測試集**（DocVQA、InfoVQA、MME-RW Lite、HR-Bench 4K、V* Bench）；HR-Bench 8K 另外放在 `tab_hr8k`（25 vs 188 塊）與分析表（使用者 2026-10-26 決定）
+- 主表第二行是保留率（加 %）
+- 正文不放「Where FoveaTile helps and where it fails」分析節（使用者 2026-10-26 決定）；內容移到 `paper/sec/supp_analysis.tex` 給 supplementary。Conclusion 仍要用一兩句交代限制（極小物件的 prior 召回率），建議正面寫成未來方向
 - 主表的 ↑/↓ = FoveaTile 對該欄最強 baseline 的配對 bootstrap（雙向都標）
+- 主結果先放 **Table「記憶體上限下的 accuracy」**（`tab_memcap.tex`）：≤0.5 / ≤1 / ≤2 GB（= uncompressed）/ 不限，FoveaTile 每一欄都第一；FastV、SparseVLM、IF-Prune 在 ≤1 GB 跑不了，IF-Prune 比 uncompressed 還吃記憶體（2.9 vs 2.0 GB）
+- 主表成本欄改成相對 uncompressed 的節省倍率（TTFT / 記憶體 / FLOPs，越大越好；絕對值放附錄），最佳粗體、第二名底線
 - Ablation 用 5 個 budget 的平均（單看 b1536 時「只有覆蓋」平均略高，跨 budget 才完整）
 - 呈現原則：圖表用最能凸顯 FoveaTile 的方式（成本與 accuracy 並列、Pareto、縮放），但不刪資料集、不只挑對自己有利的 budget；弱點寫在文字
 - Low-Res-Fill 不當 baseline（使用者決定）；「只有覆蓋」放在 ablation
 - 第二個模型家族不做，用 InternVL3.5 4B / 8B / 14B 代替
 
-## 5. 目前主要數字（8B，6 個測試集）
+## 5. 目前主要數字（8B；平均 = 主表的 5 個測試集，不含 HR-8K）
 
-- b1536：平均保留率 FoveaTile 94.5% vs IF-Prune 94.6%、FastV 90.9%；記憶體 0.41 vs 2.93 / 1.30 GB；TTFT 0.71 vs 1.16 / 0.68 s
-- b3072：FoveaTile 98.3%（最高）
+- 平均保留率 FoveaTile / IF-Prune / FastV：b1024 91.5 / 94.5 / 82.1；b1536 **95.0** / 94.9 / 90.0；b2560 **97.6** / 97.1 / 95.5；b3072 **99.3** / 97.4 / 97.2
+- b1536 記憶體節省（相對 uncompressed）：FoveaTile 5.0×、FastV 1.5×、IF-Prune 0.7×（比 uncompressed 還多）；TTFT 比 IF-Prune 快 1.6×
+- 記憶體上限表：≤0.5 / ≤1 / ≤2 GB / 不限，FoveaTile 95.0 / 99.3 / 99.3 / 99.3，全部第一
 - InfoVQA、MME-RW 每個 budget 都顯著贏所有 baseline；HR-Bench、V* Bench 跟 baseline 的差距全部不顯著；DocVQA 只有 b1536 顯著輸 IF-Prune（−1.2）
 - 188 塊：TTFT 24×、記憶體 31× 低於 uncompressed；所有方法（含 uncompressed 56.5→49.0）accuracy 都下降，IF-Prune 52.0 > FoveaTile 47.0 > FastV 42.5，但 IF-Prune 要 7.0 s / 8.3 GB
 - V* Bench：選中目標時 88.2%（高於 uncompressed 86.8%），沒選中 50.9%；失敗來自 prior 沒排進窗口

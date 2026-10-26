@@ -4,58 +4,58 @@
   \centering
   \footnotesize
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{l cc c ccc c ccc}
+  \begin{tabular}{l cc c cc c ccc}
     \toprule
-    & \multicolumn{2}{c}{Document} & Real-world & \multicolumn{3}{c}{High resolution} & & \multicolumn{3}{c}{Cost per image} \\
-    \cmidrule(lr){2-3}\cmidrule(lr){4-4}\cmidrule(lr){5-7}\cmidrule(lr){9-11}
-    Method & DocVQA & InfoVQA & MME-RW & HR-4K & HR-8K & V$^*$ Bench & Avg.\ (\%) & TTFT$\downarrow$ & Mem.$\downarrow$ & TFLOPs$\downarrow$ \\
+    & \multicolumn{2}{c}{Document} & Real-world & \multicolumn{2}{c}{High resolution} & & \multicolumn{3}{c}{Saving \vs uncompressed$\uparrow$} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-4}\cmidrule(lr){5-6}\cmidrule(lr){8-10}
+    Method & DocVQA & InfoVQA & MME-RW & HR-Bench 4K & V$^*$ Bench & Avg.\ (\%) & TTFT & Memory & FLOPs \\
     \midrule
-    \multicolumn{11}{c}{\textit{Upper bound: all visual tokens}} \\
-    Uncompressed & 91.4 & 78.7 & 51.6 & 62.0 & 56.5 & 83.8 & 100.0 & 1.69 & 2.00 & 143 \\
+    \multicolumn{10}{c}{\textit{Upper bound: all visual tokens}} \\
+    Uncompressed & 91.4 & 78.7 & 51.6 & 62.0 & 83.8 & 100.0 & 1.0$\times$ & 1.0$\times$ & 1.0$\times$ \\
     \midrule
-    \multicolumn{11}{c}{\textit{Budget $B=1536$ visual tokens (default), $\approx$21\% of all visual tokens}} \\
-    FastV~\cite{fastv} & 84.0 & 61.0 & 46.9 & 59.0 & \textbf{54.0} & 79.1 & 90.9 & & & \\
-    & {\scriptsize 91.9} & {\scriptsize 77.4} & {\scriptsize 90.9} & {\scriptsize 95.2} & {\scriptsize 95.6} & {\scriptsize 94.4} & {\scriptsize ($\downarrow$9.1)} & \multirow{-2}{*}{0.68} & \multirow{-2}{*}{1.30} & \multirow{-2}{*}{50} \\
-    SparseVLM~\cite{sparsevlm} & 55.1 & 62.2 & 50.2 & \textbf{59.5} & 53.5 & 79.6 & 87.1 & & & \\
-    & {\scriptsize 60.3} & {\scriptsize 79.1} & {\scriptsize 97.4} & {\scriptsize 96.0} & {\scriptsize 94.7} & {\scriptsize 95.0} & {\scriptsize ($\downarrow$12.9)} & \multirow{-2}{*}{0.80} & \multirow{-2}{*}{1.32} & \multirow{-2}{*}{60} \\
-    VisionZip~\cite{visionzip} & 48.7 & 47.6 & 41.7 & 49.0 & 44.5 & 70.2 & 72.7 & & & \\
-    & {\scriptsize 53.3} & {\scriptsize 60.4} & {\scriptsize 80.9} & {\scriptsize 79.0} & {\scriptsize 78.8} & {\scriptsize 83.8} & {\scriptsize ($\downarrow$27.3)} & \multirow{-2}{*}{\textbf{0.63}} & \multirow{-2}{*}{0.48} & \multirow{-2}{*}{\textbf{45}} \\
-    IF-Prune~\cite{ifprune} & \textbf{88.2} & 72.7 & 49.3 & 57.5 & 52.5 & \textbf{81.7} & \textbf{94.6} & & & \\
-    & {\scriptsize 96.5} & {\scriptsize 92.3} & {\scriptsize 95.6} & {\scriptsize 92.7} & {\scriptsize 92.9} & {\scriptsize 97.5} & {\scriptsize ($\downarrow$5.4)} & \multirow{-2}{*}{1.16} & \multirow{-2}{*}{2.93} & \multirow{-2}{*}{79} \\
+    \multicolumn{10}{c}{\textit{Budget $B=1536$ visual tokens (default), $\approx$21\% of all visual tokens}} \\
+    FastV~\cite{fastv} & 84.0 & 61.0 & 46.9 & \underline{59.0} & 79.1 & 90.0 & & & \\
+    & {\scriptsize 91.9\%} & {\scriptsize 77.4\%} & {\scriptsize 90.9\%} & {\scriptsize 95.2\%} & {\scriptsize 94.4\%} & {\scriptsize ($\downarrow$10.0)} & \multirow{-2}{*}{\underline{2.5$\times$}} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{\underline{2.9$\times$}} \\
+    SparseVLM~\cite{sparsevlm} & 55.1 & 62.2 & \underline{50.2} & \textbf{59.5} & \underline{79.6} & 85.5 & & & \\
+    & {\scriptsize 60.3\%} & {\scriptsize 79.1\%} & {\scriptsize 97.4\%} & {\scriptsize 96.0\%} & {\scriptsize 95.0\%} & {\scriptsize ($\downarrow$14.5)} & \multirow{-2}{*}{2.2$\times$} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{2.4$\times$} \\
+    VisionZip~\cite{visionzip} & 48.7 & 47.6 & 41.7 & 49.0 & 70.2 & 71.5 & & & \\
+    & {\scriptsize 53.3\%} & {\scriptsize 60.4\%} & {\scriptsize 80.9\%} & {\scriptsize 79.0\%} & {\scriptsize 83.8\%} & {\scriptsize ($\downarrow$28.5)} & \multirow{-2}{*}{\textbf{2.7$\times$}} & \multirow{-2}{*}{\underline{4.2$\times$}} & \multirow{-2}{*}{\textbf{3.2$\times$}} \\
+    IF-Prune~\cite{ifprune} & \textbf{88.2} & \underline{72.7} & 49.3 & 57.5 & \textbf{81.7} & \underline{94.9} & & & \\
+    & {\scriptsize 96.5\%} & {\scriptsize 92.3\%} & {\scriptsize 95.6\%} & {\scriptsize 92.7\%} & {\scriptsize 97.5\%} & {\scriptsize ($\downarrow$5.1)} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{0.7$\times$} & \multirow{-2}{*}{1.8$\times$} \\
     \rowcolor{oursbg}
-    \method (ours) & 87.0$^{\downarrow}$ & \textbf{74.8}$^{\uparrow}$ & \textbf{52.1}$^{\uparrow}$ & 56.5 & 52.0 & 77.5 & 94.5 & & & \\
+    \method (ours) & \underline{87.0}$^{\downarrow}$ & \textbf{74.8}$^{\uparrow}$ & \textbf{52.1}$^{\uparrow}$ & 56.5 & 77.5 & \textbf{95.0} & & & \\
     \rowcolor{oursbg}
-    & {\scriptsize 95.2} & {\scriptsize 95.0} & {\scriptsize 100.9} & {\scriptsize 91.1} & {\scriptsize 92.0} & {\scriptsize 92.5} & {\scriptsize ($\downarrow$5.5)} & \multirow{-2}{*}{0.71} & \multirow{-2}{*}{\textbf{0.41}} & \multirow{-2}{*}{\textbf{45}} \\
+    & {\scriptsize 95.2\%} & {\scriptsize 95.0\%} & {\scriptsize 100.9\%} & {\scriptsize 91.1\%} & {\scriptsize 92.5\%} & {\scriptsize ($\downarrow$5.0)} & \multirow{-2}{*}{2.4$\times$} & \multirow{-2}{*}{\textbf{5.0$\times$}} & \multirow{-2}{*}{\textbf{3.2$\times$}} \\
     \midrule
-    \multicolumn{11}{c}{\textit{Budget $B=2560$ visual tokens, $\approx$35\% of all visual tokens}} \\
-    FastV~\cite{fastv} & 89.6 & 70.5 & 50.1 & 59.0 & 55.0 & 81.7 & 95.8 & & & \\
-    & {\scriptsize 98.0} & {\scriptsize 89.5} & {\scriptsize 97.2} & {\scriptsize 95.2} & {\scriptsize 97.3} & {\scriptsize 97.5} & {\scriptsize ($\downarrow$4.2)} & \multirow{-2}{*}{0.84} & \multirow{-2}{*}{1.32} & \multirow{-2}{*}{65} \\
-    SparseVLM~\cite{sparsevlm} & 69.8 & 71.1 & 51.8 & 57.0 & 55.0 & 81.2 & 92.2 & & & \\
-    & {\scriptsize 76.4} & {\scriptsize 90.3} & {\scriptsize 100.4} & {\scriptsize 91.9} & {\scriptsize 97.3} & {\scriptsize 96.9} & {\scriptsize ($\downarrow$7.8)} & \multirow{-2}{*}{1.02} & \multirow{-2}{*}{1.43} & \multirow{-2}{*}{80} \\
-    VisionZip~\cite{visionzip} & 62.8 & 57.9 & 45.9 & 57.5 & 49.5 & 76.4 & 83.8 & & & \\
-    & {\scriptsize 68.8} & {\scriptsize 73.5} & {\scriptsize 89.0} & {\scriptsize 92.7} & {\scriptsize 87.6} & {\scriptsize 91.2} & {\scriptsize ($\downarrow$16.2)} & \multirow{-2}{*}{\textbf{0.80}} & \multirow{-2}{*}{0.73} & \multirow{-2}{*}{\textbf{60}} \\
-    IF-Prune~\cite{ifprune} & 89.6 & 74.8 & 49.9 & \textbf{59.5} & \textbf{56.0} & \textbf{83.8} & \textbf{97.5} & & & \\
-    & {\scriptsize 98.0} & {\scriptsize 95.0} & {\scriptsize 96.8} & {\scriptsize 96.0} & {\scriptsize 99.1} & {\scriptsize 100.0} & {\scriptsize ($\downarrow$2.5)} & \multirow{-2}{*}{1.32} & \multirow{-2}{*}{2.95} & \multirow{-2}{*}{94} \\
+    \multicolumn{10}{c}{\textit{Budget $B=2560$ visual tokens, $\approx$35\% of all visual tokens}} \\
+    FastV~\cite{fastv} & \underline{89.6} & 70.5 & 50.1 & \underline{59.0} & \underline{81.7} & 95.5 & & & \\
+    & {\scriptsize 98.0\%} & {\scriptsize 89.5\%} & {\scriptsize 97.2\%} & {\scriptsize 95.2\%} & {\scriptsize 97.5\%} & {\scriptsize ($\downarrow$4.5)} & \multirow{-2}{*}{\underline{2.0$\times$}} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{\underline{2.2$\times$}} \\
+    SparseVLM~\cite{sparsevlm} & 69.8 & 71.1 & \underline{51.8} & 57.0 & 81.2 & 91.2 & & & \\
+    & {\scriptsize 76.4\%} & {\scriptsize 90.3\%} & {\scriptsize 100.4\%} & {\scriptsize 91.9\%} & {\scriptsize 96.9\%} & {\scriptsize ($\downarrow$8.8)} & \multirow{-2}{*}{1.7$\times$} & \multirow{-2}{*}{1.4$\times$} & \multirow{-2}{*}{1.8$\times$} \\
+    VisionZip~\cite{visionzip} & 62.8 & 57.9 & 45.9 & 57.5 & 76.4 & 83.0 & & & \\
+    & {\scriptsize 68.8\%} & {\scriptsize 73.5\%} & {\scriptsize 89.0\%} & {\scriptsize 92.7\%} & {\scriptsize 91.2\%} & {\scriptsize ($\downarrow$17.0)} & \multirow{-2}{*}{\textbf{2.1$\times$}} & \multirow{-2}{*}{\underline{2.8$\times$}} & \multirow{-2}{*}{\textbf{2.4$\times$}} \\
+    IF-Prune~\cite{ifprune} & \underline{89.6} & \underline{74.8} & 49.9 & \textbf{59.5} & \textbf{83.8} & \underline{97.1} & & & \\
+    & {\scriptsize 98.0\%} & {\scriptsize 95.0\%} & {\scriptsize 96.8\%} & {\scriptsize 96.0\%} & {\scriptsize 100.0\%} & {\scriptsize ($\downarrow$2.9)} & \multirow{-2}{*}{1.3$\times$} & \multirow{-2}{*}{0.7$\times$} & \multirow{-2}{*}{1.5$\times$} \\
     \rowcolor{oursbg}
-    \method (ours) & \textbf{90.1} & \textbf{78.6}$^{\uparrow}$ & \textbf{52.2} & 58.0 & 52.5 & 79.6 & 96.8 & & & \\
+    \method (ours) & \textbf{90.1} & \textbf{78.6}$^{\uparrow}$ & \textbf{52.2} & 58.0 & 79.6 & \textbf{97.6} & & & \\
     \rowcolor{oursbg}
-    & {\scriptsize 98.5} & {\scriptsize 99.8} & {\scriptsize 101.1} & {\scriptsize 93.5} & {\scriptsize 92.9} & {\scriptsize 95.0} & {\scriptsize ($\downarrow$3.2)} & \multirow{-2}{*}{1.01} & \multirow{-2}{*}{\textbf{0.56}} & \multirow{-2}{*}{68} \\
+    & {\scriptsize 98.5\%} & {\scriptsize 99.8\%} & {\scriptsize 101.1\%} & {\scriptsize 93.5\%} & {\scriptsize 95.0\%} & {\scriptsize ($\downarrow$2.4)} & \multirow{-2}{*}{1.7$\times$} & \multirow{-2}{*}{\textbf{3.6$\times$}} & \multirow{-2}{*}{\underline{2.2$\times$}} \\
     \midrule
-    \multicolumn{11}{c}{\textit{Budget $B=3072$ visual tokens, $\approx$43\% of all visual tokens}} \\
-    FastV~\cite{fastv} & \textbf{90.8} & 73.6 & 49.7 & \textbf{61.0} & 56.0 & 82.7 & 97.6 & & & \\
-    & {\scriptsize 99.4} & {\scriptsize 93.5} & {\scriptsize 96.3} & {\scriptsize 98.4} & {\scriptsize 99.1} & {\scriptsize 98.7} & {\scriptsize ($\downarrow$2.4)} & \multirow{-2}{*}{0.94} & \multirow{-2}{*}{1.33} & \multirow{-2}{*}{72} \\
-    SparseVLM~\cite{sparsevlm} & 69.8 & 72.5 & 51.0 & 57.0 & \textbf{57.0} & \textbf{83.8} & 93.3 & & & \\
-    & {\scriptsize 76.3} & {\scriptsize 92.1} & {\scriptsize 98.8} & {\scriptsize 91.9} & {\scriptsize 100.9} & {\scriptsize 100.0} & {\scriptsize ($\downarrow$6.7)} & \multirow{-2}{*}{1.14} & \multirow{-2}{*}{1.52} & \multirow{-2}{*}{89} \\
-    VisionZip~\cite{visionzip} & 68.8 & 61.8 & 47.4 & 56.5 & 52.0 & 78.5 & 87.1 & & & \\
-    & {\scriptsize 75.3} & {\scriptsize 78.5} & {\scriptsize 91.9} & {\scriptsize 91.1} & {\scriptsize 92.0} & {\scriptsize 93.8} & {\scriptsize ($\downarrow$12.9)} & \multirow{-2}{*}{\textbf{0.90}} & \multirow{-2}{*}{0.86} & \multirow{-2}{*}{\textbf{68}} \\
-    IF-Prune~\cite{ifprune} & 90.1 & 75.1 & 49.8 & \textbf{61.0} & 56.0 & 82.2 & 97.7 & & & \\
-    & {\scriptsize 98.5} & {\scriptsize 95.4} & {\scriptsize 96.5} & {\scriptsize 98.4} & {\scriptsize 99.1} & {\scriptsize 98.1} & {\scriptsize ($\downarrow$2.3)} & \multirow{-2}{*}{1.42} & \multirow{-2}{*}{3.01} & \multirow{-2}{*}{101} \\
+    \multicolumn{10}{c}{\textit{Budget $B=3072$ visual tokens, $\approx$42\% of all visual tokens}} \\
+    FastV~\cite{fastv} & \textbf{90.8} & 73.6 & 49.7 & \textbf{61.0} & \underline{82.7} & 97.2 & & & \\
+    & {\scriptsize 99.4\%} & {\scriptsize 93.5\%} & {\scriptsize 96.3\%} & {\scriptsize 98.4\%} & {\scriptsize 98.7\%} & {\scriptsize ($\downarrow$2.8)} & \multirow{-2}{*}{\underline{1.8$\times$}} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{\underline{2.0$\times$}} \\
+    SparseVLM~\cite{sparsevlm} & 69.8 & 72.5 & \underline{51.0} & 57.0 & \textbf{83.8} & 91.8 & & & \\
+    & {\scriptsize 76.3\%} & {\scriptsize 92.1\%} & {\scriptsize 98.8\%} & {\scriptsize 91.9\%} & {\scriptsize 100.0\%} & {\scriptsize ($\downarrow$8.2)} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{1.3$\times$} & \multirow{-2}{*}{1.6$\times$} \\
+    VisionZip~\cite{visionzip} & 68.8 & 61.8 & 47.4 & 56.5 & 78.5 & 86.1 & & & \\
+    & {\scriptsize 75.3\%} & {\scriptsize 78.5\%} & {\scriptsize 91.9\%} & {\scriptsize 91.1\%} & {\scriptsize 93.8\%} & {\scriptsize ($\downarrow$13.9)} & \multirow{-2}{*}{\textbf{1.9$\times$}} & \multirow{-2}{*}{\underline{2.4$\times$}} & \multirow{-2}{*}{\textbf{2.2$\times$}} \\
+    IF-Prune~\cite{ifprune} & 90.1 & \underline{75.1} & 49.8 & \textbf{61.0} & 82.2 & \underline{97.4} & & & \\
+    & {\scriptsize 98.5\%} & {\scriptsize 95.4\%} & {\scriptsize 96.5\%} & {\scriptsize 98.4\%} & {\scriptsize 98.1\%} & {\scriptsize ($\downarrow$2.6)} & \multirow{-2}{*}{1.2$\times$} & \multirow{-2}{*}{0.7$\times$} & \multirow{-2}{*}{1.4$\times$} \\
     \rowcolor{oursbg}
-    \method (ours) & 90.3 & \textbf{79.4}$^{\uparrow}$ & \textbf{53.5}$^{\uparrow}$ & 59.5 & 52.5 & 81.7 & \textbf{98.3} & & & \\
+    \method (ours) & \underline{90.3} & \textbf{79.4}$^{\uparrow}$ & \textbf{53.5}$^{\uparrow}$ & \underline{59.5} & 81.7 & \textbf{99.3} & & & \\
     \rowcolor{oursbg}
-    & {\scriptsize 98.8} & {\scriptsize 100.8} & {\scriptsize 103.6} & {\scriptsize 96.0} & {\scriptsize 92.9} & {\scriptsize 97.5} & {\scriptsize ($\downarrow$1.7)} & \multirow{-2}{*}{1.20} & \multirow{-2}{*}{\textbf{0.77}} & \multirow{-2}{*}{83} \\
+    & {\scriptsize 98.8\%} & {\scriptsize 100.8\%} & {\scriptsize 103.6\%} & {\scriptsize 96.0\%} & {\scriptsize 97.5\%} & {\scriptsize ($\downarrow$0.7)} & \multirow{-2}{*}{1.4$\times$} & \multirow{-2}{*}{\textbf{2.7$\times$}} & \multirow{-2}{*}{1.8$\times$} \\
     \bottomrule
   \end{tabular}
-  \caption{\textbf{Accuracy and cost on InternVL3.5-8B.} For each method, the first row is the score on each benchmark (ANLS for DocVQA and InfoVQA, CircularEval accuracy for HR-Bench, accuracy otherwise) and the second row is its percentage of the uncompressed model. Avg.\ is the mean percentage over the six benchmarks. $^{\uparrow}$/$^{\downarrow}$: \method is significantly better/worse than the strongest baseline on that benchmark (paired bootstrap, 95\%); unmarked differences are not significant. Cost is the median time to first token (TTFT, s), the peak memory on top of the model weights (GB), and the prefill FLOPs, averaged over the six benchmarks (50 images each, one A6000). Best compressed result per budget in bold. Results for $B\in\{1024,2048,4096,5120\}$ are in the supplementary material and in \cref{fig:pareto}.}
+  \caption{\textbf{Accuracy and cost on InternVL3.5-8B.} For each method, the first row is the score on each benchmark (ANLS for DocVQA and InfoVQA, CircularEval accuracy for HR-Bench, accuracy otherwise) and the second row is its percentage of the uncompressed model; Avg.\ is the mean percentage over the five benchmarks. HR-Bench 8K is reported separately in \cref{tab:hr8k}. Cost is reported as the saving relative to the uncompressed model (higher is better) in median time to first token, peak memory on top of the model weights, and prefill FLOPs, averaged over the five benchmarks (absolute values in the supplementary material); IF-Prune uses \emph{more} memory than the uncompressed model because of its guide model. $^{\uparrow}$/$^{\downarrow}$: \method is significantly better/worse than the strongest baseline on that benchmark (paired bootstrap, 95\%); unmarked differences are not significant. Best compressed result per budget in \textbf{bold}, second \underline{underlined}.}
   \label{tab:main}
 \end{table*}

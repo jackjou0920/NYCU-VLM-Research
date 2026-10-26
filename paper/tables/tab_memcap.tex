@@ -1,0 +1,23 @@
+\providecommand{\pend}{\textcolor{red}{?}}
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{2.2pt}
+  \begin{tabular}{l cccc}
+    \toprule
+    & \multicolumn{4}{c}{Memory limit per image} \\
+    \cmidrule(lr){2-5}
+    Method & $\leq$0.5\,GB & $\leq$1\,GB & $\leq$2\,GB$^\dagger$ & None \\
+    \midrule
+    FastV & -- & -- & \underline{97.2}\,{\tiny (3072)} & 97.2\,{\tiny (3072)} \\
+    SparseVLM & -- & -- & 91.8\,{\tiny (3072)} & 91.8\,{\tiny (3072)} \\
+    VisionZip & \underline{71.5}\,{\tiny (1536)} & \underline{86.1}\,{\tiny (3072)} & 86.1\,{\tiny (3072)} & 86.1\,{\tiny (3072)} \\
+    IF-Prune & -- & -- & -- & \underline{97.4}\,{\tiny (3072)} \\
+    \rowcolor{oursbg}
+    \method (ours) & \textbf{95.0}\,{\tiny (1536)} & \textbf{99.3}\,{\tiny (3072)} & \textbf{99.3}\,{\tiny (3072)} & \textbf{99.3}\,{\tiny (3072)} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Accuracy under a memory limit} on InternVL3.5-8B: the best mean percentage of the uncompressed score (five benchmarks of \cref{tab:main}) that each method reaches with budgets $B\in\{1024,\dots,3072\}$ while its peak memory on top of the model weights stays within the limit (budget in parentheses; --: no budget fits; $^\dagger$the memory of the uncompressed model). FastV, SparseVLM, and IF-Prune need at least 1.3\,GB at any budget, and IF-Prune needs more memory than the uncompressed model.}
+  \label{tab:memcap}
+\end{table}

@@ -1,0 +1,12 @@
+dataset,tag,metric,n_units,score,ttft_s,kv_cache_mb,ref,delta,ci_lo,ci_hi,n_common
+hrbench_8k,uncompressed,hrbench_circular,200,49.0,,5536.0,uncompressed,,,,
+hrbench_8k,foveatile_b1536,hrbench_circular,200,47.0,0.727,229.8,uncompressed,-2.0,-8.5,4.5,200
+hrbench_8k,foveatile_b2560,hrbench_circular,200,52.5,1.005,373.8,uncompressed,3.5,-2.5,9.0,200
+hrbench_8k,fastv_budget=1536_k=2,hrbench_circular,200,42.5,,,uncompressed,-6.5,-13.0,-0.5,200
+hrbench_8k,fastv_budget=2560_k=2,hrbench_circular,200,48.0,,,uncompressed,-1.0,-6.0,4.5,200
+hrbench_8k,ifprune_budget=1536_L=2,hrbench_circular,200,52.0,,,uncompressed,3.0,-2.0,8.0,200
+hrbench_8k,ifprune_budget=2560_L=2,hrbench_circular,200,52.5,,,uncompressed,3.5,-1.5,8.5,200
+hrbench_8k,sparsevlm_budget=1536_lam=0.7537,hrbench_circular,200,51.5,,,uncompressed,2.5,-3.0,8.0,200
+hrbench_8k,sparsevlm_budget=2560_lam=0.7537,hrbench_circular,200,52.5,,,uncompressed,3.5,-1.5,9.0,200
+hrbench_8k,visionzip_budget=1536,hrbench_circular,200,27.0,,,uncompressed,-22.0,-29.0,-15.0,200
+hrbench_8k,visionzip_budget=2560,hrbench_circular,200,33.5,,,uncompressed,-15.5,-23.0,-8.5,200

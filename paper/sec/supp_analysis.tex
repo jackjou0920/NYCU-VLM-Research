@@ -1,0 +1,25 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Supplementary：從正文 4.5 移出（使用者 2026-10-26 決定正文不放）。表格由 build_paper_results.py 產生（tab_analysis.tex）。
+% 放進 supplementary 時，把 \subsection 改成 supplementary 的章節層級。
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Where \method helps and where it fails}
+\label{sec:analysis}
+
+\input{tables/tab_analysis}
+
+\cref{tab:analysis} breaks down the high-resolution benchmarks by question type. On questions that
+involve several objects or the global arrangement of the scene (HR-Bench cross-instance, V$^*$ Bench
+relative position), \method is on par with or better than the baselines, \eg 43.0 \vs 37.0 for IF-Prune
+on HR-Bench 8K cross-instance. Its gap is concentrated on questions about a single small object
+(HR-Bench single-instance, V$^*$ Bench attributes).
+
+V$^*$ Bench provides target boxes, which tell us why. When the selected detail tiles cover the target
+(136 of 191 questions), \method answers 88.2\% correctly, more than any baseline and more than the
+uncompressed model (86.8\%), since the target is seen at native resolution without the distraction of
+the other tiles. When the target is missed, accuracy drops to 50.9\%. The misses come from the prior,
+not from boundary scoring: most missed targets are ranked outside the scoring window, while targets
+that enter the window are selected 93--95\% of the time ($B=1024$ and $2048$). The prior is computed
+on the coverage tiles, in which more than half of the V$^*$ targets are smaller than one ViT patch
+(14\,px), so a small budget can leave them out of the window. Methods
+that encode every tile do not have this failure mode, but pay $\mathcal{O}(N)$ for it.
+

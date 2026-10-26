@@ -4,36 +4,36 @@
   \centering
   \footnotesize
   \setlength{\tabcolsep}{4.5pt}
-  \begin{tabular}{l cccccc c cc}
+  \begin{tabular}{l ccccc c cc}
     \toprule
-    Method & DocVQA & InfoVQA & MME-RW & HR-4K & HR-8K & V$^*$ Bench & Avg.\ (\%) & TTFT (s)$\downarrow$ & Mem.\ (GB)$\downarrow$ \\
+    Method & DocVQA & InfoVQA & MME-RW & HR-Bench 4K & V$^*$ Bench & Avg.\ (\%) & TTFT (s)$\downarrow$ & Mem.\ (GB)$\downarrow$ \\
     \midrule
-    \multicolumn{10}{c}{\textit{InternVL3.5-4B, $B=1536$}} \\
-    Uncompressed (score) & \pend & \pend & \pend & \pend & \pend & \pend & 100.0 & \pend & \pend \\
-    FastV & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
-    SparseVLM & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
-    VisionZip & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
-    IF-Prune & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    \multicolumn{9}{c}{\textit{InternVL3.5-4B, $B=1536$}} \\
+    Uncompressed (score) & \pend & \pend & \pend & \pend & \pend & 100.0 & \pend & \pend \\
+    FastV & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    SparseVLM & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    VisionZip & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    IF-Prune & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
     \rowcolor{oursbg}
-    \method (ours) & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    \method (ours) & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
     \midrule
-    \multicolumn{10}{c}{\textit{InternVL3.5-8B, $B=1536$}} \\
-    Uncompressed (score) & 91.4 & 78.7 & 51.6 & 62.0 & 56.5 & 83.8 & 100.0 & 1.69 & 2.00 \\
-    FastV & 91.9 & 77.4 & 90.9 & 95.2 & \textbf{95.6} & 94.4 & 90.9 & 0.68 & 1.30 \\
-    SparseVLM & 60.3 & 79.1 & 97.4 & \textbf{96.0} & 94.7 & 95.0 & 87.1 & 0.80 & 1.32 \\
-    VisionZip & 53.3 & 60.4 & 80.9 & 79.0 & 78.8 & 83.8 & 72.7 & \textbf{0.63} & 0.48 \\
-    IF-Prune & \textbf{96.5} & 92.3 & 95.6 & 92.7 & 92.9 & \textbf{97.5} & \textbf{94.6} & 1.16 & 2.93 \\
+    \multicolumn{9}{c}{\textit{InternVL3.5-8B, $B=1536$}} \\
+    Uncompressed (score) & 91.4 & 78.7 & 51.6 & 62.0 & 83.8 & 100.0 & 1.74 & 2.05 \\
+    FastV & 91.9 & 77.4 & 90.9 & 95.2 & 94.4 & 90.0 & 0.69 & 1.33 \\
+    SparseVLM & 60.3 & 79.1 & 97.4 & \textbf{96.0} & 95.0 & 85.5 & 0.81 & 1.35 \\
+    VisionZip & 53.3 & 60.4 & 80.9 & 79.0 & 83.8 & 71.5 & \textbf{0.64} & 0.48 \\
+    IF-Prune & \textbf{96.5} & 92.3 & 95.6 & 92.7 & \textbf{97.5} & 94.9 & 1.18 & 2.95 \\
     \rowcolor{oursbg}
-    \method (ours) & 95.2 & \textbf{95.0} & \textbf{100.9} & 91.1 & 92.0 & 92.5 & 94.5 & 0.71 & \textbf{0.41} \\
+    \method (ours) & 95.2 & \textbf{95.0} & \textbf{100.9} & 91.1 & 92.5 & \textbf{95.0} & 0.72 & \textbf{0.41} \\
     \midrule
-    \multicolumn{10}{c}{\textit{InternVL3.5-14B, $B=1536$}} \\
-    Uncompressed (score) & \pend & \pend & \pend & \pend & \pend & \pend & 100.0 & \pend & \pend \\
-    FastV & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
-    SparseVLM & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
-    VisionZip & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
-    IF-Prune & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    \multicolumn{9}{c}{\textit{InternVL3.5-14B, $B=1536$}} \\
+    Uncompressed (score) & \pend & \pend & \pend & \pend & \pend & 100.0 & \pend & \pend \\
+    FastV & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    SparseVLM & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    VisionZip & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    IF-Prune & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
     \rowcolor{oursbg}
-    \method (ours) & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
+    \method (ours) & \pend & \pend & \pend & \pend & \pend & \pend & \pend & \pend \\
     \bottomrule
   \end{tabular}
   \caption{\textbf{Model scale.} Percentage of the uncompressed score at $B=1536$ on InternVL3.5-4B, -8B, and -14B (the uncompressed rows give raw scores). \method uses the hyperparameters calibrated on the 8B model without re-tuning; its attention layers are mapped by relative depth. Best compressed result per model in bold.}
