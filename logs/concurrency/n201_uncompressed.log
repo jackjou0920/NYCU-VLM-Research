@@ -1,0 +1,14 @@
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 89.33it/s]
+Token indices sequence length is longer than the specified maximum sequence length for this model (48230 > 14588). Running this sequence through the model will result in indexing errors
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:151645 for open-end generation.
+model=OpenGVLab/InternVL3_5-8B method=uncompressed max_num=201 B=1536  weights=17.06 GB  free=32.75 GB
+prompt_mode: letter
+[load_hrbench] DreamMr/HR-Bench:hrbench_8k (prompt_mode=letter) -> kept 11, skipped 0 (no image)
+[uncompressed max_num=201] n_requests=3 (OOM), kv/req=7.112 GB, 59s
+[saved] results/concurrency/n201_uncompressed.csv

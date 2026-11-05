@@ -1,0 +1,38 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Sec. 2  Related Work. One paragraph per motivation: cost of resolution, pruning too late (incl. KV
+% compression), downscaling loses detail.
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{High-resolution VLMs.}
+Most open VLMs reach near-native resolution by dynamic tiling: the image is split into fixed-size crops
+that are encoded independently and appended with a downscaled global
+view~\cite{monkey,llavauhd,llavanext,internvl15,llavaov,internvl35}; others encode the image at its native
+resolution directly~\cite{qwen2vl}. Either way, the number of visual tokens, and with it the cost of the
+vision encoder, the prefill, and the KV cache, grows linearly with the image area.
+
+\paragraph{Visual token compression.}
+Training-free methods reduce visual tokens either after the vision encoder, using its attention or
+token similarity~\cite{tome,prumerge,visionzip}, or inside the language model, guided by text-to-image
+attention~\cite{fastv,pdrop,sparsevlm} or information flow~\cite{ifprune}. For tiled high-resolution
+inputs, the global view can also distribute the token budget over the crops~\cite{hired,globalcom2}. All of them select among tokens that have already been computed (\cref{sec:prelim}). \method
+selects before the vision encoder and keeps whole tiles rather than scattered tokens, which preserves the
+spatial layout of text and small objects.
+
+\paragraph{KV cache compression.}
+For language models, the KV cache is compressed by evicting tokens with low accumulated
+attention~\cite{h2o} or by keeping only attention sinks and a recent window~\cite{streamingllm}, and
+paged memory management packs the caches of many requests on one GPU~\cite{pagedattention}. Eviction
+acts after the cache has been built, so it reduces the memory held during decoding but not the peak of
+prefilling a long visual sequence. \method is complementary: it never builds the full cache, and since
+its cache has a fixed size per request, it fits paged serving directly.
+
+\paragraph{Zooming and visual search.}
+Downscaling the whole image is not an alternative, since small targets fall below the resolution of a
+single patch. Zoom-in methods therefore locate the relevant region and look at it again at higher
+resolution, using the attention of the VLM~\cite{vicrop}, a trained search model~\cite{vstar}, tree
+search~\cite{zoomeye,dyfo}, or an external retriever~\cite{rap}. They aim to \emph{add} detail on top of
+the full input and run the model several times per question, so they cost more than the uncompressed
+model. \method uses the same signal, \ie where the VLM looks, to decide in a single partial pass over a
+low-resolution view which detail tiles are worth encoding at all.

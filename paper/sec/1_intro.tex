@@ -1,0 +1,63 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Sec. 1  Introduction. Numbers match Sec. 5 (fig_scaling, tab_main, tab_memcap), supp_scale (tab_scale) and the
+% V* bbox statistics (80% of targets < 1 patch in the 448-px thumbnail; median 0.08% area, 1 of 24 tiles).
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Introduction}
+\label{sec:intro}
+
+Memory is the main constraint in serving large language models. The KV cache grows with every token
+in the context, and it, not compute, limits how many requests a GPU can hold at
+once~\cite{pagedattention}, which has motivated a line of work on compressing it~\cite{h2o,streamingllm}.
+Vision-language models (VLMs) make this problem much worse. To read small text and recognize small
+objects, current VLMs split a high-resolution image into many tiles at near-native
+resolution~\cite{internvl15,llavanext,internvl35}, and each tile becomes hundreds of visual tokens. Kept at
+the native tile resolution of InternVL3.5-8B~\cite{internvl35}, an 8K image needs 188 tiles, \ie 48K
+visual tokens. Its prefill
+needs 12.9\,GB of GPU memory on top of the model weights and 17\,s to the first token, so a 48\,GB GPU
+can hold only three such requests. Visual tokens, not text, now dominate the memory of a VLM, and their
+number grows linearly with the image area.
+
+Visual token pruning reduces the number of tokens that reach the language model, but it acts too late.
+VisionZip~\cite{visionzip} prunes after the vision encoder, so every tile is still encoded.
+FastV~\cite{fastv}, SparseVLM~\cite{sparsevlm}, and IF-Prune~\cite{ifprune} prune inside the language
+model, so all tokens still pass through its first layers, and the peak memory of prefill is still set
+by the full image. At 188 tiles these methods need more than 8\,GB, although they keep only 1{,}536
+tokens; IF-Prune, which adds a guide model, needs more memory than the uncompressed model already at
+the default resolution. The obvious alternative, downscaling the image before encoding, loses exactly
+the details that high resolution was meant to provide: on V$^*$~Bench~\cite{vstar}, 80\% of the target
+objects become smaller than a single ViT patch in the global thumbnail. Local crops alone, on the other
+hand, lose the layout and context of the whole image. Yet the answer usually lies in a small part of the
+image: on V$^*$~Bench, the target objects cover a median of 0.08\% of the image and fall into a single one
+of 24 tiles, while token pruning encodes all of them.
+
+The question is therefore not how many visual tokens to keep, but which regions to compute at all. To
+bound memory without losing these details, this decision must be made \emph{before} the regions are
+encoded (\cref{fig:method}). This is feasible: low-resolution attention alone places the target within the top four of a median of 24 tiles on 67.0\% of the V$^*$~Bench questions, against 14.8\% for random selection
+(\cref{sec:reliability}). We propose \method, a training-free method that follows the principle
+\emph{look before you encode}. Like foveated vision~\cite{ram,glancefocus}, it combines a coarse view of
+the whole scene with a few high-resolution glimpses. \method spends half of the token budget on
+low-resolution \emph{coverage tiles} of the whole image. A single partial forward pass of the VLM over
+these tiles and the question yields a question-aware prior over the high-resolution \emph{detail tiles};
+only the tiles at the selection boundary are re-scored with question attention. The selected detail
+tiles are then encoded and streamed into the KV cache, and all other tiles never reach the vision
+encoder. As a result, the vision encoder, the language model, and the KV cache all process a number of
+tokens set by the budget, independently of the input resolution, and no model other than the VLM
+itself is needed.
+
+Our contributions are as follows.
+\begin{itemize}
+  \item We identify that existing visual token pruning cannot bound the memory of high-resolution VLMs,
+        because it removes tokens only after they have been computed, and we propose to select image
+        regions before encoding instead. We show on V$^*$~Bench that low-resolution attention can filter
+        regions by question, and that re-scoring a few tiles at high resolution recovers most of the targets
+        it would miss.
+  \item We present \method, which ranks tiles with the VLM's own attention from a low-resolution view,
+        re-scores only the uncertain tiles, and builds the KV cache by streaming. Its vision compute,
+        prefill, and KV cache are $\mathcal{O}(K)$ in the budget $K$ and independent of the number of
+        tiles.
+  \item On InternVL3.5 and six high-resolution benchmarks, \method keeps 95.0\% of the uncompressed
+        accuracy with 5.0$\times$ less memory, and it is the most accurate method under every memory
+        limit. From 7 to 188 tiles its peak memory stays at 0.41\,GB, 20$\times$ less than pruning inside
+        the language model, so one GPU serves 3.4$\times$ and 3.3$\times$ more requests than FastV and IF-Prune, respectively, and 41$\times$ more than the uncompressed model (\cref{fig:scaling}); beyond about 35 tiles it is also the fastest method.
+        The memory advantage holds from 4B to 14B parameters without re-tuning.
+\end{itemize}

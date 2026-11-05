@@ -1,0 +1,17 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{2.5pt}
+  \begin{tabular}{lc ccc cc}
+    \toprule
+    $B$ & Window & Prior & Recov. & Lost & Final & Rate (rand.) \\
+    \midrule
+    1024 & 2 of 5 & 53 & +79 & 0 & \textbf{69.1\%} & 89.8\% (33.8\%) \\
+    1536 & 2 of 4 & 126 & +17 & $-$7 & \textbf{71.2\%} & 77.3\% (39.4\%) \\
+    2048 & 2 of 4 & 115 & +27 & $-$2 & \textbf{73.3\%} & 79.4\% (33.8\%) \\
+    3072 & 1 of 3 & 149 & +9 & $-$4 & \textbf{80.6\%} & 64.3\% (31.0\%) \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{From the prior to the final selection} on the 191 questions of V$^*$~Bench. Prior: questions on which the prior alone covers the target with the tiles of the budget. Recov.: the target enters the window, the prior alone would miss it, and boundary scoring keeps it. Lost: the reverse. Final = (prior + recovered $-$ lost) / 191. Rate: the recovery rate, computed over the questions whose target enters the window and that the prior alone would miss (88, 22, 34, 14 questions); in parentheses, the expected rate when the window tiles are kept at random.}
+  \label{tab:window}
+\end{table}

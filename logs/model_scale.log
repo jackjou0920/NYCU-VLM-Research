@@ -1,1 +1,564 @@
 [10-26 13:14] 等 PID 3466489 結束
+[10-27 02:04] InternVL3.5-4B
+== test suite：36 個工作，GPUS=0 1 ==
+[10-27 02:04] GPU1 docvqa foveatile 1536
+[10-27 02:58] GPU0 docvqa uncompressed 
+[10-27 04:11] GPU1 docvqa visionzip 1536
+[10-27 05:05] GPU0 docvqa fastv 1536
+[10-27 05:32] GPU1 docvqa sparsevlm 1536
+  docvqa sparsevlm b1536：校準 λ=0.5666
+[10-27 06:35] GPU0 docvqa ifprune 1536
+[10-27 06:59] GPU1 infovqa foveatile 1536
+[10-27 07:44] GPU1 infovqa visionzip 1536
+[10-27 08:27] GPU1 infovqa sparsevlm 1536
+  infovqa sparsevlm b1536：校準 λ=0.3794
+[10-27 08:35] GPU0 infovqa uncompressed 
+[10-27 09:20] GPU1 hrbench_4k foveatile 1536
+[10-27 09:34] GPU1 hrbench_4k visionzip 1536
+[10-27 09:48] GPU0 infovqa fastv 1536
+[10-27 09:50] GPU1 hrbench_4k sparsevlm 1536
+  hrbench_4k sparsevlm b1536：校準 λ=0.5666
+[10-27 10:10] GPU1 hrbench_8k foveatile 1536
+[10-27 10:30] GPU1 hrbench_8k visionzip 1536
+[10-27 10:34] GPU0 infovqa ifprune 1536
+[10-27 10:49] GPU1 hrbench_8k sparsevlm 1536
+  hrbench_8k sparsevlm b1536：校準 λ=0.3794
+[10-27 11:13] GPU1 mme_rw_lite foveatile 1536
+[10-27 11:41] GPU0 hrbench_4k uncompressed 
+[10-27 11:47] GPU1 mme_rw_lite visionzip 1536
+[10-27 12:09] GPU0 hrbench_4k fastv 1536
+[10-27 12:20] GPU1 mme_rw_lite sparsevlm 1536
+  mme_rw_lite sparsevlm b1536：校準 λ=0.3794
+[10-27 12:25] GPU0 hrbench_4k ifprune 1536
+[10-27 12:49] GPU0 hrbench_8k uncompressed 
+[10-27 13:02] GPU1 vstar foveatile 1536
+[10-27 13:05] GPU1 vstar visionzip 1536
+[10-27 13:08] GPU1 vstar sparsevlm 1536
+  vstar sparsevlm b1536：校準 λ=0.3794
+[10-27 13:18] GPU0 hrbench_8k fastv 1536
+[10-27 13:37] GPU0 hrbench_8k ifprune 1536
+[10-27 14:02] GPU0 mme_rw_lite uncompressed 
+[10-27 15:00] GPU0 mme_rw_lite fastv 1536
+[10-27 15:33] GPU0 mme_rw_lite ifprune 1536
+[10-27 16:24] GPU0 vstar uncompressed 
+[10-27 16:29] GPU0 vstar fastv 1536
+[10-27 16:31] GPU0 vstar ifprune 1536
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed            5349   91.41                                           
+  foveatile_b1024         5349   84.06   -7.34     [-8.2, -6.5]*   0.61s      153
+  foveatile_b1536         5349   87.02   -4.39     [-5.2, -3.6]*   0.70s      225
+  foveatile_b2048         5349   89.01   -2.39     [-3.0, -1.7]*   0.88s      297
+  foveatile_b2560         5349   90.07   -1.34     [-1.9, -0.7]*   0.98s      369
+  foveatile_b3072         5349   90.29   -1.11     [-1.7, -0.5]*   1.17s      437
+  foveatile_b4096         5349   90.79   -0.62     [-1.2, -0.1]*   1.49s      577
+  foveatile_b5120         5349   90.88   -0.53      [-1.1, +0.0]   1.78s      719
+  fastv_budget=1024_k=2   5349   73.48  -17.93   [-18.9, -16.9]*                 
+  fastv_budget=1536_k=2   5349   84.01   -7.40     [-8.2, -6.6]*                 
+  fastv_budget=2048_k=2   5349   87.97   -3.44     [-4.0, -2.9]*                 
+  fastv_budget=2560_k=2   5349   89.57   -1.84     [-2.3, -1.4]*                 
+  fastv_budget=3072_k=2   5349   90.82   -0.58     [-1.0, -0.2]*                 
+  fastv_budget=4096_k=2   5349   91.40   -0.00      [-0.3, +0.3]                 
+  fastv_budget=5120_k=2   5349   91.70   +0.30     [+0.0, +0.6]*                 
+  ifprune_budget=1024_L=2  5349   86.88   -4.53     [-5.2, -3.8]*                 
+  ifprune_budget=1536_L=2  5349   88.17   -3.23     [-3.9, -2.6]*                 
+  ifprune_budget=2048_L=2  5349   89.29   -2.12     [-2.6, -1.6]*                 
+  ifprune_budget=2560_L=2  5349   89.58   -1.83     [-2.4, -1.3]*                 
+  ifprune_budget=3072_L=2  5349   90.06   -1.35     [-1.8, -0.9]*                 
+  ifprune_budget=4096_L=2  5349   90.98   -0.43     [-0.8, -0.0]*                 
+  ifprune_budget=5120_L=2  5349   91.34   -0.06      [-0.4, +0.2]                 
+  sparsevlm_budget=1024_lam=0.5666  5349   55.18  -36.23   [-37.4, -35.0]*                 
+  sparsevlm_budget=1536_lam=0.5666  5349   55.08  -36.33   [-37.5, -35.1]*                 
+  sparsevlm_budget=2048_lam=0.3794  5349   69.46  -21.95   [-23.1, -20.9]*                 
+  sparsevlm_budget=2560_lam=0.3794  5349   69.83  -21.58   [-22.7, -20.5]*                 
+  sparsevlm_budget=3072_lam=0.3794  5349   69.77  -21.64   [-22.7, -20.5]*                 
+  sparsevlm_budget=4096_lam=0.1922  5349   81.99   -9.42    [-10.3, -8.6]*                 
+  sparsevlm_budget=5120_lam=0.1922  5349   82.13   -9.28    [-10.1, -8.5]*                 
+  visionzip_budget=1024   5349   35.44  -55.97   [-57.2, -54.8]*                 
+  visionzip_budget=1536   5349   48.69  -42.72   [-43.9, -41.5]*                 
+  visionzip_budget=2048   5349   57.07  -34.34   [-35.5, -33.1]*                 
+  visionzip_budget=2560   5349   62.85  -28.56   [-29.7, -27.4]*                 
+  visionzip_budget=3072   5349   68.82  -22.58   [-23.6, -21.5]*                 
+  visionzip_budget=4096   5349   76.83  -14.58   [-15.6, -13.6]*                 
+  visionzip_budget=5120   5349   84.21   -7.19     [-8.0, -6.4]*                 
+
+[saved] results/runs/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed            2801   78.73                                           
+  foveatile_b1024         2801   67.75  -10.98    [-12.4, -9.4]*   0.60s      152
+  foveatile_b1536         2801   74.82   -3.91     [-5.1, -2.6]*   0.71s      221
+  foveatile_b2048         2801   77.18   -1.55     [-2.8, -0.3]*   0.85s      290
+  foveatile_b2560         2801   78.60   -0.13      [-1.3, +1.1]   0.96s      356
+  foveatile_b3072         2801   79.36   +0.63      [-0.5, +1.8]   1.08s      416
+  foveatile_b4096         2801   79.60   +0.87      [-0.3, +2.1]   1.37s      544
+  foveatile_b5120         2801   80.17   +1.44     [+0.3, +2.5]*   1.61s      662
+  fastv_budget=1024_k=2   2801   51.68  -27.05   [-28.7, -25.3]*                 
+  fastv_budget=1536_k=2   2801   60.96  -17.77   [-19.3, -16.3]*                 
+  fastv_budget=2048_k=2   2801   66.16  -12.57   [-13.9, -11.2]*                 
+  fastv_budget=2560_k=2   2801   70.47   -8.26     [-9.4, -7.0]*                 
+  fastv_budget=3072_k=2   2801   73.59   -5.14     [-6.2, -4.0]*                 
+  fastv_budget=4096_k=2   2801   76.12   -2.61     [-3.5, -1.7]*                 
+  fastv_budget=5120_k=2   2801   77.28   -1.45     [-2.2, -0.7]*                 
+  ifprune_budget=1024_L=2  2801   70.74   -7.99     [-9.4, -6.7]*                 
+  ifprune_budget=1536_L=2  2801   72.68   -6.05     [-7.3, -4.8]*                 
+  ifprune_budget=2048_L=2  2801   73.43   -5.29     [-6.4, -4.2]*                 
+  ifprune_budget=2560_L=2  2801   74.79   -3.93     [-5.0, -2.8]*                 
+  ifprune_budget=3072_L=2  2801   75.08   -3.65     [-4.7, -2.6]*                 
+  ifprune_budget=4096_L=2  2801   76.47   -2.26     [-3.1, -1.4]*                 
+  ifprune_budget=5120_L=2  2801   77.17   -1.56     [-2.4, -0.7]*                 
+  sparsevlm_budget=1024_lam=0.3794  2801   59.11  -19.61   [-21.2, -18.1]*                 
+  sparsevlm_budget=1536_lam=0.3794  2801   62.24  -16.49   [-18.0, -15.0]*                 
+  sparsevlm_budget=2048_lam=0.1922  2801   69.11   -9.62    [-10.9, -8.4]*                 
+  sparsevlm_budget=2560_lam=0.1922  2801   71.06   -7.67     [-8.9, -6.4]*                 
+  sparsevlm_budget=3072_lam=0.1922  2801   72.52   -6.21     [-7.4, -5.0]*                 
+  sparsevlm_budget=4096_lam=0.1922  2801   74.90   -3.83     [-4.9, -2.7]*                 
+  sparsevlm_budget=5120_lam=0.1922  2801   75.46   -3.27     [-4.3, -2.3]*                 
+  visionzip_budget=1024   2801   37.75  -40.98   [-42.8, -39.1]*                 
+  visionzip_budget=1536   2801   47.58  -31.15   [-32.9, -29.3]*                 
+  visionzip_budget=2048   2801   53.34  -25.39   [-27.0, -23.8]*                 
+  visionzip_budget=2560   2801   57.86  -20.87   [-22.4, -19.3]*                 
+  visionzip_budget=3072   2801   61.84  -16.89   [-18.3, -15.4]*                 
+  visionzip_budget=4096   2801   67.74  -10.99    [-12.3, -9.7]*                 
+  visionzip_budget=5120   2801   70.97   -7.76     [-9.0, -6.5]*                 
+
+[saved] results/runs/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             200   62.00                                           
+  foveatile_b1024          200   58.00   -4.00      [-9.5, +1.0]   0.60s      158
+  foveatile_b1536          200   56.50   -5.50    [-10.5, -0.5]*   0.70s      230
+  foveatile_b2048          200   57.00   -5.00     [-10.5, +0.5]   0.90s      302
+  foveatile_b2560          200   58.00   -4.00      [-9.0, +1.0]   1.00s      374
+  foveatile_b3072          200   59.50   -2.50      [-7.5, +2.0]   1.19s      446
+  foveatile_b4096          200   59.50   -2.50      [-7.0, +2.0]   1.48s      590
+  foveatile_b5120          200   57.50   -4.50      [-9.0, +0.0]   1.84s      734
+  fastv_budget=1024_k=2    200   53.50   -8.50    [-13.5, -4.0]*                 
+  fastv_budget=1536_k=2    200   59.00   -3.00      [-6.5, +0.5]                 
+  fastv_budget=2048_k=2    200   58.00   -4.00      [-8.0, +0.0]                 
+  fastv_budget=2560_k=2    200   59.00   -3.00      [-6.0, +0.0]                 
+  fastv_budget=3072_k=2    200   61.00   -1.00      [-4.0, +2.0]                 
+  fastv_budget=4096_k=2    200   59.50   -2.50      [-5.0, +0.0]                 
+  fastv_budget=5120_k=2    200   61.00   -1.00      [-3.5, +1.5]                 
+  ifprune_budget=1024_L=2   200   58.00   -4.00      [-8.5, +0.0]                 
+  ifprune_budget=1536_L=2   200   57.50   -4.50     [-8.5, -0.5]*                 
+  ifprune_budget=2048_L=2   200   58.50   -3.50      [-8.0, +0.5]                 
+  ifprune_budget=2560_L=2   200   59.50   -2.50      [-6.5, +1.5]                 
+  ifprune_budget=3072_L=2   200   61.00   -1.00      [-4.5, +2.5]                 
+  ifprune_budget=4096_L=2   200   60.00   -2.00      [-6.0, +2.0]                 
+  ifprune_budget=5120_L=2   200   62.00   +0.00      [-3.5, +3.5]                 
+  sparsevlm_budget=1024_lam=0.5666   200   60.00   -2.00      [-5.5, +1.5]                 
+  sparsevlm_budget=1536_lam=0.5666   200   59.50   -2.50      [-6.0, +1.0]                 
+  sparsevlm_budget=2048_lam=0.3794   200   58.00   -4.00     [-7.0, -1.0]*                 
+  sparsevlm_budget=2560_lam=0.3794   200   57.00   -5.00     [-8.5, -1.5]*                 
+  sparsevlm_budget=3072_lam=0.3794   200   57.00   -5.00     [-8.5, -1.5]*                 
+  sparsevlm_budget=4096_lam=0.1922   200   62.00   +0.00      [-2.0, +2.0]                 
+  sparsevlm_budget=5120_lam=0.1922   200   62.00   +0.00      [-2.5, +2.5]                 
+  visionzip_budget=1024    200   43.00  -19.00   [-25.5, -12.5]*                 
+  visionzip_budget=1536    200   49.00  -13.00    [-18.5, -8.0]*                 
+  visionzip_budget=2048    200   52.50   -9.50    [-15.0, -4.5]*                 
+  visionzip_budget=2560    200   57.50   -4.50      [-9.0, +0.0]                 
+  visionzip_budget=3072    200   56.50   -5.50    [-10.0, -1.0]*                 
+  visionzip_budget=4096    200   58.50   -3.50      [-7.5, +0.5]                 
+  visionzip_budget=5120    200   58.50   -3.50      [-7.5, +0.5]                 
+
+[saved] results/runs/summary.csv
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             200   56.50                                       1040
+  foveatile_b1024          200   52.50   -4.00      [-9.0, +1.0]   0.64s      158
+  foveatile_b1536          200   52.00   -4.50      [-9.0, +0.0]   0.73s      230
+  foveatile_b2048          200   49.50   -7.00    [-12.5, -1.5]*   0.91s      302
+  foveatile_b2560          200   52.50   -4.00      [-9.0, +1.0]   1.01s      374
+  foveatile_b3072          200   52.50   -4.00      [-9.0, +0.5]   1.20s      446
+  fastv_budget=1024_k=2    200   47.50   -9.00    [-13.5, -4.5]*                 
+  fastv_budget=1536_k=2    200   54.00   -2.50      [-6.0, +1.0]                 
+  fastv_budget=2048_k=2    200   53.50   -3.00      [-6.5, +0.5]                 
+  fastv_budget=2560_k=2    200   55.00   -1.50      [-4.5, +1.5]                 
+  fastv_budget=3072_k=2    200   56.00   -0.50      [-2.5, +1.5]                 
+  ifprune_budget=1024_L=2   200   52.50   -4.00      [-9.0, +1.0]                 
+  ifprune_budget=1536_L=2   200   52.50   -4.00      [-8.5, +0.5]                 
+  ifprune_budget=2048_L=2   200   54.50   -2.00      [-6.5, +2.5]                 
+  ifprune_budget=2560_L=2   200   56.00   -0.50      [-5.0, +3.5]                 
+  ifprune_budget=3072_L=2   200   56.00   -0.50      [-4.0, +3.0]                 
+  sparsevlm_budget=1024_lam=0.5666   200   52.50   -4.00      [-8.5, +0.5]                 
+  sparsevlm_budget=1536_lam=0.3794   200   53.50   -3.00      [-7.5, +1.0]                 
+  sparsevlm_budget=2048_lam=0.3794   200   54.00   -2.50      [-7.0, +1.5]                 
+  sparsevlm_budget=2560_lam=0.1922   200   55.00   -1.50      [-5.0, +2.0]                 
+  sparsevlm_budget=3072_lam=0.1922   200   57.00   +0.50      [-2.0, +3.5]                 
+  visionzip_budget=1024    200   41.00  -15.50    [-22.5, -9.0]*                 
+  visionzip_budget=1536    200   44.50  -12.00    [-18.0, -6.5]*                 
+  visionzip_budget=2048    200   48.00   -8.50    [-14.0, -2.5]*                 
+  visionzip_budget=2560    200   49.50   -7.00    [-13.0, -1.0]*                 
+  visionzip_budget=3072    200   52.00   -4.50      [-9.5, +0.5]                 
+
+[saved] results/runs/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed            1919   51.59                                       1160
+  foveatile_b1024         1919   48.78   -2.81     [-4.6, -0.8]*   0.68s      166
+  foveatile_b1536         1919   52.06   +0.47      [-1.2, +2.2]   0.78s      237
+  foveatile_b2048         1919   51.22   -0.36      [-2.1, +1.4]   0.93s      309
+  foveatile_b2560         1919   52.16   +0.57      [-1.1, +2.2]   1.03s      381
+  foveatile_b3072         1919   53.47   +1.88     [+0.1, +3.6]*   1.21s      447
+  foveatile_b4096         1919   52.42   +0.83      [-0.9, +2.5]   1.53s      588
+  foveatile_b5120         1919   53.41   +1.82     [+0.2, +3.5]*   1.83s      726
+  fastv_budget=1024_k=2   1919   45.54   -6.04     [-7.7, -4.4]*                 
+  fastv_budget=1536_k=2   1919   46.90   -4.69     [-6.2, -3.2]*                 
+  fastv_budget=2048_k=2   1919   48.20   -3.39     [-4.7, -2.0]*                 
+  fastv_budget=2560_k=2   1919   50.13   -1.46     [-2.7, -0.3]*                 
+  fastv_budget=3072_k=2   1919   49.66   -1.93     [-3.0, -0.9]*                 
+  fastv_budget=4096_k=2   1919   51.17   -0.42      [-1.4, +0.5]                 
+  fastv_budget=5120_k=2   1919   52.01   +0.42      [-0.4, +1.3]                 
+  ifprune_budget=1024_L=2  1919   48.93   -2.66     [-4.3, -1.0]*                 
+  ifprune_budget=1536_L=2  1919   49.30   -2.29     [-3.9, -0.8]*                 
+  ifprune_budget=2048_L=2  1919   49.45   -2.14     [-3.6, -0.7]*                 
+  ifprune_budget=2560_L=2  1919   49.92   -1.67     [-3.0, -0.4]*                 
+  ifprune_budget=3072_L=2  1919   49.77   -1.82     [-3.1, -0.6]*                 
+  ifprune_budget=4096_L=2  1919   50.44   -1.15      [-2.3, +0.0]                 
+  ifprune_budget=5120_L=2  1919   51.22   -0.36      [-1.5, +0.7]                 
+  sparsevlm_budget=1024_lam=0.5666  1919   48.31   -3.28     [-5.1, -1.6]*                 
+  sparsevlm_budget=1536_lam=0.3794  1919   50.23   -1.35      [-2.9, +0.1]                 
+  sparsevlm_budget=2048_lam=0.3794  1919   50.55   -1.04      [-2.5, +0.4]                 
+  sparsevlm_budget=2560_lam=0.1922  1919   51.80   +0.21      [-1.0, +1.5]                 
+  sparsevlm_budget=3072_lam=0.1922  1919   50.96   -0.63      [-1.8, +0.7]                 
+  sparsevlm_budget=4096_lam=0.1922  1919   51.43   -0.16      [-1.2, +0.9]                 
+  sparsevlm_budget=5120_lam=0.1922  1919   51.38   -0.21      [-1.2, +0.9]                 
+  visionzip_budget=1024   1919   36.58  -15.01   [-17.2, -12.9]*                 
+  visionzip_budget=1536   1919   41.74   -9.85    [-11.9, -8.0]*                 
+  visionzip_budget=2048   1919   44.14   -7.45     [-9.4, -5.6]*                 
+  visionzip_budget=2560   1919   45.91   -5.68     [-7.6, -4.0]*                 
+  visionzip_budget=3072   1919   47.42   -4.17     [-6.0, -2.4]*                 
+  visionzip_budget=4096   1919   49.77   -1.82     [-3.2, -0.5]*                 
+  visionzip_budget=5120   1919   49.61   -1.98     [-3.3, -0.7]*                 
+
+[saved] results/runs/summary.csv
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             191   83.77                                        924
+  foveatile_b1024          191   76.44   -7.33    [-13.1, -2.1]*   0.62s      156
+  foveatile_b1536          191   77.49   -6.28    [-12.0, -0.5]*   0.71s      228
+  foveatile_b2048          191   77.49   -6.28    [-11.5, -1.1]*   0.90s      300
+  foveatile_b2560          191   79.58   -4.19      [-9.4, +1.6]   1.00s      372
+  foveatile_b3072          191   81.68   -2.09      [-6.8, +3.1]   1.20s      444
+  foveatile_b4096          191   84.82   +1.05      [-2.6, +4.7]   1.54s      588
+  foveatile_b5120          191   83.25   -0.52      [-4.2, +3.1]   1.86s      732
+  fastv_budget=1024_k=2    191   75.39   -8.38    [-13.1, -3.7]*                 
+  fastv_budget=1536_k=2    191   79.06   -4.71     [-9.4, -0.5]*                 
+  fastv_budget=2048_k=2    191   80.63   -3.14      [-6.8, +0.0]                 
+  fastv_budget=2560_k=2    191   81.68   -2.09      [-5.8, +1.1]                 
+  fastv_budget=3072_k=2    191   82.72   -1.05      [-3.7, +1.6]                 
+  fastv_budget=4096_k=2    191   83.77   +0.00      [-2.1, +2.1]                 
+  fastv_budget=5120_k=2    191   84.29   +0.52      [+0.0, +1.6]                 
+  ifprune_budget=1024_L=2   191   83.25   -0.52      [-4.7, +4.2]                 
+  ifprune_budget=1536_L=2   191   81.68   -2.09      [-6.3, +2.1]                 
+  ifprune_budget=2048_L=2   191   82.72   -1.05      [-5.2, +3.1]                 
+  ifprune_budget=2560_L=2   191   83.77   +0.00      [-3.7, +3.7]                 
+  ifprune_budget=3072_L=2   191   82.20   -1.57      [-4.7, +1.6]                 
+  ifprune_budget=4096_L=2   191   85.34   +1.57      [-1.1, +4.2]                 
+  ifprune_budget=5120_L=2   191   85.34   +1.57      [-0.5, +4.2]                 
+  sparsevlm_budget=1024_lam=0.5666   191   77.49   -6.28    [-11.0, -1.6]*                 
+  sparsevlm_budget=1536_lam=0.3794   191   79.58   -4.19      [-8.4, +0.0]                 
+  sparsevlm_budget=2048_lam=0.3794   191   79.58   -4.19      [-8.4, +0.0]                 
+  sparsevlm_budget=2560_lam=0.1922   191   81.15   -2.62      [-6.3, +1.1]                 
+  sparsevlm_budget=3072_lam=0.1922   191   83.77   +0.00      [-3.1, +3.7]                 
+  sparsevlm_budget=4096_lam=0.1922   191   84.29   +0.52      [-2.6, +4.2]                 
+  sparsevlm_budget=5120_lam=0.1922   191   84.29   +0.52      [-2.6, +4.2]                 
+  visionzip_budget=1024    191   67.02  -16.75   [-23.0, -10.5]*                 
+  visionzip_budget=1536    191   70.16  -13.61    [-19.4, -7.8]*                 
+  visionzip_budget=2048    191   76.96   -6.81    [-11.5, -2.1]*                 
+  visionzip_budget=2560    191   76.44   -7.33    [-12.0, -2.6]*                 
+  visionzip_budget=3072    191   78.53   -5.24     [-9.4, -1.1]*                 
+  visionzip_budget=4096    191   81.15   -2.62      [-6.8, +1.1]                 
+  visionzip_budget=5120    191   82.20   -1.57      [-4.2, +1.1]                 
+
+[saved] results/runs/summary.csv
+[10-27 16:38] done
+[10-27 16:38] InternVL3.5-14B
+== test suite：36 個工作，GPUS=0 1 ==
+[10-27 16:38] GPU1 docvqa foveatile 1536
+[10-27 16:38] GPU0 docvqa uncompressed 
+[10-27 19:15] GPU1 docvqa visionzip 1536
+[10-27 20:20] GPU0 docvqa fastv 1536
+[10-27 21:14] GPU1 docvqa sparsevlm 1536
+  docvqa sparsevlm b1536：校準 λ=0.5666
+[10-27 22:35] GPU0 docvqa ifprune 1536
+[10-27 23:19] GPU1 infovqa foveatile 1536
+[10-28 00:36] GPU1 infovqa visionzip 1536
+[10-28 01:20] GPU0 infovqa uncompressed 
+[10-28 01:38] GPU1 infovqa sparsevlm 1536
+  infovqa sparsevlm b1536：校準 λ=0.3794
+[10-28 03:01] GPU1 hrbench_4k foveatile 1536
+[10-28 03:24] GPU1 hrbench_4k visionzip 1536
+[10-28 03:39] GPU0 infovqa fastv 1536
+[10-28 03:44] GPU1 hrbench_4k sparsevlm 1536
+  hrbench_4k sparsevlm b1536：校準 λ=0.5666
+[10-28 04:12] GPU1 hrbench_8k foveatile 1536
+[10-28 04:41] GPU1 hrbench_8k visionzip 1536
+[10-28 04:47] GPU0 infovqa ifprune 1536
+[10-28 05:05] GPU1 hrbench_8k sparsevlm 1536
+  hrbench_8k sparsevlm b1536：校準 λ=0.3794
+[10-28 05:39] GPU1 mme_rw_lite foveatile 1536
+[10-28 06:15] GPU0 hrbench_4k uncompressed 
+[10-28 06:37] GPU1 mme_rw_lite visionzip 1536
+[10-28 07:08] GPU0 hrbench_4k fastv 1536
+[10-28 07:22] GPU1 mme_rw_lite sparsevlm 1536
+  mme_rw_lite sparsevlm b1536：校準 λ=0.3794
+[10-28 07:30] GPU0 hrbench_4k ifprune 1536
+[10-28 08:00] GPU0 hrbench_8k uncompressed 
+[10-28 08:28] GPU1 vstar foveatile 1536
+[10-28 08:33] GPU1 vstar visionzip 1536
+[10-28 08:37] GPU1 vstar sparsevlm 1536
+  vstar sparsevlm b1536：校準 λ=0.3794
+[10-28 08:48] GPU0 hrbench_8k fastv 1536
+[10-28 09:12] GPU0 hrbench_8k ifprune 1536
+[10-28 09:43] GPU0 mme_rw_lite uncompressed 
+[10-28 11:37] GPU0 mme_rw_lite fastv 1536
+[10-28 12:26] GPU0 mme_rw_lite ifprune 1536
+[10-28 13:31] GPU0 vstar uncompressed 
+[10-28 13:40] GPU0 vstar fastv 1536
+[10-28 13:44] GPU0 vstar ifprune 1536
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed            5349   91.41                                           
+  foveatile_b1024         5349   84.06   -7.34     [-8.2, -6.5]*   0.61s      153
+  foveatile_b1536         5349   87.02   -4.39     [-5.2, -3.6]*   0.70s      225
+  foveatile_b2048         5349   89.01   -2.39     [-3.0, -1.7]*   0.88s      297
+  foveatile_b2560         5349   90.07   -1.34     [-1.9, -0.7]*   0.98s      369
+  foveatile_b3072         5349   90.29   -1.11     [-1.7, -0.5]*   1.17s      437
+  foveatile_b4096         5349   90.79   -0.62     [-1.2, -0.1]*   1.49s      577
+  foveatile_b5120         5349   90.88   -0.53      [-1.1, +0.0]   1.78s      719
+  fastv_budget=1024_k=2   5349   73.48  -17.93   [-18.9, -16.9]*                 
+  fastv_budget=1536_k=2   5349   84.01   -7.40     [-8.2, -6.6]*                 
+  fastv_budget=2048_k=2   5349   87.97   -3.44     [-4.0, -2.9]*                 
+  fastv_budget=2560_k=2   5349   89.57   -1.84     [-2.3, -1.4]*                 
+  fastv_budget=3072_k=2   5349   90.82   -0.58     [-1.0, -0.2]*                 
+  fastv_budget=4096_k=2   5349   91.40   -0.00      [-0.3, +0.3]                 
+  fastv_budget=5120_k=2   5349   91.70   +0.30     [+0.0, +0.6]*                 
+  ifprune_budget=1024_L=2  5349   86.88   -4.53     [-5.2, -3.8]*                 
+  ifprune_budget=1536_L=2  5349   88.17   -3.23     [-3.9, -2.6]*                 
+  ifprune_budget=2048_L=2  5349   89.29   -2.12     [-2.6, -1.6]*                 
+  ifprune_budget=2560_L=2  5349   89.58   -1.83     [-2.4, -1.3]*                 
+  ifprune_budget=3072_L=2  5349   90.06   -1.35     [-1.8, -0.9]*                 
+  ifprune_budget=4096_L=2  5349   90.98   -0.43     [-0.8, -0.0]*                 
+  ifprune_budget=5120_L=2  5349   91.34   -0.06      [-0.4, +0.2]                 
+  sparsevlm_budget=1024_lam=0.5666  5349   55.18  -36.23   [-37.4, -35.0]*                 
+  sparsevlm_budget=1536_lam=0.5666  5349   55.08  -36.33   [-37.5, -35.1]*                 
+  sparsevlm_budget=2048_lam=0.3794  5349   69.46  -21.95   [-23.1, -20.9]*                 
+  sparsevlm_budget=2560_lam=0.3794  5349   69.83  -21.58   [-22.7, -20.5]*                 
+  sparsevlm_budget=3072_lam=0.3794  5349   69.77  -21.64   [-22.7, -20.5]*                 
+  sparsevlm_budget=4096_lam=0.1922  5349   81.99   -9.42    [-10.3, -8.6]*                 
+  sparsevlm_budget=5120_lam=0.1922  5349   82.13   -9.28    [-10.1, -8.5]*                 
+  visionzip_budget=1024   5349   35.44  -55.97   [-57.2, -54.8]*                 
+  visionzip_budget=1536   5349   48.69  -42.72   [-43.9, -41.5]*                 
+  visionzip_budget=2048   5349   57.07  -34.34   [-35.5, -33.1]*                 
+  visionzip_budget=2560   5349   62.85  -28.56   [-29.7, -27.4]*                 
+  visionzip_budget=3072   5349   68.82  -22.58   [-23.6, -21.5]*                 
+  visionzip_budget=4096   5349   76.83  -14.58   [-15.6, -13.6]*                 
+  visionzip_budget=5120   5349   84.21   -7.19     [-8.0, -6.4]*                 
+
+[saved] results/runs/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed            2801   78.73                                           
+  foveatile_b1024         2801   67.75  -10.98    [-12.4, -9.4]*   0.60s      152
+  foveatile_b1536         2801   74.82   -3.91     [-5.1, -2.6]*   0.71s      221
+  foveatile_b2048         2801   77.18   -1.55     [-2.8, -0.3]*   0.85s      290
+  foveatile_b2560         2801   78.60   -0.13      [-1.3, +1.1]   0.96s      356
+  foveatile_b3072         2801   79.36   +0.63      [-0.5, +1.8]   1.08s      416
+  foveatile_b4096         2801   79.60   +0.87      [-0.3, +2.1]   1.37s      544
+  foveatile_b5120         2801   80.17   +1.44     [+0.3, +2.5]*   1.61s      662
+  fastv_budget=1024_k=2   2801   51.68  -27.05   [-28.7, -25.3]*                 
+  fastv_budget=1536_k=2   2801   60.96  -17.77   [-19.3, -16.3]*                 
+  fastv_budget=2048_k=2   2801   66.16  -12.57   [-13.9, -11.2]*                 
+  fastv_budget=2560_k=2   2801   70.47   -8.26     [-9.4, -7.0]*                 
+  fastv_budget=3072_k=2   2801   73.59   -5.14     [-6.2, -4.0]*                 
+  fastv_budget=4096_k=2   2801   76.12   -2.61     [-3.5, -1.7]*                 
+  fastv_budget=5120_k=2   2801   77.28   -1.45     [-2.2, -0.7]*                 
+  ifprune_budget=1024_L=2  2801   70.74   -7.99     [-9.4, -6.7]*                 
+  ifprune_budget=1536_L=2  2801   72.68   -6.05     [-7.3, -4.8]*                 
+  ifprune_budget=2048_L=2  2801   73.43   -5.29     [-6.4, -4.2]*                 
+  ifprune_budget=2560_L=2  2801   74.79   -3.93     [-5.0, -2.8]*                 
+  ifprune_budget=3072_L=2  2801   75.08   -3.65     [-4.7, -2.6]*                 
+  ifprune_budget=4096_L=2  2801   76.47   -2.26     [-3.1, -1.4]*                 
+  ifprune_budget=5120_L=2  2801   77.17   -1.56     [-2.4, -0.7]*                 
+  sparsevlm_budget=1024_lam=0.3794  2801   59.11  -19.61   [-21.2, -18.1]*                 
+  sparsevlm_budget=1536_lam=0.3794  2801   62.24  -16.49   [-18.0, -15.0]*                 
+  sparsevlm_budget=2048_lam=0.1922  2801   69.11   -9.62    [-10.9, -8.4]*                 
+  sparsevlm_budget=2560_lam=0.1922  2801   71.06   -7.67     [-8.9, -6.4]*                 
+  sparsevlm_budget=3072_lam=0.1922  2801   72.52   -6.21     [-7.4, -5.0]*                 
+  sparsevlm_budget=4096_lam=0.1922  2801   74.90   -3.83     [-4.9, -2.7]*                 
+  sparsevlm_budget=5120_lam=0.1922  2801   75.46   -3.27     [-4.3, -2.3]*                 
+  visionzip_budget=1024   2801   37.75  -40.98   [-42.8, -39.1]*                 
+  visionzip_budget=1536   2801   47.58  -31.15   [-32.9, -29.3]*                 
+  visionzip_budget=2048   2801   53.34  -25.39   [-27.0, -23.8]*                 
+  visionzip_budget=2560   2801   57.86  -20.87   [-22.4, -19.3]*                 
+  visionzip_budget=3072   2801   61.84  -16.89   [-18.3, -15.4]*                 
+  visionzip_budget=4096   2801   67.74  -10.99    [-12.3, -9.7]*                 
+  visionzip_budget=5120   2801   70.97   -7.76     [-9.0, -6.5]*                 
+
+[saved] results/runs/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             200   62.00                                           
+  foveatile_b1024          200   58.00   -4.00      [-9.5, +1.0]   0.60s      158
+  foveatile_b1536          200   56.50   -5.50    [-10.5, -0.5]*   0.70s      230
+  foveatile_b2048          200   57.00   -5.00     [-10.5, +0.5]   0.90s      302
+  foveatile_b2560          200   58.00   -4.00      [-9.0, +1.0]   1.00s      374
+  foveatile_b3072          200   59.50   -2.50      [-7.5, +2.0]   1.19s      446
+  foveatile_b4096          200   59.50   -2.50      [-7.0, +2.0]   1.48s      590
+  foveatile_b5120          200   57.50   -4.50      [-9.0, +0.0]   1.84s      734
+  fastv_budget=1024_k=2    200   53.50   -8.50    [-13.5, -4.0]*                 
+  fastv_budget=1536_k=2    200   59.00   -3.00      [-6.5, +0.5]                 
+  fastv_budget=2048_k=2    200   58.00   -4.00      [-8.0, +0.0]                 
+  fastv_budget=2560_k=2    200   59.00   -3.00      [-6.0, +0.0]                 
+  fastv_budget=3072_k=2    200   61.00   -1.00      [-4.0, +2.0]                 
+  fastv_budget=4096_k=2    200   59.50   -2.50      [-5.0, +0.0]                 
+  fastv_budget=5120_k=2    200   61.00   -1.00      [-3.5, +1.5]                 
+  ifprune_budget=1024_L=2   200   58.00   -4.00      [-8.5, +0.0]                 
+  ifprune_budget=1536_L=2   200   57.50   -4.50     [-8.5, -0.5]*                 
+  ifprune_budget=2048_L=2   200   58.50   -3.50      [-8.0, +0.5]                 
+  ifprune_budget=2560_L=2   200   59.50   -2.50      [-6.5, +1.5]                 
+  ifprune_budget=3072_L=2   200   61.00   -1.00      [-4.5, +2.5]                 
+  ifprune_budget=4096_L=2   200   60.00   -2.00      [-6.0, +2.0]                 
+  ifprune_budget=5120_L=2   200   62.00   +0.00      [-3.5, +3.5]                 
+  sparsevlm_budget=1024_lam=0.5666   200   60.00   -2.00      [-5.5, +1.5]                 
+  sparsevlm_budget=1536_lam=0.5666   200   59.50   -2.50      [-6.0, +1.0]                 
+  sparsevlm_budget=2048_lam=0.3794   200   58.00   -4.00     [-7.0, -1.0]*                 
+  sparsevlm_budget=2560_lam=0.3794   200   57.00   -5.00     [-8.5, -1.5]*                 
+  sparsevlm_budget=3072_lam=0.3794   200   57.00   -5.00     [-8.5, -1.5]*                 
+  sparsevlm_budget=4096_lam=0.1922   200   62.00   +0.00      [-2.0, +2.0]                 
+  sparsevlm_budget=5120_lam=0.1922   200   62.00   +0.00      [-2.5, +2.5]                 
+  visionzip_budget=1024    200   43.00  -19.00   [-25.5, -12.5]*                 
+  visionzip_budget=1536    200   49.00  -13.00    [-18.5, -8.0]*                 
+  visionzip_budget=2048    200   52.50   -9.50    [-15.0, -4.5]*                 
+  visionzip_budget=2560    200   57.50   -4.50      [-9.0, +0.0]                 
+  visionzip_budget=3072    200   56.50   -5.50    [-10.0, -1.0]*                 
+  visionzip_budget=4096    200   58.50   -3.50      [-7.5, +0.5]                 
+  visionzip_budget=5120    200   58.50   -3.50      [-7.5, +0.5]                 
+
+[saved] results/runs/summary.csv
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             200   56.50                                       1040
+  foveatile_b1024          200   52.50   -4.00      [-9.0, +1.0]   0.64s      158
+  foveatile_b1536          200   52.00   -4.50      [-9.0, +0.0]   0.73s      230
+  foveatile_b2048          200   49.50   -7.00    [-12.5, -1.5]*   0.91s      302
+  foveatile_b2560          200   52.50   -4.00      [-9.0, +1.0]   1.01s      374
+  foveatile_b3072          200   52.50   -4.00      [-9.0, +0.5]   1.20s      446
+  fastv_budget=1024_k=2    200   47.50   -9.00    [-13.5, -4.5]*                 
+  fastv_budget=1536_k=2    200   54.00   -2.50      [-6.0, +1.0]                 
+  fastv_budget=2048_k=2    200   53.50   -3.00      [-6.5, +0.5]                 
+  fastv_budget=2560_k=2    200   55.00   -1.50      [-4.5, +1.5]                 
+  fastv_budget=3072_k=2    200   56.00   -0.50      [-2.5, +1.5]                 
+  ifprune_budget=1024_L=2   200   52.50   -4.00      [-9.0, +1.0]                 
+  ifprune_budget=1536_L=2   200   52.50   -4.00      [-8.5, +0.5]                 
+  ifprune_budget=2048_L=2   200   54.50   -2.00      [-6.5, +2.5]                 
+  ifprune_budget=2560_L=2   200   56.00   -0.50      [-5.0, +3.5]                 
+  ifprune_budget=3072_L=2   200   56.00   -0.50      [-4.0, +3.0]                 
+  sparsevlm_budget=1024_lam=0.5666   200   52.50   -4.00      [-8.5, +0.5]                 
+  sparsevlm_budget=1536_lam=0.3794   200   53.50   -3.00      [-7.5, +1.0]                 
+  sparsevlm_budget=2048_lam=0.3794   200   54.00   -2.50      [-7.0, +1.5]                 
+  sparsevlm_budget=2560_lam=0.1922   200   55.00   -1.50      [-5.0, +2.0]                 
+  sparsevlm_budget=3072_lam=0.1922   200   57.00   +0.50      [-2.0, +3.5]                 
+  visionzip_budget=1024    200   41.00  -15.50    [-22.5, -9.0]*                 
+  visionzip_budget=1536    200   44.50  -12.00    [-18.0, -6.5]*                 
+  visionzip_budget=2048    200   48.00   -8.50    [-14.0, -2.5]*                 
+  visionzip_budget=2560    200   49.50   -7.00    [-13.0, -1.0]*                 
+  visionzip_budget=3072    200   52.00   -4.50      [-9.5, +0.5]                 
+
+[saved] results/runs/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed            1919   51.59                                       1160
+  foveatile_b1024         1919   48.78   -2.81     [-4.6, -0.8]*   0.68s      166
+  foveatile_b1536         1919   52.06   +0.47      [-1.2, +2.2]   0.78s      237
+  foveatile_b2048         1919   51.22   -0.36      [-2.1, +1.4]   0.93s      309
+  foveatile_b2560         1919   52.16   +0.57      [-1.1, +2.2]   1.03s      381
+  foveatile_b3072         1919   53.47   +1.88     [+0.1, +3.6]*   1.21s      447
+  foveatile_b4096         1919   52.42   +0.83      [-0.9, +2.5]   1.53s      588
+  foveatile_b5120         1919   53.41   +1.82     [+0.2, +3.5]*   1.83s      726
+  fastv_budget=1024_k=2   1919   45.54   -6.04     [-7.7, -4.4]*                 
+  fastv_budget=1536_k=2   1919   46.90   -4.69     [-6.2, -3.2]*                 
+  fastv_budget=2048_k=2   1919   48.20   -3.39     [-4.7, -2.0]*                 
+  fastv_budget=2560_k=2   1919   50.13   -1.46     [-2.7, -0.3]*                 
+  fastv_budget=3072_k=2   1919   49.66   -1.93     [-3.0, -0.9]*                 
+  fastv_budget=4096_k=2   1919   51.17   -0.42      [-1.4, +0.5]                 
+  fastv_budget=5120_k=2   1919   52.01   +0.42      [-0.4, +1.3]                 
+  ifprune_budget=1024_L=2  1919   48.93   -2.66     [-4.3, -1.0]*                 
+  ifprune_budget=1536_L=2  1919   49.30   -2.29     [-3.9, -0.8]*                 
+  ifprune_budget=2048_L=2  1919   49.45   -2.14     [-3.6, -0.7]*                 
+  ifprune_budget=2560_L=2  1919   49.92   -1.67     [-3.0, -0.4]*                 
+  ifprune_budget=3072_L=2  1919   49.77   -1.82     [-3.1, -0.6]*                 
+  ifprune_budget=4096_L=2  1919   50.44   -1.15      [-2.3, +0.0]                 
+  ifprune_budget=5120_L=2  1919   51.22   -0.36      [-1.5, +0.7]                 
+  sparsevlm_budget=1024_lam=0.5666  1919   48.31   -3.28     [-5.1, -1.6]*                 
+  sparsevlm_budget=1536_lam=0.3794  1919   50.23   -1.35      [-2.9, +0.1]                 
+  sparsevlm_budget=2048_lam=0.3794  1919   50.55   -1.04      [-2.5, +0.4]                 
+  sparsevlm_budget=2560_lam=0.1922  1919   51.80   +0.21      [-1.0, +1.5]                 
+  sparsevlm_budget=3072_lam=0.1922  1919   50.96   -0.63      [-1.8, +0.7]                 
+  sparsevlm_budget=4096_lam=0.1922  1919   51.43   -0.16      [-1.2, +0.9]                 
+  sparsevlm_budget=5120_lam=0.1922  1919   51.38   -0.21      [-1.2, +0.9]                 
+  visionzip_budget=1024   1919   36.58  -15.01   [-17.2, -12.9]*                 
+  visionzip_budget=1536   1919   41.74   -9.85    [-11.9, -8.0]*                 
+  visionzip_budget=2048   1919   44.14   -7.45     [-9.4, -5.6]*                 
+  visionzip_budget=2560   1919   45.91   -5.68     [-7.6, -4.0]*                 
+  visionzip_budget=3072   1919   47.42   -4.17     [-6.0, -2.4]*                 
+  visionzip_budget=4096   1919   49.77   -1.82     [-3.2, -0.5]*                 
+  visionzip_budget=5120   1919   49.61   -1.98     [-3.3, -0.7]*                 
+
+[saved] results/runs/summary.csv
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  uncompressed             191   83.77                                        924
+  foveatile_b1024          191   76.44   -7.33    [-13.1, -2.1]*   0.62s      156
+  foveatile_b1536          191   77.49   -6.28    [-12.0, -0.5]*   0.71s      228
+  foveatile_b2048          191   77.49   -6.28    [-11.5, -1.1]*   0.90s      300
+  foveatile_b2560          191   79.58   -4.19      [-9.4, +1.6]   1.00s      372
+  foveatile_b3072          191   81.68   -2.09      [-6.8, +3.1]   1.20s      444
+  foveatile_b4096          191   84.82   +1.05      [-2.6, +4.7]   1.54s      588
+  foveatile_b5120          191   83.25   -0.52      [-4.2, +3.1]   1.86s      732
+  fastv_budget=1024_k=2    191   75.39   -8.38    [-13.1, -3.7]*                 
+  fastv_budget=1536_k=2    191   79.06   -4.71     [-9.4, -0.5]*                 
+  fastv_budget=2048_k=2    191   80.63   -3.14      [-6.8, +0.0]                 
+  fastv_budget=2560_k=2    191   81.68   -2.09      [-5.8, +1.1]                 
+  fastv_budget=3072_k=2    191   82.72   -1.05      [-3.7, +1.6]                 
+  fastv_budget=4096_k=2    191   83.77   +0.00      [-2.1, +2.1]                 
+  fastv_budget=5120_k=2    191   84.29   +0.52      [+0.0, +1.6]                 
+  ifprune_budget=1024_L=2   191   83.25   -0.52      [-4.7, +4.2]                 
+  ifprune_budget=1536_L=2   191   81.68   -2.09      [-6.3, +2.1]                 
+  ifprune_budget=2048_L=2   191   82.72   -1.05      [-5.2, +3.1]                 
+  ifprune_budget=2560_L=2   191   83.77   +0.00      [-3.7, +3.7]                 
+  ifprune_budget=3072_L=2   191   82.20   -1.57      [-4.7, +1.6]                 
+  ifprune_budget=4096_L=2   191   85.34   +1.57      [-1.1, +4.2]                 
+  ifprune_budget=5120_L=2   191   85.34   +1.57      [-0.5, +4.2]                 
+  sparsevlm_budget=1024_lam=0.5666   191   77.49   -6.28    [-11.0, -1.6]*                 
+  sparsevlm_budget=1536_lam=0.3794   191   79.58   -4.19      [-8.4, +0.0]                 
+  sparsevlm_budget=2048_lam=0.3794   191   79.58   -4.19      [-8.4, +0.0]                 
+  sparsevlm_budget=2560_lam=0.1922   191   81.15   -2.62      [-6.3, +1.1]                 
+  sparsevlm_budget=3072_lam=0.1922   191   83.77   +0.00      [-3.1, +3.7]                 
+  sparsevlm_budget=4096_lam=0.1922   191   84.29   +0.52      [-2.6, +4.2]                 
+  sparsevlm_budget=5120_lam=0.1922   191   84.29   +0.52      [-2.6, +4.2]                 
+  visionzip_budget=1024    191   67.02  -16.75   [-23.0, -10.5]*                 
+  visionzip_budget=1536    191   70.16  -13.61    [-19.4, -7.8]*                 
+  visionzip_budget=2048    191   76.96   -6.81    [-11.5, -2.1]*                 
+  visionzip_budget=2560    191   76.44   -7.33    [-12.0, -2.6]*                 
+  visionzip_budget=3072    191   78.53   -5.24     [-9.4, -1.1]*                 
+  visionzip_budget=4096    191   81.15   -2.62      [-6.8, +1.1]                 
+  visionzip_budget=5120    191   82.20   -1.57      [-4.2, +1.1]                 
+
+[saved] results/runs/summary.csv
+[10-28 13:52] done
+[10-28 13:52] all done

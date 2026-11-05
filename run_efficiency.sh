@@ -16,14 +16,18 @@ read -r -a GPUS <<< "${GPUS:-0 1}"
 BUDGETS=${BUDGETS:-1024,2048,3072,4096,5120}
 NUM_IMAGES=${NUM_IMAGES:-51}
 LAMS=${LAMS:-1024:0.5666,2048:0.3794,3072:0.1922,4096:0.1922,5120:0.1922}
+LAMS_BY_DS=${LAMS_BY_DS:-}          # 每個資料集各自的 λ，例 "docvqa=1536:0.5666;infovqa=1536:0.3794"；有給的資料集覆蓋 LAMS
+MODEL=${MODEL:-OpenGVLab/InternVL3_5-8B}
 OUT=${OUT:-results/efficiency}
 LOG=${LOG_DIR:-logs/efficiency}
 mkdir -p "$OUT" "$LOG"
 
 run_ds() {   # $1 dataset
-    echo "[$(date '+%m-%d %H:%M')] GPU$CUDA_VISIBLE_DEVICES $1"
-    $PY bench_metrics.py --dataset "$1" --num_images "$NUM_IMAGES" --warmup_images 1 --budgets "$BUDGETS" \
-        --run_fastv --run_sparsevlm --sparsevlm_lams "$LAMS" --run_visionzip --run_ifprune \
+    local lams=$LAMS kv
+    for kv in ${LAMS_BY_DS//;/ }; do [ "${kv%%=*}" = "$1" ] && lams=${kv#*=}; done
+    echo "[$(date '+%m-%d %H:%M')] GPU$CUDA_VISIBLE_DEVICES $1 ($MODEL, λ $lams)"
+    $PY bench_metrics.py --dataset "$1" --model_name "$MODEL" --num_images "$NUM_IMAGES" --warmup_images 1 --budgets "$BUDGETS" \
+        --run_fastv --run_sparsevlm --sparsevlm_lams "$lams" --run_visionzip --run_ifprune \
         --out_csv "$OUT/metrics_$1.csv" > "$LOG/$1.log" 2>&1 || echo "  [error] $1，看 $LOG/$1.log"
 }
 run_shard() {   # $1 shard index $2 shard 數

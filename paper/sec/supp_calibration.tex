@@ -1,0 +1,130 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Supplementary: calibration protocol. Condensed from docs/04_calibration_protocol.md (full record, every number from there).
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Calibration protocol}
+\label{sec:calibration}
+
+Apart from the attention layers, all hyperparameters of \method were set on two held-out calibration sets. Apart from choosing those layers, the test sets were used only to report results and to diagnose errors; any change suggested by a diagnosis had to pass on the calibration sets first.
+
+\paragraph{Calibration sets.}
+\emph{InfoVQA train} consists of 600 questions sampled with a fixed seed from the train split (ANLS).
+\emph{MME-RW calib} is drawn from the full English MME-RealWorld (23,609 questions): we remove the questions of
+the Lite subset (1,787) and all other questions on its images (2,654), and sample 120 of the remaining 19,168
+questions from each of the five subtasks (accuracy, 600 questions). The result shares no questions and no images with the Lite test set.
+DocVQA has no train split with answers, so InfoVQA train also represents documents.
+
+\paragraph{Metrics.}
+Retention is the score divided by the uncompressed score on the same set (83.9 and 59.5). We report its average
+over the two sets and its worst value over six groups (InfoVQA and the five subtasks). TTFT is the median over 50
+images after one warm-up image, with one process per GPU. Comparisons use a paired bootstrap on the same questions
+with 2,000 resamples (4,000 in the candidate tests) at 95\% confidence.
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{l ccccc c}
+    \toprule
+    $m$ & 1024 & 1536 & 2048 & 2560 & 3072 & Mean \\
+    \midrule
+    $1$ & 57.9 & 61.2 & 63.9 & 65.2 & 68.4 & 63.3 \\
+    $K/2$ & 63.9 & 68.4 & 68.8 & 70.7 & 71.0 & \textbf{68.5} \\
+    $3K/4$ & 65.2 & 67.6 & 68.3 & 70.0 & 70.9 & 68.4 \\
+    $K$ & 63.5 & 68.8 & 69.1 & 70.1 & 71.8 & 68.6 \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Stage A: coverage fraction.} Score averaged over the two calibration sets, per budget $B$.}
+  \label{tab:calib_m}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{2pt}
+  \begin{tabular}{l ccc ccc ccc}
+    \toprule
+    & \multicolumn{3}{c}{$m=K/2$} & \multicolumn{3}{c}{$m=3K/4$} & \multicolumn{3}{c}{$m=K$} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+    $B$ & Avg. & Min & TTFT & Avg. & Min & TTFT & Avg. & Min & TTFT \\
+    \midrule
+    1024 & 89.7 & 76 & 0.90 & 91.2 & 77 & 0.69 & 88.5 & 80 & 0.40 \\
+    1536 & 95.7 & 85 & 0.99 & 94.3 & 72 & 0.89 & 96.2 & 86 & 0.45 \\
+    2048 & 95.9 & 85 & 1.08 & 95.5 & 72 & 1.00 & 96.0 & 74 & 0.56 \\
+    2560 & 98.9 & 94 & 1.19 & 97.9 & 82 & 1.15 & 97.7 & 69 & 0.69 \\
+    3072 & 99.3 & 86 & 1.41 & 99.1 & 83 & 1.32 & 100.1 & 78 & 0.80 \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Retention (\%) and TTFT (s)} for the three plausible coverage fractions, before the window was calibrated. Avg.: average over the two sets. Min: worst of the six groups.}
+  \label{tab:calib_ret}
+\end{table}
+
+\paragraph{Stage A: coverage fraction and default budget.}
+We swept $m\in\{1,K/4,K/2,3K/4,K\}$ with a provisional window. Using only the thumbnail ($m=1$) loses about 5
+points at every budget (\cref{tab:calib_m}), while $m/K$ from 0.5 to 1 forms a plateau whose differences are mostly not significant.
+Since the averages tie, we chose by stability: $m=K/2$ has the most stable worst-group retention (\cref{tab:calib_ret}). We set
+$B=1536$ as the default because retention saturates there (90\% at $B=1024$, 96\% at $B=1536$, no further gain at $B=2048$).
+Pure coverage ($m=K$) is about twice as fast and is reported as an ablation.
+
+\begin{table*}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{l c c c c}
+    \toprule
+    $B$ & $S$ & Avg.\ retention (\%) & Worst group (\%) & TTFT (s) \\
+    \midrule
+    1024 & 0 / \textbf{5} / 10 / 15 / 20 & 85.9 / \textbf{89.6} / 89.7 / 88.6 / 89.3 & 61.5 / \textbf{77.7} / 75.5 / 73.8 / 73.8 & 0.43 / \textbf{0.67} / 0.89 / 1.12 / 1.35 \\
+    1536 & 0 / \textbf{4} / 9 / 13 / 18 & 93.2 / \textbf{95.6} / 95.7 / 95.5 / 94.5 & 80.0 / \textbf{85.1} / 84.6 / 89.2 / 78.5 & 0.58 / \textbf{0.77} / 0.99 / 1.18 / 1.41 \\
+    2048 & 0 / \textbf{4} / 8 / 12 / 16 & 95.1 / \textbf{96.7} / 95.9 / 95.5 / 96.2 & 75.4 / \textbf{84.6} / 84.6 / 81.5 / 83.1 & 0.72 / \textbf{0.92} / 1.08 / 1.26 / 1.45 \\
+    2560 & 0 / \textbf{3} / 7 / 10 / 14 & 97.7 / \textbf{98.8} / 98.9 / 97.5 / 97.5 & 89.2 / \textbf{93.6} / 93.8 / 83.1 / 80.0 & 0.86 / \textbf{1.02} / 1.19 / 1.30 / 1.48 \\
+    3072 & 0 / \textbf{3} / 7 / 10 / 14 & 98.5 / \textbf{98.2} / 99.3 / 98.3 / 100.3 & 86.2 / \textbf{86.2} / 86.2 / 86.2 / 89.2 & 1.05 / \textbf{1.23} / 1.41 / 1.53 / 1.72 \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Stage B: scoring window} with $m=\lfloor K/2\rfloor$. The adopted value of $S$ is in bold.}
+  \label{tab:calib_s}
+\end{table*}
+
+\paragraph{Stage B: scoring window.}
+We fixed $m=\lfloor K/2\rfloor$ and swept $S\in\{0,S_0/2,S_0,1.5S_0,2S_0\}$, where $S_0$ is the provisional window
+(\cref{tab:calib_s}). Removing the window ($S=0$) is significantly worse on local-detail questions, \eg $-$10.8
+points [$-$18, $-$4] on Remote Sensing at $B=1024$ and $1536$. Larger windows bring no reliable gain and add TTFT.
+
+\paragraph{Attention layers.}
+The layers $\mathcal{L}_p=\{21,\dots,28\}$ and $l_q=20$ were chosen on InfoVQA val before this protocol existed, and
+InfoVQA val is also a test set. They were not re-selected on the calibration sets. For the 4B and 14B models they are mapped by
+relative depth, by a rule fixed before those models were run.
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{>{\raggedright\arraybackslash}p{0.33\linewidth} >{\raggedright\arraybackslash}p{0.57\linewidth}}
+    \toprule
+    Candidate & Result on the calibration sets \\
+    \midrule
+    Window grows with the grid & No $f\in\{0.2,\dots,0.5\}$ passes all criteria; local-detail $\Delta$ at $f=0.2$: +0.67 [$-$0.44, +1.78] \\
+    Question-stem query, top-patch aggregation & Worse on local detail for all eight variants, \eg $-$3.33 for the stem query \\
+    Options sorted before scoring & Local detail $-$0.19 [$-$0.93, +0.46]; retention $-$0.56 at $B=1536$, misses the limit of $-$0.5 \\
+    Attention-head selection, question-free correction & Recall +4.2 on a synthetic set, but retention $-$1.60, $-$0.83, $-$0.85; local detail $-$2.22 [$-$4.35, $-$0.09] \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Rejected candidates.} All were tested with the criteria below, and each decision used only the calibration sets.}
+  \label{tab:calib_rej}
+\end{table}
+
+\paragraph{Rejected candidates.}
+Diagnosing errors on the test sets suggested the four changes in \cref{tab:calib_rej}. Before each test we fixed three
+criteria: average retention at most 0.5 points below the frozen configuration at every budget, a significant gain on the
+local-detail questions of MME-RW (Remote Sensing, Monitoring, Autonomous Driving; 360 questions), and at most
+0.3\,s of added TTFT at $B=1536$. None of the candidates passed its criteria, so we kept the configuration as frozen.
+
+\paragraph{Deviations from the pre-registered rules.}
+\begin{enumerate}
+  \item The rule for Stage B selected $S=\{5,13,4,3,14\}$: the smallest $S$ within one point of the best average and
+        worst-group retention. Each MME-RW group has only 120 questions, so the rule was driven by noise, and the
+        differences to $S_0/2$ are not significant. We therefore used $S_0/2$ at every budget.
+  \item The sweep of the growing window added $f=0.2$, since larger $f$ is very costly on MME-RW. The criteria did not change.
+  \item Sorted options were added after the results of the other query variants were known. The criteria did not change, and the candidate was rejected.
+  \item An earlier configuration had its window table and coverage fraction tuned on test data. We discarded it and
+        recalibrated as described here.
+\end{enumerate}

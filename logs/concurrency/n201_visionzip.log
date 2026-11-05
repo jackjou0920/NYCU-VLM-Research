@@ -1,0 +1,21 @@
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 98.23it/s]
+model=OpenGVLab/InternVL3_5-8B method=visionzip max_num=201 B=1536  weights=17.06 GB  free=32.75 GB
+prompt_mode: letter
+[load_hrbench] DreamMr/HR-Bench:hrbench_8k (prompt_mode=letter) -> kept 11, skipped 0 (no image)
+  10 requests resident, allocated=19.51 GB
+  20 requests resident, allocated=21.90 GB
+  30 requests resident, allocated=24.30 GB
+  40 requests resident, allocated=26.70 GB
+  50 requests resident, allocated=29.10 GB
+  60 requests resident, allocated=31.50 GB
+  70 requests resident, allocated=33.90 GB
+  80 requests resident, allocated=36.30 GB
+  90 requests resident, allocated=38.70 GB
+  100 requests resident, allocated=41.10 GB
+  110 requests resident, allocated=43.50 GB
+  120 requests resident, allocated=45.90 GB
+  130 requests resident, allocated=48.30 GB
+[visionzip max_num=201] n_requests=130 (OOM), kv/req=0.240 GB, 341s
+[saved] results/concurrency/n201_visionzip.csv

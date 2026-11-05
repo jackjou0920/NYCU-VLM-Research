@@ -12,7 +12,7 @@
   paper/figures/fig_scaling.pdf  Fig：TTFT / 記憶體 vs tile 數（HR-Bench 8K，b1536）
   results/paper/main_6ds.csv     所有數字（含 4B / 14B）
 """
-import csv, json, os, statistics as st, sys
+import csv, glob, json, os, statistics as st, sys
 from collections import defaultdict
 
 sys.path.insert(0, ".")
@@ -176,15 +176,12 @@ def tab_main():
                   f"{color}    & {row2} & {drop} & " + " & ".join(f"\\multirow{{-2}}{{*}}{{{c}}}" for c in costs) + " \\\\"]
     L += ["    \\bottomrule", "  \\end{tabular}",
           "  \\caption{\\textbf{Accuracy and cost on InternVL3.5-8B.} For each method, the first row is the score on "
-          "each benchmark (ANLS for DocVQA and InfoVQA, CircularEval accuracy for HR-Bench, accuracy otherwise) and "
-          "the second row is its percentage of the uncompressed model; Avg.\\ is the mean percentage over the five "
-          "benchmarks. HR-Bench 8K is reported separately in \\cref{tab:hr8k}. Cost is reported as the saving relative to the uncompressed model (higher is better) in "
-          "median time to first token, peak memory on top of the model weights, and prefill FLOPs, averaged over "
-          "the five benchmarks (absolute values in the supplementary material); IF-Prune uses \\emph{more} memory "
-          "than the uncompressed model because of its guide model. $^{\\uparrow}$/$^{\\downarrow}$: \\method is "
-          "significantly better/worse than the strongest baseline on that benchmark (paired bootstrap, 95\\%); "
-          "unmarked differences are not significant. Best compressed result per budget in \\textbf{bold}, second "
-          "\\underline{underlined}.}",
+          "each benchmark and the second its percentage of the uncompressed model; Avg.\\ is the mean percentage. "
+          "HR-Bench 8K is in \\cref{tab:hr8k}. Cost is the saving relative to the uncompressed model (higher is "
+          "better), averaged over the five benchmarks. "
+          "$^{\\uparrow}$/$^{\\downarrow}$: \\method is significantly better/worse than the strongest baseline on "
+          "that benchmark (paired bootstrap, 95\\%); unmarked differences are not significant. Best compressed "
+          "result per budget in \\textbf{bold}, second \\underline{underlined}.}",
           "  \\label{tab:main}", "\\end{table*}"]
     open(f"{OUT_TAB}/tab_main.tex", "w").write("\n".join(L) + "\n")
 
@@ -459,11 +456,10 @@ def tab_ablation():
         color = "    \\rowcolor{oursbg}\n" if ours else ""
         L.append(f"{color}    {name} & " + " & ".join(cells) + " \\\\")
     L += ["    \\bottomrule", "  \\end{tabular}",
-          "  \\caption{\\textbf{Ablations} on the held-out calibration sets (Info: InfoVQA train; MME: MME-RealWorld "
-          "without its Lite subset; 600 questions each), as a percentage of the uncompressed score, averaged over "
-          "$B\\in\\{1024,1536,2048,2560,3072\\}$. Local: MME-RealWorld remote sensing, monitoring, and autonomous "
-          "driving, where answers depend on small regions. Worst: lowest percentage among InfoVQA and the five "
-          "MME-RealWorld subtasks, averaged over budgets. Window sizes are relative to the default $S$; TTFT in seconds.}",
+          "  \\caption{\\textbf{Ablations} on the held-out calibration sets of \\cref{sec:impl} (Info, MME), as a "
+          "percentage of the uncompressed score. Local: MME-RealWorld remote sensing, monitoring, and autonomous "
+          "driving. Worst: lowest percentage among InfoVQA and the five MME-RealWorld subtasks. Window sizes are "
+          "relative to the default $S$; TTFT in seconds.}",
           "  \\label{tab:ablation}", "\\end{table}"]
     open(f"{OUT_TAB}/tab_ablation.tex", "w").write("\n".join(L) + "\n")
 
@@ -481,6 +477,34 @@ def dump_csv():
                     continue
                 w.writerow([model, m, b] + [None if x is None else round(x, 2) for x in s["raw"] + s["ret"]] +
                            [None if s[k] is None else round(s[k], 3) for k in ("avg", "ttft", "mem", "flops")])
+
+
+# ─────────────────────────────── 解析度縮放的成本點 ───────────────────────────────
+A6000_FREE_GB = 50.9 - 17.06     # A6000 可用顯存 − InternVL3.5-8B 權重（docs/03 的換算）
+
+
+def scaling_points(max_nums, budget=DEFAULT_B):
+    """{(method, max_num): {tiles, ttft, mem, kv, conc}} 與 {(method, 'slope'): MB/tile}。
+    conc = 一張 A6000 能同時常駐的請求數：有 results/concurrency/ 的實測就用實測，否則估計——請求逐一 prefill，每個請求留下自己的 KV cache，
+    新請求 prefill 時還需要它的峰值 → n = floor((free − peak) / kv) + 1。"""
+    out = {}
+    for n in max_nums:
+        for f in glob.glob(f"results/scaling/metrics_n{n}_*.csv"):
+            for r in csv.DictReader(open(f)):
+                m = r["method"]
+                m = "uncompressed" if m == "uncompressed" else m.rsplit("_b", 1)[0]
+                if r["method"] not in ("uncompressed", f"{m}_b{budget}"):
+                    continue
+                peak, kv = float(r["mem_delta_gb_mean"]), float(r["kv_cache_mb_mean"]) / 1024
+                out[(m, n)] = {"tiles": float(r["raw_tiles_mean"]), "ttft": float(r["ttft_s_median"]), "mem": peak,
+                               "kv": kv, "conc": int((A6000_FREE_GB - peak) / kv) + 1}
+                cf = f"results/concurrency/n{n}_{m}.csv"      # 有實測（bench_concurrency.py）就用實測
+                if os.path.exists(cf):
+                    out[(m, n)]["conc"] = int(next(csv.DictReader(open(cf)))["n_requests"])
+    for m in {k[0] for k in out}:
+        a, b = out[(m, max_nums[0])], out[(m, max_nums[-1])]
+        out[(m, "slope")] = max(0.0, (b["mem"] - a["mem"]) / (b["tiles"] - a["tiles"]) * 1000)
+    return out
 
 
 # ─────────────────────────────── 圖 ───────────────────────────────
@@ -526,33 +550,47 @@ def figures():
     fig.savefig(f"{OUT_FIG}/fig_pareto.png", dpi=400, bbox_inches="tight", pad_inches=0.01)
     plt.close(fig)
 
-    # 解析度縮放：HR-Bench 8K，b1536
-    summ = json.load(open("results/scaling/summary.json"))
+    # 解析度縮放：HR-Bench 8K，b1536（單欄 2x2：TTFT、記憶體、每張 GPU 可同時服務的請求數、圖例）
     max_nums = [7, 25, 97, 145, 201]
-    tiles = [int(float(summ[f"{n}|foveatile"]["raw_tiles_mean"])) for n in max_nums]
-    fig, axes = plt.subplots(1, 2, figsize=(3.4, 1.6))
-    for ax, col, yl in [(axes[0], "ttft_s_median", "TTFT (s)"), (axes[1], "mem_delta_gb_mean", "Memory increase (GB)")]:
-        for m, lab, c, mk in reversed(STY + [("uncompressed", "Uncompressed", "#444444", "X")]):
-            ys = [float(summ[f"{n}|{m}"][col]) for n in max_nums]
+    scal = scaling_points(max_nums)
+    tiles = [int(scal[("foveatile", n)]["tiles"]) for n in max_nums]
+    ALL = STY + [("uncompressed", "Uncompressed", "#444444", "X")]
+    fig, grid = plt.subplots(2, 2, figsize=(3.4, 2.75))
+    axes, leg_ax = [grid[0, 0], grid[0, 1], grid[1, 0]], grid[1, 1]
+    panels = [("ttft", "TTFT (s)"), ("mem", "Memory increase (GB)"), ("conc", "Requests per GPU")]
+    for ax, (key, yl) in zip(axes, panels):
+        for m, lab, c, mk in reversed(ALL):
+            ys = [scal[(m, n)][key] for n in max_nums]
             ours = m == "foveatile"
+            if key == "mem":                      # 圖例標出每多一塊 tile 增加的記憶體
+                lab = f"{lab}\n(+{scal[(m, 'slope')]:.0f} MB / tile)"
             ax.plot(tiles, ys, color=c, marker=mk, ms=2.6 if not ours else 3.2, lw=1.4 if ours else 0.9,
                     ls="--" if m == "uncompressed" else "-", label=lab, zorder=3 if ours else 2)
-        top, ours_y = float(summ[f"201|uncompressed"][col]), float(summ[f"201|foveatile"][col])
-        frac = 0.5 if col.startswith("ttft") else 0.28        # 記憶體面板：避開 188 塊附近的 baseline 線
-        ax.annotate(f"{top / ours_y:.0f}$\\times$", (tiles[-1], ours_y + frac * (top - ours_y)), xytext=(-3, 0),
-                    textcoords="offset points", ha="right", va="center", fontsize=6, color="#2a6fdb", fontweight="bold")
-        ax.annotate("", xy=(tiles[-1], top), xytext=(tiles[-1], ours_y),
-                    arrowprops=dict(arrowstyle="<->", color="#2a6fdb", lw=0.7, shrinkA=3, shrinkB=3))
+        top, ours_y = scal[("uncompressed", 201)][key], scal[("foveatile", 201)][key]
+        if key != "conc":
+            frac = 0.5 if key == "ttft" else 0.28
+            ax.annotate(f"{top / ours_y:.0f}$\\times$", (tiles[-1], ours_y + frac * (top - ours_y)), xytext=(-3, 0),
+                        textcoords="offset points", ha="right", va="center", fontsize=5.6, color="#2a6fdb",
+                        fontweight="bold")
+            ax.annotate("", xy=(tiles[-1], top), xytext=(tiles[-1], ours_y),
+                        arrowprops=dict(arrowstyle="<->", color="#2a6fdb", lw=0.7, shrinkA=3, shrinkB=3))
+        else:
+            fv = scal[("fastv", 201)][key]
+            ax.annotate(f"{ours_y / fv:.1f}$\\times$ FastV\n{ours_y / top:.0f}$\\times$ uncomp.", (tiles[-1], ours_y),
+                        xytext=(-3, -9), textcoords="offset points", ha="right", va="top", fontsize=5.3,
+                        color="#2a6fdb", fontweight="bold")
         ax.set_xticks(tiles); ax.set_xticklabels([str(t) for t in tiles])
-        ax.set_xlabel("Tiles per image $N$ (HR-Bench 8K)", fontsize=6)
-        ax.set_ylabel(yl, fontsize=6)
+        ax.set_xlabel("Tiles per image $N$", fontsize=5.6, labelpad=1)
+        ax.set_ylabel(yl, fontsize=5.6, labelpad=1)
         ax.grid(color="#eeeeee", lw=0.5)
-        ax.tick_params(labelsize=5.5, length=2)
-    h, l = axes[0].get_legend_handles_labels()
-    order = [l.index(x) for x in ["FoveaTile (ours)", "IF-Prune", "FastV", "SparseVLM", "VisionZip", "Uncompressed"]]
-    fig.legend([h[i] for i in order], [l[i] for i in order], loc="upper center", ncol=3, frameon=False,
-               fontsize=5.4, bbox_to_anchor=(0.53, 1.15), handlelength=1.6, columnspacing=1.0)
-    fig.tight_layout(pad=0.2, w_pad=0.8)
+        ax.tick_params(labelsize=5, length=2, pad=1.5)
+    h, l = axes[1].get_legend_handles_labels()
+    names = ["FoveaTile (ours)", "IF-Prune", "FastV", "SparseVLM", "VisionZip", "Uncompressed"]
+    order = [next(i for i, x in enumerate(l) if x.startswith(n)) for n in names]
+    leg_ax.axis("off")
+    leg_ax.legend([h[i] for i in order], [l[i] for i in order], loc="center", ncol=1, frameon=False,
+                  fontsize=5.2, handlelength=1.8, labelspacing=0.55, borderaxespad=0)
+    fig.tight_layout(pad=0.2, w_pad=0.6, h_pad=0.6)
     fig.savefig(f"{OUT_FIG}/fig_scaling.pdf", bbox_inches="tight", pad_inches=0.01)
     fig.savefig(f"{OUT_FIG}/fig_scaling.png", dpi=400, bbox_inches="tight", pad_inches=0.01)
     plt.close(fig)

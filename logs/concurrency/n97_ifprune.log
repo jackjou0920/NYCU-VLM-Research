@@ -1,0 +1,20 @@
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 99.53it/s]
+/home/jackjou/.virtualenvs/vlm/lib/python3.12/site-packages/timm/models/layers/__init__.py:49: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+[IF-Prune] loading small VLM skeleton from OpenGVLab/InternVL2_5-1B ...
+[IF-Prune] loading IF-Prune weights from ZachSun/internvl2_5_1b_pruning_kl_lora32 ...
+[IF-Prune] attached 168 LoRA modules (scale=2, unmerged)
+model=OpenGVLab/InternVL3_5-8B method=ifprune max_num=97 B=1536  weights=18.99 GB  free=30.78 GB
+prompt_mode: letter
+[load_hrbench] DreamMr/HR-Bench:hrbench_8k (prompt_mode=letter) -> kept 11, skipped 0 (no image)
+  10 requests resident, allocated=22.97 GB
+  20 requests resident, allocated=26.89 GB
+  30 requests resident, allocated=30.81 GB
+  40 requests resident, allocated=34.74 GB
+  50 requests resident, allocated=38.65 GB
+  60 requests resident, allocated=42.57 GB
+  70 requests resident, allocated=46.50 GB
+[ifprune max_num=97] n_requests=70 (OOM), kv/req=0.391 GB, 207s
+[saved] results/concurrency/n97_ifprune.csv

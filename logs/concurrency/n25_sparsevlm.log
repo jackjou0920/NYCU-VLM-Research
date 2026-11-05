@@ -1,0 +1,15 @@
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 99.19it/s]
+model=OpenGVLab/InternVL3_5-8B method=sparsevlm max_num=25 B=1536  weights=17.06 GB  free=32.75 GB
+prompt_mode: letter
+[load_hrbench] DreamMr/HR-Bench:hrbench_8k (prompt_mode=letter) -> kept 11, skipped 0 (no image)
+  10 requests resident, allocated=21.07 GB
+  20 requests resident, allocated=25.03 GB
+  30 requests resident, allocated=28.99 GB
+  40 requests resident, allocated=32.95 GB
+  50 requests resident, allocated=36.92 GB
+  60 requests resident, allocated=40.88 GB
+  70 requests resident, allocated=44.83 GB
+[sparsevlm max_num=25] n_requests=73 (OOM), kv/req=0.394 GB, 68s
+[saved] results/concurrency/n25_sparsevlm.csv
