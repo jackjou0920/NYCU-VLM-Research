@@ -1,0 +1,2303 @@
+[load_vstar] 191 題（/home/jackjou/datasets/vstar_bench/test_questions.jsonl）
+[FoveaTile] budget=3072  K=12  m=12  S=0
+[foveatile_b3072_m12] vstar: 191 題，從第 1 題開始 → results/runs_lowres/vstar/coverage_b3072_InternVL3_5-8B.json
+Loading tokenizer from OpenGVLab/InternVL3_5-8B ...
+Loading model from OpenGVLab/InternVL3_5-8B ...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 83.23it/s]
+model loaded in 5.7s, peak alloc 17.06 GB
+
+================================================================================
+[Image 0] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 0] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [1~4/191]] time=4.39 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the material of the glove?
+  A: A
+  Q: What is the color of the dustpan?
+  A: C
+  Q: What kind of animal is in the poster?
+  A: A
+  Q: What is the color of the woman's scarf?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 444.1 MB (3158 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 2] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 444.0 MB (3157 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [5~8/191]] time=3.98 sec  peak_allocated=17.548 GB  peak_reserved=18.061 GB
+  Q: What is the pose of the woman with yellow backpack?
+  A: C
+  Q: What is the color of the cart?
+  A: D
+  Q: What is the color of the candles?
+  A: B
+  Q: What is the color of the Apple logo?
+  A: A
+
+================================================================================
+[Image 0] detail=(5, 3) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/27
+[Image 0] raw=27 tiles -> KV=12 tiles / 3072 tokens; dropped=15; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 2] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 3] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [9~12/191]] time=4.01 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the plastic stool?
+  A: B
+  Q: What is the color of the tissue box?
+  A: D
+  Q: What is the color of the man's helmet?
+  A: C
+  Q: What is the color of the woman's shirt?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 444.2 MB (3159 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [13~16/191]] time=3.99 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the slippers?
+  A: C
+  Q: What is the color of the cart?
+  A: A
+  Q: What is the cartoon character on the clock.
+  A: B
+  Q: What is the color of the suitcase?
+  A: C
+
+================================================================================
+[Image 0] detail=(5, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/32
+[Image 0] raw=32 tiles -> KV=12 tiles / 3072 tokens; dropped=20; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 444.0 MB (3157 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/47
+[Image 2] raw=47 tiles -> KV=12 tiles / 3072 tokens; dropped=35; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [17~20/191]] time=4.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the little girl's shirt?
+  A: B
+  Q: What is the color of the bicycle?
+  A: D
+  Q: What is the material of the stool?
+  A: C
+  Q: What is the color of the bucket?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(8, 4) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/44
+[Image 1] raw=44 tiles -> KV=12 tiles / 3072 tokens; dropped=32; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 3] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 444.2 MB (3159 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [21~24/191]] time=3.99 sec  peak_allocated=17.549 GB  peak_reserved=18.061 GB
+  Q: What is the color of the shovel?
+  A: C
+  Q: What kind of animal is on the blue sail?
+  A: D
+  Q: What is the color of the SUV car?
+  A: C
+  Q: What is the color of the pink-haired woman's handbag?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 3] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [25~28/191]] time=4.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the car?
+  A: B
+  Q: What is the color of the bicycle?
+  A: C
+  Q: What is the color of the parachute?
+  A: B
+  Q: What is the color of the motorcycle?
+  A: B
+
+================================================================================
+[Image 0] detail=(0, 0) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 0] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(0, 0) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 1] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [29~32/191]] time=4.02 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the woman's jacket?
+  A: C
+  Q: What is the color of the man's cap?
+  A: D
+  Q: What is the color of the pet collar?
+  A: A
+  Q: What is the color of the telephone?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 6) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/54
+[Image 1] raw=54 tiles -> KV=12 tiles / 3072 tokens; dropped=42; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [33~36/191]] time=4.03 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the water bottle?
+  A: B
+  Q: What is the color of the man's cap?
+  A: C
+  Q: What is the color of the helmet?
+  A: C
+  Q: What is the color of the woman's bikini?
+  A: C
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 442.7 MB (3148 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [37~40/191]] time=4.00 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the flower?
+  A: D
+  Q: What is the color of the clock?
+  A: A
+  Q: Is the color of the motorcycle orange or green?
+  A: B
+  Q: What is the color of the bag?
+  A: C
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 442.7 MB (3148 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(8, 3) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [41~44/191]] time=4.02 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the color of the motorcycle red or blue?
+  A: B
+  Q: What is the color of the man's cap?
+  A: A
+  Q: What is the color of the van?
+  A: B
+  Q: What is the color of the car?
+  A: B
+
+================================================================================
+[Image 0] detail=(8, 4) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/44
+[Image 0] raw=44 tiles -> KV=12 tiles / 3072 tokens; dropped=32; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [45~48/191]] time=4.01 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the toothbrush?
+  A: A
+  Q: What is the color of the handbag?
+  A: B
+  Q: What is the color of the man's cap?
+  A: A
+  Q: What is the color of the fire hydrant?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [49~52/191]] time=4.03 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the seesaw?
+  A: B
+  Q: What is the color of the plastic stool?
+  A: D
+  Q: What is the color of the motorcycle helmet?
+  A: A
+  Q: What is the color of the helmet?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [53~56/191]] time=4.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the luggage?
+  A: A
+  Q: What is the color of the trash can?
+  A: C
+  Q: What is the color of the scooter?
+  A: A
+  Q: What is the color of the dress?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 2] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 444.7 MB (3162 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 444.9 MB (3164 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.02 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [57~60/191]] time=4.01 sec  peak_allocated=17.551 GB  peak_reserved=18.061 GB
+  Q: What is the color of the cyclist's box?
+  A: A
+  Q: What is the color of the bicycle?
+  A: C
+  Q: What is the color of the flag?
+  A: B
+  Q: What is the color of the cyclist's bag?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 444.7 MB (3162 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(12, 3) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/48
+[Image 2] raw=48 tiles -> KV=12 tiles / 3072 tokens; dropped=36; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [61~64/191]] time=4.04 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the breed of the dog?
+  A: D
+  Q: What is the color of the dog?
+  A: A
+  Q: What is the color of the motorcycle?
+  A: D
+  Q: What is the color of the car?
+  A: D
+
+================================================================================
+[Image 0] detail=(5, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/42
+[Image 0] raw=42 tiles -> KV=12 tiles / 3072 tokens; dropped=30; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.0 MB (3150 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 444.0 MB (3157 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [65~68/191]] time=4.04 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Does the kid have curly hair or straight hair?
+  A: B
+  Q: What is the color of the broom?
+  A: B
+  Q: What is the color of the body of the bucket?
+  A: B
+  Q: What is the color of the scarf?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 442.3 MB (3145 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(8, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/52
+[Image 1] raw=52 tiles -> KV=12 tiles / 3072 tokens; dropped=40; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 444.8 MB (3163 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [69~72/191]] time=4.03 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: Is the flag red or white?
+  A: A
+  Q: How many people are in the oil painting?
+  A: D
+  Q: What is the color of the dog?
+  A: B
+  Q: What is the color of the paraglider?
+  A: B
+
+================================================================================
+[Image 0] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 0] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/42
+[Image 1] raw=42 tiles -> KV=12 tiles / 3072 tokens; dropped=30; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [73~76/191]] time=4.00 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the woman's dress?
+  A: D
+  Q: What is the color of the cleaning cloth?
+  A: B
+  Q: What is the color of the umbrella?
+  A: C
+  Q: What is the color of the backpack?
+  A: D
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(0, 0) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 1] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 442.7 MB (3148 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.54 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [77~80/191]] time=4.02 sec  peak_allocated=17.544 GB  peak_reserved=18.061 GB
+  Q: What is the color of the umbrella?
+  A: C
+  Q: What is the color of the baby carriage?
+  A: C
+  Q: What is the color of the watch?
+  A: D
+  Q: Is the color of the bus red or yellow?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(5, 3) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/27
+[Image 3] raw=27 tiles -> KV=12 tiles / 3072 tokens; dropped=15; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [81~84/191]] time=4.03 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the flute?
+  A: D
+  Q: What is the color of the flag?
+  A: C
+  Q: What is the color of the soda can?
+  A: A
+  Q: What is the color of the handbag?
+  A: D
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [85~88/191]] time=4.05 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the straw?
+  A: D
+  Q: What is the color of the bus?
+  A: D
+  Q: What is the color of the trash can?
+  A: B
+  Q: What is the color of the guard's glove?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 444.0 MB (3157 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(8, 4) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/44
+[Image 3] raw=44 tiles -> KV=12 tiles / 3072 tokens; dropped=32; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [89~92/191]] time=4.03 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the comb?
+  A: C
+  Q: What is the color of the electric rickshaw?
+  A: D
+  Q: What is the color of the truck?
+  A: C
+  Q: What is the color of the chair?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(9, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/57
+[Image 1] raw=57 tiles -> KV=12 tiles / 3072 tokens; dropped=45; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(0, 0) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 3] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [93~96/191]] time=4.01 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the messenger bag?
+  A: D
+  Q: What is the color of the helmet?
+  A: A
+  Q: What is the color of the backpack?
+  A: A
+  Q: What is the color of the watchband?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 442.8 MB (3149 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(8, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/52
+[Image 3] raw=52 tiles -> KV=12 tiles / 3072 tokens; dropped=40; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [97~100/191]] time=4.00 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the bottle cap?
+  A: C
+  Q: What is the color of the umbrella?
+  A: B
+  Q: Does the flag have two or three colors?
+  A: B
+  Q: What is the color of the dog?
+  A: D
+
+================================================================================
+[Image 0] detail=(9, 4) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/48
+[Image 0] raw=48 tiles -> KV=12 tiles / 3072 tokens; dropped=36; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 444.0 MB (3157 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(9, 4) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/48
+[Image 1] raw=48 tiles -> KV=12 tiles / 3072 tokens; dropped=36; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 444.8 MB (3163 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(0, 0) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 3] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [101~104/191]] time=4.02 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the woman's handbag?
+  A: C
+  Q: What is the color of the life buoy?
+  A: B
+  Q: What is the color of the mailbox?
+  A: C
+  Q: What is the color of the lock?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(5, 3) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/27
+[Image 3] raw=27 tiles -> KV=12 tiles / 3072 tokens; dropped=15; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [105~108/191]] time=3.99 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: What is the color of the tent?
+  A: B
+  Q: What is the color of the bottle cap?
+  A: B
+  Q: What is the color of the earring?
+  A: A
+  Q: What is the color of the apples?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [109~112/191]] time=4.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the swim ring?
+  A: D
+  Q: What is the color of the tablecloth?
+  A: A
+  Q: What is the color of the hat?
+  A: D
+  Q: Is the flag blue and yellow or red and yellow?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(9, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/57
+[Image 1] raw=57 tiles -> KV=12 tiles / 3072 tokens; dropped=45; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 442.8 MB (3149 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(9, 4) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/48
+[Image 2] raw=48 tiles -> KV=12 tiles / 3072 tokens; dropped=36; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [113~116/191]] time=4.02 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: What is the color of the bench?
+  A: D
+  Q: Is the color of the plastic bucket black or green?
+  A: A
+  Q: What is the color of the plastic basin?
+  A: C
+  Q: Is the telephone on the left or right side of the hand lamp?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [117~120/191]] time=4.00 sec  peak_allocated=17.545 GB  peak_reserved=18.061 GB
+  Q: Is the red car on the left or right side of the police car?
+  A: A
+  Q: Is the drum on the left or right side of the yellow balloon?
+  A: A
+  Q: Is the motorcycle on the left or right side of the dog?
+  A: A
+  Q: Is the cyclist on the left or right side of the sculpture?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 442.5 MB (3147 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [121~124/191]] time=4.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the baby stroller on the left or right side of the person in orange?
+  A: A
+  Q: Is the red backpack on the left or right side of the clock?
+  A: A
+  Q: Is the bell above or below the clock?
+  A: A
+  Q: Is the orange luggage on the left or right side of the purple umbrella?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/47
+[Image 1] raw=47 tiles -> KV=12 tiles / 3072 tokens; dropped=35; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 442.8 MB (3149 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(8, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/44
+[Image 3] raw=44 tiles -> KV=12 tiles / 3072 tokens; dropped=32; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [125~128/191]] time=4.00 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the dog on the left or right side of the golden tower?
+  A: A
+  Q: Is the shark doll above or below the banana doll?
+  A: B
+  Q: Is the trash can on the left or right side of the baby carriage?
+  A: B
+  Q: Is the seesaw on the left or right side of the red vehicle?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(5, 7) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/47
+[Image 2] raw=47 tiles -> KV=12 tiles / 3072 tokens; dropped=35; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [129~132/191]] time=4.03 sec  peak_allocated=17.545 GB  peak_reserved=18.061 GB
+  Q: Is the umbrella on the left or right side of the traffic light?
+  A: B
+  Q: Is the cyclist on the left or right side of the woman's handbag?
+  A: B
+  Q: Is the wristband on the left or right side of the dog?
+  A: B
+  Q: Is the dog on the left or right side of the train?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 3] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [133~136/191]] time=4.02 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: Is the soccer ball on the left or right side of the water dispenser?
+  A: B
+  Q: Is the dog on the left or right side of the scooter?
+  A: B
+  Q: Is the trash can on the left or right side of the black chair?
+  A: A
+  Q: Is the person with white trousers on the left or right side of the person in blue?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [137~140/191]] time=4.02 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the dog on the left or right side of the river?
+  A: B
+  Q: Is the blue bench on the left or right side of the green door?
+  A: A
+  Q: Is the dog on the left or right side of the bicycle?
+  A: A
+  Q: Is the blue truck on the left or right side of the white vehicle?
+  A: B
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [141~144/191]] time=4.03 sec  peak_allocated=17.547 GB  peak_reserved=18.061 GB
+  Q: Is the bucket on the left or right side of the plunger?
+  A: B
+  Q: Is the green statue on the left or right side of the white statue?
+  A: A
+  Q: Is the man with green shorts on the left or right side of the blue boat?
+  A: B
+  Q: Is the man with yellow cap on the left or right side of the lamp post?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [145~148/191]] time=4.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the green handbag on the left or right side of the blue umbrella?
+  A: B
+  Q: Is the shopping cart on the left or right side of the dog?
+  A: A
+  Q: Is the switch on the left or right side of the towel?
+  A: B
+  Q: Is the silver vehicle on the left or right side of the red vehicle?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [149~152/191]] time=4.00 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the shovel on the left or right side of the house?
+  A: A
+  Q: Is the yellow trash can on the left or right side of the motorcycle?
+  A: B
+  Q: Is the suitcase on the left or right side of the river?
+  A: B
+  Q: Is the red chair on the left or right side of the road?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(10, 3) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/42
+[Image 1] raw=42 tiles -> KV=12 tiles / 3072 tokens; dropped=30; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [153~156/191]] time=4.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the bowl on the left or right side of the faucet?
+  A: B
+  Q: Is the white truck on the left or right side of the red truck?
+  A: A
+  Q: Is the pillar box on the left or right side of the telephone booth?
+  A: B
+  Q: Is the motorcyclist on the left or right side of the truck?
+  A: A
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(7, 3) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/33
+[Image 1] raw=33 tiles -> KV=12 tiles / 3072 tokens; dropped=21; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.7 MB (3155 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [157~160/191]] time=4.02 sec  peak_allocated=17.545 GB  peak_reserved=18.061 GB
+  Q: Is the baby carriage on the left or right side of the cone?
+  A: B
+  Q: Is the sky wheel on the left or right side of the person on the horse?
+  A: B
+  Q: Is the pillar box on the left or right side of the man with the cane?
+  A: B
+  Q: Is the motorcycle on the left or right side of the street?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 444.1 MB (3158 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 444.0 MB (3157 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [161~164/191]] time=4.02 sec  peak_allocated=17.548 GB  peak_reserved=18.061 GB
+  Q: Is the blue luggage on the left or right side of the bus?
+  A: B
+  Q: Is the small red car on the left or right side of the baby carriage?
+  A: A
+  Q: Is the woman with a backpack on the left or right side of the person with a beanie?
+  A: B
+  Q: Is the kid with black shirt on the left or right side of the kid with blue shirt?
+  A: B
+
+================================================================================
+[Image 0] detail=(7, 3) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/33
+[Image 0] raw=33 tiles -> KV=12 tiles / 3072 tokens; dropped=21; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [165~168/191]] time=4.00 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the yellow car on the left or right side of the pool?
+  A: A
+  Q: Is the green bucket on the left or right side of the red tent?
+  A: B
+  Q: Is the blue bottle on the left or right side of the carton?
+  A: B
+  Q: Is the wheelchair on the left or right side of the lamp post?
+  A: B
+
+================================================================================
+[Image 0] detail=(4, 6) cover=(3, 4) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [169~172/191]] time=4.02 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the dog on the left or right side of the blue bicycle?
+  A: B
+  Q: Is the keyboard on the left or right side of the guitar?
+  A: A
+  Q: Is the dog on the left or right side of the crosswalk?
+  A: A
+  Q: Is the vehicle on the left or right side of the blue umbrella?
+  A: B
+
+================================================================================
+[Image 0] detail=(5, 3) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/27
+[Image 0] raw=27 tiles -> KV=12 tiles / 3072 tokens; dropped=15; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 2] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [173~176/191]] time=4.02 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the steel ladder on the left or right side of the wagon?
+  A: A
+  Q: Is the red vehicle on the left or right side of the sculpture?
+  A: B
+  Q: Is the slide on the left or right side of the life buoy?
+  A: B
+  Q: Is the green surfboard on the left or right side of the purple umbrella?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(9, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/57
+[Image 1] raw=57 tiles -> KV=12 tiles / 3072 tokens; dropped=45; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(7, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/40
+[Image 2] raw=40 tiles -> KV=12 tiles / 3072 tokens; dropped=28; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(9, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/57
+[Image 3] raw=57 tiles -> KV=12 tiles / 3072 tokens; dropped=45; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [177~180/191]] time=3.98 sec  peak_allocated=17.545 GB  peak_reserved=18.061 GB
+  Q: Is the broom on the left or right side of the folded chair?
+  A: B
+  Q: Is the soccer ball on the left or right side of the long bench?
+  A: B
+  Q: Is the baby carriage on the left or right side of the cyclist?
+  A: A
+  Q: Is the bucket on the left or right side of the cyclist?
+  A: B
+
+================================================================================
+[Image 0] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 442.8 MB (3149 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.8 MB (3156 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(0, 0) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/12
+[Image 3] raw=12 tiles -> KV=12 tiles / 3072 tokens; dropped=0; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [181~184/191]] time=4.00 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the telephone booth on the left or right side of the yellow van?
+  A: A
+  Q: Is the red balloon above or below the white balloon?
+  A: B
+  Q: Which one is closer to the camera, the black vehicle or the silver vehicle?
+  A: A
+  Q: Which one is closer to the camera, the water bottle or the vehicle?
+  A: A
+
+================================================================================
+[Image 0] detail=(8, 3) cover=(6, 2) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 0] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.1 MB (3151 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 1] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.5 MB (3154 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 2] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 3] detail=(6, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 3] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/36
+[Image 3] raw=36 tiles -> KV=12 tiles / 3072 tokens; dropped=24; max_resident=0 tiles
+[Image 3] selected_tile_indices=[]
+[Image 3] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [185~188/191]] time=4.00 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the scooter on the left or right side of the cyclist?
+  A: B
+  Q: Is the volleyball on the left or right side of the man with white cap?
+  A: A
+  Q: Is the blue mask on the left or right side of the black mask?
+  A: B
+  Q: Is the street lamp on the left or right side of the blue van?
+  A: A
+
+================================================================================
+[Image 0] detail=(7, 4) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 0] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/40
+[Image 0] raw=40 tiles -> KV=12 tiles / 3072 tokens; dropped=28; max_resident=0 tiles
+[Image 0] selected_tile_indices=[]
+[Image 0] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 1] detail=(8, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 1] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/52
+[Image 1] raw=52 tiles -> KV=12 tiles / 3072 tokens; dropped=40; max_resident=0 tiles
+[Image 1] selected_tile_indices=[]
+[Image 1] KV cache (prompt-only, analytical) = 443.4 MB (3153 tokens x 36 layers)
+
+================================================================================
+[Image 2] detail=(8, 5) cover=(4, 3) budget=3072 S=0
+================================================================================
+[Image 2] boundary S=0 (a=0, b=0): direct=[] window=[] vit_encoded=12/52
+[Image 2] raw=52 tiles -> KV=12 tiles / 3072 tokens; dropped=40; max_resident=0 tiles
+[Image 2] selected_tile_indices=[]
+[Image 2] KV cache (prompt-only, analytical) = 443.2 MB (3152 tokens x 36 layers)
+
+[Peak Memory Breakdown]
+  Prefill            peak= 17.08 GB resting_end= 17.07 GB transient=+ 0.00 GB
+  Vision+OnlineKV    peak= 17.66 GB resting_end= 17.53 GB transient=+ 0.14 GB
+  Decode             peak= 17.55 GB resting_end= 17.53 GB transient=+ 0.01 GB
+  OVERALL            peak= 17.66 GB
+
+[foveatile_b3072_m12 [189~191/191]] time=3.01 sec  peak_allocated=17.546 GB  peak_reserved=18.061 GB
+  Q: Is the yellow umbrella on the left or right side of the pink umbrella?
+  A: A
+  Q: Is the red suitcase on the left or right side of the red stool?
+  A: B
+  Q: Is the white chair on the left or right side of the street?
+  A: A
+
+All done in 237.0s → results/runs_lowres/vstar/coverage_b3072_InternVL3_5-8B.json

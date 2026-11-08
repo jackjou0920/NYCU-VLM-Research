@@ -1,0 +1,23 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Supplementary: same-budget downscaling (docs/06 §9 #2). Tables from results/paper/build_downscale_tables.py.
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Same-budget downscaling}
+\label{sec:supp_downscale}
+
+\input{tables/tab_downscale_full}
+
+\paragraph{Baselines.}
+Both baselines use InternVL3.5-8B with the prompts, decoding, and evaluation of \cref{sec:main}, on the full test
+sets, at $B\in\{1536,2560,3072\}$ with $K=B/256$. \emph{Low-Res} is the official dynamic tiling with the tile cap
+set to $K$ and the thumbnail added as usual, and no compression afterwards. It is the standard way to run InternVL
+at a lower resolution, but the official aspect-ratio grid often cannot use all $K$ tiles, so it uses fewer visual
+tokens than the budget on average (\cref{tab:downscale_full}). At $B=2560$, the grid plus thumbnail exceeds the
+budget by one tile on 41 of 11{,}860 questions. \emph{Low-Res-Fill} is \method with $m=K$: the whole budget goes to
+coverage tiles of the downscaled image, no detail tile is selected, and it uses exactly $B$ visual tokens. It is
+the coverage-only variant of \cref{tab:ablation}, evaluated on the test sets.
+
+\paragraph{Results.}
+\cref{tab:downscale_delta} gives the paired differences. \method is significantly better than Low-Res on InfoVQA,
+MME-RealWorld, and V$^*$ Bench at every budget, and on all six benchmarks at $B=1536$. Against Low-Res-Fill, it is
+ahead on all three small-object benchmarks at every budget, by 2.5 to 8.0 points, and significantly better on
+MME-RealWorld at every budget and on HR-Bench 8K at $B=1536$.

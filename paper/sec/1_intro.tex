@@ -55,9 +55,9 @@ Our contributions are as follows.
         re-scores only the uncertain tiles, and builds the KV cache by streaming. Its vision compute,
         prefill, and KV cache are $\mathcal{O}(K)$ in the budget $K$ and independent of the number of
         tiles.
-  \item On InternVL3.5 and six high-resolution benchmarks, \method keeps 95.0\% of the uncompressed
+  \item On InternVL3.5 and five high-resolution benchmarks, \method keeps 95.0\% of the uncompressed
         accuracy with 5.0$\times$ less memory, and it is the most accurate method under every memory
-        limit. From 7 to 188 tiles its peak memory stays at 0.41\,GB, 20$\times$ less than pruning inside
+        limit. On HR-Bench 8K, from 7 to 188 tiles, its peak memory stays at 0.41\,GB, 20$\times$ less than pruning inside
         the language model, so one GPU serves 3.4$\times$ and 3.3$\times$ more requests than FastV and IF-Prune, respectively, and 41$\times$ more than the uncompressed model (\cref{fig:scaling}); beyond about 35 tiles it is also the fastest method.
         The memory advantage holds from 4B to 14B parameters without re-tuning.
 \end{itemize}

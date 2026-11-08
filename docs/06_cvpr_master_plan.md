@@ -114,3 +114,53 @@ Overleaf 上傳清單：
 `foveatile_internvl.py`（層號換算、`--random_prior`）、`bench_metrics.py`、`run_test_suite.sh`（`MAX_NUM`）、`plot_budget_curves.py`、
 `run_model_scale.sh`、`run_ablation_randprior.sh`、`paper/`、`docs/05`、`docs/06`、`results/paper/build_paper_results.py`、
 `results/runs/hrbench_8k/`（800 題完整結果）。使用者要求時再 commit。
+
+## 9. 投稿前審查缺口（2026-11-07，以 CVPR 審查者角度檢查 PDF；**尚未決定要做哪些**，使用者看時間再決定）
+
+時限：全文 11/16、Supplementary 11/23。正文已超過 8 頁約 1 頁多，正文要先刪才能加。GPU 共用，跑前先確認沒人在用。
+
+### 第一級：很可能被審查者點名
+| # | 缺失 | 審查者會問 | 建議做法 | 工作量 | 放哪 | 狀態 |
+|---|---|---|---|---|---|---|
+| 1 | 缺最相近 baseline：HiRED、GlobalCom2（`docs/03` 標為「必要」，checklist 2.1–2.3 未做） | 同樣用全圖資訊分配每塊 tile 的預算，為何不比？ | 至少補 HiRED；時間夠再補 GlobalCom2 | HiRED 約 1 天 + GPU；GlobalCom2 2–4 天 | Supp（11/23）或正文主表 | 未決定 |
+| 2 | 缺「直接降解析度到同預算」對照（**2026-11-07 開跑**，設計見下） | Ablation 顯示只用覆蓋 tile（m=K）平均打平且更快，選 tile 機制有何用？ | 測試集補 m=K，至少 HR-Bench 4K、V* Bench；論點聚焦「細節 tile 防止小物件題失敗」 | 低（現有程式 `--coverage_tiles`） | 正文 §5.2 + Supp | **已完成並放進論文（2026-11-08）**，結果見下方 #2 實驗設計之後的「結果」 |
+| 3 | 只有一個模型家族 | 是否只適用 InternVL 的切 tile 架構？ | 不補實驗；在 Limitations 說明適用 tile 式 VLM，並討論原生解析度編碼器（Qwen2-VL）怎麼套用 | 只需寫作 | 正文 | 未決定 |
+| 4 | 缺 Limitations 段落（結論只有一句） | CVPR 審查表會看限制 | 獨立一段：多輪對話（KV 依問題選 tile，換問題要重選、無法共用 prefix cache）、極小物件 prior 漏掉、約 35 塊以下 TTFT 不比 FastV 快、attention 層號在測試集上選定 | 只需寫作 | 正文 | **已補（2026-11-08）**：結論加 \paragraph{Limitations}，只寫 tile 獨立架構（LLaVA-OV 可套用、未評估；Qwen2-VL 不適用）；多輪、極小物件、延遲三點使用者決定不寫 |
+
+### #2 實驗設計（2026-11-07 開跑前寫下，結果出來前不改）
+- **問題**：同樣的 visual token 預算下，「直接降解析度」能不能取代 FoveaTile 的細節 tile 選擇？
+- **兩個對照（KV 都是 B 個 visual token，跟 FoveaTile 同預算）**：
+  - `lowres`：官方動態切 tile，上限改成 K 塊（含縮圖）＝ InternVL 原生的低解析度用法（`--mode uncompressed --max_num K`，batch 1，同 uncompressed）
+  - `coverage`：FoveaTile 的覆蓋 tile 拿全部預算（m = K，沒有細節 tile、沒有 prior / q_attn；＝ Low-Res-Fill，`--coverage_tiles K`，batch 4，同 FoveaTile）
+- **資料集**：主表 5 個（DocVQA、InfoVQA、MME-RW Lite、HR-Bench 4K、V* Bench）＋ HR-Bench 8K（tile 上限 47）；全量。
+- **Budget**：先 1536 / 2560 / 3072（主表），GPU 有空再 1024 / 2048。
+- **主要檢定（事先指定）**：小物件資料集（HR-Bench 4K、HR-Bench 8K、V* Bench）上 FoveaTile vs 兩個對照，每個 budget 配對 bootstrap 95%（HR-Bench 用 CircularEval 組）。
+- **次要**：5 個主表資料集的平均保留率；文件類（DocVQA、InfoVQA）預期對照可能打平或贏（SVMA 時期的觀察），照實報告。
+- **呈現原則**：所有資料集與 budget 都列在表裡，不挑；正文文字只寫顯著的部分（同 paper-text-positive-only 規則）。是否放進論文由使用者看完結果決定。
+- 程式：`run_lowres_baselines.sh`；結果 `results/runs_lowres/<ds>/{lowres,coverage}_b<B>_InternVL3_5-8B.json`；log `logs/runs_lowres/`。
+
+### #2 結果（2026-11-08 跑完，36 個工作全數完成）
+- 平均保留率（5 個主表資料集）Low-Res / Low-Res-Fill / FoveaTile：b1536 84.2 / 91.7 / **95.0**；b2560 92.9 / 94.1 / **97.6**；b3072 93.3 / 96.2 / **99.3**。小物件（HR-4K、HR-8K、V*）：73.5 / 82.6 / **91.9**；85.4 / 86.6 / **93.8**；85.9 / 90.3 / **95.5**。
+- 主要檢定 vs Low-Res-Fill：小物件 9 格全為正（+2.5～+8.0），但只有 HR-8K b1536 顯著（+8.0 [+0.5, +15.0]）；V* 三個 budget CI 都碰到 0。MME-RW 三個 budget 都顯著贏（+2.2～+2.5）。**DocVQA 輸**：b1536 −2.7、b3072 −0.9（顯著）。
+- vs Low-Res：b1536 六個資料集全部顯著贏；InfoVQA / MME-RW / V* 每個 budget 都顯著。Low-Res 用不滿預算（平均 1,149 / 1,931 / 1,972 個 token）；b2560 有 41/11,860 題多一個 tile。
+- 論文：主文 §5.2 新段落 `sec:downscale` + `tab:downscale`；Supp `sec/supp_downscale.tex`（`tab:downscale_full`、`tab:downscale_delta`）；§2 第 32 行、§5.1 Baselines、§5.4 消融各加一句引用。表格由 `results/paper/build_downscale_tables.py` 產生。合併檢定（三個小物件資料集合併）使用者決定不放（事後分析）。
+
+### 第二級：補上會明顯加分
+| # | 缺失 | 建議做法 | 工作量 | 放哪 | 狀態 |
+|---|---|---|---|---|---|
+| 5 | 層號在測試集（InfoVQA val）上選定 | 在校準集掃幾組層號，證明不敏感 | 約 1 天 GPU | Supp | 未決定 |
+| 6 | 缺額外 forward 的成本拆解 | TTFT 拆成 ViT / prior / q_attn / prefill（`stats` 已有 `_t_detail_vit`、`_t_qattn`、`_t_commit`） | 低 | Supp | 未決定 |
+| 7 | 服務吞吐量只用估算（保留 KV、無 batching） | 誠實說明，或補簡單批次實驗（`docs/03` checklist 4.2） | 寫作或中等 | 正文文字 | 未決定 |
+| 8 | 第 1 頁沒有 teaser | `paper/figures/make_teaser.py` 已有，但占篇幅 | 低（與頁數衝突） | 正文 | 未決定 |
+| 9 | 和 ViCrop、GlobalCom2 的差異不夠清楚 | Related Work 加性質比較表：免訓練 / ViT 前 / 看問題 / KV O(K) / 需額外模型 | 低 | 正文 | 未決定 |
+| 10 | 缺質性範例 | Supp 放成功與失敗的選擇視覺化 | 低 | Supp | 未決定 |
+
+### 第三級：寫作風險
+- L453 "highest average accuracy at every budget in Tab. 4"：Tab. 4 沒放 b1024，Fig. 4 可見 b1024 輸 IF-Prune（91.5 vs 94.5）→ 改成「從 b1536 起」。**已修（2026-11-08）**
+- Abstract 說 six benchmarks，主表平均只用五個（HR-8K 另放）→ 第一次出現時說明。**已修（2026-11-08）**：摘要與 intro 改 five benchmarks、memory 句註明 HR-Bench 8K；§5.1 加一句平均只含前五個。
+- 加一句會公開程式碼（審查期用匿名連結）。**使用者決定不加（2026-11-08）**
+
+### 建議順序
+- 11/16 前：#2、#4、#9、第三級。
+- 11/23 前（Supp）：#1 HiRED、#5、#6、#10。
+- 只寫作：#3、#7。

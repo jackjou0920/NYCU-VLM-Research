@@ -18,7 +18,8 @@ example.
 An image of size $W\times H$ is resized to a grid of $c\times r$ tiles of $448\times448$ pixels, where
 $(c, r)$ is the grid whose aspect ratio is closest to $W/H$ subject to $N=cr\le N_{\max}$; a global
 thumbnail is appended when $N>1$. Each tile is encoded independently by the vision encoder, and
-pixel shuffle followed by an MLP projector turns it into $n=256$ visual tokens. The language model
+pixel shuffle followed by an MLP projector turns it into $n=256$ visual tokens. \method relies on this
+independence, which other tile-based VLMs such as LLaVA-OneVision~\cite{llavaov} share. The language model
 then prefills the sequence
 \begin{equation}
   [\,\mathbf{x}_b;\ \mathbf{V}_1;\ \dots;\ \mathbf{V}_{N+1};\ \mathbf{x}_a\,],

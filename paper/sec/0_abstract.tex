@@ -9,8 +9,8 @@ been computed. We propose \method, a training-free method that decides which reg
 \emph{before} encoding them. A single partial pass of the VLM over low-resolution coverage tiles ranks
 the high-resolution detail tiles by their relevance to the question, and only the selected tiles are
 encoded and streamed into the KV cache, so memory and compute are set by the token budget instead of the
-input resolution. On InternVL3.5 and six high-resolution benchmarks, \method retains 95.0\% of the
+input resolution. On InternVL3.5 and five high-resolution benchmarks, \method retains 95.0\% of the
 uncompressed accuracy with 5.0$\times$ less memory and is the most accurate method under every memory
-limit. Its peak memory stays at 0.41\,GB from 7 to 188 tiles, so one GPU serves at least 3.3$\times$
+limit. On HR-Bench 8K, its peak memory stays at 0.41\,GB from 7 to 188 tiles, so one GPU serves at least 3.3$\times$
 more requests than in-LLM pruning and 41$\times$ more than the uncompressed model.
 \end{abstract}

@@ -11,9 +11,16 @@ they have been computed. On InternVL3.5, \method keeps 95.0\% of the uncompresse
 constant from 7 to 188 tiles, so one GPU serves 41$\times$ more requests than the uncompressed model,
 and its behavior carries over from 4B to 14B parameters without re-tuning.
 
-Because every detail tile is chosen from a low-resolution view, the recall of this prior for very small
-objects is the main lever for further gains. Improving this recall, and extending the selection to
-native-resolution encoders and to video, are directions for future work.
+\paragraph{Limitations.}
+\method requires a VLM whose vision encoder processes each tile independently, so that the encoder can be
+run on a subset of the tiles. All our experiments use InternVL3.5, but the same holds for other tile-based
+VLMs: LLaVA-OneVision~\cite{llavaov}, for example, encodes each AnyRes crop separately and adds a
+downscaled base image, so \method can be applied to it in the same way, although we have not evaluated it.
+Native-resolution encoders~\cite{qwen2vl} attend across the whole image, so encoding only the selected
+regions would change the input they were trained on; \method does not cover them.
+
+Improving the recall of the prior for very small objects, evaluating other tile-based VLMs, and
+extending the selection to native-resolution encoders and to video are directions for future work.
 
 \section*{LLM Usage Statement}
 We used Claude Code (Anthropic) to help write and run experiment code, analyze results, generate tables

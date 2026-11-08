@@ -1,0 +1,19 @@
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{3.4pt}
+  \begin{tabular}{l cc cc cc}
+    \toprule
+    & \multicolumn{2}{c}{$B=1536$} & \multicolumn{2}{c}{$B=2560$} & \multicolumn{2}{c}{$B=3072$} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+    Method & Avg. & Small & Avg. & Small & Avg. & Small \\
+    \midrule
+    Low-Res & 84.2 & 73.5 & 92.9 & 85.4 & 93.3 & 85.9 \\
+    Low-Res-Fill & 91.7 & 82.6 & 94.1 & 86.6 & 96.2 & 90.3 \\
+    \rowcolor{oursbg}
+    \method (ours) & \textbf{95.0} & \textbf{91.9} & \textbf{97.6} & \textbf{93.8} & \textbf{99.3} & \textbf{95.5} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Same-budget downscaling}, as a percentage of the uncompressed score. Avg.: the five benchmarks of \cref{tab:main}; Small: HR-Bench 4K, HR-Bench 8K, and V$^*$. Low-Res is the official tiling capped at $K=B/256$ tiles, which cannot always fill the budget (on average 1{,}149/1{,}931/1{,}972 visual tokens); Low-Res-Fill gives the whole budget to coverage tiles ($m{=}K$). Per-benchmark scores and paired confidence intervals are in the supplementary material.}
+  \label{tab:downscale}
+\end{table}

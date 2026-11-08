@@ -30,7 +30,7 @@ its cache has a fixed size per request, it fits paged serving directly.
 
 \paragraph{Zooming and visual search.}
 Downscaling the whole image is not an alternative, since small targets fall below the resolution of a
-single patch. Zoom-in methods therefore locate the relevant region and look at it again at higher
+single patch (\cref{tab:downscale}). Zoom-in methods therefore locate the relevant region and look at it again at higher
 resolution, using the attention of the VLM~\cite{vicrop}, a trained search model~\cite{vstar}, tree
 search~\cite{zoomeye,dyfo}, or an external retriever~\cite{rap}. They aim to \emph{add} detail on top of
 the full input and run the model several times per question, so they cost more than the uncompressed
