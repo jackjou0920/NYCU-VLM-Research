@@ -1,0 +1,13 @@
+== test suite：1 個工作，GPUS=0 ==
+[11-09 21:06] GPU0 infovqa hired 1536
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       2801   46.53                                           
+  hired_budget=1536       2801   51.56                                           
+  hired_budget=2048       2801   55.50                                           
+  hired_budget=2560       2801   59.24                                           
+  hired_budget=3072       2801   61.84                                           
+
+[saved] results/runs_hired/summary.csv
+[11-09 21:42] done

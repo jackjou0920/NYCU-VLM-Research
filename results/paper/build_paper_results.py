@@ -27,9 +27,9 @@ MODELS = {"4B": "InternVL3_5-4B", "8B": "InternVL3_5-8B", "14B": "InternVL3_5-14
 DS = [("docvqa", "DocVQA"), ("infovqa", "InfoVQA"), ("mme_rw_lite", "MME-RW"),
       ("hrbench_4k", "HR-Bench 4K"), ("vstar", "V$^*$ Bench")]
 METHODS = [("fastv", "FastV~\\cite{fastv}"), ("sparsevlm", "SparseVLM~\\cite{sparsevlm}"),
-           ("visionzip", "VisionZip~\\cite{visionzip}"), ("ifprune", "IF-Prune~\\cite{ifprune}"),
+           ("visionzip", "VisionZip~\\cite{visionzip}"), ("hired", "HiRED~\\cite{hired}"), ("ifprune", "IF-Prune~\\cite{ifprune}"),
            ("foveatile", "\\method (ours)")]
-SHORT = {"fastv": "FastV", "sparsevlm": "SparseVLM", "visionzip": "VisionZip", "ifprune": "IF-Prune",
+SHORT = {"fastv": "FastV", "sparsevlm": "SparseVLM", "visionzip": "VisionZip", "hired": "HiRED", "ifprune": "IF-Prune",
          "foveatile": "\\method (ours)", "uncompressed": "Uncompressed"}
 BUDGETS_ALL = [1024, 1536, 2048, 2560, 3072]
 MAIN_BLOCKS = [1536, 2560, 3072]
@@ -40,6 +40,8 @@ PREAMBLE = "\\providecommand{\\pend}{\\textcolor{red}{?}}\n"
 
 # ─────────────────────────────── 資料 ───────────────────────────────
 def load_run(ds, method, budget, model="8B", root="results/runs"):
+    if method == "hired":                                 # HiRED 的結果放在獨立資料夾（results/runs_hired、runs_hired_maxnum201）
+        root = root.replace("results/runs", "results/runs_hired", 1)
     tag = "uncompressed" if method == "uncompressed" else f"{method}_b{budget}"
     f = f"{root}/{ds}/{tag}_{MODELS[model]}.json"
     if not os.path.exists(f):
@@ -61,18 +63,18 @@ def score(ds, method, budget, model="8B", root="results/runs"):
     return None if u is None else 100 * st.mean(u.values())
 
 
-def eff_file(ds, budget, model):
+def eff_file(ds, budget, model, root="results/efficiency"):
     if model != "8B":
-        return f"results/efficiency/{MODELS[model]}/metrics_{ds}.csv"
+        return f"{root}/{MODELS[model]}/metrics_{ds}.csv"
     if ds == "hrbench_8k":
-        return "results/efficiency/hrbench_8k/metrics_hrbench_8k.csv"
-    return {1536: f"results/efficiency/b1536/metrics_{ds}.csv",
-            2560: f"results/efficiency/b2560/metrics_{ds}.csv"}.get(budget, f"results/efficiency/metrics_{ds}.csv")
+        return f"{root}/hrbench_8k/metrics_hrbench_8k.csv"
+    return {1536: f"{root}/b1536/metrics_{ds}.csv",
+            2560: f"{root}/b2560/metrics_{ds}.csv"}.get(budget, f"{root}/metrics_{ds}.csv")
 
 
 def eff(ds, method, budget, model="8B"):
     """(TTFT 中位數 s, 記憶體增量 GB, TFLOPs, 原始 tile 數)；沒有量測時 None。"""
-    f = eff_file(ds, budget, model)
+    f = eff_file(ds, budget, model, "results/efficiency_hired" if method == "hired" else "results/efficiency")
     if not os.path.exists(f):
         return None
     key = "uncompressed" if method == "uncompressed" else f"{method}_b{budget}"
@@ -259,6 +261,8 @@ def tab_scale():
 # ─────────────────────────────── Table：HR-Bench 8K 兩種 tile 上限 ───────────────────────────────
 def tab_hr8k():
     summ = json.load(open("results/scaling/summary.json"))
+    summ["201|hired"] = next(r for r in csv.DictReader(open("results/scaling_hired/metrics_n201_hired.csv"))
+                             if r["method"] == f"hired_b{DEFAULT_B}")
     rows = [("uncompressed", "Uncompressed")] + METHODS
     L = [PREAMBLE, "\\begin{table}[t]", "  \\centering", "  \\footnotesize", "  \\setlength{\\tabcolsep}{3.2pt}",
          "  \\begin{tabular}{l ccc ccc}", "    \\toprule",
@@ -489,16 +493,18 @@ def scaling_points(max_nums, budget=DEFAULT_B):
     新請求 prefill 時還需要它的峰值 → n = floor((free − peak) / kv) + 1。"""
     out = {}
     for n in max_nums:
-        for f in glob.glob(f"results/scaling/metrics_n{n}_*.csv"):
+        for f in glob.glob(f"results/scaling/metrics_n{n}_*.csv") + [f"results/scaling_hired/metrics_n{n}_hired.csv"]:
             for r in csv.DictReader(open(f)):
                 m = r["method"]
                 m = "uncompressed" if m == "uncompressed" else m.rsplit("_b", 1)[0]
                 if r["method"] not in ("uncompressed", f"{m}_b{budget}"):
                     continue
+                if "scaling_hired" in f and m != "hired":     # 這些檔案順便量到的 FoveaTile 不用，維持原本的數字
+                    continue
                 peak, kv = float(r["mem_delta_gb_mean"]), float(r["kv_cache_mb_mean"]) / 1024
                 out[(m, n)] = {"tiles": float(r["raw_tiles_mean"]), "ttft": float(r["ttft_s_median"]), "mem": peak,
                                "kv": kv, "conc": int((A6000_FREE_GB - peak) / kv) + 1}
-                cf = f"results/concurrency/n{n}_{m}.csv"      # 有實測（bench_concurrency.py）就用實測
+                cf = f"results/concurrency{'_hired' if m == 'hired' else ''}/n{n}_{m}.csv"      # 有實測（bench_concurrency.py）就用實測
                 if os.path.exists(cf):
                     out[(m, n)]["conc"] = int(next(csv.DictReader(open(cf)))["n_requests"])
     for m in {k[0] for k in out}:
@@ -516,7 +522,7 @@ def figures():
                          "axes.spines.top": False, "axes.spines.right": False, "mathtext.fontset": "dejavusans"})
     STY = [("foveatile", "FoveaTile (ours)", "#2a6fdb", "o"), ("ifprune", "IF-Prune", "#eb6834", "s"),
            ("fastv", "FastV", "#1f9e5a", "^"), ("sparsevlm", "SparseVLM", "#e0a100", "D"),
-           ("visionzip", "VisionZip", "#d16a9b", "v")]
+           ("visionzip", "VisionZip", "#d16a9b", "v"), ("hired", "HiRED", "#7a5cc7", "P")]
 
     # Pareto：平均保留率 vs TTFT / 記憶體（8B）
     S = {(m, b): summary(m, b) for m, *_ in STY for b in BUDGETS_ALL}
@@ -542,8 +548,8 @@ def figures():
         ax.tick_params(labelsize=5.5, length=2)
     axes[0].set_ylabel("Mean % of uncompressed", fontsize=6)
     h, l = axes[0].get_legend_handles_labels()
-    order = [l.index(x) for x in ["FoveaTile (ours)", "IF-Prune", "FastV", "SparseVLM", "VisionZip", "Uncompressed"] if x in l]
-    fig.legend([h[i] for i in order], [l[i] for i in order], loc="upper center", ncol=3, frameon=False,
+    order = [l.index(x) for x in ["FoveaTile (ours)", "IF-Prune", "FastV", "SparseVLM", "VisionZip", "HiRED", "Uncompressed"] if x in l]
+    fig.legend([h[i] for i in order], [l[i] for i in order], loc="upper center", ncol=4, frameon=False,
                fontsize=5.4, bbox_to_anchor=(0.53, 1.13), handlelength=1.6, columnspacing=1.0)
     fig.tight_layout(pad=0.2, w_pad=0.6)
     fig.savefig(f"{OUT_FIG}/fig_pareto.pdf", bbox_inches="tight", pad_inches=0.01)
@@ -585,7 +591,7 @@ def figures():
         ax.grid(color="#eeeeee", lw=0.5)
         ax.tick_params(labelsize=5, length=2, pad=1.5)
     h, l = axes[1].get_legend_handles_labels()
-    names = ["FoveaTile (ours)", "IF-Prune", "FastV", "SparseVLM", "VisionZip", "Uncompressed"]
+    names = ["FoveaTile (ours)", "IF-Prune", "FastV", "SparseVLM", "VisionZip", "HiRED", "Uncompressed"]
     order = [next(i for i, x in enumerate(l) if x.startswith(n)) for n in names]
     leg_ax.axis("off")
     leg_ax.legend([h[i] for i in order], [l[i] for i in order], loc="center", ncol=1, frameon=False,

@@ -34,7 +34,7 @@ of the language model is $\mathcal{O}(N)$ in its linear layers and $\mathcal{O}(
 the KV cache is $\mathcal{O}(N)$. With the cap $N_{\max}=47$ used in our experiments, a 4K image already
 yields 24 to 45 tiles (6K to 12K visual tokens); without a cap, an 8K image yields 188 tiles (48K
 visual tokens).
-Token-pruning methods remove tokens \emph{after} they are computed. VisionZip~\cite{visionzip} prunes
+Token-pruning methods remove tokens \emph{after} they are computed. VisionZip~\cite{visionzip} and HiRED~\cite{hired} prune
 after the vision encoder, so the encoder still sees all $N$ tiles. FastV~\cite{fastv},
 SparseVLM~\cite{sparsevlm}, and IF-Prune~\cite{ifprune} prune inside the language model, so the
 encoder and the first layers still process all $nN$ tokens, and the peak memory of prefill is still
@@ -42,7 +42,7 @@ set by $N$.
 
 Cost therefore follows the input, not what is kept. On HR-Bench 8K with 188 tiles and $B=1536$, FastV,
 SparseVLM, and IF-Prune keep only 3.2\% of the 48K visual tokens, yet they need more than 8\,GB of memory
-and 3.2 to 7.0\,s to the first token. VisionZip keeps its memory flat but still encodes all 188 tiles
+and 3.2 to 7.0\,s to the first token. VisionZip and HiRED stay below 1\,GB but still encode all 188 tiles
 (\cref{tab:hr8k}). The limit of these methods is thus not which tokens they keep, but that every tile is
 computed first.
 

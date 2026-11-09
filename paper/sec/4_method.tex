@@ -167,7 +167,7 @@ $\mathcal{O}(K)$.
 language-model work consists of the prior pass over $|\mathbf{x}_b|+nm+|\mathbf{x}_a|$ tokens
 ($l_{\text{hi}}$ layers), $S$ scoring passes of $n+|\mathbf{x}_a|$ tokens ($l_q$ layers), and the main
 prefill of $nK$ visual tokens. Every term depends on the budget $K$ and the window $S$, but none depends
-on the number of tiles $N$. The KV cache is bounded by the budget. In contrast, every method that prunes
+on the number of tiles $N$ (per-stage timings in \cref{tab:ttft}). The KV cache is bounded by the budget. In contrast, every method that prunes
 after encoding pays $\mathcal{O}(N)$ vision compute, and methods that prune inside the language model
 also pay $\mathcal{O}(N)$ in the layers before pruning.
 
@@ -180,7 +180,7 @@ also pay $\mathcal{O}(N)$ in the layers before pruning.
     Method & ViT & LLM prefill & KV cache \\
     \midrule
     Uncompressed & $N$ & $N$ & $N$ \\
-    VisionZip & $N$ & $K$ & $K$ \\
+    VisionZip, HiRED & $N$ & $K$ & $K$ \\
     FastV, SparseVLM & $N$ & $N\!\to\!K$ & $\approx K$ \\
     IF-Prune & $N^{\ddagger}$ & $N\!\to\!K$ & $\approx K$ \\
     \method (ours) & $K{-}a{+}S$ & $K{+}m{+}S^{\dagger}$ & $K$ \\

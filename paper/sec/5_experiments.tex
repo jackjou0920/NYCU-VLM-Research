@@ -30,13 +30,14 @@ from the same official dynamic tiling with up to $N_{\max}=47$ tiles plus a thum
 \cref{sec:scaling}.
 
 \paragraph{Baselines.}
-We compare with FastV~\cite{fastv}, SparseVLM~\cite{sparsevlm}, VisionZip~\cite{visionzip}, and
+We compare with FastV~\cite{fastv}, SparseVLM~\cite{sparsevlm}, VisionZip~\cite{visionzip}, HiRED~\cite{hired}, and
 IF-Prune~\cite{ifprune}, ported to InternVL3.5 from the official code with the official
 hyperparameters: FastV and IF-Prune prune at layer 2, IF-Prune uses the released InternVL2.5-1B guide
 model, SparseVLM prunes at the official relative depths with its pruning rate calibrated per budget,
-and VisionZip keeps dominant and contextual tokens in each tile. For all methods, the budget $B$ is the
+VisionZip keeps dominant and contextual tokens in each tile, and HiRED splits the budget over the tiles by
+the CLS attention of the thumbnail. For all methods, the budget $B$ is the
 number of visual tokens left in the KV cache. We also compare with two same-budget downscaling baselines
-(\cref{sec:downscale}). Implementation details are in the supplementary material.
+(\cref{sec:downscale}). Implementation details are in \cref{sec:baselines}.
 
 \paragraph{Efficiency measurement.}
 All measurements use one NVIDIA A6000 (48\,GB), bfloat16, and batch size 1. TTFT is the wall-clock time
@@ -57,14 +58,14 @@ All \method hyperparameters are fixed on held-out calibration data (\cref{sec:im
 The number of high-resolution requests a GPU can serve is bounded by memory, so we first ask which
 accuracy each method reaches within a memory limit (\cref{tab:memcap}). \method is the most accurate
 method under every limit. Within 1\,GB per image, it retains 99.3\% of the uncompressed accuracy, while
-FastV, SparseVLM, and IF-Prune cannot run at any budget, and VisionZip reaches 86.1\%. IF-Prune even needs
+FastV, SparseVLM, and IF-Prune cannot run at any budget, and VisionZip and HiRED reach 86.1\% and 89.2\%. IF-Prune even needs
 more memory than the uncompressed model (3.0 \vs 2.0\,GB), mainly for its guide model, so it does not fit
 within the uncompressed model's own footprint. Without a limit, \method still has the highest accuracy
 (99.3\% at $B=3072$).
 
 \cref{tab:main} compares all methods at equal token budgets. At the default budget $B=1536$, which keeps
 about a fifth of the visual tokens, \method retains 95.0\% of the uncompressed accuracy on average, the
-highest of all methods, ahead of IF-Prune (94.9\%), FastV (90.0\%), SparseVLM (85.5\%), and VisionZip
+highest of all methods, ahead of IF-Prune (94.9\%), FastV (90.0\%), SparseVLM (85.5\%), HiRED (78.0\%), and VisionZip
 (71.5\%). It needs 5.0$\times$ less memory than the uncompressed model, against 1.5$\times$ for FastV and SparseVLM and
 0.7$\times$ for IF-Prune, and it is 1.6$\times$ faster than IF-Prune. From $B=1536$ upward,
 \method has the highest average accuracy of all methods at every budget, reaching 99.3\% at $B=3072$,
@@ -84,13 +85,13 @@ significant at any budget.
   \includegraphics[width=\linewidth]{figures/fig_pareto.pdf}
   \caption{\textbf{Accuracy--cost trade-off} on InternVL3.5-8B, averaged over the five benchmarks of \cref{tab:main}, for
   $B\in\{1024,1536,2048,2560,3072\}$. The star marks the default \method budget. \method uses the least
-  memory at every budget, and every configuration of IF-Prune and SparseVLM is dominated by a \method
+  memory from $B=1536$ upward, and every configuration of IF-Prune and SparseVLM is dominated by a \method
   configuration that is both faster and more accurate.}
   \label{fig:pareto}
 \end{figure}
 
 \cref{fig:pareto} shows the full trade-off over five budgets. In memory, \method has the best curve at every budget: even its largest budget uses less memory than any budget of FastV, SparseVLM,
-or IF-Prune. In TTFT, \method reaches the highest accuracy of all methods (99.3\% at 1.2\,s), and every
+or IF-Prune, and its smallest budget uses less memory than any budget of HiRED and is more accurate. In TTFT, \method reaches the highest accuracy of all methods (99.3\% at 1.2\,s), and every
 configuration of IF-Prune and SparseVLM is dominated by a \method configuration that is both faster and
 more accurate: at about the same TTFT as IF-Prune at $B=1536$ (1.2\,s), \method reaches 99.3\% instead
 of 94.9\%, and at $B=1536$ (95.0\%) it is more accurate than IF-Prune at any $B\leq1536$ with about
@@ -137,10 +138,10 @@ more than the budget. Every method that prunes inside the language model grows l
 32 to 43\,MB per added tile (68\,MB for the uncompressed model), and needs over 8\,GB at 188 tiles,
 20$\times$ more than \method. TTFT behaves the same way: \method stays at 0.7\,s, whereas FastV and
 IF-Prune become 4.5$\times$ and 10$\times$ slower than \method at 188 tiles, and the uncompressed model
-24$\times$ slower. VisionZip also keeps its memory flat, since it prunes before the language model, but
-it still encodes every tile, so its TTFT grows with $N$, and its accuracy is 23.5 points lower on average
+24$\times$ slower. VisionZip and HiRED also stay below 1\,GB, since they prune before the language model, but
+they still encode every tile, so their TTFT grows with $N$, and their accuracy is 23.5 and 17.0 points lower on average
 (\cref{tab:main}). \method is the only method whose memory and latency are both independent of the
-resolution. Beyond about 35 tiles, \method is the fastest of all methods, and its lead grows with
+resolution. Beyond about 40 tiles, \method is the fastest of all methods, and its lead grows with
 $N$.
 
 Memory determines how many requests a GPU can serve. We measure this directly: on one A6000 (33\,GB free
@@ -155,7 +156,7 @@ at 25 tiles to 37--38 at 188 tiles, with SparseVLM to 20, and with the uncompres
 lowers accuracy for every method, and even for the uncompressed model (56.5 to 49.0). Among the
 compressed methods, \method has the best accuracy per unit cost: at 188 tiles it is 10$\times$ faster
 than IF-Prune and 6$\times$ faster than SparseVLM with 20$\times$ less memory, and it is more accurate
-than FastV (47.0 \vs 42.5) at 4.5$\times$ less TTFT. With a larger budget
+than FastV (47.0 \vs 42.5) at 4.5$\times$ less TTFT and than HiRED (41.0) at 3.3$\times$ less TTFT. With a larger budget
 ($B=2560$), \method matches the best compressed methods at 188 tiles (52.5) and exceeds the uncompressed
 model (49.0), which may suffer from the very long visual sequence.
 

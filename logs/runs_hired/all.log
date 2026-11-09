@@ -1,0 +1,281 @@
+[11-08 12:42] 等 A0 結束
+[11-08 18:32] A1
+== test suite：30 個工作，GPUS=0 1 ==
+[11-08 18:32] GPU0 vstar hired 1024
+[11-08 18:32] GPU1 vstar hired 1536
+[11-08 18:32] GPU1 vstar hired 2560
+[11-08 18:32] GPU1 hrbench_4k hired 1024
+[11-08 18:35] GPU0 vstar hired 2048
+[11-08 18:38] GPU0 vstar hired 3072
+[11-08 18:38] GPU0 hrbench_4k hired 1536
+[11-08 18:40] GPU0 hrbench_4k hired 2560
+[11-08 18:41] GPU0 hrbench_8k hired 1024
+[11-08 18:48] GPU1 hrbench_4k hired 2048
+[11-08 19:01] GPU0 hrbench_8k hired 2048
+[11-08 19:06] GPU1 hrbench_4k hired 3072
+[11-08 19:08] GPU1 hrbench_8k hired 1536
+[11-08 19:23] GPU0 hrbench_8k hired 3072
+[11-08 19:29] GPU1 hrbench_8k hired 2560
+[11-08 19:53] GPU1 mme_rw_lite hired 1024
+[11-08 19:55] GPU0 mme_rw_lite hired 1536
+[11-08 19:55] GPU0 mme_rw_lite hired 2560
+[11-08 19:55] GPU0 infovqa hired 1024
+[11-08 20:27] GPU1 mme_rw_lite hired 2048
+[11-08 20:40] GPU0 infovqa hired 2048
+[11-08 21:07] GPU1 mme_rw_lite hired 3072
+[11-08 21:07] GPU1 infovqa hired 1536
+[11-08 21:08] GPU1 infovqa hired 2560
+[11-08 21:10] GPU1 docvqa hired 1024
+[11-08 21:32] GPU0 infovqa hired 3072
+[11-08 21:33] GPU0 docvqa hired 1536
+[11-08 21:36] GPU0 docvqa hired 2560
+[11-08 22:34] GPU1 docvqa hired 2048
+[11-09 00:13] GPU1 docvqa hired 3072
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        191   73.30                                           
+  hired_budget=1536        191   72.77                                           
+  hired_budget=2048        191   76.96                                           
+  hired_budget=2560        191   77.49                                           
+  hired_budget=3072        191   81.68                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        200   47.00                                           
+  hired_budget=1536        200   53.50                                           
+  hired_budget=2048        200   57.00                                           
+  hired_budget=2560        200   58.00                                           
+  hired_budget=3072        200   60.00                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        200   44.50                                           
+  hired_budget=1536        200   48.50                                           
+  hired_budget=2048        200   53.50                                           
+  hired_budget=2560        200   52.50                                           
+  hired_budget=3072        200   54.00                                           
+
+[saved] results/runs_hired/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       1919   42.73                                           
+  hired_budget=1536       1919   45.18                                           
+  hired_budget=2048       1919   45.75                                           
+  hired_budget=2560       1919   48.15                                           
+  hired_budget=3072       1919   49.19                                           
+
+[saved] results/runs_hired/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       2801   46.53                                           
+  hired_budget=1536       2801   51.56                                           
+  hired_budget=2048       2801   55.50                                           
+  hired_budget=2560       2801   59.24                                           
+  hired_budget=3072       2801   61.84                                           
+
+[saved] results/runs_hired/summary.csv
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       5349   51.42                                           
+  hired_budget=1536       5349   58.49                                           
+  hired_budget=2048       5349   63.74                                           
+  hired_budget=2560       5349   67.82                                           
+  hired_budget=3072       5349   71.06                                           
+
+[saved] results/runs_hired/summary.csv
+[11-09 00:16] done
+[11-09 00:16] A2
+== test suite：1 個工作，GPUS=0 1 ==
+[11-09 00:16] GPU0 hrbench_8k hired 1536
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536        200   41.00                                           
+
+[saved] results/runs_hired_maxnum201/summary.csv
+[11-09 01:00] done
+[11-09 01:00] A3 4B
+== test suite：6 個工作，GPUS=0 1 ==
+[11-09 01:00] GPU0 docvqa hired 1536
+[11-09 01:00] GPU1 infovqa hired 1536
+  [error] infovqa hired b1536，看 logs/runs_hired/infovqa/hired_b1536.log
+[11-09 01:10] GPU1 hrbench_8k hired 1536
+[11-09 01:30] GPU1 vstar hired 1536
+[11-09 02:23] GPU0 hrbench_4k hired 1536
+[11-09 02:37] GPU0 mme_rw_lite hired 1536
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       5349   51.42                                           
+  hired_budget=1536       5349   58.49                                           
+  hired_budget=2048       5349   63.74                                           
+  hired_budget=2560       5349   67.82                                           
+  hired_budget=3072       5349   71.06                                           
+
+[saved] results/runs_hired/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       2801   46.53                                           
+  hired_budget=1536       2801   51.56                                           
+  hired_budget=2048       2801   55.50                                           
+  hired_budget=2560       2801   59.24                                           
+  hired_budget=3072       2801   61.84                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        200   47.00                                           
+  hired_budget=1536        200   53.50                                           
+  hired_budget=2048        200   57.00                                           
+  hired_budget=2560        200   58.00                                           
+  hired_budget=3072        200   60.00                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        200   44.50                                           
+  hired_budget=1536        200   48.50                                           
+  hired_budget=2048        200   53.50                                           
+  hired_budget=2560        200   52.50                                           
+  hired_budget=3072        200   54.00                                           
+
+[saved] results/runs_hired/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       1919   42.73                                           
+  hired_budget=1536       1919   45.18                                           
+  hired_budget=2048       1919   45.75                                           
+  hired_budget=2560       1919   48.15                                           
+  hired_budget=3072       1919   49.19                                           
+
+[saved] results/runs_hired/summary.csv
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        191   73.30                                           
+  hired_budget=1536        191   72.77                                           
+  hired_budget=2048        191   76.96                                           
+  hired_budget=2560        191   77.49                                           
+  hired_budget=3072        191   81.68                                           
+
+[saved] results/runs_hired/summary.csv
+[11-09 03:09] done
+[11-09 03:09] A3 14B
+== test suite：6 個工作，GPUS=0 1 ==
+[11-09 03:09] GPU0 docvqa hired 1536
+[11-09 03:09] GPU1 infovqa hired 1536
+[11-09 04:12] GPU1 hrbench_8k hired 1536
+[11-09 04:36] GPU1 vstar hired 1536
+[11-09 05:11] GPU0 hrbench_4k hired 1536
+[11-09 05:31] GPU0 mme_rw_lite hired 1536
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       5349   51.42                                           
+  hired_budget=1536       5349   58.49                                           
+  hired_budget=2048       5349   63.74                                           
+  hired_budget=2560       5349   67.82                                           
+  hired_budget=3072       5349   71.06                                           
+
+[saved] results/runs_hired/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       2801   46.53                                           
+  hired_budget=1536       2801   51.56                                           
+  hired_budget=2048       2801   55.50                                           
+  hired_budget=2560       2801   59.24                                           
+  hired_budget=3072       2801   61.84                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        200   47.00                                           
+  hired_budget=1536        200   53.50                                           
+  hired_budget=2048        200   57.00                                           
+  hired_budget=2560        200   58.00                                           
+  hired_budget=3072        200   60.00                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        200   44.50                                           
+  hired_budget=1536        200   48.50                                           
+  hired_budget=2048        200   53.50                                           
+  hired_budget=2560        200   52.50                                           
+  hired_budget=3072        200   54.00                                           
+
+[saved] results/runs_hired/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024       1919   42.73                                           
+  hired_budget=1536       1919   45.18                                           
+  hired_budget=2048       1919   45.75                                           
+  hired_budget=2560       1919   48.15                                           
+  hired_budget=3072       1919   49.19                                           
+
+[saved] results/runs_hired/summary.csv
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1024        191   73.30                                           
+  hired_budget=1536        191   72.77                                           
+  hired_budget=2048        191   76.96                                           
+  hired_budget=2560        191   77.49                                           
+  hired_budget=3072        191   81.68                                           
+
+[saved] results/runs_hired/summary.csv
+[11-09 06:15] done
+[11-09 06:15] B1–B5：33 個工作
+[11-09 06:15] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset docvqa --budgets 1024,2048,3072 --out_csv results/efficiency_hired
+[11-09 06:15] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset docvqa --budgets 1536 --out_csv results/efficiency_hired/b1536/met
+[11-09 06:19] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset infovqa --budgets 1024,2048,3072 --out_csv results/efficiency_hire
+[11-09 06:24] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset docvqa --budgets 2560 --out_csv results/efficiency_hired/b2560/met
+[11-09 06:27] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset infovqa --budgets 2560 --out_csv results/efficiency_hired/b2560/me
+[11-09 06:28] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset infovqa --budgets 1536 --out_csv results/efficiency_hired/b1536/me
+[11-09 06:30] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset mme_rw_lite --budgets 1536 --out_csv results/efficiency_hired/b153
+[11-09 06:30] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset mme_rw_lite --budgets 1024,2048,3072 --out_csv results/efficiency_
+[11-09 06:34] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset hrbench_4k --budgets 1024,2048,3072 --out_csv results/efficiency_h
+[11-09 06:40] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset mme_rw_lite --budgets 2560 --out_csv results/efficiency_hired/b256
+[11-09 06:43] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset hrbench_4k --budgets 2560 --out_csv results/efficiency_hired/b2560
+[11-09 06:44] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset hrbench_4k --budgets 1536 --out_csv results/efficiency_hired/b1536
+[11-09 06:47] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset vstar --budgets 1536 --out_csv results/efficiency_hired/b1536/metr
+[11-09 06:47] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset vstar --budgets 1024,2048,3072 --out_csv results/efficiency_hired/
+[11-09 06:49] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset hrbench_8k --budgets 1024,1536,2048,2560,3072 --out_csv results/ef
+[11-09 06:55] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --dataset vstar --budgets 2560 --out_csv results/efficiency_hired/b2560/metr
+[11-09 06:58] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-4B --dataset docvqa --budgets 1536 --out_
+[11-09 07:00] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-4B --dataset mme_rw_lite --budgets 1536 -
+[11-09 07:04] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-4B --dataset vstar --budgets 1536 --out_c
+[11-09 07:04] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-4B --dataset infovqa --budgets 1536 --out
+[11-09 07:06] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-14B --dataset infovqa --budgets 1536 --ou
+[11-09 07:06] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-4B --dataset hrbench_4k --budgets 1536 --
+[11-09 07:09] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-14B --dataset docvqa --budgets 1536 --out
+[11-09 07:09] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-14B --dataset hrbench_4k --budgets 1536 -
+[11-09 07:13] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-14B --dataset mme_rw_lite --budgets 1536 
+[11-09 07:13] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --dataset hrbench_8k --num_images 11 --warmup_images 1 --max_num 7 --budgets 1536 --skip_uncompressed --run_hired --out_csv results/scaling_hi
+[11-09 07:14] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --dataset hrbench_8k --num_images 11 --warmup_images 1 --max_num 25 --budgets 1536 --skip_uncompressed --run_hired --out_csv results/scaling_h
+[11-09 07:15] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --dataset hrbench_8k --num_images 11 --warmup_images 1 --max_num 97 --budgets 1536 --skip_uncompressed --run_hired --out_csv results/scaling_h
+[11-09 07:16] GPU0 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --dataset hrbench_8k --num_images 11 --warmup_images 1 --max_num 201 --budgets 1536 --skip_uncompressed --run_hired --out_csv results/scaling_
+[11-09 07:17] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --num_images 51 --warmup_images 1 --skip_uncompressed --run_hired --model_name OpenGVLab/InternVL3_5-14B --dataset vstar --budgets 1536 --out_
+[11-09 07:20] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --dataset hrbench_8k --num_images 11 --warmup_images 1 --max_num 13 --budgets 1536 --skip_uncompressed --run_hired --out_csv results/scaling_h
+[11-09 07:21] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --dataset hrbench_8k --num_images 11 --warmup_images 1 --max_num 49 --budgets 1536 --skip_uncompressed --run_hired --out_csv results/scaling_h
+[11-09 07:22] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_metrics.py --dataset hrbench_8k --num_images 11 --warmup_images 1 --max_num 145 --budgets 1536 --skip_uncompressed --run_hired --out_csv results/scaling_
+[11-09 07:23] B6：5 個工作
+[11-09 07:23] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_concurrency.py --method hired --max_num 201 --out_csv results/concurrency_hired/n201_hired.csv > logs/runs_hired/conc_n201.log 2>&1
+[11-09 07:29] GPU1 /home/jackjou/.virtualenvs/vlm/bin/python bench_concurrency.py --method hired --max_num 97 --out_csv results/concurrency_hired/n97_hired.csv > logs/runs_hired/conc_n97.log 2>&1
+[11-09 21:06] done

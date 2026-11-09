@@ -174,6 +174,8 @@ def main():
     ap.add_argument("--run_visionzip", action="store_true",
                      help="每個 budget 額外跑一次 VisionZip，跟 foveatile/sparsevlm/fastv 同一組 budget 公平比較")
     ap.add_argument("--visionzip_contextual_ratio", type=float, default=VZ.CONTEXTUAL_RATIO)
+    ap.add_argument("--run_hired", action="store_true",
+                     help="每個 budget 額外跑一次 HiRED（hired_internvl.py，官方 alpha=0.5），同一組 budget 公平比較")
 
     ap.add_argument("--foveatile_m_fracs", default=None,
                     help="逗號分隔的 m/K 比例（例如 0.5,0.75,1.0），每個 budget 各量一次 m = max(1, floor(f*K))；"
@@ -231,6 +233,10 @@ def main():
     fastv_rows = {b: [] for b in budgets} if args.run_fastv else {}
     vz_rows = {b: [] for b in budgets} if args.run_visionzip else {}
     ifprune_rows = {b: [] for b in budgets} if args.run_ifprune else {}
+    hd_rows = {b: [] for b in budgets} if args.run_hired else {}
+    if args.run_hired:
+        import hired_internvl as HD       # lazy import：沒開 --run_hired 時不影響其他方法
+        from internvl_preprocess import dynamic_grid
 
     ifprune_guide = None
     if args.run_ifprune:
@@ -484,6 +490,33 @@ def main():
                 gc.collect()
                 torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
+        # ---- HiRED @ each budget：量法同 VisionZip（token 在進 LLM 前就縮短；ViT 跑全部 tile）----
+        if args.run_hired:
+            grid = dynamic_grid(img, 1, max_num_grid, 448)
+            for b in budgets:
+                hd_tag = f"hired_b{b}"
+                output_results["candidates"].setdefault(hd_tag, [])
+                _peak_reset()
+                _sync()
+                t0 = time.time()
+                HD.generate_hired(model, tokenizer, pv, grid, q, b, vit_batch=args.vit_batch, max_new_tokens=1)
+                _sync()
+                hd_ttft = time.time() - t0
+                answer, hd_stats = HD.generate_hired(model, tokenizer, pv, grid, q, b, vit_batch=args.vit_batch,
+                                                     max_new_tokens=args.max_new_tokens)
+                output_results["candidates"][hd_tag].append(answer)
+                (hd_rows[b] if keep else []).append({
+                    "raw_tiles": n_tiles,
+                    "ttft_s": hd_ttft,
+                    "peak_alloc_gb": _peak_alloc_gb(),
+                    "peak_resv_gb": _peak_resv_gb(),
+                    "vision_s": None,
+                    "kv_cache_mb": hd_stats["kv_cache_mb"],
+                    **_flops(fc, n_tiles, FL.full_segments(fc, tb_q, hd_stats["final_vis_tokens"], ta_q)),
+                })
+                gc.collect()
+                torch.cuda.empty_cache() if torch.cuda.is_available() else None
+
         if (i + 1) % 5 == 0 or i + 1 == len(ds):
             print(f"  [{i + 1}/{len(ds)}] done  (raw_tiles={n_tiles})")
 
@@ -533,6 +566,8 @@ def main():
         if args.run_visionzip:
             out_rows.append(_row(f"visionzip_b{b}", _agg(vz_rows[b], num_keys),
                                   extra=f"ctx_ratio={args.visionzip_contextual_ratio:.4g}"))
+        if args.run_hired:
+            out_rows.append(_row(f"hired_b{b}", _agg(hd_rows[b], num_keys), extra=f"alpha={HD.ALPHA}"))
 
     fields = ["model", "dataset", "method", "n_images", "model_load_peak_gb", "note", "ttft_s_median"]
     fields += [k + "_mean" for k in num_keys] + [k + "_std" for k in num_keys]

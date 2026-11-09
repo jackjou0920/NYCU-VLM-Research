@@ -58,7 +58,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--model_name", default="OpenGVLab/InternVL3_5-8B")
     ap.add_argument("--dataset", default="hrbench_8k")
-    ap.add_argument("--method", required=True, choices=["uncompressed", "foveatile", "fastv", "sparsevlm", "visionzip", "ifprune"])
+    ap.add_argument("--method", required=True, choices=["uncompressed", "foveatile", "fastv", "sparsevlm", "visionzip", "ifprune", "hired"])
     ap.add_argument("--max_num", type=int, default=48)
     ap.add_argument("--budget", type=int, default=1536)
     ap.add_argument("--num_images", type=int, default=11)
@@ -95,6 +95,9 @@ def main():
         req = {"q": d["question"], "img": img,
                "pv": load_image_tiles(img, input_size=448, max_num=max(1, args.max_num - 1))}
         req["tiles"] = req["pv"].shape[0]
+        if args.method == "hired":
+            from internvl_preprocess import dynamic_grid
+            req["grid"] = dynamic_grid(img, 1, max(1, args.max_num - 1), 448)
         reqs.append(req)
     if args.method == "sparsevlm":
         _capture[0] = False
@@ -125,6 +128,9 @@ def main():
         elif args.method == "visionzip":
             VZ.generate_visionzip(model, tokenizer, r["pv"], r["q"], budget=b, contextual_ratio=VZ.CONTEXTUAL_RATIO,
                                   vit_batch=args.vit_batch, max_new_tokens=1)
+        elif args.method == "hired":
+            import hired_internvl as HD
+            HD.generate_hired(model, tokenizer, r["pv"], r["grid"], r["q"], b, vit_batch=args.vit_batch, max_new_tokens=1)
         else:
             IP.generate_ifprune(model, tokenizer, r["pv"], r["q"], guide, budget=b, prune_layer=2,
                                 vit_batch=args.vit_batch, max_new_tokens=1)

@@ -68,6 +68,7 @@ run_job() {   # $1 dataset $2 method $3 budget（uncompressed 給 0）
         fastv)        $PY fastv_internvl.py $common --budget "$b" --run_fastv >> "$log" 2>&1 ;;
         visionzip)    $PY visionzip_internvl.py $common --budget "$b" --run_visionzip >> "$log" 2>&1 ;;
         ifprune)      $PY ifprune_internvl.py $common --budget "$b" --run_ifprune >> "$log" 2>&1 ;;
+        hired)        $PY hired_internvl.py $common --budget "$b" --run_hired >> "$log" 2>&1 ;;
         sparsevlm)
             lam=$($PY sparsevlm_internvl.py --use_ds --dataset "$bds" --num_images "$CALIB_IMAGES" --model_name "$MODEL" --max_num "$MAX_NUM" \
                       --budget "$b" --max_new_tokens 1 --auto_lam --run_sparsevlm 2>&1 | tee -a "$log.calib" \

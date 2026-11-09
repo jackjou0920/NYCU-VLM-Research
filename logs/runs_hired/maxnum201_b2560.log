@@ -1,0 +1,10 @@
+== test suite：1 個工作，GPUS=1 ==
+[11-09 21:51] GPU1 hrbench_8k hired 2560
+
+[hrbench_8k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536        200   41.00                                           
+  hired_budget=2560        200   46.00                                           
+
+[saved] results/runs_hired_maxnum201/summary.csv
+[11-09 22:37] done

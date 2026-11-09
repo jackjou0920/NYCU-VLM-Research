@@ -122,9 +122,9 @@ Overleaf 上傳清單：
 ### 第一級：很可能被審查者點名
 | # | 缺失 | 審查者會問 | 建議做法 | 工作量 | 放哪 | 狀態 |
 |---|---|---|---|---|---|---|
-| 1 | 缺最相近 baseline：HiRED、GlobalCom2（`docs/03` 標為「必要」，checklist 2.1–2.3 未做） | 同樣用全圖資訊分配每塊 tile 的預算，為何不比？ | 至少補 HiRED；時間夠再補 GlobalCom2 | HiRED 約 1 天 + GPU；GlobalCom2 2–4 天 | Supp（11/23）或正文主表 | 未決定 |
+| 1 | 缺最相近 baseline：HiRED、GlobalCom2（`docs/03` 標為「必要」，checklist 2.1–2.3 未做） | 同樣用全圖資訊分配每塊 tile 的預算，為何不比？ | 至少補 HiRED；時間夠再補 GlobalCom2 | HiRED 約 1 天 + GPU；GlobalCom2 2–4 天 | Supp（11/23）或正文主表 | **HiRED 實驗進行中（2026-11-08 開跑）**，見下方「#1 HiRED」；放不放由使用者看完結果決定 |
 | 2 | 缺「直接降解析度到同預算」對照（**2026-11-07 開跑**，設計見下） | Ablation 顯示只用覆蓋 tile（m=K）平均打平且更快，選 tile 機制有何用？ | 測試集補 m=K，至少 HR-Bench 4K、V* Bench；論點聚焦「細節 tile 防止小物件題失敗」 | 低（現有程式 `--coverage_tiles`） | 正文 §5.2 + Supp | **已完成並放進論文（2026-11-08）**，結果見下方 #2 實驗設計之後的「結果」 |
-| 3 | 只有一個模型家族 | 是否只適用 InternVL 的切 tile 架構？ | 不補實驗；在 Limitations 說明適用 tile 式 VLM，並討論原生解析度編碼器（Qwen2-VL）怎麼套用 | 只需寫作 | 正文 | 未決定 |
+| 3 | 只有一個模型家族 | 是否只適用 InternVL 的切 tile 架構？ | 不補實驗；在 Limitations 說明適用 tile 式 VLM，並討論原生解析度編碼器（Qwen2-VL）怎麼套用 | 只需寫作 | 正文 | **已處理（2026-11-08）**：§3.1 加前提句、結論 Limitations 寫 LLaVA-OV 可套用（未評估）、原生解析度不適用 |
 | 4 | 缺 Limitations 段落（結論只有一句） | CVPR 審查表會看限制 | 獨立一段：多輪對話（KV 依問題選 tile，換問題要重選、無法共用 prefix cache）、極小物件 prior 漏掉、約 35 塊以下 TTFT 不比 FastV 快、attention 層號在測試集上選定 | 只需寫作 | 正文 | **已補（2026-11-08）**：結論加 \paragraph{Limitations}，只寫 tile 獨立架構（LLaVA-OV 可套用、未評估；Qwen2-VL 不適用）；多輪、極小物件、延遲三點使用者決定不寫 |
 
 ### #2 實驗設計（2026-11-07 開跑前寫下，結果出來前不改）
@@ -145,11 +145,19 @@ Overleaf 上傳清單：
 - vs Low-Res：b1536 六個資料集全部顯著贏；InfoVQA / MME-RW / V* 每個 budget 都顯著。Low-Res 用不滿預算（平均 1,149 / 1,931 / 1,972 個 token）；b2560 有 41/11,860 題多一個 tile。
 - 論文：主文 §5.2 新段落 `sec:downscale` + `tab:downscale`；Supp `sec/supp_downscale.tex`（`tab:downscale_full`、`tab:downscale_delta`）；§2 第 32 行、§5.1 Baselines、§5.4 消融各加一句引用。表格由 `results/paper/build_downscale_tables.py` 產生。合併檢定（三個小物件資料集合併）使用者決定不放（事後分析）。
 
+### #1 HiRED（2026-11-08）
+- 移植：`hired_internvl.py`，照官方碼（github.com/hasanar1f/HiRED commit c5978a5）：alpha=0.5、第 0 層 CLS attention 的 top-100 patch 決定每塊 sub-image 的 budget、特徵輸出層 CLS attention 選 token。InternVL 逼出來的差異列在檔頭 (a)–(g)；論文 Eq.(1)（連續值總和）與官方碼（top-100 個數）不一致，照官方碼。
+- `bench_metrics.py --run_hired`、`bench_concurrency.py --method hired`、`run_test_suite.sh` 的 `hired` 都已加上。
+- 全部實驗由 `run_hired_all.sh` 依序跑（log `logs/runs_hired/all.log`）：A0 主表 5 資料集 × {1536, 2560, 3072} → A1 補 {1024, 2048} 與 HR-8K × 5 budget → A2 HR-8K 188 塊 → A3 4B / 14B → B1–B5 效率與縮放 → B6 同時常駐請求數。
+- 結果放 `results/runs_hired/`、`results/runs_hired_maxnum201/`、`results/efficiency_hired/`、`results/scaling_hired/`、`results/concurrency_hired/`，還沒接進 `build_paper_results.py`。比較：`python results/paper/analyze_hired.py <B>`。
+- **已放進論文（2026-11-09，使用者決定）**：`build_paper_results.py` 的 METHODS 加 hired（結果仍在獨立資料夾，loader 自動換路徑）；tab_main / memcap / hr8k / scale / analysis、fig_pareto / fig_scaling 重新產生；S7 加 HiRED 段；§1 §3 §4 §5 supp_scale 文字已更新。
+- 全量結果：平均保留率 B=1024…3072 為 72.3 / 78.0 / 82.5 / 85.8 / 89.2（FoveaTile 91.5 / 95.0 / 95.8 / 97.6 / 99.3）；DocVQA、InfoVQA、MME-RW 五個 budget 都顯著輸；HR-4K / HR-8K 只有 B=1024 顯著輸；V* 不顯著。TTFT：tile < 約 38 塊時 HiRED 較快；同時常駐 133–136（FoveaTile 124）。
+
 ### 第二級：補上會明顯加分
 | # | 缺失 | 建議做法 | 工作量 | 放哪 | 狀態 |
 |---|---|---|---|---|---|
 | 5 | 層號在測試集（InfoVQA val）上選定 | 在校準集掃幾組層號，證明不敏感 | 約 1 天 GPU | Supp | 未決定 |
-| 6 | 缺額外 forward 的成本拆解 | TTFT 拆成 ViT / prior / q_attn / prefill（`stats` 已有 `_t_detail_vit`、`_t_qattn`、`_t_commit`） | 低 | Supp | 未決定 |
+| 6 | 缺額外 forward 的成本拆解 | TTFT 拆成 ViT / prior / q_attn / prefill（`stats` 已有 `_t_detail_vit`、`_t_qattn`、`_t_commit`） | 低 | Supp | **已完成（2026-11-08）**：`results/paper/build_ttft_breakdown.py` → `paper/tables/tab_ttft.tex`，Supp `sec/supp_ttft.tex`（CVPR27.tex 接在 supp_downscale 後）；用既有效率量測，不另跑 GPU。正文尚未引用 |
 | 7 | 服務吞吐量只用估算（保留 KV、無 batching） | 誠實說明，或補簡單批次實驗（`docs/03` checklist 4.2） | 寫作或中等 | 正文文字 | 未決定 |
 | 8 | 第 1 頁沒有 teaser | `paper/figures/make_teaser.py` 已有，但占篇幅 | 低（與頁數衝突） | 正文 | 未決定 |
 | 9 | 和 ViCrop、GlobalCom2 的差異不夠清楚 | Related Work 加性質比較表：免訓練 / ViT 前 / 看問題 / KV O(K) / 需額外模型 | 低 | 正文 | 未決定 |

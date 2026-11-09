@@ -1,0 +1,28 @@
+% 由 results/paper/build_ttft_breakdown.py 產生，不要手改
+\begin{table*}[t]
+  \centering
+  \small
+  \setlength{\tabcolsep}{4.5pt}
+  \begin{tabular}{lccccccccccc}
+    \toprule
+    & \multicolumn{5}{c}{(a) Budget $B$ (five benchmarks)} & & \multicolumn{5}{c}{(b) Input tiles (HR-8K)} \\
+    \cmidrule(lr){2-6}\cmidrule(lr){8-12}
+    Stage (ms) & 1024 & 1536 & 2048 & 2560 & 3072 & & 7 & 25 & 78 & 127 & 188 \\
+    \midrule
+    Prefill of $\mathbf{x}_b$ & 41 & 41 & 41 & 41 & 41 & & 41 & 41 & 42 & 42 & 43 \\
+    Vision encoder, coverage tiles & 20 & 22 & 41 & 43 & 65 & & 22 & 22 & 23 & 24 & 23 \\
+    Prior pass & 95 & 101 & 174 & 180 & 246 & & 98 & 99 & 99 & 100 & 99 \\
+    Vision encoder, detail tiles & 62 & 70 & 69 & 86 & 88 & & 68 & 70 & 70 & 71 & 72 \\
+    Boundary scoring ($q_t$) & 172 & 140 & 149 & 118 & 124 & & 129 & 131 & 137 & 132 & 136 \\
+    Prefill of selected tiles & 188 & 290 & 381 & 488 & 580 & & 288 & 291 & 291 & 294 & 292 \\
+    Prefill of $\mathbf{x}_a$ + first token & 42 & 42 & 43 & 43 & 44 & & 42 & 42 & 42 & 42 & 42 \\
+    \midrule
+    \rowcolor{oursbg}
+    TTFT, \method & 623 & 709 & 899 & 1002 & 1191 & & 690 & 699 & 706 & 707 & 710 \\
+    \quad of which selection (prior + $q_t$) & 43\% & 34\% & 36\% & 30\% & 31\% & & 33\% & 33\% & 33\% & 33\% & 33\% \\
+    TTFT, uncompressed & \multicolumn{5}{c}{1740 (independent of $B$)} & & 414 & 1428 & 5258 & 10013 & 17229 \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{TTFT breakdown} of \method on InternVL3.5-8B (mean in ms; the stages add up to the mean TTFT up to about 2\,ms of CPU time). (a) Mean over DocVQA, InfoVQA, MME-RealWorld, HR-Bench 4K, and V$^*$ Bench, 50 images each. (b) HR-Bench 8K with the tile cap raised from 7 to 201, at $B=1536$; columns give the mean number of input tiles including the thumbnail.}
+  \label{tab:ttft}
+\end{table*}

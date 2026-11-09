@@ -1,0 +1,52 @@
+== test suite：10 個工作，GPUS=0 1 ==
+[11-08 14:29] GPU0 vstar hired 2560
+[11-08 14:29] GPU1 vstar hired 3072
+[11-08 14:32] GPU0 hrbench_4k hired 2560
+[11-08 14:33] GPU1 hrbench_4k hired 3072
+[11-08 14:52] GPU0 mme_rw_lite hired 2560
+[11-08 14:53] GPU1 mme_rw_lite hired 3072
+[11-08 15:34] GPU0 infovqa hired 2560
+[11-08 15:38] GPU1 infovqa hired 3072
+[11-08 16:29] GPU0 docvqa hired 2560
+[11-08 16:38] GPU1 docvqa hired 3072
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536        191   72.77                                           
+  hired_budget=2560        191   77.49                                           
+  hired_budget=3072        191   81.68                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536        200   53.50                                           
+  hired_budget=2560        200   58.00                                           
+  hired_budget=3072        200   60.00                                           
+
+[saved] results/runs_hired/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536       1919   45.18                                           
+  hired_budget=2560       1919   48.15                                           
+  hired_budget=3072       1919   49.19                                           
+
+[saved] results/runs_hired/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536       2801   51.56                                           
+  hired_budget=2560       2801   59.24                                           
+  hired_budget=3072       2801   61.84                                           
+
+[saved] results/runs_hired/summary.csv
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536       5349   58.49                                           
+  hired_budget=2560       5349   67.82                                           
+  hired_budget=3072       5349   71.06                                           
+
+[saved] results/runs_hired/summary.csv
+[11-08 18:32] done

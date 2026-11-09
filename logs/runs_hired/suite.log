@@ -1,0 +1,37 @@
+== test suite：5 個工作，GPUS=0 1 ==
+[11-08 12:16] GPU1 hrbench_4k hired 1536
+[11-08 12:16] GPU0 vstar hired 1536
+[11-08 12:19] GPU0 mme_rw_lite hired 1536
+[11-08 12:33] GPU1 infovqa hired 1536
+[11-08 12:56] GPU0 docvqa hired 1536
+
+[vstar]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536        191   72.77                                           
+
+[saved] results/runs_hired/summary.csv
+
+[hrbench_4k]  metric=hrbench_circular  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536        200   53.50                                           
+
+[saved] results/runs_hired/summary.csv
+
+[mme_rw_lite]  metric=mc_accuracy  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536       1919   45.18                                           
+
+[saved] results/runs_hired/summary.csv
+
+[infovqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536       2801   51.56                                           
+
+[saved] results/runs_hired/summary.csv
+
+[docvqa]  metric=anls  Δ = 相對 uncompressed 的配對差（共同題目上，95% CI；* = 顯著）
+  tag                        n   score       Δ            95% CI    TTFT    KV MB
+  hired_budget=1536       5349   58.49                                           
+
+[saved] results/runs_hired/summary.csv
+[11-08 14:28] done
