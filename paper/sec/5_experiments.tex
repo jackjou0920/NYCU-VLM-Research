@@ -67,12 +67,12 @@ within the uncompressed model's own footprint. Without a limit, \method still ha
 about a fifth of the visual tokens, \method retains 95.0\% of the uncompressed accuracy on average, the
 highest of all methods, ahead of IF-Prune (94.9\%), FastV (90.0\%), SparseVLM (85.5\%), HiRED (78.0\%), and VisionZip
 (71.5\%). It needs 5.0$\times$ less memory than the uncompressed model, against 1.5$\times$ for FastV and SparseVLM and
-0.7$\times$ for IF-Prune, and it is 1.6$\times$ faster than IF-Prune. From $B=1536$ upward,
-\method has the highest average accuracy of all methods at every budget, reaching 99.3\% at $B=3072$,
+0.7$\times$ for IF-Prune, and it is 1.6$\times$ faster than IF-Prune. At $B=1536$, 2560, and 3072,
+\method has the highest average accuracy of all methods, reaching 99.3\% at $B=3072$,
 while using the least memory.
 
 \method is strongest where the answer depends on the layout of the whole image. On InfoVQA it is
-significantly better than every baseline at every budget, by 2.1 to 4.3 points over the strongest one,
+significantly better than every baseline from $B=1536$ upward, by 2.1 to 4.3 points over the strongest one,
 and on MME-RealWorld it even exceeds the uncompressed model (significantly at $B=3072$, +1.9 points):
 its high-resolution scenes contain large regions irrelevant to the question, and keeping only the
 coverage view and the question-relevant tiles removes these distractors, which may also explain why more
