@@ -170,15 +170,14 @@ def tab_main():
                     if base and ours is not None:
                         delta, lo, hi, _n = R.paired_delta(ours, unit_scores(d, max(base)[1], b))
                         cells[i] += "$^{\\uparrow}$" if lo > 0 else ("$^{\\downarrow}$" if hi < 0 else "")
-            row2 = " & ".join("{\\scriptsize " + fmt(x) + ("\\%" if x is not None else "") + "}" for x in s["ret"])
-            drop = "" if s["avg"] is None else f"{{\\scriptsize ($\\downarrow${100 - s['avg']:.1f})}}"
+            # 2026-11-10：為了頁數拿掉第二行的各資料集保留率（Avg. 仍是保留率）；完整版在 paper_full_2026-11-10/
             costs = [rank_fmt(s["sx"][k], [S[mm]["sx"][k] for mm, _ in METHODS], 1, X) for k in ("ttft", "mem", "flops")]
             color = "    \\rowcolor{oursbg}\n" if m == "foveatile" else ""
-            L += [f"{color}    {name} & " + " & ".join(cells) + f" & {rank_fmt(s['avg'], [S[mm]['avg'] for mm, _ in METHODS])} & & & \\\\",
-                  f"{color}    & {row2} & {drop} & " + " & ".join(f"\\multirow{{-2}}{{*}}{{{c}}}" for c in costs) + " \\\\"]
+            L += [f"{color}    {name} & " + " & ".join(cells) + f" & {rank_fmt(s['avg'], [S[mm]['avg'] for mm, _ in METHODS])} & "
+                  + " & ".join(costs) + " \\\\"]
     L += ["    \\bottomrule", "  \\end{tabular}",
-          "  \\caption{\\textbf{Accuracy and cost on InternVL3.5-8B.} For each method, the first row is the score on "
-          "each benchmark and the second its percentage of the uncompressed model; Avg.\\ is the mean percentage. "
+          "  \\caption{\\textbf{Accuracy and cost on InternVL3.5-8B.} Scores on each benchmark; Avg.\\ is the mean "
+          "percentage of the uncompressed score over the five benchmarks. "
           "HR-Bench 8K is in \\cref{tab:hr8k}. Cost is the saving relative to the uncompressed model (higher is "
           "better), averaged over the five benchmarks. "
           "$^{\\uparrow}$/$^{\\downarrow}$: \\method is significantly better/worse than the strongest baseline on "

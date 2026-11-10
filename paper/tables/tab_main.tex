@@ -14,54 +14,33 @@
     Uncompressed & 91.4 & 78.7 & 51.6 & 62.0 & 83.8 & 100.0 & 1.0$\times$ & 1.0$\times$ & 1.0$\times$ \\
     \midrule
     \multicolumn{10}{c}{\textit{Budget $B=1536$ visual tokens (default), $\approx$21\% of all visual tokens}} \\
-    FastV~\cite{fastv} & 84.0 & 61.0 & 46.9 & \underline{59.0} & 79.1 & 90.0 & & & \\
-    & {\scriptsize 91.9\%} & {\scriptsize 77.4\%} & {\scriptsize 90.9\%} & {\scriptsize 95.2\%} & {\scriptsize 94.4\%} & {\scriptsize ($\downarrow$10.0)} & \multirow{-2}{*}{2.5$\times$} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{2.9$\times$} \\
-    SparseVLM~\cite{sparsevlm} & 55.1 & 62.2 & \underline{50.2} & \textbf{59.5} & \underline{79.6} & 85.5 & & & \\
-    & {\scriptsize 60.3\%} & {\scriptsize 79.1\%} & {\scriptsize 97.4\%} & {\scriptsize 96.0\%} & {\scriptsize 95.0\%} & {\scriptsize ($\downarrow$14.5)} & \multirow{-2}{*}{2.2$\times$} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{2.4$\times$} \\
-    VisionZip~\cite{visionzip} & 48.7 & 47.6 & 41.7 & 49.0 & 70.2 & 71.5 & & & \\
-    & {\scriptsize 53.3\%} & {\scriptsize 60.4\%} & {\scriptsize 80.9\%} & {\scriptsize 79.0\%} & {\scriptsize 83.8\%} & {\scriptsize ($\downarrow$28.5)} & \multirow{-2}{*}{\underline{2.7$\times$}} & \multirow{-2}{*}{\underline{4.2$\times$}} & \multirow{-2}{*}{\underline{3.2$\times$}} \\
-    HiRED~\cite{hired} & 58.5 & 51.6 & 45.2 & 53.5 & 72.8 & 78.0 & & & \\
-    & {\scriptsize 64.0\%} & {\scriptsize 65.5\%} & {\scriptsize 87.6\%} & {\scriptsize 86.3\%} & {\scriptsize 86.9\%} & {\scriptsize ($\downarrow$22.0)} & \multirow{-2}{*}{\textbf{2.8$\times$}} & \multirow{-2}{*}{3.7$\times$} & \multirow{-2}{*}{\textbf{3.3$\times$}} \\
-    IF-Prune~\cite{ifprune} & \textbf{88.2} & \underline{72.7} & 49.3 & 57.5 & \textbf{81.7} & \underline{94.9} & & & \\
-    & {\scriptsize 96.5\%} & {\scriptsize 92.3\%} & {\scriptsize 95.6\%} & {\scriptsize 92.7\%} & {\scriptsize 97.5\%} & {\scriptsize ($\downarrow$5.1)} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{0.7$\times$} & \multirow{-2}{*}{1.8$\times$} \\
+    FastV~\cite{fastv} & 84.0 & 61.0 & 46.9 & \underline{59.0} & 79.1 & 90.0 & 2.5$\times$ & 1.5$\times$ & 2.9$\times$ \\
+    SparseVLM~\cite{sparsevlm} & 55.1 & 62.2 & \underline{50.2} & \textbf{59.5} & \underline{79.6} & 85.5 & 2.2$\times$ & 1.5$\times$ & 2.4$\times$ \\
+    VisionZip~\cite{visionzip} & 48.7 & 47.6 & 41.7 & 49.0 & 70.2 & 71.5 & \underline{2.7$\times$} & \underline{4.2$\times$} & \underline{3.2$\times$} \\
+    HiRED~\cite{hired} & 58.5 & 51.6 & 45.2 & 53.5 & 72.8 & 78.0 & \textbf{2.8$\times$} & 3.7$\times$ & \textbf{3.3$\times$} \\
+    IF-Prune~\cite{ifprune} & \textbf{88.2} & \underline{72.7} & 49.3 & 57.5 & \textbf{81.7} & \underline{94.9} & 1.5$\times$ & 0.7$\times$ & 1.8$\times$ \\
     \rowcolor{oursbg}
-    \method (ours) & \underline{87.0}$^{\downarrow}$ & \textbf{74.8}$^{\uparrow}$ & \textbf{52.1}$^{\uparrow}$ & 56.5 & 77.5 & \textbf{95.0} & & & \\
-    \rowcolor{oursbg}
-    & {\scriptsize 95.2\%} & {\scriptsize 95.0\%} & {\scriptsize 100.9\%} & {\scriptsize 91.1\%} & {\scriptsize 92.5\%} & {\scriptsize ($\downarrow$5.0)} & \multirow{-2}{*}{2.4$\times$} & \multirow{-2}{*}{\textbf{5.0$\times$}} & \multirow{-2}{*}{\underline{3.2$\times$}} \\
+    \method (ours) & \underline{87.0}$^{\downarrow}$ & \textbf{74.8}$^{\uparrow}$ & \textbf{52.1}$^{\uparrow}$ & 56.5 & 77.5 & \textbf{95.0} & 2.4$\times$ & \textbf{5.0$\times$} & \underline{3.2$\times$} \\
     \midrule
     \multicolumn{10}{c}{\textit{Budget $B=2560$ visual tokens, $\approx$35\% of all visual tokens}} \\
-    FastV~\cite{fastv} & \underline{89.6} & 70.5 & 50.1 & \underline{59.0} & \underline{81.7} & 95.5 & & & \\
-    & {\scriptsize 98.0\%} & {\scriptsize 89.5\%} & {\scriptsize 97.2\%} & {\scriptsize 95.2\%} & {\scriptsize 97.5\%} & {\scriptsize ($\downarrow$4.5)} & \multirow{-2}{*}{2.0$\times$} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{2.2$\times$} \\
-    SparseVLM~\cite{sparsevlm} & 69.8 & 71.1 & \underline{51.8} & 57.0 & 81.2 & 91.2 & & & \\
-    & {\scriptsize 76.4\%} & {\scriptsize 90.3\%} & {\scriptsize 100.4\%} & {\scriptsize 91.9\%} & {\scriptsize 96.9\%} & {\scriptsize ($\downarrow$8.8)} & \multirow{-2}{*}{1.7$\times$} & \multirow{-2}{*}{1.4$\times$} & \multirow{-2}{*}{1.8$\times$} \\
-    VisionZip~\cite{visionzip} & 62.8 & 57.9 & 45.9 & 57.5 & 76.4 & 83.0 & & & \\
-    & {\scriptsize 68.8\%} & {\scriptsize 73.5\%} & {\scriptsize 89.0\%} & {\scriptsize 92.7\%} & {\scriptsize 91.2\%} & {\scriptsize ($\downarrow$17.0)} & \multirow{-2}{*}{\underline{2.1$\times$}} & \multirow{-2}{*}{\underline{2.8$\times$}} & \multirow{-2}{*}{\underline{2.4$\times$}} \\
-    HiRED~\cite{hired} & 67.8 & 59.2 & 48.2 & 58.0 & 77.5 & 85.8 & & & \\
-    & {\scriptsize 74.2\%} & {\scriptsize 75.2\%} & {\scriptsize 93.3\%} & {\scriptsize 93.5\%} & {\scriptsize 92.5\%} & {\scriptsize ($\downarrow$14.2)} & \multirow{-2}{*}{\textbf{2.2$\times$}} & \multirow{-2}{*}{2.6$\times$} & \multirow{-2}{*}{\textbf{2.5$\times$}} \\
-    IF-Prune~\cite{ifprune} & \underline{89.6} & \underline{74.8} & 49.9 & \textbf{59.5} & \textbf{83.8} & \underline{97.1} & & & \\
-    & {\scriptsize 98.0\%} & {\scriptsize 95.0\%} & {\scriptsize 96.8\%} & {\scriptsize 96.0\%} & {\scriptsize 100.0\%} & {\scriptsize ($\downarrow$2.9)} & \multirow{-2}{*}{1.3$\times$} & \multirow{-2}{*}{0.7$\times$} & \multirow{-2}{*}{1.5$\times$} \\
+    FastV~\cite{fastv} & \underline{89.6} & 70.5 & 50.1 & \underline{59.0} & \underline{81.7} & 95.5 & 2.0$\times$ & 1.5$\times$ & 2.2$\times$ \\
+    SparseVLM~\cite{sparsevlm} & 69.8 & 71.1 & \underline{51.8} & 57.0 & 81.2 & 91.2 & 1.7$\times$ & 1.4$\times$ & 1.8$\times$ \\
+    VisionZip~\cite{visionzip} & 62.8 & 57.9 & 45.9 & 57.5 & 76.4 & 83.0 & \underline{2.1$\times$} & \underline{2.8$\times$} & \underline{2.4$\times$} \\
+    HiRED~\cite{hired} & 67.8 & 59.2 & 48.2 & 58.0 & 77.5 & 85.8 & \textbf{2.2$\times$} & 2.6$\times$ & \textbf{2.5$\times$} \\
+    IF-Prune~\cite{ifprune} & \underline{89.6} & \underline{74.8} & 49.9 & \textbf{59.5} & \textbf{83.8} & \underline{97.1} & 1.3$\times$ & 0.7$\times$ & 1.5$\times$ \\
     \rowcolor{oursbg}
-    \method (ours) & \textbf{90.1} & \textbf{78.6}$^{\uparrow}$ & \textbf{52.2} & 58.0 & 79.6 & \textbf{97.6} & & & \\
-    \rowcolor{oursbg}
-    & {\scriptsize 98.5\%} & {\scriptsize 99.8\%} & {\scriptsize 101.1\%} & {\scriptsize 93.5\%} & {\scriptsize 95.0\%} & {\scriptsize ($\downarrow$2.4)} & \multirow{-2}{*}{1.7$\times$} & \multirow{-2}{*}{\textbf{3.6$\times$}} & \multirow{-2}{*}{2.2$\times$} \\
+    \method (ours) & \textbf{90.1} & \textbf{78.6}$^{\uparrow}$ & \textbf{52.2} & 58.0 & 79.6 & \textbf{97.6} & 1.7$\times$ & \textbf{3.6$\times$} & 2.2$\times$ \\
     \midrule
     \multicolumn{10}{c}{\textit{Budget $B=3072$ visual tokens, $\approx$42\% of all visual tokens}} \\
-    FastV~\cite{fastv} & \textbf{90.8} & 73.6 & 49.7 & \textbf{61.0} & \underline{82.7} & 97.2 & & & \\
-    & {\scriptsize 99.4\%} & {\scriptsize 93.5\%} & {\scriptsize 96.3\%} & {\scriptsize 98.4\%} & {\scriptsize 98.7\%} & {\scriptsize ($\downarrow$2.8)} & \multirow{-2}{*}{\underline{1.8$\times$}} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{\underline{2.0$\times$}} \\
-    SparseVLM~\cite{sparsevlm} & 69.8 & 72.5 & \underline{51.0} & 57.0 & \textbf{83.8} & 91.8 & & & \\
-    & {\scriptsize 76.3\%} & {\scriptsize 92.1\%} & {\scriptsize 98.8\%} & {\scriptsize 91.9\%} & {\scriptsize 100.0\%} & {\scriptsize ($\downarrow$8.2)} & \multirow{-2}{*}{1.5$\times$} & \multirow{-2}{*}{1.3$\times$} & \multirow{-2}{*}{1.6$\times$} \\
-    VisionZip~\cite{visionzip} & 68.8 & 61.8 & 47.4 & 56.5 & 78.5 & 86.1 & & & \\
-    & {\scriptsize 75.3\%} & {\scriptsize 78.5\%} & {\scriptsize 91.9\%} & {\scriptsize 91.1\%} & {\scriptsize 93.8\%} & {\scriptsize ($\downarrow$13.9)} & \multirow{-2}{*}{\textbf{1.9$\times$}} & \multirow{-2}{*}{\underline{2.4$\times$}} & \multirow{-2}{*}{\textbf{2.2$\times$}} \\
-    HiRED~\cite{hired} & 71.1 & 61.8 & 49.2 & \underline{60.0} & 81.7 & 89.2 & & & \\
-    & {\scriptsize 77.7\%} & {\scriptsize 78.5\%} & {\scriptsize 95.4\%} & {\scriptsize 96.8\%} & {\scriptsize 97.5\%} & {\scriptsize ($\downarrow$10.8)} & \multirow{-2}{*}{\textbf{1.9$\times$}} & \multirow{-2}{*}{2.3$\times$} & \multirow{-2}{*}{\textbf{2.2$\times$}} \\
-    IF-Prune~\cite{ifprune} & 90.1 & \underline{75.1} & 49.8 & \textbf{61.0} & 82.2 & \underline{97.4} & & & \\
-    & {\scriptsize 98.5\%} & {\scriptsize 95.4\%} & {\scriptsize 96.5\%} & {\scriptsize 98.4\%} & {\scriptsize 98.1\%} & {\scriptsize ($\downarrow$2.6)} & \multirow{-2}{*}{1.2$\times$} & \multirow{-2}{*}{0.7$\times$} & \multirow{-2}{*}{1.4$\times$} \\
+    FastV~\cite{fastv} & \textbf{90.8} & 73.6 & 49.7 & \textbf{61.0} & \underline{82.7} & 97.2 & \underline{1.8$\times$} & 1.5$\times$ & \underline{2.0$\times$} \\
+    SparseVLM~\cite{sparsevlm} & 69.8 & 72.5 & \underline{51.0} & 57.0 & \textbf{83.8} & 91.8 & 1.5$\times$ & 1.3$\times$ & 1.6$\times$ \\
+    VisionZip~\cite{visionzip} & 68.8 & 61.8 & 47.4 & 56.5 & 78.5 & 86.1 & \textbf{1.9$\times$} & \underline{2.4$\times$} & \textbf{2.2$\times$} \\
+    HiRED~\cite{hired} & 71.1 & 61.8 & 49.2 & \underline{60.0} & 81.7 & 89.2 & \textbf{1.9$\times$} & 2.3$\times$ & \textbf{2.2$\times$} \\
+    IF-Prune~\cite{ifprune} & 90.1 & \underline{75.1} & 49.8 & \textbf{61.0} & 82.2 & \underline{97.4} & 1.2$\times$ & 0.7$\times$ & 1.4$\times$ \\
     \rowcolor{oursbg}
-    \method (ours) & \underline{90.3} & \textbf{79.4}$^{\uparrow}$ & \textbf{53.5}$^{\uparrow}$ & 59.5 & 81.7 & \textbf{99.3} & & & \\
-    \rowcolor{oursbg}
-    & {\scriptsize 98.8\%} & {\scriptsize 100.8\%} & {\scriptsize 103.6\%} & {\scriptsize 96.0\%} & {\scriptsize 97.5\%} & {\scriptsize ($\downarrow$0.7)} & \multirow{-2}{*}{1.4$\times$} & \multirow{-2}{*}{\textbf{2.7$\times$}} & \multirow{-2}{*}{1.8$\times$} \\
+    \method (ours) & \underline{90.3} & \textbf{79.4}$^{\uparrow}$ & \textbf{53.5}$^{\uparrow}$ & 59.5 & 81.7 & \textbf{99.3} & 1.4$\times$ & \textbf{2.7$\times$} & 1.8$\times$ \\
     \bottomrule
   \end{tabular}
-  \caption{\textbf{Accuracy and cost on InternVL3.5-8B.} For each method, the first row is the score on each benchmark and the second its percentage of the uncompressed model; Avg.\ is the mean percentage. HR-Bench 8K is in \cref{tab:hr8k}. Cost is the saving relative to the uncompressed model (higher is better), averaged over the five benchmarks. $^{\uparrow}$/$^{\downarrow}$: \method is significantly better/worse than the strongest baseline on that benchmark (paired bootstrap, 95\%); unmarked differences are not significant. Best compressed result per budget in \textbf{bold}, second \underline{underlined}.}
+  \caption{\textbf{Accuracy and cost on InternVL3.5-8B.} Scores on each benchmark; Avg.\ is the mean percentage of the uncompressed score over the five benchmarks. HR-Bench 8K is in \cref{tab:hr8k}. Cost is the saving relative to the uncompressed model (higher is better), averaged over the five benchmarks. $^{\uparrow}$/$^{\downarrow}$: \method is significantly better/worse than the strongest baseline on that benchmark (paired bootstrap, 95\%); unmarked differences are not significant. Best compressed result per budget in \textbf{bold}, second \underline{underlined}.}
   \label{tab:main}
 \end{table*}

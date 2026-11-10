@@ -7,9 +7,7 @@
 \label{sec:exp}
 
 Our central claim is that the memory and latency of \method do not grow with the input resolution,
-while its accuracy matches the strongest token-pruning methods. \cref{sec:main} compares accuracy under
-memory and token budgets, \cref{sec:scaling} varies the resolution, and \cref{sec:ablation} studies the
-components of \method.
+while its accuracy matches the strongest token-pruning methods.
 
 \input{tables/tab_main}
 
@@ -58,9 +56,7 @@ All \method hyperparameters are fixed on held-out calibration data (\cref{sec:im
 The number of high-resolution requests a GPU can serve is bounded by memory, so we first ask which
 accuracy each method reaches within a memory limit (\cref{tab:memcap}). \method is the most accurate
 method under every limit. Within 1\,GB per image, it retains 99.3\% of the uncompressed accuracy, while
-FastV, SparseVLM, and IF-Prune cannot run at any budget, and VisionZip and HiRED reach 86.1\% and 89.2\%. IF-Prune even needs
-more memory than the uncompressed model (3.0 \vs 2.0\,GB), mainly for its guide model, so it does not fit
-within the uncompressed model's own footprint. Without a limit, \method still has the highest accuracy
+FastV, SparseVLM, and IF-Prune cannot run at any budget, and VisionZip and HiRED reach 86.1\% and 89.2\%. Without a limit, \method still has the highest accuracy
 (99.3\% at $B=3072$).
 
 \cref{tab:main} compares all methods at equal token budgets. At the default budget $B=1536$, which keeps
@@ -75,8 +71,7 @@ while using the least memory.
 significantly better than every baseline from $B=1536$ upward, by 2.1 to 4.3 points over the strongest one,
 and on MME-RealWorld it even exceeds the uncompressed model (significantly at $B=3072$, +1.9 points):
 its high-resolution scenes contain large regions irrelevant to the question, and keeping only the
-coverage view and the question-relevant tiles removes these distractors, which may also explain why more
-tiles lower the accuracy of the uncompressed model on HR-Bench 8K (\cref{tab:hr8k}). On HR-Bench and V$^*$ Bench, which ask about
+coverage view and the question-relevant tiles removes these distractors. On HR-Bench and V$^*$ Bench, which ask about
 small objects, \method is within a few points of the best baseline, and none of these differences is
 significant at any budget.
 
@@ -90,14 +85,10 @@ significant at any budget.
   \label{fig:pareto}
 \end{figure}
 
-\cref{fig:pareto} shows the full trade-off over five budgets. In memory, \method has the best curve at every budget: even its largest budget uses less memory than any budget of FastV, SparseVLM,
-or IF-Prune, and its smallest budget uses less memory than any budget of HiRED and is more accurate. In TTFT, \method reaches the highest accuracy of all methods (99.3\% at 1.2\,s), and every
-configuration of IF-Prune and SparseVLM is dominated by a \method configuration that is both faster and
-more accurate: at about the same TTFT as IF-Prune at $B=1536$ (1.2\,s), \method reaches 99.3\% instead
-of 94.9\%, and at $B=1536$ (95.0\%) it is more accurate than IF-Prune at any $B\leq1536$ with about
-0.6$\times$ its TTFT and one seventh of its memory.
-
-\input{tables/tab_downscale}
+\cref{fig:pareto} shows the full trade-off over five budgets. In memory, even the largest budget of \method
+uses less memory than any budget of FastV, SparseVLM, or IF-Prune, and its smallest budget uses less memory
+than any budget of HiRED and is more accurate. In TTFT, \method reaches the highest accuracy of all methods:
+99.3\% at 1.2\,s, about the TTFT of IF-Prune at $B=1536$, which reaches 94.9\%.
 
 \paragraph{Same-budget downscaling.}
 \label{sec:downscale}
@@ -147,10 +138,9 @@ $N$.
 Memory determines how many requests a GPU can serve. We measure this directly: on one A6000 (33\,GB free
 after the 8B weights), we prefill requests one after another, keep the KV cache of each, as if it were
 still decoding, and count the requests that complete before the GPU runs out of memory. \method holds 124
-requests at every resolution, from 7 to 188 tiles. With FastV and IF-Prune this number falls from 103--109
-at 25 tiles to 37--38 at 188 tiles, with SparseVLM to 20, and with the uncompressed model from 32 to 3. At
-188 tiles, \method serves 3.4$\times$ more requests than FastV, 3.3$\times$ more than IF-Prune,
-6.2$\times$ more than SparseVLM, and 41$\times$ more than the uncompressed model.
+requests at every resolution, from 7 to 188 tiles, whereas at 188 tiles FastV and IF-Prune hold 37--38,
+SparseVLM 20, and the uncompressed model 3: \method serves 3.3 to 6.2$\times$ more requests than pruning inside
+the language model and 41$\times$ more than the uncompressed model.
 
 \cref{tab:hr8k} reports accuracy at both resolutions. Splitting the image more finely at a fixed budget
 lowers accuracy for every method, and even for the uncompressed model (56.5 to 49.0). Among the
@@ -176,5 +166,4 @@ small regions. On the test sets, the same variant trails \method by 3.1 to 3.5 p
 7.5 on local-detail questions, so ranking by the prior alone is not enough. Larger windows add TTFT
 without improving accuracy. Finally, replacing the question-aware prior with a random ranking, while
 keeping boundary scoring, costs 9.0 points on average and 14.8 on the worst task: which detail tiles reach
-the window matters most, and the attention of the VLM over the coverage tiles is what finds them. These accuracy results complement the
-recall analysis of \cref{sec:reliability}.
+the window matters most, and the attention of the VLM over the coverage tiles is what finds them.

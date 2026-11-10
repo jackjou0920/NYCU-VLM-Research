@@ -1,0 +1,100 @@
+% ── 方法章節的補充引用（2026-10-26 依 arXiv 頁面核對標題與作者）。貼到 Overleaf 的 main.bib ──
+
+% Prior：MLLM 的 attention 在低解析度圖上就指向相關區域
+@inproceedings{vicrop,
+  title     = {{MLLMs} Know Where to Look: Training-free Perception of Small Visual Details with Multimodal {LLMs}},
+  author    = {Zhang, Jiarui and Khayatkhoei, Mahyar and Chhikara, Prateek and Ilievski, Filip},
+  booktitle = ICLR,
+  year      = {2025}
+}
+
+% Prior 用中後段層：影像資訊在中間層流向問題 token
+@inproceedings{crossmodalflow,
+  title     = {Cross-modal Information Flow in Multimodal Large Language Models},
+  author    = {Zhang, Zhi and Yadav, Srishti and Han, Fengze and Shutova, Ekaterina},
+  booktitle = CVPR,
+  year      = {2025}
+}
+
+% Zoom-in / visual search：需要多次 forward 或額外模型
+@inproceedings{vstar,
+  title     = {{V*}: Guided Visual Search as a Core Mechanism in Multimodal {LLMs}},
+  author    = {Wu, Penghao and Xie, Saining},
+  booktitle = CVPR,
+  year      = {2024}
+}
+
+@inproceedings{zoomeye,
+  title     = {{ZoomEye}: Enhancing Multimodal {LLMs} with Human-Like Zooming Capabilities through Tree-Based Image Exploration},
+  author    = {Shen, Haozhan and Zhao, Kangjia and Zhao, Tiancheng and Xu, Ruochen and Zhang, Zilun and Zhu, Mingwei and Yin, Jianwei},
+  booktitle = {EMNLP},
+  year      = {2025}
+}
+
+@inproceedings{dyfo,
+  title     = {{DyFo}: A Training-Free Dynamic Focus Visual Search for Enhancing {LMMs} in Fine-Grained Visual Understanding},
+  author    = {Li, Geng and Xu, Jinglin and Zhao, Yunzhen and Peng, Yuxin},
+  booktitle = CVPR,
+  year      = {2025}
+}
+
+@inproceedings{rap,
+  title     = {Retrieval-Augmented Perception: High-Resolution Image Perception Meets Visual {RAG}},
+  author    = {Wang, Wenbin and Jing, Yongcheng and Ding, Liang and Wang, Yingjie and Shen, Li and Luo, Yong and Du, Bo and Tao, Dacheng},
+  booktitle = {ICML},
+  year      = {2025}
+}
+
+% 全域縮圖引導每塊 crop 的保留量（不看問題、仍編碼所有 crop）
+@inproceedings{hired,
+  title     = {{HiRED}: Attention-Guided Token Dropping for Efficient Inference of High-Resolution Vision-Language Models},
+  author    = {Arif, Kazi Hasan Ibn and Yoon, JinYi and Nikolopoulos, Dimitrios S. and Vandierendonck, Hans and John, Deepu and Ji, Bo},
+  booktitle = AAAI,
+  year      = {2025}
+}
+
+@inproceedings{globalcom2,
+  title     = {Global Compression Commander: Plug-and-Play Inference Acceleration for High-Resolution Large Vision-Language Models},
+  author    = {Liu, Xuyang and Wang, Ziming and Chen, Junjie and Han, Yuhang and Wang, Yingyao and Yuan, Jiale and Song, Jun and Huang, Siteng and Chen, Honggang},
+  booktitle = AAAI,
+  year      = {2026}
+}
+
+% 動態解析度切 tile（InternVL 1.5 起）
+@article{internvl15,
+  title   = {How Far Are We to {GPT-4V}? Closing the Gap to Commercial Multimodal Models with Open-Source Suites},
+  author  = {Chen, Zhe and Wang, Weiyun and Tian, Hao and Ye, Shenglong and Gao, Zhangwei and Cui, Erfei and Tong, Wenwen and Hu, Kongzhi and others},
+  journal = {arXiv preprint arXiv:2404.16821},
+  year    = {2024}
+}
+
+% Boundary scoring：便宜的第一階段排序 + 只對候選做昂貴的重排序
+@article{monobert,
+  title   = {Passage Re-ranking with {BERT}},
+  author  = {Nogueira, Rodrigo and Cho, Kyunghyun},
+  journal = {arXiv preprint arXiv:1901.04085},
+  year    = {2019}
+}
+
+% 前綴 KV 重用、串流有界 KV
+@inproceedings{promptcache,
+  title     = {Prompt Cache: Modular Attention Reuse for Low-Latency Inference},
+  author    = {Gim, In and Chen, Guojun and Lee, Seung-seob and Sarda, Nikhil and Khandelwal, Anurag and Zhong, Lin},
+  booktitle = {MLSys},
+  year      = {2024}
+}
+
+@inproceedings{streamingllm,
+  title     = {Efficient Streaming Language Models with Attention Sinks},
+  author    = {Xiao, Guangxuan and Tian, Yuandong and Chen, Beidi and Han, Song and Lewis, Mike},
+  booktitle = ICLR,
+  year      = {2024}
+}
+
+% 「Foveated」：先看低解析度全貌、再取高解析度 glimpse
+@inproceedings{ram,
+  title     = {Recurrent Models of Visual Attention},
+  author    = {Mnih, Volodymyr and Heess, Nicolas and Graves, Alex and Kavukcuoglu, Koray},
+  booktitle = NIPS,
+  year      = {2014}
+}

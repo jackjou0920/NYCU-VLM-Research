@@ -9,8 +9,7 @@
 Most open VLMs reach near-native resolution by dynamic tiling: the image is split into fixed-size crops
 that are encoded independently and appended with a downscaled global
 view~\cite{monkey,llavauhd,llavanext,internvl15,llavaov,internvl35}; others encode the image at its native
-resolution directly~\cite{qwen2vl}. Either way, the number of visual tokens, and with it the cost of the
-vision encoder, the prefill, and the KV cache, grows linearly with the image area.
+resolution directly~\cite{qwen2vl}. Either way, the number of visual tokens grows with the image area.
 
 \paragraph{Visual token compression.}
 Training-free methods reduce visual tokens either after the vision encoder, using its attention or
@@ -22,11 +21,10 @@ spatial layout of text and small objects.
 
 \paragraph{KV cache compression.}
 For language models, the KV cache is compressed by evicting tokens with low accumulated
-attention~\cite{h2o} or by keeping only attention sinks and a recent window~\cite{streamingllm}, and
-paged memory management packs the caches of many requests on one GPU~\cite{pagedattention}. Eviction
-acts after the cache has been built, so it reduces the memory held during decoding but not the peak of
-prefilling a long visual sequence. \method is complementary: it never builds the full cache, and since
-its cache has a fixed size per request, it fits paged serving directly.
+attention~\cite{h2o} or by keeping attention sinks and a recent window~\cite{streamingllm}, and paged
+memory packs the caches of many requests on one GPU~\cite{pagedattention}. Eviction acts after the cache
+has been built, so it does not reduce the peak of prefilling a long visual sequence. \method never builds
+the full cache, and its fixed-size cache fits paged serving directly.
 
 \paragraph{Zooming and visual search.}
 Downscaling the whole image is not an alternative, since small targets fall below the resolution of a

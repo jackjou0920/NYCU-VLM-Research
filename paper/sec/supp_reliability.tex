@@ -5,7 +5,14 @@
 \section{Details of the reliability analysis}
 \label{sec:reliability_supp}
 
+\input{tables/tab_recall}
+\input{tables/tab_window}
 \input{tables/tab_recall_full}
+
+\cref{tab:recall,tab:window} give the numbers behind \cref{sec:reliability}. Little has to be found: of a median of
+24 detail tiles, one tile covers the target on 78.5\% of the questions, and two tiles on all of them. Boundary scoring
+recovers the targets that the prior alone would miss at 2.0 to 2.7 times the rate of random selection
+(\cref{tab:window}).
 
 \cref{tab:recall_full} extends \cref{tab:recall} to all budgets with saved selections. Boundary scoring only
 reorders the tiles inside the window, so the two values coincide at every $K$ outside the window. The coverage

@@ -5,11 +5,9 @@
 \label{sec:conclusion}
 
 We presented \method, a training-free method that bounds the memory of high-resolution VLMs by
-deciding which tiles to encode before the vision encoder, since token pruning removes tokens only after
-they have been computed. On InternVL3.5, \method keeps 95.0\% of the uncompressed accuracy with
+deciding which tiles to encode before the vision encoder. On InternVL3.5, \method keeps 95.0\% of the uncompressed accuracy with
 5.0$\times$ less memory and is the most accurate method under every memory limit. Its peak memory stays
-constant from 7 to 188 tiles, so one GPU serves 41$\times$ more requests than the uncompressed model,
-and its behavior carries over from 4B to 14B parameters without re-tuning.
+constant from 7 to 188 tiles, so one GPU serves 41$\times$ more requests than the uncompressed model.
 
 \paragraph{Limitations.}
 \method requires a VLM whose vision encoder processes each tile independently, so that the encoder can be

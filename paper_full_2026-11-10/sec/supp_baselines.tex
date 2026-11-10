@@ -1,0 +1,54 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Supplementary: baseline ports. Matches the header notes of fastv/sparsevlm/visionzip/hired/ifprune_internvl.py and run_test_suite.sh.
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Baseline implementation}
+\label{sec:baselines}
+
+We ported each baseline to InternVL3.5 from its official code and kept the selection algorithm and official
+hyperparameters. All methods share the prompts, the tiling, the greedy decoding, and the measurement code. Budget
+$B$ always means the number of visual tokens left in the KV cache, so a method keeps $\min(B,\text{all tokens})$.
+The points below are the only decisions that the official code does not determine.
+
+\paragraph{FastV~\cite{fastv}.}
+We follow the official in-place variant: at layer 2, the attention of the last token ranks the visual tokens, the top
+$B$ are kept, and the sequence is actually shortened, with the original position ids retained. The official in-place
+code does not support a KV cache, so we added multi-token decoding with per-layer cache lengths. The pruning
+decision is unchanged.
+
+\paragraph{SparseVLM~\cite{sparsevlm}.}
+We implement the rank-based removal of the paper at the official relative depths (layers 2, 6, and 15 of 32, scaled
+to the depth of the model). The paper publishes no value of $\lambda$, so for each benchmark and budget we search the
+smallest $\lambda$ for which the three stages alone reach between $B$ and $1.5B$ tokens, and use the median over 32
+images. This step uses only token counts, not answers; images that need no compression are excluded. Remaining
+excess tokens are clipped at the final stage. An image with at most $B$ tokens is not pruned ($\lambda=0$), as for
+all other methods; the official experiments use a fixed input that always exceeds the budget, so the official code has
+no such case.
+
+\paragraph{VisionZip~\cite{visionzip}.}
+Dominant and contextual tokens are computed per tile in the feature layer of the vision encoder. The contextual
+share of 5/32 reproduces all pairs in the tables of the paper, and we apply it to other sizes as well. The official API
+takes the numbers per crop, so we split $B$ evenly over the tiles. InternVL merges $2\times2$ patches by pixel shuffle before the
+projector, so tokens are selected and merged after pixel shuffle and before the projector, averaging scores and keys in
+each group as in the official Qwen2.5-VL code. The CLS token serves only as the query, since InternVL drops it.
+
+\paragraph{HiRED~\cite{hired}.}
+We follow the official code, with the official $\alpha=0.5$. The thumbnail receives $\min(\lfloor\alpha B\rfloor,256)$
+tokens. The budget of each other tile is proportional to the number of top attention patches of the thumbnail that
+fall inside it, taken from the CLS attention of the first layer; here the official code counts patches, whereas
+Eq.~(1) of the paper sums the attention, and we keep the code, which produced the published numbers. Budgets are
+rounded down and capped at 256 tokens per tile, as in the official code, so a few tokens of the budget can remain
+unused. In each tile, the tokens with the highest CLS attention in the feature layer are kept in their original order.
+The following points are specific to InternVL. Scores of the $2\times2$ groups merged by pixel shuffle are averaged,
+and selection happens before the projector. The feature layer is the last layer, since InternVL uses the last layer as
+its output. Each tile has 1{,}024 patches instead of 576, so the official top 100 becomes the same fraction, 178
+patches. The tile grids do not always divide the patch grid evenly, so each patch is assigned to the tile that
+contains it, which is identical to the official code when they do. InternVL places the thumbnail last, and an image with a
+single tile has no thumbnail, so that tile receives the whole budget. The official budget is a fraction of the tokens,
+and we use the absolute $B$ as for all other methods.
+
+\paragraph{IF-Prune~\cite{ifprune}.}
+We load the released guide model (InternVL2.5-1B with its LoRA and importance head) without retraining. It runs once on
+all tiles and the question, as in the official evaluation code, and the main model keeps the top $B$ tokens at layer
+2, which corresponds to a keep ratio of $B$ divided by the number of tokens. Prefill and decoding follow our FastV
+path. The official experiments use InternVL2 main models, so applying the guide to InternVL3.5 is an extrapolation of
+their cross-model result. Both models produce 256 tokens per tile in the same order. Memory and TTFT include the guide model.

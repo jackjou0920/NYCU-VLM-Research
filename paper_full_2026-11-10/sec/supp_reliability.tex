@@ -1,0 +1,35 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Supplementary: details of Sec. 3.2. tab_recall_full.tex and the numbers here come from paper/figures/make_recall_figure.py
+% and results/diagnostics/vstar_selection/ (post-hoc analysis of frozen v1.0, V* Bench only).
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Details of the reliability analysis}
+\label{sec:reliability_supp}
+
+\input{tables/tab_recall_full}
+
+\cref{tab:recall_full} extends \cref{tab:recall} to all budgets with saved selections. Boundary scoring only
+reorders the tiles inside the window, so the two values coincide at every $K$ outside the window. The coverage
+view, and thus the prior, changes with the budget because $m=\lfloor K/2\rfloor$. Hits follow the definition of
+\cref{sec:reliability}. In this table, the top of the refined ranking consists of the directly kept tiles in
+prior order, followed by the window in the order of $q_t$ and the remaining tiles in prior order.
+
+\paragraph{Why the top of the ranking needs a second stage.}
+At $B=1536$, the first-ranked tile of the prior is the same as with the neutral question ``Describe this
+image.'' on 90.6\% of the questions, and the same as with the swapped question on 91.6\%; the median
+correlation between the prior with the real and the neutral question is 0.93. This tile falls into the top
+quarter of the image on 63.4\% of the questions (62.3\%, 82.7\%, and 82.2\% at $B=1024$, $2048$, and $3072$), whereas
+the top quarter holds the center of a target on only 4.7\% of the questions. The dependence on the question
+therefore shows below the first rank, which is where the prior separates from the swapped-question prior
+in \cref{fig:recall}. We have not established the cause of this pattern, and we did not change the method in
+response to it.
+
+\paragraph{Upper bound of the scorer.}
+If $q_t$ is computed for all detail tiles, its first-ranked tile covers the target on 56.5\% of the questions,
+and its top $k$ tiles on 84.8\%, against 71.2\% for the selection of \method at $B=1536$. This requires encoding
+every tile and thus gives up the bound on compute, so it serves only as a reference. The neutral question
+reaches a Recall@5 of 22.0\%, close to a center-first ranking (22.5\%), and the swapped question 49.2\%.
+
+\paragraph{Target size.}
+Measured in the coverage tiles at $B=1536$, 63.4\% of the questions have a target whose short side is below one
+ViT patch (14\,px). Boundary scoring raises the hit rate from 59.5\% to 66.9\% on these questions, and from 77.1\%
+to 78.6\% on the others.

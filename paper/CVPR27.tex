@@ -64,14 +64,28 @@ First line of institution2 address\\
 \renewcommand{\thepage}{S\arabic{page}}
 \setcounter{section}{0}
 \setcounter{table}{0}
+\setcounter{figure}{0}
+\setcounter{algorithm}{0}
 \renewcommand{\thesection}{S\arabic{section}}
 \renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thealgorithm}{S\arabic{algorithm}}
 \renewcommand{\theHsection}{S\arabic{section}}
 \renewcommand{\theHtable}{S\arabic{table}}
+\renewcommand{\theHfigure}{S\arabic{figure}}
+\renewcommand{\theHalgorithm}{S\arabic{algorithm}}
 % Top-align full-width tables on float pages instead of centering them vertically.
 \makeatletter\setlength{\@dblfptop}{0pt}\makeatother
 \maketitlesupplementary
-% Single-column table first: a deferred table* would hold it back and leave a blank column.
+% Column-width floats may stay where they are defined (the [t] of the shared table files would push them to the
+% tops of later columns, away from their sections); full-width tables still go to the top of a page.
+\let\origtable\table \let\endorigtable\endtable
+\renewenvironment{table}[1][]{\origtable[!htbp]}{\endorigtable}
+\let\origfigure\figure \let\endorigfigure\endfigure
+\renewenvironment{figure}[1][]{\origfigure[!htbp]}{\endorigfigure}
+\let\origalgorithm\algorithm \let\endorigalgorithm\endalgorithm
+\renewenvironment{algorithm}[1][]{\origalgorithm[!htbp]}{\endorigalgorithm}
+\input{sec/supp_method}
 \input{sec/supp_analysis}
 \input{sec/supp_reliability}
 \input{sec/supp_scale}

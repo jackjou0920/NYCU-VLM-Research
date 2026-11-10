@@ -1,0 +1,45 @@
+\begin{table*}[t]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{l c ccc ccc ccc}
+    \toprule
+    & & \multicolumn{3}{c}{$B=1536$} & \multicolumn{3}{c}{$B=2560$} & \multicolumn{3}{c}{$B=3072$} \\
+    \cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(lr){9-11}
+    Benchmark & Unc. & Low-Res & Fill & Ours & Low-Res & Fill & Ours & Low-Res & Fill & Ours \\
+    \midrule
+    DocVQA & 91.4 & 85.3 & \textbf{89.8} & 87.0 & 90.0 & 89.8 & \textbf{90.1} & 90.1 & \textbf{91.2} & 90.3 \\
+    InfoVQA & 78.7 & 67.3 & 73.6 & \textbf{74.8} & 73.2 & 77.8 & \textbf{78.6} & 74.0 & 78.8 & \textbf{79.4} \\
+    MME-RW & 51.6 & 45.5 & 49.9 & \textbf{52.1} & 50.2 & 49.9 & \textbf{52.2} & 50.2 & 51.0 & \textbf{53.5} \\
+    HR-4K & 62.0 & 47.5 & 51.5 & \textbf{56.5} & 55.0 & 54.5 & \textbf{58.0} & 55.5 & 56.5 & \textbf{59.5} \\
+    V$^*$ & 83.8 & 64.9 & 72.8 & \textbf{77.5} & 72.8 & 74.3 & \textbf{79.6} & 72.8 & 76.4 & \textbf{81.7} \\
+    HR-8K & 56.5 & 37.5 & 44.0 & \textbf{52.0} & 45.5 & 47.0 & \textbf{52.5} & 46.0 & 50.0 & \textbf{52.5} \\
+    \midrule
+    Low-Res tokens & -- & \multicolumn{3}{c}{1{,}149 / 1{,}536} & \multicolumn{3}{c}{1{,}931 / 2{,}560} & \multicolumn{3}{c}{1{,}972 / 3{,}072} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Same-budget downscaling: scores.} Fill: Low-Res-Fill ($m{=}K$). Low-Res tokens: average number of visual tokens used by Low-Res over the five benchmarks of \cref{tab:main}, against the budget; Low-Res-Fill and \method use exactly $B$.}
+  \label{tab:downscale_full}
+\end{table*}
+
+\begin{table*}[t]
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{2.4pt}
+  \begin{tabular}{l cc cc cc}
+    \toprule
+    & \multicolumn{2}{c}{$B=1536$} & \multicolumn{2}{c}{$B=2560$} & \multicolumn{2}{c}{$B=3072$} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+    Benchmark & vs.\ Fill & vs.\ Low-Res & vs.\ Fill & vs.\ Low-Res & vs.\ Fill & vs.\ Low-Res \\
+    \midrule
+    DocVQA & $-$2.7\,[$-$3.6,\,$-$1.9] & \textbf{+1.7\,[+0.8,\,+2.6]} & +0.3\,[$-$0.5,\,+1.0] & +0.1\,[$-$0.6,\,+0.8] & $-$0.9\,[$-$1.5,\,$-$0.2] & +0.2\,[$-$0.5,\,+0.8] \\
+    InfoVQA & +1.2\,[$-$0.3,\,+2.6] & \textbf{+7.6\,[+6.1,\,+9.1]} & +0.8\,[$-$0.5,\,+2.1] & \textbf{+5.4\,[+4.0,\,+6.8]} & +0.6\,[$-$0.7,\,+1.7] & \textbf{+5.3\,[+4.0,\,+6.6]} \\
+    MME-RW & \textbf{+2.2\,[+0.4,\,+4.0]} & \textbf{+6.6\,[+4.7,\,+8.4]} & \textbf{+2.3\,[+0.6,\,+3.9]} & \textbf{+1.9\,[+0.2,\,+3.8]} & \textbf{+2.5\,[+0.9,\,+4.1]} & \textbf{+3.2\,[+1.5,\,+5.0]} \\
+    HR-4K & +5.0\,[$-$1.5,\,+12.0] & \textbf{+9.0\,[+2.5,\,+15.5]} & +3.5\,[$-$2.0,\,+9.5] & +3.0\,[$-$2.5,\,+8.5] & +3.0\,[$-$3.0,\,+8.5] & +4.0\,[$-$1.5,\,+9.0] \\
+    V$^*$ & +4.7\,[$-$1.0,\,+11.0] & \textbf{+12.6\,[+5.2,\,+19.9]} & +5.2\,[$-$1.0,\,+12.0] & \textbf{+6.8\,[+1.0,\,+13.1]} & +5.2\,[$-$0.5,\,+11.5] & \textbf{+8.9\,[+2.6,\,+15.2]} \\
+    HR-8K & \textbf{+8.0\,[+0.5,\,+15.0]} & \textbf{+14.5\,[+7.5,\,+22.0]} & +5.5\,[$-$1.0,\,+12.0] & +7.0\,[+0.0,\,+13.5] & +2.5\,[$-$3.0,\,+8.0] & +6.5\,[+0.0,\,+12.5] \\
+    \bottomrule
+  \end{tabular}
+  \caption{\textbf{Same-budget downscaling: paired differences} (\method minus baseline, points) with 95\% paired bootstrap intervals (2{,}000 resamples; HR-Bench resamples CircularEval groups). Bold: the interval excludes zero in favor of \method.}
+  \label{tab:downscale_delta}
+\end{table*}

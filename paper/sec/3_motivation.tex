@@ -5,46 +5,28 @@
 \section{Background and Motivation}
 \label{sec:motivation}
 
-High-resolution VLMs pay for the whole image, although the answer usually lies in a small part of it. We
-first show where this cost comes from and why token pruning does not remove it, and then ask whether a
-low-resolution view is enough to find the regions that matter.
-
 % ─────────────────────────────────────────────────────────────────────────────
 \subsection{Where the cost of high resolution comes from}
 \label{sec:prelim}
 
 We build on dynamic-resolution VLMs~\cite{internvl15}, using InternVL3.5~\cite{internvl35} as the running
-example.
-An image of size $W\times H$ is resized to a grid of $c\times r$ tiles of $448\times448$ pixels, where
-$(c, r)$ is the grid whose aspect ratio is closest to $W/H$ subject to $N=cr\le N_{\max}$; a global
-thumbnail is appended when $N>1$. Each tile is encoded independently by the vision encoder, and
-pixel shuffle followed by an MLP projector turns it into $n=256$ visual tokens. \method relies on this
-independence, which other tile-based VLMs such as LLaVA-OneVision~\cite{llavaov} share. The language model
-then prefills the sequence
-\begin{equation}
-  [\,\mathbf{x}_b;\ \mathbf{V}_1;\ \dots;\ \mathbf{V}_{N+1};\ \mathbf{x}_a\,],
-  \label{eq:seq}
-\end{equation}
-where $\mathbf{x}_b$ is the text before the image (system prompt and user prefix), $\mathbf{V}_t\in
-\mathbb{R}^{n\times d}$ are the tokens of tile $t$, and $\mathbf{x}_a$ is the question, the answer
-instruction, and the assistant prefix.
+example. An image is resized to a grid of $c\times r$ tiles of $448\times448$ pixels whose aspect ratio is
+closest to that of the image, with $N=cr\le N_{\max}$, and a global thumbnail is appended when $N>1$. Each
+tile is encoded independently and turned into $n=256$ visual tokens by pixel shuffle and an MLP projector.
+\method relies on this independence, which other tile-based VLMs such as LLaVA-OneVision~\cite{llavaov}
+share. The language model then prefills $[\,\mathbf{x}_b;\ \mathbf{V}_1;\ \dots;\ \mathbf{V}_{N+1};\
+\mathbf{x}_a\,]$, where $\mathbf{x}_b$ is the text before the image, $\mathbf{V}_t\in\mathbb{R}^{n\times d}$
+are the tokens of tile $t$, and $\mathbf{x}_a$ is the question with the answer prefix. Vision-encoder
+compute, prefill, and the KV cache all grow with $N$, the attention of prefill even as $\mathcal{O}(N^2)$.
+With $N_{\max}=47$, a 4K image already yields 24 to 45 tiles; without a cap, an 8K image yields 188 tiles
+(48K visual tokens).
 
-Every stage of this pipeline grows with $N$: vision-encoder compute is $\mathcal{O}(N)$, the prefill
-of the language model is $\mathcal{O}(N)$ in its linear layers and $\mathcal{O}(N^2)$ in attention, and
-the KV cache is $\mathcal{O}(N)$. With the cap $N_{\max}=47$ used in our experiments, a 4K image already
-yields 24 to 45 tiles (6K to 12K visual tokens); without a cap, an 8K image yields 188 tiles (48K
-visual tokens).
-Token-pruning methods remove tokens \emph{after} they are computed. VisionZip~\cite{visionzip} and HiRED~\cite{hired} prune
-after the vision encoder, so the encoder still sees all $N$ tiles. FastV~\cite{fastv},
-SparseVLM~\cite{sparsevlm}, and IF-Prune~\cite{ifprune} prune inside the language model, so the
-encoder and the first layers still process all $nN$ tokens, and the peak memory of prefill is still
-set by $N$.
-
-Cost therefore follows the input, not what is kept. On HR-Bench 8K with 188 tiles and $B=1536$, FastV,
-SparseVLM, and IF-Prune keep only 3.2\% of the 48K visual tokens, yet they need more than 8\,GB of memory
-and 3.2 to 7.0\,s to the first token. VisionZip and HiRED stay below 1\,GB but still encode all 188 tiles
-(\cref{tab:hr8k}). The limit of these methods is thus not which tokens they keep, but that every tile is
-computed first.
+Token pruning removes tokens \emph{after} they are computed: VisionZip~\cite{visionzip} and
+HiRED~\cite{hired} after the vision encoder, which still sees all $N$ tiles, and FastV~\cite{fastv},
+SparseVLM~\cite{sparsevlm}, and IF-Prune~\cite{ifprune} inside the language model, whose first layers still
+process all $nN$ tokens. On HR-Bench 8K with 188 tiles and $B=1536$, the latter keep only 3.2\% of the 48K
+visual tokens, yet need more than 8\,GB of memory and 3.2 to 7.0\,s to the first token, and VisionZip and
+HiRED still encode all 188 tiles (\cref{tab:hr8k}). Cost follows the input, not what is kept.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \subsection{How reliable is low-resolution attention}
@@ -52,15 +34,11 @@ computed first.
 
 Encoding only a few tiles means choosing them from a view in which the target may not even be resolved: on
 V$^*$~Bench~\cite{vstar}, 80\% of the target objects are smaller than one ViT patch in the thumbnail. We
-measure how reliable this choice is on V$^*$~Bench, the only one of our benchmarks with target boxes. A
-question counts as a hit if at least half of the box of each target lies in the chosen tiles. By this measure, little has to be found: of a median of 24 detail tiles, one tile covers the target on 78.5\% of the
-questions, and two tiles on all of them.
-
-We examine two signals, which \cref{sec:method} defines in detail. The \emph{coarse prior} ranks the
-detail tiles by the attention that the question pays to a low-resolution view of the image (\cref{sec:prior}).
-\emph{Boundary scoring} then re-scores a small window of tiles near the selection cut-off with question
-attention on their high-resolution tokens (\cref{sec:boundary}). We analyze the frozen method
-(\cref{sec:impl}), and no parameter was chosen from this analysis.
+measure this choice on V$^*$~Bench, the only one of our benchmarks with target boxes, and count a hit if at
+least half of the box of each target lies in the chosen tiles. We analyze the two signals of the frozen
+method (\cref{sec:impl}): the coarse prior, \ie the attention that the question pays to a low-resolution view
+(\cref{sec:prior}), and boundary scoring, which re-scores a few tiles near the cut-off with their
+high-resolution tokens (\cref{sec:boundary}). No parameter was chosen from this analysis.
 
 \begin{figure}[t]
   \centering
@@ -71,42 +49,28 @@ attention on their high-resolution tokens (\cref{sec:boundary}). We analyze the 
   \label{fig:recall}
 \end{figure}
 
-\input{tables/tab_recall}
-
 \paragraph{The prior can filter.}
 With the top four of a median of 24 tiles, the coarse prior covers the target on 67.0\% of the questions, against
-14.8\% for random and 8.9\% for spatially uniform selection (\cref{fig:recall}). The ranking also follows the
-question: replacing the question with that of another image lowers recall to 44.0\%, a difference of 23.0
-points (95\% CI [15.7, 30.9]). Regions can therefore be filtered by their relevance to the question before
-any detail tile is encoded.
-
-\input{tables/tab_window}
+14.8\% for random and 8.9\% for spatially uniform selection (\cref{fig:recall}). It also follows the question:
+with the question of another image, recall drops to 44.0\%, by 23.0 points (95\% CI [15.7, 30.9]).
 
 \paragraph{The decision needs high resolution.}
-The prior alone cannot make the final choice: its first-ranked tile covers the target on only 3.1\% of the
-questions, so the top of the ranking cannot be taken at face value. Scoring only a few tiles at high
-resolution improves the choice at the cut-off. At the same $K$, boundary scoring raises recall at every
-budget, from 27.7\% to 69.1\% at $B=1024$ and from 67.0\% to 71.2\% at the default $B=1536$
-(\cref{tab:recall}). Of the targets that enter the window and that the prior alone would miss, 64 to 90\%
-are recovered, 2.0 to 2.7 times the rate of random selection (\cref{tab:window}). The coverage view stays
-in the context in all cases, so this recall is not the final accuracy, which \cref{sec:main} reports.
+The first-ranked tile of the prior covers the target on only 3.1\% of the questions. At the same $K$, boundary
+scoring raises recall at every budget, from 27.7\% to 69.1\% at $B=1024$ and from 67.0\% to 71.2\% at
+$B=1536$, and it recovers 64 to 90\% of the targets in the window that the prior alone would miss
+(\cref{tab:recall,tab:window}). This recall is not the final accuracy, which \cref{sec:main} reports.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \subsection{Motivation}
 \label{sec:design}
 
-These observations explain three design choices of \method:
-\begin{itemize}
-  \item Cost arises when tiles are computed, so the decision is made before the vision encoder, and the KV
-        cache is built by streaming.
-  \item Low-resolution attention finds candidates for the question, so the VLM's own attention over a
-        low-resolution view can filter the tiles, without any other model.
-  \item The final choice needs high resolution, but only near the cut-off, so only a small boundary window is
-        encoded and scored.
-\end{itemize}
+These observations motivate three design choices of \method: since cost arises when tiles are computed, the
+decision is made before the vision encoder and the KV cache is built by streaming; since low-resolution
+attention finds candidates for the question, the VLM's own attention over a low-resolution view filters the
+tiles, without any other model; and since the final choice needs high resolution only near the cut-off, only
+a small boundary window is encoded and scored.
 
 \paragraph{Problem setting.}
 Given a budget of $B$ visual tokens, \ie $K=\lfloor B/n\rfloor$ tiles, we want to choose \emph{before
 encoding} which tiles to keep, such that the vision encoder, the language model, and the KV cache
-each process $\mathcal{O}(K)$ tokens independently of $N$. The method is training-free and uses no
-model other than the VLM itself.
+each process $\mathcal{O}(K)$ tokens independently of $N$.

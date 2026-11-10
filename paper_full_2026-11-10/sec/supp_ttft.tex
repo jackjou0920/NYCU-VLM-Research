@@ -1,0 +1,24 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% Supplementary: TTFT breakdown (docs/06 §9 #6). Table from results/paper/build_ttft_breakdown.py,
+% using the existing efficiency measurements (no extra runs).
+% ─────────────────────────────────────────────────────────────────────────────
+\section{TTFT breakdown}
+\label{sec:supp_ttft}
+
+\input{tables/tab_ttft}
+
+\cref{tab:ttft} splits the TTFT of \method into the stages of \cref{alg:foveatile}, measured as in
+\cref{sec:setup}. The two stages that exist only to select tiles, the prior pass and boundary scoring, take
+240 to 270\,ms at $B\le1536$ and 300 to 370\,ms at larger budgets. They replace the encoding and prefill
+of the tiles that are never selected.
+
+\paragraph{Budget.} The largest stage is the prefill of the selected tiles, which grows linearly with $B$
+(188 to 580\,ms). The prior pass grows with the $m=\lfloor K/2\rfloor$ coverage tiles it reads, and boundary
+scoring shrinks as the window $S$ narrows from 5 to 3. The text prefills before and after the image take
+about 40\,ms each at every budget.
+
+\paragraph{Resolution.} Raising the tile cap from 7 to 201 changes no stage by more than 10\,ms, and TTFT
+stays between 0.69 and 0.71\,s, as \cref{tab:complexity} predicts: every stage depends on $K$ and $S$ and
+none on $N$. The detail tiles that fall outside the directly kept set and the window are never encoded,
+so the vision encoder runs on the same number of tiles at every resolution. Without compression, TTFT grows
+from 1.4\,s at 25 tiles to 17.2\,s at 188 tiles, 24$\times$ the TTFT of \method.

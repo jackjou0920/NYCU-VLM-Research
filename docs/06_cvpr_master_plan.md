@@ -29,6 +29,7 @@ Overleaf 上傳清單：
 - `CVPR27.tex` 依序 `\input` sec/0~6，references 之後接 Supp（`supp_*`）
 - 上傳 `paper/figures/*.pdf`、`paper/tables/*.tex`
 - 篇幅：**2026-11-09 Overleaf 實測正文約 9.65 頁，超過 8 頁上限約 1.65 頁**（References 與 LLM Usage Statement 不計）；11/16 前必須刪減
+- **2026-11-10 刪減（第一組 + 第二組 + A，使用者決定）**：刪減前完整版備份在 `paper_full_2026-11-10/`。Algorithm 1、Fig. boundary → 新的 Supp `sec/supp_method.tex`（S1）；tab_recall、tab_window → `supp_reliability.tex`；tab_downscale → `supp_downscale.tex`；主表拿掉第二行；§1–§6 正文共少 650 字。估計省約 1.65 頁，待 Overleaf 實測。CVPR27.tex 的 Supp 部分加了 figure / algorithm 的 S 編號。
 - LLM Usage Statement：已寫在 `sec/6_conclusion.tex`（正文後、references 前，匿名）
 
 ## 2. 圖表怎麼產生
@@ -67,7 +68,7 @@ Overleaf 上傳清單：
 - 資料集名稱寫 **V\* Bench**；HR-Bench 主設定 tile 上限 47（8K 約切 25 塊），188 塊是另外的縮放實驗
 - 主表區塊放 b1536 / b2560 / b3072；b1024、b2048 放 Pareto 圖與附錄（所有方法同一組 budget）
 - 主表 / 平均保留率 / 記憶體上限表 / Pareto / 模型尺寸表都用 **5 個測試集**（DocVQA、InfoVQA、MME-RW Lite、HR-Bench 4K、V* Bench）；HR-Bench 8K 另外放在 `tab_hr8k`（25 vs 188 塊）與分析表（使用者 2026-10-26 決定）
-- 主表第二行是保留率（加 %）
+- 主表每個方法一行（2026-11-10 為頁數拿掉第二行的各資料集保留率，Avg. 仍是保留率；使用者決定）
 - 第 5 章主軸 = 記憶體 / 延遲不隨解析度增長：章首總述；5.3 的縮放圖是單欄 2x2（TTFT、記憶體 + 每 tile 增量、每張 GPU 同時請求數、圖例）。同時請求數為實測：188 塊時 FoveaTile 124、FastV 37、IF-Prune 38、SparseVLM 20、uncompressed 3。VisionZip、HiRED 記憶體低於 1 GB，但 TTFT 隨 N 增長、accuracy 低 23.5 / 17.0 分
 - 正文不放「Where FoveaTile helps and where it fails」分析節（使用者 2026-10-26 決定）；內容在 `paper/sec/supp_analysis.tex`。Limitations 只寫 tile 獨立架構（使用者 2026-11-08 決定）
 - 主表的 ↑/↓ = FoveaTile 對該欄最強 baseline 的配對 bootstrap（雙向都標）

@@ -1,0 +1,15 @@
+\section{Model scale}
+\label{sec:scale}
+
+\input{tables/tab_scale}
+
+\cref{tab:scale} repeats the default setting on InternVL3.5-4B and \mbox{-14B}, using the hyperparameters
+calibrated on the 8B model; only the attention layers are mapped by relative depth. The results
+carry over without re-tuning. On all three models, \method is among the two most accurate methods
+(94.5\%, 95.0\%, and 95.2\%), well ahead of FastV (89.4 to 91.4), SparseVLM (84.5 to 85.5), HiRED (70.5 to 81.2), and
+VisionZip (59.0 to 76.8). The memory advantage holds at every scale: \method uses the least memory on all three models
+(0.37, 0.41, and 0.43\,GB), since its footprint is set by the budget and not by the input, whereas
+IF-Prune needs 2.70 to 3.27\,GB, about 7$\times$ more, and FastV and SparseVLM over 1\,GB. \method is
+also faster than IF-Prune on every model (2.1$\times$ on 4B, 1.3$\times$ on 14B), and on 4B it is the
+fastest of all methods (0.50\,s). On InfoVQA, \method remains the best method on every model, and on
+HR-Bench 4K it is the best on 4B and 14B.
